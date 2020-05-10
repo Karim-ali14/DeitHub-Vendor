@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DietHub Vendor</string>
+    <string name="hallo">مرحباً بك !</string>
+    <string name="login_to_use_app">سجل دخول لإستخدام التطبيق</string>
+    <string name="phone_number">رقم الجوال</string>
+    <string name="enter">دخول</string>
+    <string name="password">كلمة المرور</string>
+    <string name="restaurant_version">نسخة المطعم</string>
+    <string name="login">تسجيل دخول</string>
+</resources>

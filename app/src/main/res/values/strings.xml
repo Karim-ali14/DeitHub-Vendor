@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Diethub Vendor</string>
+    <string name="app_name">DietHub Vendor</string>
+    <string name="hallo">Hallo</string>
+    <string name="login_to_use_app">Login to tse app</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="enter">Enter</string>
+    <string name="password">Password</string>
+    <string name="restaurant_version">Restaurant Version</string>
+    <string name="login">Login</string>
 </resources>
