@@ -7,4 +7,28 @@
     <string name="password">Password</string>
     <string name="restaurant_version">Restaurant Version</string>
     <string name="login">Login</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
+    <string name="home">home</string>
+    <string name="myorders">MyOrders</string>
+    <string name="meals">Meals</string>
+    <string name="mypackages">MyPackages</string>
+    <string name="adds">Adds</string>
+    <string name="delegates">Delegates</string>
+    <string name="sittings">Sittings</string>
+    <string name="about_app">About App</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="lang">Language</string>
+    <string name="signout">SignOut</string>
 </resources>

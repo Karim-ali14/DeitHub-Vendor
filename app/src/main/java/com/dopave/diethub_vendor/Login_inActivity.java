@@ -35,7 +35,7 @@ public class Login_inActivity extends AppCompatActivity {
         EnterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(Login_inActivity.this,HomeActivity.class));
             }
         });
         Layout.setOnClickListener(new View.OnClickListener() {
