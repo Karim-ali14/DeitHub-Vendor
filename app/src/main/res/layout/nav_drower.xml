@@ -46,7 +46,8 @@
                 android:padding="2dp"
                 tools:ignore="RtlHardcoded"
                 android:gravity="center_vertical"
-                android:onClick="onClick">
+                android:onClick="onClick"
+                android:id="@+id/nav_Home">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -81,7 +82,7 @@
                 tools:ignore="RtlHardcoded"
                 android:gravity="center_vertical"
                 android:onClick="onClick"
-                android:id="@+id/nav_myAccount">
+                android:id="@+id/nav_myOrders">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -106,7 +107,7 @@
 
             <LinearLayout
                 android:layout_weight="1"
-                android:id="@+id/nav_listOrder"
+                android:id="@+id/nav_myMeals"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginStart="16dp"
@@ -140,7 +141,7 @@
 
             <LinearLayout
                 android:layout_weight="1"
-                android:id="@+id/nav_myOrders"
+                android:id="@+id/nav_myPackages"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginStart="16dp"

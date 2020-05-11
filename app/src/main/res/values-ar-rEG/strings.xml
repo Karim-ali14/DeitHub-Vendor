@@ -8,4 +8,32 @@
     <string name="password">كلمة المرور</string>
     <string name="restaurant_version">نسخة المطعم</string>
     <string name="login">تسجيل دخول</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
+    <string name="home">الرئيسة</string>
+    <string name="myorders">الطلبات</string>
+    <string name="meals">الوجبات</string>
+    <string name="mypackages">الباقات</string>
+    <string name="adds">الإضافات</string>
+    <string name="delegates">المناديب</string>
+    <string name="sittings">الاعدادات</string>
+    <string name="about_app">عن التطبيق</string>
+    <string name="terms_and_conditions">الشروط و الاحكام</string>
+    <string name="lang">اللغة</string>
+    <string name="signout">تسجيل الخروج</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Orders">الطلبات</string>
 </resources>
