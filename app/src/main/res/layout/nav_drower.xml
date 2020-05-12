@@ -65,9 +65,10 @@
                     android:layout_marginLeft="20dp"
                     android:gravity="start"
                     android:text="@string/home"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_15sdp"
                     android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"/>
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -100,9 +101,10 @@
                     android:layout_marginLeft="20dp"
                     android:gravity="start"
                     android:text="@string/myorders"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_15sdp"
                     android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"/>
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -134,9 +136,10 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:text="@string/meals"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_15sdp"
                     android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"/>
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -169,9 +172,10 @@
                     android:layout_marginLeft="20dp"
                     android:gravity="start"
                     android:text="@string/mypackages"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_15sdp"
                     android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false" />
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -204,9 +208,10 @@
                     android:layout_marginLeft="20dp"
                     android:gravity="start"
                     android:text="@string/adds"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_15sdp"
                     android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"/>
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -238,10 +243,11 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:text="@string/delegates"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_15sdp"
                     tools:ignore="RtlHardcoded"
                     android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false" />
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -273,10 +279,11 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:text="@string/sittings"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_15sdp"
                     tools:ignore="RtlHardcoded"
                     android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"/>
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -308,10 +315,11 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:text="@string/about_app"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_15sdp"
                     tools:ignore="RtlHardcoded"
                     android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"/>
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -343,10 +351,11 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:text="@string/terms_and_conditions"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_15sdp"
                     tools:ignore="RtlHardcoded"
                     android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"/>
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -378,10 +387,11 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:text="@string/lang"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_15sdp"
                     tools:ignore="RtlHardcoded"
                     android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"/>
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
             </LinearLayout>
         </LinearLayout>
 
