@@ -1,6 +1,7 @@
 package com.dopave.diethub_vendor.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.dopave.diethub_vendor.Details_OrderActivity;
 import com.dopave.diethub_vendor.Orders_Activity;
 import com.dopave.diethub_vendor.PrograssBarAnimation;
 import com.dopave.diethub_vendor.R;
@@ -42,7 +45,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         holder.AllDetailsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //context.startActivity(new Intent(context, Details_OrderActivity.class).putExtra("Type",i));
+                context.startActivity(new Intent(context, Details_OrderActivity.class));
             }
         });
     }

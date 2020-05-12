@@ -39,4 +39,11 @@
     <string name="finished">تم الانتهاء</string>
     <string name="Preparing">جار ي التجهيز</string>
     <string name="Accepted">تم القبول</string>
+    <string name="NumberOfOrder">رقم الطلب :</string>
+    <string name="OrderDetails">تفاصيل الطلب</string>
+    <string name="Count">الكمية :</string>
+    <string name="Total">الاجمالي :</string>
+    <string name="Payment_Method">طريقة الدفع :</string>
+    <string name="Order_State">حالة الطلب :</string>
+    <string name="Delivery_Address">عنوان التوصيل</string>
 </resources>

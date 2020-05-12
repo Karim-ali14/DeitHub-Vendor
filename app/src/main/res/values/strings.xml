@@ -38,4 +38,11 @@
     <string name="finished">Finished</string>
     <string name="Preparing">Preparing</string>
     <string name="Accepted">Accepted</string>
+    <string name="NumberOfOrder">Order\'s number :</string>
+    <string name="OrderDetails">Order details</string>
+    <string name="Count">Count :</string>
+    <string name="Total">Total :</string>
+    <string name="Payment_Method">Payment Method :</string>
+    <string name="Order_State">Order State :</string>
+    <string name="Delivery_Address">Delivery Address</string>
 </resources>
