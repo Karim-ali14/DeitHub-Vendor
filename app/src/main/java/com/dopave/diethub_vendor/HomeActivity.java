@@ -16,7 +16,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     DrawerLayout drawer;
     String CurrentPage = "nav_Home";
-    String destination = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +55,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             CurrentPage = "nav_myOrders";
             drawer.closeDrawer(GravityCompat.START);
         }else if (view.getId() == R.id.nav_myMeals && !CurrentPage.equals("nav_myMeals")){
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new MealsFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new DelegateFragment()).commit();
             CurrentPage = "nav_myMeals";
             drawer.closeDrawer(GravityCompat.START);
         }else {
             drawer.closeDrawer(GravityCompat.START);
         }
-
-
     }
 
     @Override

@@ -46,4 +46,15 @@
     <string name="Payment_Method">طريقة الدفع :</string>
     <string name="Order_State">حالة الطلب :</string>
     <string name="Delivery_Address">عنوان التوصيل</string>
+    <string name="Add_delegate">اضافة مندوب</string>
+    <string name="name_delegate">اسم المندوب</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="vehicle_details">تفاصيل المركبة</string>
+    <string name="vehicle_type">نوع المركبة</string>
+    <string name="brand">الماركة</string>
+    <string name="Type">النوع</string>
+    <string name="license_image">صورة الرخصه</string>
+    <string name="Model">الموديل</string>
+    <string name="Edit_Order">تعديل الطلب</string>
+
 </resources>

@@ -9,4 +9,6 @@
     <color name="ColorTextDescription">#474747</color>
     <color name="background">#F3F3F3</color>
     <color name="colorLine">#688D8C8C</color>
+    <color name="image_frame">#3C707070</color>
+    <color name="text_color">#B9B9B9</color>
 </resources>

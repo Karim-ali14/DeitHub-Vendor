@@ -45,4 +45,15 @@
     <string name="Payment_Method">Payment Method :</string>
     <string name="Order_State">Order State :</string>
     <string name="Delivery_Address">Delivery Address</string>
+    <string name="Add_delegate">Add delegate</string>
+    <string name="name_delegate">name delegate</string>
+    <string name="email">email</string>
+    <string name="vehicle_details">Vehicle details</string>
+    <string name="vehicle_type">Vehicle type</string>
+    <string name="brand">Brand</string>
+    <string name="Type">Type</string>
+    <string name="Model">Model</string>
+    <string name="license_image">license Image</string>
+    <string name="Edit_Order">تعديل الطلب</string>
+    <string name="Add_new_delegate">اضافة مندوب جديد</string>
 </resources>
