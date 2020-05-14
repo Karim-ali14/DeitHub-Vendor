@@ -216,7 +216,7 @@
 
             <LinearLayout
                 android:layout_weight="1"
-                android:id="@+id/nav_PaymentWays"
+                android:id="@+id/nav_delegates"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginStart="16dp"
@@ -251,7 +251,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/nav_packages"
+                android:id="@+id/nav_setting"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"

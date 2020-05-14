@@ -56,5 +56,10 @@
     <string name="license_image">صورة الرخصه</string>
     <string name="Model">الموديل</string>
     <string name="Edit_Order">تعديل الطلب</string>
-
+    <string name="restaurants_name">اسم المطعم</string>
+    <string name="about_restaurants">عن المطعم</string>
+    <string name="Add_new_delegate">اضافة مندوب جديد</string>
+    <string name="geographical_location">الموقع الجغرافي</string>
+    <string name="res_logo">شعار المطعم</string>
+    <string name="Time_work">مواعيد العمل</string>
 </resources>

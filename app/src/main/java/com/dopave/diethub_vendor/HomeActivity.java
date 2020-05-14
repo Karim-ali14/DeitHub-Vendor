@@ -3,6 +3,8 @@ package com.dopave.diethub_vendor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
@@ -15,7 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     DrawerLayout drawer;
-    String CurrentPage = "nav_Home";
+    public static ImageView Logo,Notification_Icon;
+    public static TextView Title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        Logo = findViewById(R.id.Logo);
+        Notification_Icon = findViewById(R.id.Notification_Icon);
+        Title = findViewById(R.id.Title);
     }
 
     @Override
@@ -46,18 +52,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onClick(View view) {
-        if (view.getId() == R.id.nav_Home && !CurrentPage.equals("nav_Home")){
+        if (view.getId() == R.id.nav_Home){
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new Home_Fragment()).commit();
-            CurrentPage = "nav_Home";
             drawer.closeDrawer(GravityCompat.START);
-        }else if (view.getId() == R.id.nav_myOrders && !CurrentPage.equals("nav_myOrders")){
+            Logo.setVisibility(View.VISIBLE);
+            Notification_Icon.setVisibility(View.VISIBLE);
+            Title.setVisibility(View.GONE);
+        }else if (view.getId() == R.id.nav_myOrders){
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new OrderFragment()).commit();
-            CurrentPage = "nav_myOrders";
             drawer.closeDrawer(GravityCompat.START);
-        }else if (view.getId() == R.id.nav_myMeals && !CurrentPage.equals("nav_myMeals")){
+            Logo.setVisibility(View.GONE);
+            Notification_Icon.setVisibility(View.GONE);
+            Title.setVisibility(View.VISIBLE);
+            Title.setText(getResources().getString(R.string.Orders));
+        }else if (view.getId() == R.id.nav_setting ){
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SettingsFragment()).commit();
+            drawer.closeDrawer(GravityCompat.START);
+            Logo.setVisibility(View.GONE);
+            Notification_Icon.setVisibility(View.GONE);
+            Title.setVisibility(View.VISIBLE);
+            Title.setText(getResources().getString(R.string.sittings));
+        }else if (view.getId() == R.id.nav_delegates ){
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new DelegateFragment()).commit();
-            CurrentPage = "nav_myMeals";
             drawer.closeDrawer(GravityCompat.START);
+            Logo.setVisibility(View.GONE);
+            Notification_Icon.setVisibility(View.GONE);
+            Title.setVisibility(View.VISIBLE);
+            Title.setText(getResources().getString(R.string.delegates));
         }else {
             drawer.closeDrawer(GravityCompat.START);
         }
@@ -66,6 +87,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new Home_Fragment()).commit();
+        Logo.setVisibility(View.VISIBLE);
+        Notification_Icon.setVisibility(View.VISIBLE);
+        Title.setVisibility(View.GONE);
+
         //HomeActivity.super.onBackPressed();
     }
 

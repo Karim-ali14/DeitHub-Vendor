@@ -54,6 +54,13 @@
     <string name="Type">Type</string>
     <string name="Model">Model</string>
     <string name="license_image">license Image</string>
-    <string name="Edit_Order">تعديل الطلب</string>
-    <string name="Add_new_delegate">اضافة مندوب جديد</string>
+    <string name="Edit_Order">Edit order</string>
+    <string name="restaurants_name">Restaurants Name</string>
+    <string name="about_restaurants">About Restaurants</string>
+    <string name="Add_new_delegate">ِAdd new delegate</string>
+    <string name="geographical_location">Geographical Location</string>
+    <string name="res_logo">Restaurants Logo</string>
+    <string name="add_photo">اضف صور</string>
+    <string name="Time_work">مواعيد العمل</string>
+    <string name="Saturday">السبت</string>
 </resources>
