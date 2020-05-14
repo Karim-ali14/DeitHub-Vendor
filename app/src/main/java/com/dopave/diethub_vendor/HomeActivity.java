@@ -86,6 +86,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Notification_Icon.setVisibility(View.GONE);
             Title.setVisibility(View.VISIBLE);
             Title.setText(getResources().getString(R.string.delegates));
+        }else if (view.getId() == R.id.nav_langu ){
+            startActivity(new Intent(this,LanguageActivity.class));
+            drawer.closeDrawer(GravityCompat.START);
         }else {
             drawer.closeDrawer(GravityCompat.START);
         }

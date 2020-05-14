@@ -63,4 +63,5 @@
     <string name="res_logo">شعار المطعم</string>
     <string name="Time_work">مواعيد العمل</string>
     <string name="Notification">الاشعارات</string>
+    <string name="App_Lang">لغة البرنامج</string>
 </resources>
