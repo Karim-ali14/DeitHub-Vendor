@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Add_DelegateActivity"></activity>
+        <activity android:name=".Notification_Activity"></activity>
+        <activity android:name=".Add_DelegateActivity" />
         <activity android:name=".Details_OrderActivity" />
         <activity android:name=".Orders_Activity" />
         <activity

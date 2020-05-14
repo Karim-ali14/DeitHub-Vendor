@@ -1,5 +1,6 @@
 package com.dopave.diethub_vendor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle = new
@@ -43,6 +44,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Logo = findViewById(R.id.Logo);
         Notification_Icon = findViewById(R.id.Notification_Icon);
         Title = findViewById(R.id.Title);
+        Notification_Icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,Notification_Activity.class));
+            }
+        });
     }
 
     @Override
