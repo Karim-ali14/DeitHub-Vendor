@@ -36,6 +36,7 @@ public class Login_inActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Login_inActivity.this,HomeActivity.class));
+                finish();
             }
         });
         Layout.setOnClickListener(new View.OnClickListener() {

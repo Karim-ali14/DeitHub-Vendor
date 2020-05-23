@@ -32,7 +32,6 @@ public class SettingsFragment extends Fragment {
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,6 +63,7 @@ public class SettingsFragment extends Fragment {
         list.add("");
         return list;
     }
+
     private void closeKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getRootView().getWindowToken(), 0);

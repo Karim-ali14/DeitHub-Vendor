@@ -8,18 +8,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-
+    private long backPressedTime = 0;
     DrawerLayout drawer;
     public static ImageView Logo,Notification_Icon;
     public static TextView Title;
+    public static String Current_Page = "nav_Home";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Logo.setVisibility(View.VISIBLE);
             Notification_Icon.setVisibility(View.VISIBLE);
             Title.setVisibility(View.GONE);
+            Current_Page = "nav_Home";
         }else if (view.getId() == R.id.nav_myOrders){
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new OrderFragment()).commit();
             drawer.closeDrawer(GravityCompat.START);
@@ -72,20 +77,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Notification_Icon.setVisibility(View.GONE);
             Title.setVisibility(View.VISIBLE);
             Title.setText(getResources().getString(R.string.Orders));
-        }else if (view.getId() == R.id.nav_setting ){
+            Current_Page = "nav_myOrders";
+        }else if (view.getId() == R.id.nav_setting){
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SettingsFragment()).commit();
             drawer.closeDrawer(GravityCompat.START);
             Logo.setVisibility(View.GONE);
             Notification_Icon.setVisibility(View.GONE);
             Title.setVisibility(View.VISIBLE);
             Title.setText(getResources().getString(R.string.sittings));
-        }else if (view.getId() == R.id.nav_delegates ){
+            Current_Page = "nav_setting";
+        }else if (view.getId() == R.id.nav_delegates){
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new DelegateFragment()).commit();
             drawer.closeDrawer(GravityCompat.START);
             Logo.setVisibility(View.GONE);
             Notification_Icon.setVisibility(View.GONE);
             Title.setVisibility(View.VISIBLE);
             Title.setText(getResources().getString(R.string.delegates));
+            Current_Page = "nav_delegates";
+        }else if (view.getId() == R.id.nav_Consulting ){
+            startActivity(new Intent(this,Conditions_Activity.class));
+            drawer.closeDrawer(GravityCompat.START);
+        }else if (view.getId() == R.id.nav_aboutApp ){
+            startActivity(new Intent(this,AboutUs_Activity.class));
+            drawer.closeDrawer(GravityCompat.START);
         }else if (view.getId() == R.id.nav_langu ){
             startActivity(new Intent(this,LanguageActivity.class));
             drawer.closeDrawer(GravityCompat.START);
@@ -96,12 +110,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new Home_Fragment()).commit();
-        Logo.setVisibility(View.VISIBLE);
-        Notification_Icon.setVisibility(View.VISIBLE);
-        Title.setVisibility(View.GONE);
-
-        //HomeActivity.super.onBackPressed();
+        if (!Current_Page.equals("nav_Home")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new Home_Fragment()).commit();
+            Logo.setVisibility(View.VISIBLE);
+            Notification_Icon.setVisibility(View.VISIBLE);
+            Title.setVisibility(View.GONE);
+            Current_Page = "nav_Home";
+        }else {
+            long t = System.currentTimeMillis();
+            if (t - backPressedTime > 2000) {    // 2 secs
+                backPressedTime = t;
+                Toast.makeText(this, getResources().getString(R.string.Press_To_back), Toast.LENGTH_SHORT).show();
+            } else {    // this guy is serious
+                // clean up
+                super.onBackPressed();       // bye
+            }
+        }
     }
 
 }

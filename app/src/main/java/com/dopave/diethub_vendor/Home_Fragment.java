@@ -37,6 +37,7 @@ public class Home_Fragment extends Fragment {
                 HomeActivity.Logo.setVisibility(View.GONE);
                 HomeActivity.Notification_Icon.setVisibility(View.GONE);
                 HomeActivity.Title.setText(getResources().getString(R.string.Orders));
+                HomeActivity.Current_Page = "nav_myOrders";
             }
         });
         Delegate_Layout.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +48,7 @@ public class Home_Fragment extends Fragment {
                 HomeActivity.Logo.setVisibility(View.GONE);
                 HomeActivity.Notification_Icon.setVisibility(View.GONE);
                 HomeActivity.Title.setText(getResources().getString(R.string.delegates));
+                HomeActivity.Current_Page = "nav_delegates";
             }
         });
         Setting_Layout.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +59,7 @@ public class Home_Fragment extends Fragment {
                 HomeActivity.Logo.setVisibility(View.GONE);
                 HomeActivity.Notification_Icon.setVisibility(View.GONE);
                 HomeActivity.Title.setText(getResources().getString(R.string.sittings));
+                HomeActivity.Current_Page = "nav_setting";
             }
         });
         return view;
