@@ -11,28 +11,29 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class Password_RecoveryActivity extends AppCompatActivity {
-    Button SendCodeButton;
-    EditText Phone;
+public class Enter_CodeActivity extends AppCompatActivity {
+    Button button;
+    EditText Code;
     ConstraintLayout Layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_password__recovery);
+        setContentView(R.layout.activity_enter__code);
         init();
     }
     private void init(){
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        SendCodeButton = findViewById(R.id.Send_Code_Button);
-        SendCodeButton.setOnClickListener(new View.OnClickListener() {
+
+        button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(Password_RecoveryActivity.this,Enter_CodeActivity.class));
+                //startActivity(new Intent(Enter_CodeActivity.this,NewPassword_Activity.class));
             }
         });
-        Phone = findViewById(R.id.PhoneNumber);
+        Code = findViewById(R.id.Code);
         Layout = findViewById(R.id.Layout);
         Layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +48,6 @@ public class Password_RecoveryActivity extends AppCompatActivity {
     private void closeKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getWindow().getDecorView().getRootView().getWindowToken(), 0);
-        Phone.clearFocus();
+        Code.clearFocus();
     }
 }
