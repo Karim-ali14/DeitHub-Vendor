@@ -29,7 +29,7 @@ public class Password_RecoveryActivity extends AppCompatActivity {
         SendCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(Password_RecoveryActivity.this,Enter_CodeActivity.class));
+                startActivity(new Intent(Password_RecoveryActivity.this,Enter_CodeActivity.class));
             }
         });
         Phone = findViewById(R.id.PhoneNumber);

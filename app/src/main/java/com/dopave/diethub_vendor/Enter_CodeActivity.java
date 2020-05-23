@@ -30,7 +30,7 @@ public class Enter_CodeActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(Enter_CodeActivity.this,NewPassword_Activity.class));
+                startActivity(new Intent(Enter_CodeActivity.this,NewPassword_Activity.class));
             }
         });
         Code = findViewById(R.id.Code);

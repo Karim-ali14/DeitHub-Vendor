@@ -20,6 +20,14 @@
     <string name="enter_code_to_password">Enter the password recovery code sent to your mobile number</string>
     <string name="PasswordRecovery">Password Recovery</string>
 
+    <string name="Old_Pass">Old Password</string>
+    <string name="New_Pass">New Password</string>
+    <string name="Confirm_New_Pass">Confirm the New Password</string>
+    <string name="Sorry_Password_Not_Match">Sorry, the password does not match</string>
+    <string name="Confirm_Pass">Confirm the Password</string>
+    <string name="Confirm">Confirm</string>
+    <string name="Password_Retrieved_Successfully">Password retrieved successfully</string>
+
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
