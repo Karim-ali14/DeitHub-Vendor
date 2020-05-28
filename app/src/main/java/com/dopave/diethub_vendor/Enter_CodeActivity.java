@@ -31,6 +31,7 @@ public class Enter_CodeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Enter_CodeActivity.this,NewPassword_Activity.class));
+                finish();
             }
         });
         Code = findViewById(R.id.Code);

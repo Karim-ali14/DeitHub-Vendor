@@ -109,6 +109,22 @@
             app:layout_constraintTop_toBottomOf="@+id/PhoneNumber"
             app:layout_constraintWidth_percent=".9" />
 
+        <TextView
+            android:id="@+id/ForgottenPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:onClick="onClick"
+            android:text="@string/ForgotPassword"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_17sdp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Password"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/helveticaneuelt_arabic"/>
         <Button
             android:id="@+id/EnterButton"
             android:layout_width="match_parent"
@@ -123,7 +139,7 @@
             android:text="@string/enter"
             android:textColor="@color/white"
             android:textSize="@dimen/_17sdp"
-            app:layout_constraintTop_toBottomOf="@+id/Password" />
+            app:layout_constraintTop_toBottomOf="@+id/ForgottenPassword" />
 
         <TextView
             android:id="@+id/WithOutEmail"
