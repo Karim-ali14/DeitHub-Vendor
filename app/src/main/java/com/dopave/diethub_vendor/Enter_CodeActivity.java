@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Enter_CodeActivity extends AppCompatActivity {
     Button button;
@@ -25,16 +26,21 @@ public class Enter_CodeActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
+        Code = findViewById(R.id.Code);
         button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Enter_CodeActivity.this,NewPassword_Activity.class));
-                finish();
+                if (!Code.getText().toString().isEmpty()){
+                    startActivity(new Intent(Enter_CodeActivity.this,NewPassword_Activity.class)
+                            .putExtra("email",getIntent().getExtras().getString("email"))
+                            .putExtra("Code",Code.getText().toString()));
+                }else {
+                    Toast.makeText(Enter_CodeActivity.this, "enter Code", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-        Code = findViewById(R.id.Code);
+
         Layout = findViewById(R.id.Layout);
         Layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +50,9 @@ public class Enter_CodeActivity extends AppCompatActivity {
             }
         });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+
+        Toast.makeText(this, getIntent().getExtras().getString("email"), Toast.LENGTH_SHORT).show();
     }
 
     private void closeKeyBoard() {

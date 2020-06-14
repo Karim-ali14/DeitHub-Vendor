@@ -70,26 +70,17 @@ public class Login_inActivity extends AppCompatActivity {
     }
 
     private boolean SignInStatus(){
-        Common.getAPIRequest().SignIn("+966590123457","password-1")
+        Common.getAPIRequest().signIn("+966590123457","password-1")
                 .enqueue(new Callback<SignIn>() {
                     @Override
                     public void onResponse(Call<SignIn> call, Response<SignIn> response) {
-                        switch (response.code()){
-                            case 200 :
-                                Toast.makeText(Login_inActivity.this, "The account created Successfully", Toast.LENGTH_SHORT).show();
-                                break;
-                            case 401 :
-                                Toast.makeText(Login_inActivity.this, "You are not authorized", Toast.LENGTH_SHORT).show();
-                                break;
-                            case 404 :
-                                Toast.makeText(Login_inActivity.this, "Resource not found", Toast.LENGTH_SHORT).show();
-                                break;
-                            case 422 :
-                                Toast.makeText(Login_inActivity.this, "validation Error", Toast.LENGTH_SHORT).show();
-                                break;
-                            case 500 :
-                                Toast.makeText(Login_inActivity.this, "Error happend while handling the response", Toast.LENGTH_SHORT).show();
-                                break;
+                        if (response.code() == 200){
+                            Log.i("TTTTTT",response.body().getData().getToken().getAccessToken() + response.body().getData().getProvider().getId());
+                            Toast.makeText(Login_inActivity.this, "The account created Successfully", Toast.LENGTH_SHORT).show();
+                            Common.currentPosition = response.body();
+                            startActivity(new Intent(Login_inActivity.this,HomeActivity.class));
+                        }else {
+
                         }
                     }
 

@@ -13,9 +13,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.dopave.diethub_vendor.Adapter.AdapterForDelegate;
+import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**

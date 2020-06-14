@@ -2,13 +2,19 @@ package com.dopave.diethub_vendor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProvider;
+import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProviderRequest;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonObject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,6 +23,15 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private long backPressedTime = 0;
@@ -54,6 +69,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(HomeActivity.this,Notification_Activity.class));
             }
         });
+
+//        Common.getAPIRequest().createDeliveryByProvider("Bearer "+
+//                Common.currentPosition.getData().getToken().getAccessToken(),new DeliveryByProviderRequest("+2001226854332","gggggghgggg",
+//                        "karhghghghim ali","karim.alffgfgi@gmail.com",1),
+//                Common.currentPosition.getData().getProvider().getId()+"")
+//                .enqueue(new Callback<DeliveryByProvider>() {
+//            @Override
+//            public void onResponse(Call<DeliveryByProvider> call, Response<DeliveryByProvider> response) {
+//
+//                if (response.code() == 201){
+//                    Log.i("TTTTTT","done");
+//                } else {
+//                    try {
+//                        Log.i("TTTTTTT",new JSONObject(response.errorBody()
+//                                .string()).getString("message")+response.code());
+//                    } catch (IOException | JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<DeliveryByProvider> call, Throwable t) {
+//
+//            }
+//        });
     }
 
     @Override
