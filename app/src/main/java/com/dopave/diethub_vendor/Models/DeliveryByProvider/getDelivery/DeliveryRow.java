@@ -4,7 +4,7 @@ package com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Row {
+public class DeliveryRow {
 
     @SerializedName("id")
     @Expose

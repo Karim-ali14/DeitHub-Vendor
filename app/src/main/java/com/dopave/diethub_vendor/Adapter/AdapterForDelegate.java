@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery.DeliveryRow;
 import com.dopave.diethub_vendor.R;
 
 import java.util.List;
@@ -16,9 +17,9 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.ViewHolderForDelegate> {
-    List<String> list;
+    List<DeliveryRow> list;
     Context context;
-    public AdapterForDelegate(List<String> list, Context context) {
+    public AdapterForDelegate(List<DeliveryRow> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -32,7 +33,8 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderForDelegate holder, int position) {
-
+        DeliveryRow row = list.get(position);
+        holder.NameOfDelegate.setText(row.getName());
     }
 
     @Override

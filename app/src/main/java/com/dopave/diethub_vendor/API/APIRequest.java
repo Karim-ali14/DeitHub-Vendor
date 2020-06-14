@@ -3,6 +3,7 @@ package com.dopave.diethub_vendor.API;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProvider;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProviderRequest;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.UpdateDeliveryRequest;
+import com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery.GetDeliveryByProviderId;
 import com.dopave.diethub_vendor.Models.ResetPassword.ResetPassword;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 
@@ -58,7 +59,7 @@ public interface APIRequest {
 
     //Todo get all Delivery by provider id
     @GET("provider/{id}/deliveryrep")
-    Call<DeliveryByProvider> getDeliveryByProvider (@Header("Authorization") String Auth,
-                                                       @Path("id") String id);
+    Call<GetDeliveryByProviderId> getDeliveryByProvider (@Header("Authorization") String Auth,
+                                                         @Path("id") String id);
 
 }

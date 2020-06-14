@@ -9,14 +9,14 @@ public class Data {
 
     @SerializedName("rows")
     @Expose
-    private List<Row> rows = null;
+    private List<DeliveryRow> deliveryRows = null;
 
-    public List<Row> getRows() {
-        return rows;
+    public List<DeliveryRow> getDeliveryRows() {
+        return deliveryRows;
     }
 
-    public void setRows(List<Row> rows) {
-        this.rows = rows;
+    public void setDeliveryRows(List<DeliveryRow> deliveryRows) {
+        this.deliveryRows = deliveryRows;
     }
 
 }

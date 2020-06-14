@@ -69,32 +69,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(HomeActivity.this,Notification_Activity.class));
             }
         });
-
-//        Common.getAPIRequest().createDeliveryByProvider("Bearer "+
-//                Common.currentPosition.getData().getToken().getAccessToken(),new DeliveryByProviderRequest("+2001226854332","gggggghgggg",
-//                        "karhghghghim ali","karim.alffgfgi@gmail.com",1),
-//                Common.currentPosition.getData().getProvider().getId()+"")
-//                .enqueue(new Callback<DeliveryByProvider>() {
-//            @Override
-//            public void onResponse(Call<DeliveryByProvider> call, Response<DeliveryByProvider> response) {
-//
-//                if (response.code() == 201){
-//                    Log.i("TTTTTT","done");
-//                } else {
-//                    try {
-//                        Log.i("TTTTTTT",new JSONObject(response.errorBody()
-//                                .string()).getString("message")+response.code());
-//                    } catch (IOException | JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<DeliveryByProvider> call, Throwable t) {
-//
-//            }
-//        });
     }
 
     @Override
