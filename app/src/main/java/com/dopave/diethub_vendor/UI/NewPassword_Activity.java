@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor;
+package com.dopave.diethub_vendor.UI;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.ResetPassword.ResetPassword;
+import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,7 +94,7 @@ public class NewPassword_Activity extends AppCompatActivity {
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(NewPassword_Activity.this,Login_inActivity.class));
+                startActivity(new Intent(NewPassword_Activity.this, Login_inActivity.class));
                 finish();
             }
         });

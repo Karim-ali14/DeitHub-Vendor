@@ -16,9 +16,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dopave.diethub_vendor.Details_OrderActivity;
-import com.dopave.diethub_vendor.Orders_Activity;
-import com.dopave.diethub_vendor.PrograssBarAnimation;
+import com.dopave.diethub_vendor.UI.Details_OrderActivity;
+import com.dopave.diethub_vendor.UI.Orders_Activity;
+import com.dopave.diethub_vendor.UI.PrograssBarAnimation;
 import com.dopave.diethub_vendor.R;
 import java.util.List;
 import static android.content.Context.INPUT_METHOD_SERVICE;

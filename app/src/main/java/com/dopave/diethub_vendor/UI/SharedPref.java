@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor;
+package com.dopave.diethub_vendor.UI;
 
 import android.content.Context;
 import android.content.SharedPreferences;

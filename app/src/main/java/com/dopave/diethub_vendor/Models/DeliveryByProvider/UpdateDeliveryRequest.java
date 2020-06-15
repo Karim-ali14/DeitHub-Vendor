@@ -28,6 +28,16 @@ public class UpdateDeliveryRequest {
     @Expose
     private Integer cityId;
 
+    public UpdateDeliveryRequest(String email, String mobilePhone, String name, Boolean online, Boolean hasTrip, String status, Integer cityId) {
+        this.email = email;
+        this.mobilePhone = mobilePhone;
+        this.name = name;
+        this.online = online;
+        this.hasTrip = hasTrip;
+        this.status = status;
+        this.cityId = cityId;
+    }
+
     public String getEmail() {
         return email;
     }

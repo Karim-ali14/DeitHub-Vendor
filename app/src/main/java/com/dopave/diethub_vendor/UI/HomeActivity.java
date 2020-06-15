@@ -1,37 +1,22 @@
-package com.dopave.diethub_vendor;
+package com.dopave.diethub_vendor.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dopave.diethub_vendor.Common.Common;
-import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProvider;
-import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProviderRequest;
+import com.dopave.diethub_vendor.R;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.JsonObject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private long backPressedTime = 0;
@@ -56,7 +41,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new Home_Fragment()).commit();
+        if (getIntent().getExtras().getString("type").equals("Login_inActivity"))
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new Home_Fragment()).commit();
+        else if (getIntent().getExtras().getString("type").equals("Add_DelegateActivity")) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new DelegateFragment()).commit();
+                drawer.closeDrawer(GravityCompat.START);
+                Logo.setVisibility(View.GONE);
+                Notification_Icon.setVisibility(View.GONE);
+                Title.setVisibility(View.VISIBLE);
+                Title.setText(getResources().getString(R.string.delegates));
+                Current_Page = "nav_delegates";
+            }
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);

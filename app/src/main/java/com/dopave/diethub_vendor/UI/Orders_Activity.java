@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor;
+package com.dopave.diethub_vendor.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dopave.diethub_vendor.Adapter.AdapterForOrder;
+import com.dopave.diethub_vendor.R;
 
 import java.util.ArrayList;
 import java.util.List;

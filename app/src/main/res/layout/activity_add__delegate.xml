@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Add_DelegateActivity"
+    tools:context=".UI.Add_DelegateActivity"
     android:background="@color/background"
     android:fillViewport="true"
     >
@@ -380,7 +380,7 @@
             app:layout_constraintWidth_percent=".9"
             android:layout_marginTop="@dimen/_15sdp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/Add"
+            app:layout_constraintBottom_toTopOf="@id/ButtonAddDelivery"
             android:layout_marginBottom="@dimen/_30sdp">
 
             <ImageView
@@ -408,7 +408,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/Add"
+            android:id="@+id/ButtonAddDelivery"
             android:fontFamily="@font/helveticaneuelt_arabic"
             android:paddingBottom="@dimen/_15sdp"
             android:paddingTop="@dimen/_10sdp"/>

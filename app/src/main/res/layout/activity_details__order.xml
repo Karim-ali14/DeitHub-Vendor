@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Details_OrderActivity">
+    tools:context=".UI.Details_OrderActivity">
 
     <ScrollView
         android:layout_width="match_parent"

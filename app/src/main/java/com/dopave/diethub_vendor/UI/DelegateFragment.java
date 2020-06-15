@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor;
+package com.dopave.diethub_vendor.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,13 +17,12 @@ import android.widget.Toast;
 import com.dopave.diethub_vendor.Adapter.AdapterForDelegate;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery.GetDeliveryByProviderId;
+import com.dopave.diethub_vendor.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +52,7 @@ public class DelegateFragment extends Fragment {
         AddDelegateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),Add_DelegateActivity.class));
+                startActivity(new Intent(getActivity(),Add_DelegateActivity.class).putExtra("type","normal"));
             }
         });
         getAllDelivery();
@@ -69,7 +68,7 @@ public class DelegateFragment extends Fragment {
                     public void onResponse(Call<GetDeliveryByProviderId> call, Response<GetDeliveryByProviderId> response) {
                         if (response.code() == 200){
                             if (response.body().getData().getDeliveryRows().size() != 0)
-                                recyclerView.setAdapter(new AdapterForDelegate(response.body().getData().getDeliveryRows(),getContext()));
+                                recyclerView.setAdapter(new AdapterForDelegate(response.body().getData().getDeliveryRows(),getContext(),recyclerView));
                             else
                                 Toast.makeText(getActivity(), "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
                         } else {

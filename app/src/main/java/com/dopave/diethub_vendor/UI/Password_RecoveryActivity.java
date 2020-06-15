@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor;
+package com.dopave.diethub_vendor.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.ResetPassword.ResetPassword;
-import com.dopave.diethub_vendor.Models.SignIn.SignIn;
+import com.dopave.diethub_vendor.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;

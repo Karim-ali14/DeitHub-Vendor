@@ -9,22 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewPassword_Activity"></activity>
-        <activity android:name=".Enter_CodeActivity" />
-        <activity android:name=".Password_RecoveryActivity" />
-        <activity android:name=".AboutUs_Activity" />
-        <activity android:name=".Conditions_Activity" />
-        <activity android:name=".LanguageActivity" />
-        <activity android:name=".Notification_Activity" />
-        <activity android:name=".Add_DelegateActivity" />
-        <activity android:name=".Details_OrderActivity" />
-        <activity android:name=".Orders_Activity" />
+        <activity android:name=".UI.NewPassword_Activity"></activity>
+        <activity android:name=".UI.Enter_CodeActivity" />
+        <activity android:name=".UI.Password_RecoveryActivity" />
+        <activity android:name=".UI.AboutUs_Activity" />
+        <activity android:name=".UI.Conditions_Activity" />
+        <activity android:name=".UI.LanguageActivity" />
+        <activity android:name=".UI.Notification_Activity" />
+        <activity android:name=".UI.Add_DelegateActivity" />
+        <activity android:name=".UI.Details_OrderActivity" />
+        <activity android:name=".UI.Orders_Activity" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".UI.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Login_inActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".UI.Login.Login_inActivity" />
+        <activity android:name=".UI.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,8 +1,11 @@
-package com.dopave.diethub_vendor;
+package com.dopave.diethub_vendor.UI.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +18,14 @@ import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
+import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.HomeActivity;
+import com.dopave.diethub_vendor.UI.Password_RecoveryActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,8 +34,8 @@ import retrofit2.Response;
 public class Login_inActivity extends AppCompatActivity {
     EditText Phone,Password;
     ConstraintLayout Layout;
-
     Button EnterButton;
+    Login_ViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +44,7 @@ public class Login_inActivity extends AppCompatActivity {
     }
 
     private void init() {
+        viewModel = ViewModelProviders.of(this).get(Login_ViewModel.class);
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -44,9 +56,12 @@ public class Login_inActivity extends AppCompatActivity {
         EnterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(Login_inActivity.this,HomeActivity.class));
-                //finish();
-                SignInStatus();
+                if (Phone.getText().toString().isEmpty())
+                    Toast.makeText(Login_inActivity.this, "Enter Your phone", Toast.LENGTH_SHORT).show();
+                else if (Password.getText().toString().isEmpty())
+                    Toast.makeText(Login_inActivity.this, "Enter Your password", Toast.LENGTH_SHORT).show();
+                else
+                    SignIn();
             }
         });
         Layout.setOnClickListener(new View.OnClickListener() {
@@ -66,29 +81,50 @@ public class Login_inActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        startActivity(new Intent(this,Password_RecoveryActivity.class));
+        startActivity(new Intent(this, Password_RecoveryActivity.class));
     }
 
-    private boolean SignInStatus(){
-        Common.getAPIRequest().signIn("+966590123457","password-1")
+    private void SignIn(){
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.show();
+        Common.getAPIRequest().signIn(Phone.getText().toString(),Password.getText().toString())
                 .enqueue(new Callback<SignIn>() {
                     @Override
                     public void onResponse(Call<SignIn> call, Response<SignIn> response) {
+                        dialog.dismiss();
                         if (response.code() == 200){
-                            Log.i("TTTTTT",response.body().getData().getToken().getAccessToken() + response.body().getData().getProvider().getId());
-                            Toast.makeText(Login_inActivity.this, "The account created Successfully", Toast.LENGTH_SHORT).show();
-                            Common.currentPosition = response.body();
-                            startActivity(new Intent(Login_inActivity.this,HomeActivity.class));
-                        }else {
 
+                        }else {
+                            try {
+                                String message = new JSONObject(response.errorBody()
+                                        .string()).getString("message");
+                                Log.i("TTTTTTT",message);
+                                Toast.makeText(Login_inActivity.this,message, Toast.LENGTH_SHORT).show();
+                            } catch (IOException | JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<SignIn> call, Throwable t) {
+                        dialog.dismiss();
                         Log.i("TTTTT",t.getMessage());
                     }
                 });
-        return true;
+
+        viewModel.onSignIn(Phone.getText().toString(),
+                Password.getText().toString(),
+                this,dialog).observe(this, new Observer<SignIn>() {
+            @Override
+            public void onChanged(SignIn signIn) {
+                Log.i("TTTTTT",signIn.getData().getToken().getAccessToken() + signIn.getData().getProvider().getId());
+                Toast.makeText(Login_inActivity.this, signIn.getMessage(), Toast.LENGTH_SHORT).show();
+                Common.currentPosition = signIn;
+                startActivity(new Intent(Login_inActivity.this,
+                        HomeActivity.class).putExtra("type",
+                        "Login_inActivity"));
+            }
+        });
     }
 }

@@ -1,13 +1,13 @@
-package com.dopave.diethub_vendor;
+package com.dopave.diethub_vendor.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
+
+import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 
 import java.util.Locale;
 

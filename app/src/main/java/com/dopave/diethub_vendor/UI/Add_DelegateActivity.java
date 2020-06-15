@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor;
+package com.dopave.diethub_vendor.UI;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,6 +28,9 @@ import com.dopave.diethub_vendor.Models.Cities.Cities;
 import com.dopave.diethub_vendor.Models.Cities.CityRow;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProvider;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProviderRequest;
+import com.dopave.diethub_vendor.Models.DeliveryByProvider.UpdateDeliveryRequest;
+import com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery.DeliveryRow;
+import com.dopave.diethub_vendor.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +48,8 @@ public class Add_DelegateActivity extends AppCompatActivity {
     Spinner spinnerCity;
     CityRow cityRow;
     TextView CitySelected;
+    Button ButtonAddDelivery;
+    DeliveryRow row;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +57,13 @@ public class Add_DelegateActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        ButtonAddDelivery = findViewById(R.id.ButtonAddDelivery);
         CitySelected = findViewById(R.id.CitySelected);
         spinnerCity = findViewById(R.id.spinnerCity);
         Layout_AddDelegate = findViewById(R.id.Layout_AddDelegate);
         NameDelegate_Add = findViewById(R.id.NameDelegate_Add);
         EmailDelegate_Add = findViewById(R.id.EmailDelegate_Add);
+        PhoneNumber_Add = findViewById(R.id.PhoneNumber_Add);
         PhoneNumber_Add = findViewById(R.id.PhoneNumber_Add);
         getCities();
         Layout_AddDelegate.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +72,79 @@ public class Add_DelegateActivity extends AppCompatActivity {
                 closeKeyBoard();
             }
         });
+        ButtonAddDelivery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NameDelegate_Add.getText().toString().isEmpty())
+                    Toast.makeText(Add_DelegateActivity.this, "Enter delivery name", Toast.LENGTH_SHORT).show();
+                else if (EmailDelegate_Add.getText().toString().isEmpty())
+                    Toast.makeText(Add_DelegateActivity.this, "Enter delivery email", Toast.LENGTH_SHORT).show();
+                else if (PhoneNumber_Add.getText().toString().isEmpty())
+                    Toast.makeText(Add_DelegateActivity.this, "Enter delivery phone", Toast.LENGTH_SHORT).show();
+                else{
+                    if (getIntent().getExtras().getString("type").equals("update")){
+                        update();
+                    }else
+                        addDelivery();
+                }
+
+            }
+        });
+        if (getIntent().getExtras().getString("type").equals("update")){
+             row = getIntent().getExtras().getParcelable("data");
+            setDataToUpdate();
+        }
     }
+
+    private void setDataToUpdate() {
+        NameDelegate_Add.setText(row.getName());
+        EmailDelegate_Add.setText(row.getEmail());
+        PhoneNumber_Add.setText(row.getMobilePhone());
+        spinnerCity.setSelection(row.getId());
+    }
+
+    private void update() {
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.show();
+        Common.getAPIRequest().updateDeliveryByProvider("Bearer "+
+                        Common.currentPosition.getData().getToken().getAccessToken()
+                ,new UpdateDeliveryRequest(
+                        EmailDelegate_Add.getText().toString()
+                        ,PhoneNumber_Add.getText().toString()
+                        ,NameDelegate_Add.getText().toString()
+                        ,false,true,"active",cityRow.getId()
+                ),
+                Common.currentPosition.getData().getProvider().getId()+""
+                ,row.getId()+"").enqueue(new Callback<DeliveryByProvider>() {
+            @Override
+            public void onResponse(Call<DeliveryByProvider> call, Response<DeliveryByProvider> response) {
+                if (response.code() == 200){
+                    dialog.dismiss();
+                    Toast.makeText(Add_DelegateActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Add_DelegateActivity.this,
+                            HomeActivity.class).putExtra("type",
+                            "Add_DelegateActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                }else {
+                    dialog.dismiss();
+                    try {
+                        String message = new JSONObject(response.errorBody()
+                                .string()).getString("message");
+                        Log.i("TTTTTTT",message);
+                        Toast.makeText(Add_DelegateActivity.this.getApplicationContext(),message, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeliveryByProvider> call, Throwable t) {
+                dialog.dismiss();
+            }
+        });
+    }
+
     private void closeKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getWindow().getDecorView().getRootView().getWindowToken(), 0);
@@ -73,14 +154,7 @@ public class Add_DelegateActivity extends AppCompatActivity {
     }
 
     public void BackButton(View view) {
-        if (NameDelegate_Add.getText().toString().isEmpty())
-            Toast.makeText(this, "Enter delivery name", Toast.LENGTH_SHORT).show();
-        else if (EmailDelegate_Add.getText().toString().isEmpty())
-            Toast.makeText(this, "Enter delivery email", Toast.LENGTH_SHORT).show();
-        else if (PhoneNumber_Add.getText().toString().isEmpty())
-            Toast.makeText(this, "Enter delivery phone", Toast.LENGTH_SHORT).show();
-        else
-            addDelivery();
+        finish();
     }
 
     private void addDelivery(){
@@ -98,9 +172,15 @@ public class Add_DelegateActivity extends AppCompatActivity {
                         dialog.dismiss();
                         if (response.code() == 201 ){
                             Toast.makeText(Add_DelegateActivity.this, "success", Toast.LENGTH_SHORT).show();
-                            finish();
+                            startActivity(new Intent(Add_DelegateActivity.this,
+                                    HomeActivity.class).putExtra("type",
+                                    "Add_DelegateActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         } else {
                             try {
+                                String message = new JSONObject(response.errorBody()
+                                        .string()).getString("message");
+                                Toast.makeText(Add_DelegateActivity.this, message, Toast.LENGTH_SHORT).show();
                                 Log.i("TTTTTTT",new JSONObject(response.errorBody()
                                         .string()).getString("message")+response.code()+"dfsfsdfs");
                             } catch (IOException | JSONException e) {

@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor;
+package com.dopave.diethub_vendor.UI;
 
 import android.os.Bundle;
 
@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.dopave.diethub_vendor.Adapter.AdapterForResImage;
+import com.dopave.diethub_vendor.R;
 
 import java.util.ArrayList;
 import java.util.List;

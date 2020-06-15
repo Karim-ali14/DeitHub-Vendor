@@ -1,10 +1,13 @@
 
 package com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DeliveryRow {
+public class DeliveryRow implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -27,6 +30,53 @@ public class DeliveryRow {
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
+
+    protected DeliveryRow(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        name = in.readString();
+        mobilePhone = in.readString();
+        email = in.readString();
+        status = in.readString();
+        createdAt = in.readString();
+        updatedAt = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+        dest.writeString(name);
+        dest.writeString(mobilePhone);
+        dest.writeString(email);
+        dest.writeString(status);
+        dest.writeString(createdAt);
+        dest.writeString(updatedAt);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<DeliveryRow> CREATOR = new Creator<DeliveryRow>() {
+        @Override
+        public DeliveryRow createFromParcel(Parcel in) {
+            return new DeliveryRow(in);
+        }
+
+        @Override
+        public DeliveryRow[] newArray(int size) {
+            return new DeliveryRow[size];
+        }
+    };
 
     public Integer getId() {
         return id;
