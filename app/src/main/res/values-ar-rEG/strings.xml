@@ -90,4 +90,16 @@
     <string name="add_photo">اضافة صورة</string>
     <string name="Save_edits">حفظ التعديل</string>
     <string name="Add_time">اضف وقت</string>
+
+    <string name="delegate_name">اسم المندوب</string>
+    <string name="I_Agree_On">أنا أوافق على كل</string>
+    <string name="Create_Account">إنشاء حساب</string>
+    <string name="Terms_Conditions">الشروط والأحكام</string>
+    <string name="Confirm_account">تاكيد إنشاء الحساب</string>
+    <string name="Vehicle_ID">رقم المركبة</string>
+    <string name="Vehicle_photos">صور المركبة</string>
+    <string name="Car_license">رخصة القياده</string>
+    <string name="driving_license">رخصة القياده</string>
+    <string name="add_delivery">اضافه مندوب</string>
+
 </resources>

@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".UI.Login.Login_inActivity"
     android:fillViewport="true"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Layout"

@@ -16,7 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dopave.diethub_vendor.UI.Add_DelegateActivity;
+import com.dopave.diethub_vendor.UI.Add_Delegate.Add_DelegateActivity;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProvider;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery.DeliveryRow;

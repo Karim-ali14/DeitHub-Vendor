@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Add_DelegateActivity"
+    tools:context=".UI.Add_Delegate.Add_DelegateActivity"
     android:background="@color/background"
     android:fillViewport="true"
     >

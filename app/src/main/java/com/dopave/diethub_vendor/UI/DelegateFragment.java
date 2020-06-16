@@ -18,6 +18,7 @@ import com.dopave.diethub_vendor.Adapter.AdapterForDelegate;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery.GetDeliveryByProviderId;
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.Add_Delegate.Add_DelegateActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +53,7 @@ public class DelegateFragment extends Fragment {
         AddDelegateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),Add_DelegateActivity.class).putExtra("type","normal"));
+                startActivity(new Intent(getActivity(), Add_DelegateActivity.class).putExtra("type","normal"));
             }
         });
         getAllDelivery();

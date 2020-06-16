@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -76,8 +77,11 @@ public class Login_inActivity extends AppCompatActivity {
     private void closeKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getWindow().getDecorView().getRootView().getWindowToken(), 0);
+        int dfValue = Layout.getDescendantFocusability();
+        Layout.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         Phone.clearFocus();
         Password.clearFocus();
+        Layout.setDescendantFocusability(dfValue);
     }
 
     public void onClick(View view) {
@@ -87,31 +91,6 @@ public class Login_inActivity extends AppCompatActivity {
     private void SignIn(){
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.show();
-        Common.getAPIRequest().signIn(Phone.getText().toString(),Password.getText().toString())
-                .enqueue(new Callback<SignIn>() {
-                    @Override
-                    public void onResponse(Call<SignIn> call, Response<SignIn> response) {
-                        dialog.dismiss();
-                        if (response.code() == 200){
-
-                        }else {
-                            try {
-                                String message = new JSONObject(response.errorBody()
-                                        .string()).getString("message");
-                                Log.i("TTTTTTT",message);
-                                Toast.makeText(Login_inActivity.this,message, Toast.LENGTH_SHORT).show();
-                            } catch (IOException | JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<SignIn> call, Throwable t) {
-                        dialog.dismiss();
-                        Log.i("TTTTT",t.getMessage());
-                    }
-                });
 
         viewModel.onSignIn(Phone.getText().toString(),
                 Password.getText().toString(),
