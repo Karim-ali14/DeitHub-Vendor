@@ -33,7 +33,7 @@ public class Add_DelegateRepository {
 
     public MutableLiveData<Cities> getCities(final Context context){
         final MutableLiveData<Cities> mutableLiveData = new MutableLiveData<>();
-        Common.getAPIRequest().getAllCties().enqueue(new Callback<Cities>() {
+        Common.getAPIRequest().getAllCities().enqueue(new Callback<Cities>() {
             @Override
             public void onResponse(Call<Cities> call, Response<Cities> response) {
                 if (response.code() == 200){

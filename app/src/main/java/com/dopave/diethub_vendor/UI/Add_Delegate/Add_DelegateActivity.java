@@ -107,43 +107,43 @@ public class Add_DelegateActivity extends AppCompatActivity {
     private void update() {
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.show();
-        Common.getAPIRequest().updateDeliveryByProvider("Bearer "+
-                        Common.currentPosition.getData().getToken().getAccessToken()
-                ,new UpdateDeliveryRequest(
-                        EmailDelegate_Add.getText().toString()
-                        ,PhoneNumber_Add.getText().toString()
-                        ,NameDelegate_Add.getText().toString()
-                        ,false,true,"active",cityRow.getId()
-                ),
-                Common.currentPosition.getData().getProvider().getId()+""
-                ,row.getId()+"").enqueue(new Callback<DeliveryByProvider>() {
-            @Override
-            public void onResponse(Call<DeliveryByProvider> call, Response<DeliveryByProvider> response) {
-                if (response.code() == 200){
-                    dialog.dismiss();
-                    Toast.makeText(Add_DelegateActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Add_DelegateActivity.this,
-                            HomeActivity.class).putExtra("type",
-                            "Add_DelegateActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                }else {
-                    dialog.dismiss();
-                    try {
-                        String message = new JSONObject(response.errorBody()
-                                .string()).getString("message");
-                        Log.i("TTTTTTT",message);
-                        Toast.makeText(Add_DelegateActivity.this.getApplicationContext(),message, Toast.LENGTH_SHORT).show();
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<DeliveryByProvider> call, Throwable t) {
-                dialog.dismiss();
-            }
-        });
+//        Common.getAPIRequest().updateDeliveryByProvider("Bearer "+
+//                        Common.currentPosition.getData().getToken().getAccessToken()
+//                ,new UpdateDeliveryRequest(
+//                        EmailDelegate_Add.getText().toString()
+//                        ,PhoneNumber_Add.getText().toString()
+//                        ,NameDelegate_Add.getText().toString()
+//                        ,false,true,"active",cityRow.getId()
+//                ),
+//                Common.currentPosition.getData().getProvider().getId()+""
+//                ,row.getId()+"").enqueue(new Callback<DeliveryByProvider>() {
+//            @Override
+//            public void onResponse(Call<DeliveryByProvider> call, Response<DeliveryByProvider> response) {
+//                if (response.code() == 200){
+//                    dialog.dismiss();
+//                    Toast.makeText(Add_DelegateActivity.this, "success", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(Add_DelegateActivity.this,
+//                            HomeActivity.class).putExtra("type",
+//                            "Add_DelegateActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+//                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                }else {
+//                    dialog.dismiss();
+//                    try {
+//                        String message = new JSONObject(response.errorBody()
+//                                .string()).getString("message");
+//                        Log.i("TTTTTTT",message);
+//                        Toast.makeText(Add_DelegateActivity.this.getApplicationContext(),message, Toast.LENGTH_SHORT).show();
+//                    } catch (IOException | JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<DeliveryByProvider> call, Throwable t) {
+//                dialog.dismiss();
+//            }
+//        });
     }
 
     private void closeKeyBoard() {
@@ -161,71 +161,71 @@ public class Add_DelegateActivity extends AppCompatActivity {
     private void addDelivery(){
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.show();
-        Common.getAPIRequest().createDeliveryByProvider("Bearer "+
-                        Common.currentPosition.getData().getToken().getAccessToken(),
-                new DeliveryByProviderRequest(PhoneNumber_Add.getText().toString(),"gggggghgggg",
-                        NameDelegate_Add.getText().toString(),EmailDelegate_Add.getText().toString()
-                        ,cityRow.getId()),
-                Common.currentPosition.getData().getProvider().getId()+"")
-                .enqueue(new Callback<DeliveryByProvider>() {
-                    @Override
-                    public void onResponse(Call<DeliveryByProvider> call, Response<DeliveryByProvider> response) {
-                        dialog.dismiss();
-                        if (response.code() == 201 ){
-                            Toast.makeText(Add_DelegateActivity.this, "success", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Add_DelegateActivity.this,
-                                    HomeActivity.class).putExtra("type",
-                                    "Add_DelegateActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                        } else {
-                            try {
-                                String message = new JSONObject(response.errorBody()
-                                        .string()).getString("message");
-                                Toast.makeText(Add_DelegateActivity.this, message, Toast.LENGTH_SHORT).show();
-                                Log.i("TTTTTTT",new JSONObject(response.errorBody()
-                                        .string()).getString("message")+response.code()+"dfsfsdfs");
-                            } catch (IOException | JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<DeliveryByProvider> call, Throwable t) {
-                        dialog.dismiss();
-                    }
-                });
+//        Common.getAPIRequest().createDeliveryByProvider("Bearer "+
+//                        Common.currentPosition.getData().getToken().getAccessToken(),
+//                new DeliveryByProviderRequest(PhoneNumber_Add.getText().toString(),"gggggghgggg",
+//                        NameDelegate_Add.getText().toString(),EmailDelegate_Add.getText().toString()
+//                        ,cityRow.getId()),
+//                Common.currentPosition.getData().getProvider().getId()+"")
+//                .enqueue(new Callback<DeliveryByProvider>() {
+//                    @Override
+//                    public void onResponse(Call<DeliveryByProvider> call, Response<DeliveryByProvider> response) {
+//                        dialog.dismiss();
+//                        if (response.code() == 201 ){
+//                            Toast.makeText(Add_DelegateActivity.this, "success", Toast.LENGTH_SHORT).show();
+//                            startActivity(new Intent(Add_DelegateActivity.this,
+//                                    HomeActivity.class).putExtra("type",
+//                                    "Add_DelegateActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+//                                    Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                        } else {
+//                            try {
+//                                String message = new JSONObject(response.errorBody()
+//                                        .string()).getString("message");
+//                                Toast.makeText(Add_DelegateActivity.this, message, Toast.LENGTH_SHORT).show();
+//                                Log.i("TTTTTTT",new JSONObject(response.errorBody()
+//                                        .string()).getString("message")+response.code()+"dfsfsdfs");
+//                            } catch (IOException | JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<DeliveryByProvider> call, Throwable t) {
+//                        dialog.dismiss();
+//                    }
+//                });
     }
 
     private void getCities (){
-        Common.getAPIRequest().getAllCties().enqueue(new Callback<Cities>() {
-            @Override
-            public void onResponse(Call<Cities> call, Response<Cities> response) {
-                if (response.code() == 200){
-                    AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(Add_DelegateActivity.this,
-                            R.layout.city_item,response.body().getData().getCityRows());
-                    spinnerCity.setAdapter(arrayAdapter);
-                    spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            cityRow = ((CityRow) parent.getItemAtPosition(position));
-                            CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getName());
-                            CitySelected.setTextColor(getResources().getColor(R.color.black));
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Cities> call, Throwable t) {
-
-            }
-        });
+//        Common.getAPIRequest().getAllCties().enqueue(new Callback<Cities>() {
+//            @Override
+//            public void onResponse(Call<Cities> call, Response<Cities> response) {
+//                if (response.code() == 200){
+//                    AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(Add_DelegateActivity.this,
+//                            R.layout.city_item,response.body().getData().getCityRows());
+//                    spinnerCity.setAdapter(arrayAdapter);
+//                    spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                        @Override
+//                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                            cityRow = ((CityRow) parent.getItemAtPosition(position));
+//                            CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getName());
+//                            CitySelected.setTextColor(getResources().getColor(R.color.black));
+//                        }
+//
+//                        @Override
+//                        public void onNothingSelected(AdapterView<?> parent) {
+//
+//                        }
+//                    });
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Cities> call, Throwable t) {
+//
+//            }
+//        });
 
     }
 

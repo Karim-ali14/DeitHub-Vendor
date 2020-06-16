@@ -97,7 +97,7 @@ public class Login_inActivity extends AppCompatActivity {
                 this,dialog).observe(this, new Observer<SignIn>() {
             @Override
             public void onChanged(SignIn signIn) {
-                Log.i("TTTTTT",signIn.getData().getToken().getAccessToken() + signIn.getData().getProvider().getId());
+                Log.i("TTTTTT",signIn.getData().getToken().getAccessToken() +"   "+ signIn.getData().getProvider().getId());
                 Toast.makeText(Login_inActivity.this, signIn.getMessage(), Toast.LENGTH_SHORT).show();
                 Common.currentPosition = signIn;
                 startActivity(new Intent(Login_inActivity.this,

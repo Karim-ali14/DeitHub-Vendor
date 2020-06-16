@@ -1,7 +1,8 @@
 package com.dopave.diethub_vendor.API;
 
 import com.dopave.diethub_vendor.Models.Cities.Cities;
-import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProvider;
+import com.dopave.diethub_vendor.Models.CreateDeliveryRequest.Response.DeliveryByProviderResponse;
+import com.dopave.diethub_vendor.Models.CreateDeliveryRequest.Request.DeliveryByProvider;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProviderRequest;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.UpdateDeliveryRequest;
 import com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery.GetDeliveryByProviderId;
@@ -41,9 +42,9 @@ public interface APIRequest {
 
     //Todo create Delivery by provider id
     @POST("provider/{id}/deliveryrep")
-    Call<DeliveryByProvider> createDeliveryByProvider (@Header("Authorization") String Auth,
-                                                       @Body DeliveryByProviderRequest requestBody,
-                                                       @Path("id") String id);
+    Call<DeliveryByProviderResponse> createDeliveryByProvider (@Header("Authorization") String Auth,
+                                                               @Body DeliveryByProvider requestBody,
+                                                               @Path("id") String id);
 
     //Todo update Delivery by provider id
     @PUT("provider/{id}/deliveryrep/{deliveryId}")
@@ -65,5 +66,5 @@ public interface APIRequest {
 
     //Todo get All Cities
     @GET("city")
-    Call<Cities> getAllCties();
+    Call<Cities> getAllCities();
 }

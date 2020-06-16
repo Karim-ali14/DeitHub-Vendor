@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor;
+package com.dopave.diethub_vendor.UI.CreateDelivery;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,13 +32,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Cities.Cities;
 import com.dopave.diethub_vendor.Models.Cities.CityRow;
+import com.dopave.diethub_vendor.Models.CreateDeliveryRequest.Request.DeliveryByProvider;
+import com.dopave.diethub_vendor.Models.CreateDeliveryRequest.Request.Image;
+import com.dopave.diethub_vendor.Models.CreateDeliveryRequest.Response.DeliveryByProviderResponse;
+import com.dopave.diethub_vendor.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -56,7 +60,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     LinearLayout chickBoxLayout;
     ImageView mark,openGallery;
     boolean firstSelect = false;
-    Registration_ViewModel viewModel;
+    CreateDeliveryViewModel viewModel;
     CircleImageView profile_image;
     String DeliveryImage = null;
     @Override
@@ -68,7 +72,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
 
 
     private void init() {
-        viewModel = ViewModelProviders.of(this).get(Registration_ViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(CreateDeliveryViewModel.class);
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -125,7 +129,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         viewModel.getCities(this).observe(this, new Observer<Cities>() {
             @Override
             public void onChanged(Cities cities) {
-                AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(Registration_Activity.this,
+                AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(CreateDeliveryActivity.this,
                         R.layout.city_item,cities.getData().getCityRows());
 
                 spinnerCity.setAdapter(arrayAdapter);
@@ -178,10 +182,26 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             Toast.makeText(this, "اختر المدينه", Toast.LENGTH_SHORT).show();
         else if (DeliveryImage == null)
             Toast.makeText(this, "اختر الصوره الشخصيه", Toast.LENGTH_SHORT).show();
-        else
-            sendCode("+20"+Phone.getText().toString());
+        else {
+            dialog.show();
+           createDelivery();
+        }
     }
 
+    private void createDelivery(){
+        viewModel.createDelivery("Bearer " +
+                        Common.currentPosition.getData().getToken().getAccessToken(),
+                new DeliveryByProvider(Phone.getText().toString(), Password.getText().toString(),
+                        UserName.getText().toString(), Email.getText().toString(),
+                        new Image(DeliveryImage), cityRow.getId()),
+                Common.currentPosition.getData().getProvider().getId() + "",
+                this, dialog).observe(this, new Observer<DeliveryByProviderResponse>() {
+            @Override
+            public void onChanged(DeliveryByProviderResponse deliveryByProviderResponse) {
+                Log.i("FFFFFFF", deliveryByProviderResponse.getData().getDelivery().getId() + "");
+            }
+        });
+    }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_IMAGE) {

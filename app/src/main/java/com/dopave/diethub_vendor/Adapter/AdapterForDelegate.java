@@ -102,63 +102,63 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
     private void delete(DeliveryRow row){
         final ProgressDialog dialog = new ProgressDialog(context);
         dialog.show();
-        Common.getAPIRequest().deleteDeliveryByProvider("Bearer "+
-                        Common.currentPosition.getData().getToken().getAccessToken(),
-                Common.currentPosition.getData().getProvider().getId()+""
-                ,row.getId()+"").enqueue(new Callback<DeliveryByProvider>() {
-            @Override
-            public void onResponse(Call<DeliveryByProvider> call, Response<DeliveryByProvider> response) {
-                if (response.code() == 200){
-                    Toast.makeText(context, "تم المسح المندوب بنجاح", Toast.LENGTH_SHORT).show();
-                    Common.getAPIRequest().getDeliveryByProvider("Bearer "+
-                                    Common.currentPosition.getData().getToken().getAccessToken(),
-                            Common.currentPosition.getData().getProvider().getId()+"")
-                            .enqueue(new Callback<GetDeliveryByProviderId>() {
-                                @Override
-                                public void onResponse(Call<GetDeliveryByProviderId> call, Response<GetDeliveryByProviderId> response) {
-                                    if (response.code() == 200){
-                                        dialog.dismiss();
-                                        if (response.body().getData().getDeliveryRows().size() != 0) {
-                                            recyclerView.setAdapter(new AdapterForDelegate(response.body().getData().getDeliveryRows(), context, recyclerView));
-                                        }
-                                        else {
-                                            recyclerView.setAdapter(new AdapterForDelegate(response.body().getData().getDeliveryRows(), context, recyclerView));
-                                            Toast.makeText(context, "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } else {
-                                        dialog.dismiss();
-                                        try {
-                                            Log.i("TTTTTTT",new JSONObject(response.errorBody()
-                                                    .string()).getString("message")+response.code());
-                                        } catch (IOException | JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<GetDeliveryByProviderId> call, Throwable t) {
-                                    dialog.dismiss();
-                                }
-                            });
-                }else {
-                    dialog.dismiss();
-                    try {
-                        Log.i("TTTTTTT",new JSONObject(response.errorBody()
-                                .string()).getString("message")+response.code()+"dfsfsdfs");
-                        Toast.makeText(context,new JSONObject(response.errorBody()
-                                .string()).getString("message"), Toast.LENGTH_SHORT).show();
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<DeliveryByProvider> call, Throwable t) {
-                dialog.dismiss();
-            }
-        });
+//        Common.getAPIRequest().deleteDeliveryByProvider("Bearer "+
+//                        Common.currentPosition.getData().getToken().getAccessToken(),
+//                Common.currentPosition.getData().getProvider().getId()+""
+//                ,row.getId()+"").enqueue(new Callback<DeliveryByProvider>() {
+//            @Override
+//            public void onResponse(Call<DeliveryByProvider> call, Response<DeliveryByProvider> response) {
+//                if (response.code() == 200){
+//                    Toast.makeText(context, "تم المسح المندوب بنجاح", Toast.LENGTH_SHORT).show();
+//                    Common.getAPIRequest().getDeliveryByProvider("Bearer "+
+//                                    Common.currentPosition.getData().getToken().getAccessToken(),
+//                            Common.currentPosition.getData().getProvider().getId()+"")
+//                            .enqueue(new Callback<GetDeliveryByProviderId>() {
+//                                @Override
+//                                public void onResponse(Call<GetDeliveryByProviderId> call, Response<GetDeliveryByProviderId> response) {
+//                                    if (response.code() == 200){
+//                                        dialog.dismiss();
+//                                        if (response.body().getData().getDeliveryRows().size() != 0) {
+//                                            recyclerView.setAdapter(new AdapterForDelegate(response.body().getData().getDeliveryRows(), context, recyclerView));
+//                                        }
+//                                        else {
+//                                            recyclerView.setAdapter(new AdapterForDelegate(response.body().getData().getDeliveryRows(), context, recyclerView));
+//                                            Toast.makeText(context, "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    } else {
+//                                        dialog.dismiss();
+//                                        try {
+//                                            Log.i("TTTTTTT",new JSONObject(response.errorBody()
+//                                                    .string()).getString("message")+response.code());
+//                                        } catch (IOException | JSONException e) {
+//                                            e.printStackTrace();
+//                                        }
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<GetDeliveryByProviderId> call, Throwable t) {
+//                                    dialog.dismiss();
+//                                }
+//                            });
+//                }else {
+//                    dialog.dismiss();
+//                    try {
+//                        Log.i("TTTTTTT",new JSONObject(response.errorBody()
+//                                .string()).getString("message")+response.code()+"dfsfsdfs");
+//                        Toast.makeText(context,new JSONObject(response.errorBody()
+//                                .string()).getString("message"), Toast.LENGTH_SHORT).show();
+//                    } catch (IOException | JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<DeliveryByProvider> call, Throwable t) {
+//                dialog.dismiss();
+//            }
+//        });
     }
 
     private void update(DeliveryRow row){
