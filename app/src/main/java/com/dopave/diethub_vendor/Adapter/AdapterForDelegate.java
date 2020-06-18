@@ -15,27 +15,40 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.GetDeliveries.DeliveryRow;
+import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateDelivery.CreateDeliveryActivity;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
+import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryViewModel;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.ViewHolderForDelegate> {
     List<DeliveryRow> list;
     Context context;
     RecyclerView recyclerView;
-    public AdapterForDelegate(List<DeliveryRow> list, Context context,RecyclerView recyclerView) {
+    DeliveryViewModel viewModel;
+    public AdapterForDelegate(DeliveryViewModel viewModel,List<DeliveryRow> list, Context context, RecyclerView recyclerView) {
         this.list = list;
         this.context = context;
         this.recyclerView = recyclerView;
+        this.viewModel = viewModel;
     }
     @NonNull
     @Override
@@ -114,62 +127,45 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
     private void delete(DeliveryRow row){
         final ProgressDialog dialog = new ProgressDialog(context);
         dialog.show();
-//        Common.getAPIRequest().deleteDeliveryByProvider("Bearer "+
-//                        Common.currentPosition.getData().getToken().getAccessToken(),
-//                Common.currentPosition.getData().getProvider().getId()+""
-//                ,row.getId()+"").enqueue(new Callback<DeliveryByProvider>() {
-//            @Override
-//            public void onResponse(Call<DeliveryByProvider> call, Response<DeliveryByProvider> response) {
-//                if (response.code() == 200){
-//                    Toast.makeText(context, "تم المسح المندوب بنجاح", Toast.LENGTH_SHORT).show();
-//                    Common.getAPIRequest().getDeliveryByProvider("Bearer "+
-//                                    Common.currentPosition.getData().getToken().getAccessToken(),
-//                            Common.currentPosition.getData().getProvider().getId()+"")
-//                            .enqueue(new Callback<GetDeliveryByProviderId>() {
-//                                @Override
-//                                public void onResponse(Call<GetDeliveryByProviderId> call, Response<GetDeliveryByProviderId> response) {
-//                                    if (response.code() == 200){
-//                                        dialog.dismiss();
-//                                        if (response.body().getData().getDeliveryRows().size() != 0) {
-//                                            recyclerView.setAdapter(new AdapterForDelegate(response.body().getData().getDeliveryRows(), context, recyclerView));
-//                                        }
-//                                        else {
-//                                            recyclerView.setAdapter(new AdapterForDelegate(response.body().getData().getDeliveryRows(), context, recyclerView));
-//                                            Toast.makeText(context, "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
-//                                        }
-//                                    } else {
-//                                        dialog.dismiss();
-//                                        try {
-//                                            Log.i("TTTTTTT",new JSONObject(response.errorBody()
-//                                                    .string()).getString("message")+response.code());
-//                                        } catch (IOException | JSONException e) {
-//                                            e.printStackTrace();
-//                                        }
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onFailure(Call<GetDeliveryByProviderId> call, Throwable t) {
-//                                    dialog.dismiss();
-//                                }
-//                            });
-//                }else {
-//                    dialog.dismiss();
-//                    try {
-//                        Log.i("TTTTTTT",new JSONObject(response.errorBody()
-//                                .string()).getString("message")+response.code()+"dfsfsdfs");
-//                        Toast.makeText(context,new JSONObject(response.errorBody()
-//                                .string()).getString("message"), Toast.LENGTH_SHORT).show();
-//                    } catch (IOException | JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<DeliveryByProvider> call, Throwable t) {
-//                dialog.dismiss();
-//            }
-//        });
+        Common.getAPIRequest().deleteDeliveryByProvider("Bearer "+
+                        Common.currentPosition.getData().getToken().getAccessToken(),
+                Common.currentPosition.getData().getProvider().getId()+""
+                ,row.getId()+"").enqueue(new Callback<GetDeliveriesData>() {
+            @Override
+            public void onResponse(Call<GetDeliveriesData> call, Response<GetDeliveriesData> response) {
+                if (response.code() == 200){
+                    Toast.makeText(context, "تم المسح المندوب بنجاح", Toast.LENGTH_SHORT).show();
+                    viewModel.getAllDeliveries(dialog,context).observe((LifecycleOwner) context,
+                            new Observer<GetDeliveriesData>() {
+                                @Override
+                                public void onChanged(GetDeliveriesData getDeliveriesData) {
+                                    dialog.dismiss();
+                                    if (getDeliveriesData.getData().getDeliveryRows().size() != 0) {
+                                        recyclerView.setAdapter(new AdapterForDelegate(viewModel,getDeliveriesData.getData().getDeliveryRows(), context, recyclerView));
+                                    }
+                                    else {
+                                        recyclerView.setAdapter(new AdapterForDelegate(viewModel,getDeliveriesData.getData().getDeliveryRows(), context, recyclerView));
+                                        Toast.makeText(context, "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }else {
+                    dialog.dismiss();
+                    try {
+                        Log.i("TTTTTTT",new JSONObject(response.errorBody()
+                                .string()).getString("message")+response.code()+"dfsfsdfs");
+                        Toast.makeText(context,new JSONObject(response.errorBody()
+                                .string()).getString("message"), Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetDeliveriesData> call, Throwable t) {
+                dialog.dismiss();
+            }
+        });
     }
 }

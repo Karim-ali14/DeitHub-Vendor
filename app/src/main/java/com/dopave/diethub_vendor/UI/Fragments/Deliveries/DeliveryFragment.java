@@ -75,7 +75,7 @@ public class DeliveryFragment extends Fragment {
             @Override
             public void onChanged(GetDeliveriesData getDeliveriesData) {
                 if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
-                    recyclerView.setAdapter(new AdapterForDelegate(getDeliveriesData.getData().getDeliveryRows(),getContext(),recyclerView));
+                    recyclerView.setAdapter(new AdapterForDelegate(viewModel,getDeliveriesData.getData().getDeliveryRows(),getContext(),recyclerView));
                 else
                     Toast.makeText(getActivity(), "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
             }
