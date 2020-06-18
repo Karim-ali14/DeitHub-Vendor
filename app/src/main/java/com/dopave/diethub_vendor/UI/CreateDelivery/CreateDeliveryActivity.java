@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -35,16 +36,28 @@ import android.widget.Toast;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Cities.Cities;
 import com.dopave.diethub_vendor.Models.Cities.CityRow;
-import com.dopave.diethub_vendor.Models.CreateDeliveryRequest.Request.DeliveryByProvider;
-import com.dopave.diethub_vendor.Models.CreateDeliveryRequest.Request.Image;
-import com.dopave.diethub_vendor.Models.CreateDeliveryRequest.Response.DeliveryByProviderResponse;
+import com.dopave.diethub_vendor.Models.CreateDelivery.Request.CreateDeliveryRequest;
+import com.dopave.diethub_vendor.Models.CreateDelivery.Request.Image;
+import com.dopave.diethub_vendor.Models.CreateDelivery.Response.CreateDeliveryResponse;
+import com.dopave.diethub_vendor.Models.GetDeliveries.DeliveryRow;
+import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
+import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequest;
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
+import com.dopave.diethub_vendor.UI.HomeActivity;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreateDeliveryActivity extends AppCompatActivity {
     private static final int SELECT_IMAGE = 1;
@@ -53,16 +66,15 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     ImageView chickBox;
     boolean isChecked = false;
     ProgressDialog dialog;
-    String mVerificationId,CodeOfVerify;
     Spinner spinnerCity;
     TextView CitySelected;
     CityRow cityRow;
     LinearLayout chickBoxLayout;
     ImageView mark,openGallery;
-    boolean firstSelect = false;
     CreateDeliveryViewModel viewModel;
     CircleImageView profile_image;
     String DeliveryImage = null;
+    DeliveryRow delivery;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +135,68 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         editTextChangeStatus();
 
         getCities();
+        if (getIntent().getExtras().getString("type").equals("update")) {
+            Password.setVisibility(View.GONE);
+            RePassword.setVisibility(View.GONE);
+            delivery = getIntent().getExtras().getParcelable("delivery");
+            if (delivery != null)
+                setData();
+        }
+    }
+
+    private void setData() {
+        UserName.setText(delivery.getName());
+        Phone.setText(delivery.getMobilePhone());
+        Email.setText(delivery.getEmail());
+        spinnerCity.setSelection(delivery.getCityId());
+        if (delivery.getImage()!=null){
+            String path = Common.BaseUrl + "images/" + delivery.getImage().getFor() + "/" + Uri.encode(delivery.getImage().getName());
+            Log.i("TTTTTTT",path);
+            Picasso.with(this).load(path).into(profile_image);
+        }
+    }
+
+    private void update(){
+        String ImageUrl = "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NCIgaGVpZ2h0PSI0Ni4yNSIgdmlld0JveD0iMCAwIDc0IDQ2LjI1Ij48ZGVmcz48c3R5bGU+LmF7ZmlsbDojZmZmO308L3N0eWxlPjwvZGVmcz48cGF0aCBjbGFzcz0iYSIgZD0iTTY5LjY2MywxNS45SDY4LjIxOHYtNi41QTUuNzc5LDUuNzc5LDAsMCwwLDU5LjQsNC40NzksNS43ODksNS43ODksMCwwLDAsNTMuNzY1LDBoMGE1Ljc4OCw1Ljc4OCwwLDAsMC01Ljc4MSw1Ljc4MVYxNS45SDI2LjAxN1Y1Ljc4MUE1Ljc4Miw1Ljc4MiwwLDAsMCwxNC42LDQuNDc5LDUuNzc5LDUuNzc5LDAsMCwwLDUuNzgxLDkuMzk1djYuNUg0LjMzNUE0LjM0MSw0LjM0MSwwLDAsMCwwLDIwLjIzNHY1Ljc4MWE0LjM0MSw0LjM0MSwwLDAsMCw0LjMzNiw0LjMzNkg1Ljc4MXY2LjVBNS43NzksNS43NzksMCwwLDAsMTQuNiw0MS43NzFhNS43ODksNS43ODksMCwwLDAsNS42MzIsNC40NzloMGE1Ljc4OCw1Ljc4OCwwLDAsMCw1Ljc4MS01Ljc4MVYzMC4zNTJINDcuOTgyVjQwLjQ2OWE1Ljc4Miw1Ljc4MiwwLDAsMCwxMS40MTUsMS4zLDUuNzc5LDUuNzc5LDAsMCwwLDguODIxLTQuOTE2di02LjVoMS40NDVBNC4zNDEsNC4zNDEsMCwwLDAsNzQsMjYuMDE2VjIwLjIzNEE0LjM0MSw0LjM0MSwwLDAsMCw2OS42NjMsMTUuOVpNNS43ODEsMjcuNDYxSDQuMzM1QTEuNDQ3LDEuNDQ3LDAsMCwxLDIuODksMjYuMDE2VjIwLjIzNGExLjQ0NywxLjQ0NywwLDAsMSwxLjQ0NS0xLjQ0NUg1Ljc4MVptOC42NzIsOS4zOTVhMi44OTEsMi44OTEsMCwwLDEtNS43ODEsMFY5LjM5NGEyLjg5MSwyLjg5MSwwLDAsMSw1Ljc4MSwwWm04LjY3NCwzLjYxM2EyLjg5NCwyLjg5NCwwLDAsMS0yLjg5MSwyLjg5MWgwYTIuODk0LDIuODk0LDAsMCwxLTIuODkxLTIuODkxVjUuNzgxYTIuODkxLDIuODkxLDAsMCwxLDUuNzgzLDBaTTQ3Ljk3NCwyMS42OEgzNy44NjdhMS40NDUsMS40NDUsMCwwLDAsMCwyLjg5MUg0Ny45NzR2Mi44OTFIMjYuMDA5VjE4Ljc4OUg0Ny45NzRabTguNjgyLDE4Ljc4OWEyLjg5MSwyLjg5MSwwLDAsMS01Ljc4MywwVjIzLjJhLjg0OS44NDksMCwwLDEtLjAwOC4wOTR2LS4zMzVhLjg0OS44NDksMCwwLDEsLjAwOC4wOTRWNS43ODFhMi44OTQsMi44OTQsMCwwLDEsMi44OTEtMi44OTFoMGEyLjg5NCwyLjg5NCwwLDAsMSwyLjg5MSwyLjg5MVptOC42NzItMy42MTNhMi44OTEsMi44OTEsMCwwLDEtNS43ODEsMFY5LjM5NWEyLjg5MSwyLjg5MSwwLDAsMSw1Ljc4MSwwWm01Ljc4MS0xMC44NGExLjQ0NywxLjQ0NywwLDAsMS0xLjQ0NSwxLjQ0NUg2OC4yMThWMTguNzg5aDEuNDQ1YTEuNDQ3LDEuNDQ3LDAsMCwxLDEuNDQ1LDEuNDQ1Wm0wLDAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMDAxIDApIi8+PHBhdGggY2xhc3M9ImEiIGQ9Ik0yMTMuNDYyLDE1Mi44OTFhMS40NDUsMS40NDUsMCwwLDEsMC0yLjg5MWgwYTEuNDQ1LDEuNDQ1LDAsMCwxLDAsMi44OTFabTAsMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4MS4zNzMgLTEyOC4zMikiLz48L3N2Zz4=";
+
+        Common.getAPIRequest().updateDeliveryByProvider("Bearer "+
+                        Common.currentPosition.getData().getToken().getAccessToken()
+                ,new UpdateDeliveryRequest(
+                        Email.getText().toString()+""
+                        ,Phone.getText().toString()+""
+                        ,UserName.getText().toString()+""
+                        ,false,true,"active",
+                        new com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.Image(ImageUrl),
+                        cityRow.getId()
+                ),
+                Common.currentPosition.getData().getProvider().getId()+""
+                ,delivery.getId()+"").enqueue(new Callback<GetDeliveriesData>() {
+            @Override
+            public void onResponse(Call<GetDeliveriesData> call, Response<GetDeliveriesData> response) {
+                dialog.dismiss();
+                if (response.code() == 200){
+                    Toast.makeText(CreateDeliveryActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CreateDeliveryActivity.this,
+                            HomeActivity.class).putExtra("type",
+                            "CreateDeliveryActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                }else {
+                    try {
+                        String message = new JSONObject(response.errorBody()
+                                .string()).getString("message");
+                        Log.i("TTTTTTT",message);
+                        Toast.makeText(CreateDeliveryActivity.this.getApplicationContext(),message, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetDeliveriesData> call, Throwable t) {
+
+            }
+        });
     }
 
     private void getCities(){
@@ -164,44 +238,66 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        if (UserName.getText().toString().isEmpty())
-            Toast.makeText(this, "Enter Your Name", Toast.LENGTH_SHORT).show();
-        else if (Phone.getText().toString().isEmpty())
-            Toast.makeText(this, "Enter Your Phone", Toast.LENGTH_SHORT).show();
-        else if (Email.getText().toString().isEmpty())
-            Toast.makeText(this, "Enter Your Email", Toast.LENGTH_SHORT).show();
-        else if (Password.getText().toString().isEmpty())
-            Toast.makeText(this, "Enter Your Password", Toast.LENGTH_SHORT).show();
-        else if (RePassword.getText().toString().isEmpty())
-            Toast.makeText(this, "Enter Your RePassword", Toast.LENGTH_SHORT).show();
-        else if (!Password.getText().toString().equals(RePassword.getText().toString()))
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-        else if (!isChecked)
-            Toast.makeText(this, "يجب الوافقه علي الشروط و الاحكام", Toast.LENGTH_SHORT).show();
-        else if (cityRow == null)
-            Toast.makeText(this, "اختر المدينه", Toast.LENGTH_SHORT).show();
-        else if (DeliveryImage == null)
-            Toast.makeText(this, "اختر الصوره الشخصيه", Toast.LENGTH_SHORT).show();
-        else {
-            dialog.show();
-           createDelivery();
+        if (getIntent().getExtras().getString("type").equals("update")){
+            if (UserName.getText().toString().isEmpty())
+                Toast.makeText(this, "Enter Your Name", Toast.LENGTH_SHORT).show();
+            else if (Phone.getText().toString().isEmpty())
+                Toast.makeText(this, "Enter Your Phone", Toast.LENGTH_SHORT).show();
+            else if (Email.getText().toString().isEmpty())
+                Toast.makeText(this, "Enter Your Email", Toast.LENGTH_SHORT).show();
+            else if (cityRow == null)
+                Toast.makeText(this, "اختر المدينه", Toast.LENGTH_SHORT).show();
+            else if (!isChecked)
+                Toast.makeText(this, "يجب الوافقه علي الشروط و الاحكام", Toast.LENGTH_SHORT).show();
+            else {
+                dialog.show();
+                update();
+            }
+        }else {
+            if (UserName.getText().toString().isEmpty())
+                Toast.makeText(this, "Enter Your Name", Toast.LENGTH_SHORT).show();
+            else if (Phone.getText().toString().isEmpty())
+                Toast.makeText(this, "Enter Your Phone", Toast.LENGTH_SHORT).show();
+            else if (Email.getText().toString().isEmpty())
+                Toast.makeText(this, "Enter Your Email", Toast.LENGTH_SHORT).show();
+            else if (Password.getText().toString().isEmpty())
+                Toast.makeText(this, "Enter Your Password", Toast.LENGTH_SHORT).show();
+            else if (RePassword.getText().toString().isEmpty())
+                Toast.makeText(this, "Enter Your RePassword", Toast.LENGTH_SHORT).show();
+            else if (!Password.getText().toString().equals(RePassword.getText().toString()))
+                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            else if (!isChecked)
+                Toast.makeText(this, "يجب الوافقه علي الشروط و الاحكام", Toast.LENGTH_SHORT).show();
+            else if (cityRow == null)
+                Toast.makeText(this, "اختر المدينه", Toast.LENGTH_SHORT).show();
+            else if (DeliveryImage == null)
+                Toast.makeText(this, "اختر الصوره الشخصيه", Toast.LENGTH_SHORT).show();
+            else {
+                dialog.show();
+                createDelivery();
+            }
         }
     }
 
     private void createDelivery(){
+        String ImageUrl = "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NCIgaGVpZ2h0PSI0Ni4yNSIgdmlld0JveD0iMCAwIDc0IDQ2LjI1Ij48ZGVmcz48c3R5bGU+LmF7ZmlsbDojZmZmO308L3N0eWxlPjwvZGVmcz48cGF0aCBjbGFzcz0iYSIgZD0iTTY5LjY2MywxNS45SDY4LjIxOHYtNi41QTUuNzc5LDUuNzc5LDAsMCwwLDU5LjQsNC40NzksNS43ODksNS43ODksMCwwLDAsNTMuNzY1LDBoMGE1Ljc4OCw1Ljc4OCwwLDAsMC01Ljc4MSw1Ljc4MVYxNS45SDI2LjAxN1Y1Ljc4MUE1Ljc4Miw1Ljc4MiwwLDAsMCwxNC42LDQuNDc5LDUuNzc5LDUuNzc5LDAsMCwwLDUuNzgxLDkuMzk1djYuNUg0LjMzNUE0LjM0MSw0LjM0MSwwLDAsMCwwLDIwLjIzNHY1Ljc4MWE0LjM0MSw0LjM0MSwwLDAsMCw0LjMzNiw0LjMzNkg1Ljc4MXY2LjVBNS43NzksNS43NzksMCwwLDAsMTQuNiw0MS43NzFhNS43ODksNS43ODksMCwwLDAsNS42MzIsNC40NzloMGE1Ljc4OCw1Ljc4OCwwLDAsMCw1Ljc4MS01Ljc4MVYzMC4zNTJINDcuOTgyVjQwLjQ2OWE1Ljc4Miw1Ljc4MiwwLDAsMCwxMS40MTUsMS4zLDUuNzc5LDUuNzc5LDAsMCwwLDguODIxLTQuOTE2di02LjVoMS40NDVBNC4zNDEsNC4zNDEsMCwwLDAsNzQsMjYuMDE2VjIwLjIzNEE0LjM0MSw0LjM0MSwwLDAsMCw2OS42NjMsMTUuOVpNNS43ODEsMjcuNDYxSDQuMzM1QTEuNDQ3LDEuNDQ3LDAsMCwxLDIuODksMjYuMDE2VjIwLjIzNGExLjQ0NywxLjQ0NywwLDAsMSwxLjQ0NS0xLjQ0NUg1Ljc4MVptOC42NzIsOS4zOTVhMi44OTEsMi44OTEsMCwwLDEtNS43ODEsMFY5LjM5NGEyLjg5MSwyLjg5MSwwLDAsMSw1Ljc4MSwwWm04LjY3NCwzLjYxM2EyLjg5NCwyLjg5NCwwLDAsMS0yLjg5MSwyLjg5MWgwYTIuODk0LDIuODk0LDAsMCwxLTIuODkxLTIuODkxVjUuNzgxYTIuODkxLDIuODkxLDAsMCwxLDUuNzgzLDBaTTQ3Ljk3NCwyMS42OEgzNy44NjdhMS40NDUsMS40NDUsMCwwLDAsMCwyLjg5MUg0Ny45NzR2Mi44OTFIMjYuMDA5VjE4Ljc4OUg0Ny45NzRabTguNjgyLDE4Ljc4OWEyLjg5MSwyLjg5MSwwLDAsMS01Ljc4MywwVjIzLjJhLjg0OS44NDksMCwwLDEtLjAwOC4wOTR2LS4zMzVhLjg0OS44NDksMCwwLDEsLjAwOC4wOTRWNS43ODFhMi44OTQsMi44OTQsMCwwLDEsMi44OTEtMi44OTFoMGEyLjg5NCwyLjg5NCwwLDAsMSwyLjg5MSwyLjg5MVptOC42NzItMy42MTNhMi44OTEsMi44OTEsMCwwLDEtNS43ODEsMFY5LjM5NWEyLjg5MSwyLjg5MSwwLDAsMSw1Ljc4MSwwWm01Ljc4MS0xMC44NGExLjQ0NywxLjQ0NywwLDAsMS0xLjQ0NSwxLjQ0NUg2OC4yMThWMTguNzg5aDEuNDQ1YTEuNDQ3LDEuNDQ3LDAsMCwxLDEuNDQ1LDEuNDQ1Wm0wLDAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMDAxIDApIi8+PHBhdGggY2xhc3M9ImEiIGQ9Ik0yMTMuNDYyLDE1Mi44OTFhMS40NDUsMS40NDUsMCwwLDEsMC0yLjg5MWgwYTEuNDQ1LDEuNDQ1LDAsMCwxLDAsMi44OTFabTAsMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4MS4zNzMgLTEyOC4zMikiLz48L3N2Zz4=";
+
         viewModel.createDelivery("Bearer " +
                         Common.currentPosition.getData().getToken().getAccessToken(),
-                new DeliveryByProvider(Phone.getText().toString(), Password.getText().toString(),
+                new CreateDeliveryRequest(Phone.getText().toString(), Password.getText().toString(),
                         UserName.getText().toString(), Email.getText().toString(),
-                        new Image(DeliveryImage), cityRow.getId()),
+                        new Image(ImageUrl), cityRow.getId()),
                 Common.currentPosition.getData().getProvider().getId() + "",
-                this, dialog).observe(this, new Observer<DeliveryByProviderResponse>() {
+                this, dialog).observe(this, new Observer<CreateDeliveryResponse>() {
             @Override
-            public void onChanged(DeliveryByProviderResponse deliveryByProviderResponse) {
-                Log.i("FFFFFFF", deliveryByProviderResponse.getData().getDelivery().getId() + "");
+            public void onChanged(CreateDeliveryResponse deliveryByProviderResponse) {
+                Log.i("FFFFFFF", deliveryByProviderResponse.getData().getId() + "");
+                startActivity(new Intent(CreateDeliveryActivity.this, CreateVehicleActivity.class).
+                        putExtra("deliveryId",deliveryByProviderResponse.getData().getId()+""));
             }
         });
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_IMAGE) {

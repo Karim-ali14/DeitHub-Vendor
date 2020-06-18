@@ -99,4 +99,12 @@
     <string name="Car_license">Car license</string>
     <string name="driving_license">Driving license</string>
     <string name="add_delivery">Add Delivery</string>
+    <string name="type_vehicle">Vehicle type</string>
+    <string name="vehicle_model">Vehicle Model</string>
+    <string name="year_manufacture">year of manufacture</string>
+
+
+    <string name="modify_delivery">modify delivery</string>
+    <string name="modify_vehicle">modify vehicle</string>
+    <string name="delete_delivery">delete delivery</string>
 </resources>

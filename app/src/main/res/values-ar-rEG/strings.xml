@@ -101,5 +101,11 @@
     <string name="Car_license">رخصة القياده</string>
     <string name="driving_license">رخصة القياده</string>
     <string name="add_delivery">اضافه مندوب</string>
+    <string name="type_vehicle">نوغ المركبة</string>
+    <string name="vehicle_model">موديل المركبة</string>
+    <string name="year_manufacture">سنة التصنيع</string>
 
+    <string name="modify_delivery">تعديل المندوي</string>
+    <string name="modify_vehicle">تعديل المركبه</string>
+    <string name="delete_delivery">مسح المندوب</string>
 </resources>

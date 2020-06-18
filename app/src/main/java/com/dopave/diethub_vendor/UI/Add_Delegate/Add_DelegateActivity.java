@@ -26,10 +26,6 @@ import android.widget.Toast;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Cities.Cities;
 import com.dopave.diethub_vendor.Models.Cities.CityRow;
-import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProvider;
-import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProviderRequest;
-import com.dopave.diethub_vendor.Models.DeliveryByProvider.UpdateDeliveryRequest;
-import com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery.DeliveryRow;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 
@@ -50,7 +46,7 @@ public class Add_DelegateActivity extends AppCompatActivity {
     CityRow cityRow;
     TextView CitySelected;
     Button ButtonAddDelivery;
-    DeliveryRow row;
+//    DeliveryRow row;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,18 +87,18 @@ public class Add_DelegateActivity extends AppCompatActivity {
 
             }
         });
-        if (getIntent().getExtras().getString("type").equals("update")){
+       /* if (getIntent().getExtras().getString("type").equals("update")){
              row = getIntent().getExtras().getParcelable("data");
             setDataToUpdate();
-        }
+        }*/
     }
 
-    private void setDataToUpdate() {
+  /*  private void setDataToUpdate() {
         NameDelegate_Add.setText(row.getName());
         EmailDelegate_Add.setText(row.getEmail());
         PhoneNumber_Add.setText(row.getMobilePhone());
         spinnerCity.setSelection(row.getId());
-    }
+    }*/
 
     private void update() {
         final ProgressDialog dialog = new ProgressDialog(this);

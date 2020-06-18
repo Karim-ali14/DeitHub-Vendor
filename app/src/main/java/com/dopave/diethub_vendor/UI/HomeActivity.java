@@ -9,6 +9,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
+import com.dopave.diethub_vendor.UI.Fragments.Home_Fragment;
+import com.dopave.diethub_vendor.UI.Fragments.OrderFragment;
+import com.dopave.diethub_vendor.UI.Fragments.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -43,8 +47,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
         if (getIntent().getExtras().getString("type").equals("Login_inActivity"))
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new Home_Fragment()).commit();
-        else if (getIntent().getExtras().getString("type").equals("Add_DelegateActivity")) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new DelegateFragment()).commit();
+        else if (getIntent().getExtras().getString("type").equals("CreateDeliveryActivity")) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new DeliveryFragment()).commit();
                 drawer.closeDrawer(GravityCompat.START);
                 Logo.setVisibility(View.GONE);
                 Notification_Icon.setVisibility(View.GONE);
@@ -97,7 +101,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Title.setText(getResources().getString(R.string.sittings));
             Current_Page = "nav_setting";
         }else if (view.getId() == R.id.nav_delegates){
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new DelegateFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new DeliveryFragment()).commit();
             drawer.closeDrawer(GravityCompat.START);
             Logo.setVisibility(View.GONE);
             Notification_Icon.setVisibility(View.GONE);

@@ -9,8 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Cities.Cities;
-import com.dopave.diethub_vendor.Models.CreateDeliveryRequest.Request.DeliveryByProvider;
-import com.dopave.diethub_vendor.Models.CreateDeliveryRequest.Response.DeliveryByProviderResponse;
+import com.dopave.diethub_vendor.Models.CreateDelivery.Request.CreateDeliveryRequest;
+import com.dopave.diethub_vendor.Models.CreateDelivery.Response.CreateDeliveryResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,17 +60,17 @@ public class CreateDeliveryRepository {
         return mutableLiveData;
     }
 
-    public MutableLiveData<DeliveryByProviderResponse> createDelivery (String Auth,
-                                                                       final DeliveryByProvider requestBody,
+    public MutableLiveData<CreateDeliveryResponse> createDelivery (String Auth,
+                                                                       final CreateDeliveryRequest requestBody,
                                                                        String id,
                                                                        final Context context,
                                                                        final ProgressDialog dialog){
-        final MutableLiveData<DeliveryByProviderResponse> mutableLiveData = new MutableLiveData<>();
+        final MutableLiveData<CreateDeliveryResponse> mutableLiveData = new MutableLiveData<>();
         Common.getAPIRequest().createDeliveryByProvider(Auth, requestBody, id)
-                .enqueue(new Callback<DeliveryByProviderResponse>() {
+                .enqueue(new Callback<CreateDeliveryResponse>() {
             @Override
-            public void onResponse(Call<DeliveryByProviderResponse> call,
-                                   Response<DeliveryByProviderResponse> response) {
+            public void onResponse(Call<CreateDeliveryResponse> call,
+                                   Response<CreateDeliveryResponse> response) {
                 dialog.dismiss();
                 if (response.code() == 201)
                     mutableLiveData.setValue(response.body());
@@ -91,7 +91,7 @@ public class CreateDeliveryRepository {
             }
 
             @Override
-            public void onFailure(Call<DeliveryByProviderResponse> call, Throwable t) {
+            public void onFailure(Call<CreateDeliveryResponse> call, Throwable t) {
                 dialog.dismiss();
             }
         });

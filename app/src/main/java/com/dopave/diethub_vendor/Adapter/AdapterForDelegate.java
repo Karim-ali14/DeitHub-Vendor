@@ -3,6 +3,7 @@ package com.dopave.diethub_vendor.Adapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,23 +17,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dopave.diethub_vendor.UI.Add_Delegate.Add_DelegateActivity;
 import com.dopave.diethub_vendor.Common.Common;
-import com.dopave.diethub_vendor.Models.DeliveryByProvider.DeliveryByProvider;
-import com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery.DeliveryRow;
-import com.dopave.diethub_vendor.Models.DeliveryByProvider.getDelivery.GetDeliveryByProviderId;
+import com.dopave.diethub_vendor.Models.GetDeliveries.DeliveryRow;
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.CreateDelivery.CreateDeliveryActivity;
+import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
+import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.ViewHolderForDelegate> {
     List<DeliveryRow> list;
@@ -63,8 +57,11 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
-                            case R.id.action_modify :
-                                update(row);
+                            case R.id.action_modify_delivery :
+                                updateDelivery(row);
+                                return true;
+                                case R.id.action_modify_vehicle :
+                                updateVehicle(row.getId());
                                 return true;
                             case R.id.action_delete:
                                 delete(row);
@@ -78,6 +75,22 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
                 popupMenu.show();
             }
         });
+        if (row.getImage() != null){
+            Toast.makeText(context, row.getImage().getName(), Toast.LENGTH_SHORT).show();
+            String path = Common.BaseUrl + "images/" + row.getImage().getFor() + "/" + Uri.encode(row.getImage().getName());
+            Log.i("TTTTTTT",path);
+            Picasso.with(context).load(path).into(holder.IconOfDelegate);
+        }
+    }
+
+    private void updateDelivery(DeliveryRow row) {
+        context.startActivity(new Intent(context, CreateDeliveryActivity.class).putExtra("type","update")
+                .putExtra("delivery",row));
+    }
+
+    private void updateVehicle(Integer id) {
+        context.startActivity(new Intent(context, CreateVehicleActivity.class).putExtra("type","update")
+                .putExtra("deliveryId",id));
     }
 
     @Override
@@ -159,11 +172,5 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
 //                dialog.dismiss();
 //            }
 //        });
-    }
-
-    private void update(DeliveryRow row){
-        context.startActivity(new Intent(context, Add_DelegateActivity.class).putExtra("type","update")
-        .putExtra("data",row));
-
     }
 }

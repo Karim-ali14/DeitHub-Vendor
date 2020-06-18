@@ -20,15 +20,15 @@
             app:layout_constraintGuide_percent=".3" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_82sdp"
+            android:layout_height="@dimen/_82sdp"
             app:layout_constraintEnd_toEndOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/style_image_frame">
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:src="@drawable/delegate_i"
                 android:layout_margin="@dimen/_10sdp"
                 android:id="@+id/IconOfDelegate"/>

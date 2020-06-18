@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
@@ -103,6 +104,25 @@ public class Login_inActivity extends AppCompatActivity {
                 startActivity(new Intent(Login_inActivity.this,
                         HomeActivity.class).putExtra("type",
                         "Login_inActivity"));
+//                Common.getAPIRequest().getVehicleByDeliveryId("Bearer "+
+//                                signIn.getData().getToken().getAccessToken(),
+//                        signIn.getData().getProvider().getId().toString(),"60",
+//                        true,true,true)
+//                        .enqueue(new Callback<GetVehicleData>() {
+//                            @Override
+//                            public void onResponse(Call<GetVehicleData> call, Response<GetVehicleData> response) {
+//                                if (response.code() == 200)
+//                                    Log.i("FFFFFF",response.code()+response.body().getData().getId()
+//                                            +""+response.body().getMessage());
+//                                else
+//                                    Log.i("FFFFFF",response.errorBody()+""+response.code());
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<GetVehicleData> call, Throwable t) {
+//
+//                            }
+//                        });
             }
         });
     }
