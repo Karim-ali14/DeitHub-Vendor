@@ -2,6 +2,7 @@ package com.dopave.diethub_vendor.UI.CreateDelivery;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,6 +12,9 @@ import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Cities.Cities;
 import com.dopave.diethub_vendor.Models.CreateDelivery.Request.CreateDeliveryRequest;
 import com.dopave.diethub_vendor.Models.CreateDelivery.Response.CreateDeliveryResponse;
+import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
+import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequest;
+import com.dopave.diethub_vendor.UI.HomeActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -93,6 +97,39 @@ public class CreateDeliveryRepository {
             @Override
             public void onFailure(Call<CreateDeliveryResponse> call, Throwable t) {
                 dialog.dismiss();
+            }
+        });
+        return mutableLiveData;
+    }
+
+    public MutableLiveData<GetDeliveriesData> updateDelivery(UpdateDeliveryRequest updateDeliveryRequest
+            , String deliveryId, final ProgressDialog dialog,final Context context){
+        final MutableLiveData<GetDeliveriesData> mutableLiveData = new MutableLiveData<>();
+        Common.getAPIRequest().updateDeliveryByProvider("Bearer "+
+                        Common.currentPosition.getData().getToken().getAccessToken()
+                ,updateDeliveryRequest,
+                Common.currentPosition.getData().getProvider().getId()+""
+                ,deliveryId).enqueue(new Callback<GetDeliveriesData>() {
+            @Override
+            public void onResponse(Call<GetDeliveriesData> call, Response<GetDeliveriesData> response) {
+                dialog.dismiss();
+                if (response.code() == 200){
+                    mutableLiveData.setValue(response.body());
+                }else {
+                    try {
+                        String message = new JSONObject(response.errorBody()
+                                .string()).getString("message");
+                        Log.i("TTTTTTT",message);
+                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetDeliveriesData> call, Throwable t) {
+
             }
         });
         return mutableLiveData;

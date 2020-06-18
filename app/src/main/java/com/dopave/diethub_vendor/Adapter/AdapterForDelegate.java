@@ -76,7 +76,6 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
             }
         });
         if (row.getImage() != null){
-            Toast.makeText(context, row.getImage().getName(), Toast.LENGTH_SHORT).show();
             String path = Common.BaseUrl + "images/" + row.getImage().getFor() + "/" + Uri.encode(row.getImage().getName());
             Log.i("TTTTTTT",path);
             Picasso.with(context).load(path).into(holder.IconOfDelegate);

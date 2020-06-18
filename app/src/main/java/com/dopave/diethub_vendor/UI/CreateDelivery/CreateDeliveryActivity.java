@@ -148,7 +148,6 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         UserName.setText(delivery.getName());
         Phone.setText(delivery.getMobilePhone());
         Email.setText(delivery.getEmail());
-        spinnerCity.setSelection(delivery.getCityId());
         if (delivery.getImage()!=null){
             String path = Common.BaseUrl + "images/" + delivery.getImage().getFor() + "/" + Uri.encode(delivery.getImage().getName());
             Log.i("TTTTTTT",path);
@@ -158,43 +157,22 @@ public class CreateDeliveryActivity extends AppCompatActivity {
 
     private void update(){
         String ImageUrl = "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NCIgaGVpZ2h0PSI0Ni4yNSIgdmlld0JveD0iMCAwIDc0IDQ2LjI1Ij48ZGVmcz48c3R5bGU+LmF7ZmlsbDojZmZmO308L3N0eWxlPjwvZGVmcz48cGF0aCBjbGFzcz0iYSIgZD0iTTY5LjY2MywxNS45SDY4LjIxOHYtNi41QTUuNzc5LDUuNzc5LDAsMCwwLDU5LjQsNC40NzksNS43ODksNS43ODksMCwwLDAsNTMuNzY1LDBoMGE1Ljc4OCw1Ljc4OCwwLDAsMC01Ljc4MSw1Ljc4MVYxNS45SDI2LjAxN1Y1Ljc4MUE1Ljc4Miw1Ljc4MiwwLDAsMCwxNC42LDQuNDc5LDUuNzc5LDUuNzc5LDAsMCwwLDUuNzgxLDkuMzk1djYuNUg0LjMzNUE0LjM0MSw0LjM0MSwwLDAsMCwwLDIwLjIzNHY1Ljc4MWE0LjM0MSw0LjM0MSwwLDAsMCw0LjMzNiw0LjMzNkg1Ljc4MXY2LjVBNS43NzksNS43NzksMCwwLDAsMTQuNiw0MS43NzFhNS43ODksNS43ODksMCwwLDAsNS42MzIsNC40NzloMGE1Ljc4OCw1Ljc4OCwwLDAsMCw1Ljc4MS01Ljc4MVYzMC4zNTJINDcuOTgyVjQwLjQ2OWE1Ljc4Miw1Ljc4MiwwLDAsMCwxMS40MTUsMS4zLDUuNzc5LDUuNzc5LDAsMCwwLDguODIxLTQuOTE2di02LjVoMS40NDVBNC4zNDEsNC4zNDEsMCwwLDAsNzQsMjYuMDE2VjIwLjIzNEE0LjM0MSw0LjM0MSwwLDAsMCw2OS42NjMsMTUuOVpNNS43ODEsMjcuNDYxSDQuMzM1QTEuNDQ3LDEuNDQ3LDAsMCwxLDIuODksMjYuMDE2VjIwLjIzNGExLjQ0NywxLjQ0NywwLDAsMSwxLjQ0NS0xLjQ0NUg1Ljc4MVptOC42NzIsOS4zOTVhMi44OTEsMi44OTEsMCwwLDEtNS43ODEsMFY5LjM5NGEyLjg5MSwyLjg5MSwwLDAsMSw1Ljc4MSwwWm04LjY3NCwzLjYxM2EyLjg5NCwyLjg5NCwwLDAsMS0yLjg5MSwyLjg5MWgwYTIuODk0LDIuODk0LDAsMCwxLTIuODkxLTIuODkxVjUuNzgxYTIuODkxLDIuODkxLDAsMCwxLDUuNzgzLDBaTTQ3Ljk3NCwyMS42OEgzNy44NjdhMS40NDUsMS40NDUsMCwwLDAsMCwyLjg5MUg0Ny45NzR2Mi44OTFIMjYuMDA5VjE4Ljc4OUg0Ny45NzRabTguNjgyLDE4Ljc4OWEyLjg5MSwyLjg5MSwwLDAsMS01Ljc4MywwVjIzLjJhLjg0OS44NDksMCwwLDEtLjAwOC4wOTR2LS4zMzVhLjg0OS44NDksMCwwLDEsLjAwOC4wOTRWNS43ODFhMi44OTQsMi44OTQsMCwwLDEsMi44OTEtMi44OTFoMGEyLjg5NCwyLjg5NCwwLDAsMSwyLjg5MSwyLjg5MVptOC42NzItMy42MTNhMi44OTEsMi44OTEsMCwwLDEtNS43ODEsMFY5LjM5NWEyLjg5MSwyLjg5MSwwLDAsMSw1Ljc4MSwwWm01Ljc4MS0xMC44NGExLjQ0NywxLjQ0NywwLDAsMS0xLjQ0NSwxLjQ0NUg2OC4yMThWMTguNzg5aDEuNDQ1YTEuNDQ3LDEuNDQ3LDAsMCwxLDEuNDQ1LDEuNDQ1Wm0wLDAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMDAxIDApIi8+PHBhdGggY2xhc3M9ImEiIGQ9Ik0yMTMuNDYyLDE1Mi44OTFhMS40NDUsMS40NDUsMCwwLDEsMC0yLjg5MWgwYTEuNDQ1LDEuNDQ1LDAsMCwxLDAsMi44OTFabTAsMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4MS4zNzMgLTEyOC4zMikiLz48L3N2Zz4=";
-
-        Common.getAPIRequest().updateDeliveryByProvider("Bearer "+
-                        Common.currentPosition.getData().getToken().getAccessToken()
-                ,new UpdateDeliveryRequest(
-                        Email.getText().toString()+""
-                        ,Phone.getText().toString()+""
-                        ,UserName.getText().toString()+""
-                        ,false,true,"active",
-                        new com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.Image(ImageUrl),
-                        cityRow.getId()
-                ),
-                Common.currentPosition.getData().getProvider().getId()+""
-                ,delivery.getId()+"").enqueue(new Callback<GetDeliveriesData>() {
+        viewModel.updateDelivery(new UpdateDeliveryRequest(
+                Email.getText().toString()+""
+                ,Phone.getText().toString()+""
+                ,UserName.getText().toString()+""
+                ,false,true,"active",
+                new com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.Image(ImageUrl),
+                cityRow.getId()
+        ),delivery
+        .getId().toString(),dialog,this).observe(this, new Observer<GetDeliveriesData>() {
             @Override
-            public void onResponse(Call<GetDeliveriesData> call, Response<GetDeliveriesData> response) {
-                dialog.dismiss();
-                if (response.code() == 200){
-                    Toast.makeText(CreateDeliveryActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(CreateDeliveryActivity.this,
-                            HomeActivity.class).putExtra("type",
-                            "CreateDeliveryActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                }else {
-                    try {
-                        String message = new JSONObject(response.errorBody()
-                                .string()).getString("message");
-                        Log.i("TTTTTTT",message);
-                        Toast.makeText(CreateDeliveryActivity.this.getApplicationContext(),message, Toast.LENGTH_SHORT).show();
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetDeliveriesData> call, Throwable t) {
-
+            public void onChanged(GetDeliveriesData getDeliveriesData) {
+                Toast.makeText(CreateDeliveryActivity.this, "success", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CreateDeliveryActivity.this,
+                        HomeActivity.class).putExtra("type",
+                        "CreateDeliveryActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK));
             }
         });
     }
@@ -221,6 +199,8 @@ public class CreateDeliveryActivity extends AppCompatActivity {
 
                     }
                 });
+                if (getIntent().getExtras().getString("type").equals("update"))
+                    spinnerCity.setSelection(delivery.getCityId());
             }
         });
     }

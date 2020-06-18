@@ -63,13 +63,14 @@ public class DeliveryFragment extends Fragment {
                 startActivity(new Intent(getActivity(), CreateDeliveryActivity.class).putExtra("type","normal"));
             }
         });
+
         getAllDelivery(dialog);
         return view;
     }
 
     private void getAllDelivery(ProgressDialog dialog){
         dialog.show();
-        viewModel.getAllDeliveries(dialog,getActivity()).observe(this,
+        viewModel.getAllDeliveries(dialog,getActivity()).observe(getActivity(),
                 new Observer<GetDeliveriesData>() {
             @Override
             public void onChanged(GetDeliveriesData getDeliveriesData) {

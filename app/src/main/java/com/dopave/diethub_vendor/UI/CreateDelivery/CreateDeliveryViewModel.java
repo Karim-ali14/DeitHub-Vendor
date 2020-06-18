@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel;
 import com.dopave.diethub_vendor.Models.Cities.Cities;
 import com.dopave.diethub_vendor.Models.CreateDelivery.Request.CreateDeliveryRequest;
 import com.dopave.diethub_vendor.Models.CreateDelivery.Response.CreateDeliveryResponse;
+import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
+import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequest;
 
 public class CreateDeliveryViewModel extends ViewModel {
 
@@ -28,5 +30,9 @@ public class CreateDeliveryViewModel extends ViewModel {
                                                             final Context context,
                                                             final ProgressDialog dialog){
         return repository.createDelivery(Auth, requestBody, id, context, dialog);
+    }
+    public LiveData<GetDeliveriesData> updateDelivery(UpdateDeliveryRequest updateDeliveryRequest
+            , String deliveryId, final ProgressDialog dialog, final Context context){
+        return repository.updateDelivery(updateDeliveryRequest, deliveryId, dialog, context);
     }
 }
