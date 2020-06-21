@@ -108,4 +108,7 @@
     <string name="modify_delivery">تعديل المندوي</string>
     <string name="modify_vehicle">تعديل المركبه</string>
     <string name="delete_delivery">مسح المندوب</string>
+    <string name="accept">قبول</string>
+    <string name="cancel">ألغاء</string>
+
 </resources>

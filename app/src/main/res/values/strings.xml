@@ -107,4 +107,6 @@
     <string name="modify_delivery">modify delivery</string>
     <string name="modify_vehicle">modify vehicle</string>
     <string name="delete_delivery">delete delivery</string>
+    <string name="cancel">cancel</string>
+    <string name="accept">Accept</string>
 </resources>
