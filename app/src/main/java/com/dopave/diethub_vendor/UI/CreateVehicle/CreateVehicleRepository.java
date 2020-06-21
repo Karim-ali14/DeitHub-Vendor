@@ -1,5 +1,6 @@
 package com.dopave.diethub_vendor.UI.CreateVehicle;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -9,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.CreateVehicleRequest;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleRespons;
+import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
 
@@ -123,6 +125,43 @@ public class CreateVehicleRepository {
 
             }
         });
+        return mutableLiveData;
+    }
+
+    public MutableLiveData<GetVehicleData> getVehicleData(String deliveryId, final Context context,
+                                                          final ProgressDialog dialog){
+        final MutableLiveData<GetVehicleData> mutableLiveData = new MutableLiveData<>();
+        Common.getAPIRequest().getVehicleByDeliveryId("Bearer "+
+                        Common.currentPosition.getData().getToken().getAccessToken(),
+                Common.currentPosition.getData().getProvider().getId().toString(),deliveryId,
+                true,true,true)
+                .enqueue(new Callback<GetVehicleData>() {
+                    @Override
+                    public void onResponse(Call<GetVehicleData> call, Response<GetVehicleData> response) {
+                        dialog.dismiss();
+                        if (response.code() == 200)
+                            mutableLiveData.setValue(response.body());
+                        else {
+                            try {
+                                String message = new JSONObject(response.errorBody().string())
+                                        .getString("message");
+                                Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
+
+                                Log.i("TTTTTT",new JSONObject(response.errorBody().string())
+                                        .getString("message"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetVehicleData> call, Throwable t) {
+                        Log.i("TTTTTTF",t.getMessage());
+                    }
+                });
         return mutableLiveData;
     }
 }

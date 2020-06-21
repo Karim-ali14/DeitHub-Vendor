@@ -73,9 +73,15 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
                             case R.id.action_modify_delivery :
                                 updateDelivery(row);
                                 return true;
-                                case R.id.action_modify_vehicle :
-                                updateVehicle(row.getId());
-                                return true;
+                                case R.id.action_modify_vehicle :{
+                                    if (row.getVehicle() == null){
+                                        Toast.makeText(context, "هذا المندوب لس له مركبه", Toast.LENGTH_SHORT).show();
+                                        return true;
+                                    }else {
+                                        updateVehicle(row.getId());
+                                        return true;
+                                    }
+                                }
                             case R.id.action_delete:
                                 delete(row);
                                 return true;
@@ -93,6 +99,7 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
             Log.i("TTTTTTT",path);
             Picasso.with(context).load(path).into(holder.IconOfDelegate);
         }
+
     }
 
     private void updateDelivery(DeliveryRow row) {
@@ -102,7 +109,7 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
 
     private void updateVehicle(Integer id) {
         context.startActivity(new Intent(context, CreateVehicleActivity.class).putExtra("type","update")
-                .putExtra("deliveryId",id));
+                .putExtra("deliveryId",id+""));
     }
 
     @Override

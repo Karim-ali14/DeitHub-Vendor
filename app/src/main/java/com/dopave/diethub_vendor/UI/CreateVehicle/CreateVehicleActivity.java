@@ -39,6 +39,8 @@ import com.dopave.diethub_vendor.Models.CreateVehicle.Request.DrivingLicence;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.VehicleLicence;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleRespons;
+import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
+import com.dopave.diethub_vendor.Models.UpdateVehicle.UpdateVehicle;
 import com.dopave.diethub_vendor.Models.VehicleTypes.RowVehicleTypes;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
@@ -47,6 +49,10 @@ import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreateVehicleActivity extends AppCompatActivity {
     RecyclerView Recycler;
@@ -58,10 +64,15 @@ public class CreateVehicleActivity extends AppCompatActivity {
     boolean firstSelect = false;
     int selectedYear = 0;
     CreateVehicleViewModel viewModel;
+    String deliveryId;
+    ProgressDialog dialog;
+    GetVehicleData VehicleData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_vehicle);
+        dialog = new ProgressDialog(this);
+        dialog.show();
         viewModel = ViewModelProviders.of(this).get(CreateVehicleViewModel.class);
         YearSelected = findViewById(R.id.YearSelected);
         VehicleTypeSelected = findViewById(R.id.VehicleTypeSelected);
@@ -110,16 +121,37 @@ public class CreateVehicleActivity extends AppCompatActivity {
             }
         });
 
-        getVehicleTypes();
-        getYears();
-
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        if (getIntent().getExtras().getString("type").equals("update")) {
+            deliveryId = getIntent().getExtras().getString("deliveryId");
+            getVehicleData();
+        }else{
+            getVehicleTypes();
+        }
     }
 
-    private List<String> getData() {
+
+    private void getVehicleData() {
+        viewModel.getVehicleData(deliveryId,this,dialog).observe(this, new Observer<GetVehicleData>() {
+            @Override
+            public void onChanged(GetVehicleData getVehicleData) {
+                VehicleData = getVehicleData;
+                setData();
+            }
+        });
+    }
+
+    private void setData() {
+        VehicleID.setText(VehicleData.getData().getNumber());
+        VehicleModel.setText(VehicleData.getData().getModel());
+        spinnerYears.setSelection(VehicleData.getData().getYear());
+        getVehicleTypes();
+    }
+
+    private List<String> getData(){
         List<String> list = new ArrayList<>();
         list.add("");
         list.add("");
@@ -131,12 +163,23 @@ public class CreateVehicleActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        if (VehicleID.getText().toString().isEmpty())
-            Toast.makeText(this, "Enter Your Name", Toast.LENGTH_SHORT).show();
-        else if (VehicleModel.getText().toString().isEmpty())
-            Toast.makeText(this, "Enter Your Phone", Toast.LENGTH_SHORT).show();
-        else
-            createVehicle();
+        if (getIntent().getExtras().getString("type").equals("update")) {
+            updateVehcle();
+        }else {
+            if (VehicleID.getText().toString().isEmpty())
+                Toast.makeText(this, "Enter Your Name", Toast.LENGTH_SHORT).show();
+            else if (VehicleModel.getText().toString().isEmpty())
+                Toast.makeText(this, "Enter Your Phone", Toast.LENGTH_SHORT).show();
+            else
+                createVehicle();
+        }
+    }
+
+    private void updateVehcle() {
+//        Common.getAPIRequest().updateVehicle("Bearer "+
+//                Common.currentPosition.getData().getToken().getAccessToken(),
+//                deliveryId,VehicleData.getData().getId(),new UpdateVehicle(
+//                        VehicleID.getText().toString(),VehicleModel.getText().toString(),VehicleTypeSelected,))
     }
 
     private void showSuccessDialog() {
@@ -228,6 +271,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
         viewModel.getAllYears(this).observe(this, new Observer<Years>() {
             @Override
             public void onChanged(Years years) {
+                dialog.dismiss();
                 Log.i("TTTTTT",years.getData().toString());
                 AdapterOfSpinnerYear arrayAdapter = new AdapterOfSpinnerYear(CreateVehicleActivity.this,
                         R.layout.city_item,years.getData());
@@ -246,6 +290,8 @@ public class CreateVehicleActivity extends AppCompatActivity {
 
                     }
                 });
+                selectedYear = VehicleData.getData().getYear();
+                YearSelected.setText(selectedYear+"");
             }
         });
     }
@@ -254,6 +300,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
         viewModel.getAllVehicleTypes(this).observe(this, new Observer<VehicleTypes>() {
             @Override
             public void onChanged(VehicleTypes vehicleTypes) {
+                getYears();
                 AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(CreateVehicleActivity.this,
                         R.layout.city_item,vehicleTypes.getData().getRowVehicleTypes());
 
@@ -271,6 +318,13 @@ public class CreateVehicleActivity extends AppCompatActivity {
 
                     }
                 });
+                for (RowVehicleTypes row : vehicleTypes.getData().getRowVehicleTypes()){
+                    Log.i("TTTTTTT",(row.getId() == VehicleData.getData().getVehicleTypeId()) +"");
+                    if (row.getId() == VehicleData.getData().getVehicleTypeId()){
+                           VehicleTypeSelected.setText(row.getType());
+                           rowVehicleTypes = row;
+                    }
+                }
             }
         });
     }

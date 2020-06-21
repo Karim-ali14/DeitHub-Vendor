@@ -13,6 +13,9 @@ public class Data {
     @SerializedName("model")
     @Expose
     private String model;
+    @SerializedName("number")
+    @Expose
+    private String number;
     @SerializedName("year")
     @Expose
     private Integer year;
@@ -85,4 +88,11 @@ public class Data {
         this.vehicleLicence = vehicleLicence;
     }
 
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 }

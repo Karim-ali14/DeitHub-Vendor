@@ -47,17 +47,11 @@ import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CreateDeliveryActivity extends AppCompatActivity {
     private static final int SELECT_IMAGE = 1;
@@ -273,7 +267,8 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             public void onChanged(CreateDeliveryResponse deliveryByProviderResponse) {
                 Log.i("FFFFFFF", deliveryByProviderResponse.getData().getId() + "");
                 startActivity(new Intent(CreateDeliveryActivity.this, CreateVehicleActivity.class).
-                        putExtra("deliveryId",deliveryByProviderResponse.getData().getId()+""));
+                        putExtra("deliveryId",deliveryByProviderResponse.getData().getId()+"")
+                        .putExtra("type","normal"));
             }
         });
     }

@@ -4,6 +4,7 @@ package com.dopave.diethub_vendor.Models.GetDeliveries;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -27,6 +28,9 @@ public class DeliveryRow implements Parcelable {
     @SerializedName("city_id")
     @Expose
     private Integer cityId;
+    @SerializedName("vehicle")
+    @Expose
+    private Data vehicle;
     @SerializedName("image")
     @Expose
     private Image image;
@@ -131,6 +135,14 @@ public class DeliveryRow implements Parcelable {
 
     public void setCityId(Integer cityId) {
         this.cityId = cityId;
+    }
+
+    public Data getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Data vehicle) {
+        this.vehicle = vehicle;
     }
 
     public Image getImage() {

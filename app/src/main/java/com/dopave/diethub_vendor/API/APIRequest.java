@@ -6,10 +6,12 @@ import com.dopave.diethub_vendor.Models.CreateDelivery.Response.CreateDeliveryRe
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.CreateVehicleRequest;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleRespons;
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
+import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
 import com.dopave.diethub_vendor.Models.ResetPassword.ResetPassword;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequest;
+import com.dopave.diethub_vendor.Models.UpdateVehicle.UpdateVehicle;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
 
@@ -68,7 +70,8 @@ public interface APIRequest {
     @GET("provider/{id}/deliveryrep")
     Call<GetDeliveriesData> getAllDeliveries (@Header("Authorization") String Auth,
                                               @Path("id") String id,
-                                              @Query("include_image") boolean include_image);
+                                              @Query("include_image") boolean include_image,
+                                              @Query("include_vehicle") boolean include_vehicle);
 
 //  Todo get all Delivery by provider id
     @GET("provider/{id}/deliveryrep/{deliveryId}/vehicle")
@@ -97,4 +100,11 @@ public interface APIRequest {
     //Todo get All Vehicle Types
     @GET("vehicle/manufacture-years")
     Call<Years> getAllYears();
+
+    //Todo Update Vehicle
+    @PUT("deliveryrep/{deliveryId}/vehicle/vehicleId")
+    Call<Data> updateVehicle (@Header("Authorization") String Auth,
+                             @Path("deliveryId") String deliveryId,
+                             @Path("vehicleId") String vehicleId,
+                             @Body UpdateVehicle updateVehicle);
 }

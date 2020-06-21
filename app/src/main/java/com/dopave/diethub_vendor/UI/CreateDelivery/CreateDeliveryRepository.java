@@ -2,7 +2,6 @@ package com.dopave.diethub_vendor.UI.CreateDelivery;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,7 +13,6 @@ import com.dopave.diethub_vendor.Models.CreateDelivery.Request.CreateDeliveryReq
 import com.dopave.diethub_vendor.Models.CreateDelivery.Response.CreateDeliveryResponse;
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequest;
-import com.dopave.diethub_vendor.UI.HomeActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,7 +101,7 @@ public class CreateDeliveryRepository {
     }
 
     public MutableLiveData<GetDeliveriesData> updateDelivery(UpdateDeliveryRequest updateDeliveryRequest
-            , String deliveryId, final ProgressDialog dialog,final Context context){
+            , String deliveryId, final ProgressDialog dialog, final Context context){
         final MutableLiveData<GetDeliveriesData> mutableLiveData = new MutableLiveData<>();
         Common.getAPIRequest().updateDeliveryByProvider("Bearer "+
                         Common.currentPosition.getData().getToken().getAccessToken()

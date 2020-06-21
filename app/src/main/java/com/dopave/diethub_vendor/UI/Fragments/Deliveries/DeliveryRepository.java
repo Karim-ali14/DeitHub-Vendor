@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.dopave.diethub_vendor.Adapter.AdapterForDelegate;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 
@@ -33,7 +32,8 @@ public class DeliveryRepository {
         final MutableLiveData<GetDeliveriesData> mutableLiveData = new MutableLiveData<>();
         Common.getAPIRequest().getAllDeliveries("Bearer "+
                         Common.currentPosition.getData().getToken().getAccessToken(),
-                Common.currentPosition.getData().getProvider().getId()+"",true)
+                Common.currentPosition.getData().getProvider().getId()+"",
+                true,true)
                 .enqueue(new Callback<GetDeliveriesData>() {
                     @Override
                     public void onResponse(Call<GetDeliveriesData> call, Response<GetDeliveriesData> response) {

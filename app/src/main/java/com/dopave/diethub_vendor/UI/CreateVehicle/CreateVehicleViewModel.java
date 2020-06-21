@@ -1,5 +1,6 @@
 package com.dopave.diethub_vendor.UI.CreateVehicle;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.CreateVehicleRequest;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleRespons;
+import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
 
@@ -30,5 +32,10 @@ public class CreateVehicleViewModel extends ViewModel {
                                                         CreateVehicleRequest createVehicleRequest,
                                                         final Context context){
         return repository.createVehicle(Auth, id, deliveryId, createVehicleRequest, context);
+    }
+
+    public LiveData<GetVehicleData> getVehicleData(String deliveryId, final Context context,
+                                                   final ProgressDialog dialog){
+        return repository.getVehicleData(deliveryId, context, dialog);
     }
 }
