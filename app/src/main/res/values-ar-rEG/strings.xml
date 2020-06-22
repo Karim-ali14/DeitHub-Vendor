@@ -111,4 +111,12 @@
     <string name="accept">قبول</string>
     <string name="cancel">ألغاء</string>
 
+    <string name="Package_Content">محتوي الباقة</string>
+    <string name="Timing_Delivery">توقيت التوصيل</string>
+    <string name="PackagePrice">سعر الباقة</string>
+    <string name="Discount">الخصم</string>
+    <string name="Calories">السعرات الحراية</string>
+    <string name="Ratings">التقييمات</string>
+    <string name="ClientInfo">معلومات العميل</string>
+
 </resources>

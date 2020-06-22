@@ -109,4 +109,12 @@
     <string name="delete_delivery">delete delivery</string>
     <string name="cancel">cancel</string>
     <string name="accept">Accept</string>
+
+    <string name="Package_Content">Package Content</string>
+    <string name="Timing_Delivery">Timing Delivery</string>
+    <string name="PackagePrice">Package Price</string>
+    <string name="Discount">Discount</string>
+    <string name="Calories">Calories</string>
+    <string name="Ratings">Ratings</string>
+    <string name="ClientInfo">Client info</string>
 </resources>
