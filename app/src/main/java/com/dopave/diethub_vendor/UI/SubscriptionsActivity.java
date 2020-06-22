@@ -29,8 +29,10 @@ public class SubscriptionsActivity extends AppCompatActivity {
         list.add("");
         list.add("");
         list.add("");
-        recyclerView.setAdapter(new AdapterForSubscription(list,this));
-
+        if (getIntent().getExtras().getString("type").equals("nav_mySubscriptionOrders"))
+            recyclerView.setAdapter(new AdapterForSubscription(list,this,0));
+        else
+            recyclerView.setAdapter(new AdapterForSubscription(list,this,1));
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);

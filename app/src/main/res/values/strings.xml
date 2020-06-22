@@ -36,6 +36,8 @@
     <string name="home_second">Home Second</string>
     <string name="home">home</string>
     <string name="myorders">MyOrders</string>
+    <string name="subscriptionOrders">Subscription Orders</string>
+    <string name="subscription">Subscription</string>
     <string name="meals">Meals</string>
     <string name="mypackages">MyPackages</string>
     <string name="adds">Adds</string>

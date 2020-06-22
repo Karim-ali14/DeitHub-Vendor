@@ -109,6 +109,78 @@
 
             <LinearLayout
                 android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="2dp"
+                tools:ignore="RtlHardcoded"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:id="@+id/nav_mySubscriptionOrders">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@string/myorders"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/pencil" />
+
+                <TextView
+                    android:id="@+id/nav_SubscriptionOrders"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="start"
+                    android:text="@string/subscriptionOrders"
+                    android:textSize="@dimen/_15sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="2dp"
+                tools:ignore="RtlHardcoded"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:id="@+id/nav_Subscription">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@string/myorders"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/pencil" />
+
+                <TextView
+                    android:id="@+id/nav_SubscriptionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="start"
+                    android:text="@string/subscription"
+                    android:textSize="@dimen/_15sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
                 android:id="@+id/nav_myMeals"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"

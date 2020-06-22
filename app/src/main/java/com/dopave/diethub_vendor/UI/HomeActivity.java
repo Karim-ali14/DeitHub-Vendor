@@ -111,6 +111,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }else if (view.getId() == R.id.nav_Consulting ){
             startActivity(new Intent(this,Conditions_Activity.class));
             drawer.closeDrawer(GravityCompat.START);
+        }else if (view.getId() == R.id.nav_mySubscriptionOrders ){
+            startActivity(new Intent(this,SubscriptionsActivity.class)
+                    .putExtra("type","nav_mySubscriptionOrders"));
+            drawer.closeDrawer(GravityCompat.START);
+        }else if (view.getId() == R.id.nav_Subscription ){
+            startActivity(new Intent(this,SubscriptionsActivity.class)
+                    .putExtra("type","nav_Subscription"));
+            drawer.closeDrawer(GravityCompat.START);
         }else if (view.getId() == R.id.nav_aboutApp ){
             startActivity(new Intent(this,AboutUs_Activity.class));
             drawer.closeDrawer(GravityCompat.START);

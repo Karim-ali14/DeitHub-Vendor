@@ -339,7 +339,7 @@
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/TimeLayout"
                 />
 
             <TextView
@@ -359,7 +359,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/DetailsTexts" >
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@id/TimeLayout">
                 <TextView
                     android:id="@+id/Time"
                     android:layout_width="wrap_content"
@@ -492,7 +493,7 @@
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/LayoutOfClientDetails"
             android:layout_width="0dp"
