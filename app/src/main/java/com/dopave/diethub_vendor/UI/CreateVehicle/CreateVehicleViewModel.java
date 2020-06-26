@@ -7,10 +7,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.CreateVehicleRequest;
+import com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleRespons;
+import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
+
+import java.util.List;
 
 public class CreateVehicleViewModel extends ViewModel {
     public CreateVehicleRepository repository;
@@ -37,5 +41,14 @@ public class CreateVehicleViewModel extends ViewModel {
     public LiveData<GetVehicleData> getVehicleData(String deliveryId, final Context context,
                                                    final ProgressDialog dialog){
         return repository.getVehicleData(deliveryId, context, dialog);
+    }
+
+    LiveData<Data> updateVehicle(String vehicleId, String Number, String vehicleModel,
+                                 int selectedYear, int vehicleTypes,
+                                 String drivingLicenceImage,
+                                 String vehicleLicenceImage, List<Image> list,
+                                 final Context context,ProgressDialog dialog){
+        return repository.updateVehicle(vehicleId, Number, vehicleModel, selectedYear,
+                vehicleTypes, drivingLicenceImage, vehicleLicenceImage, list, context,dialog);
     }
 }

@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 
 import java.util.Locale;
@@ -44,8 +45,10 @@ public class SplashActivity extends AppCompatActivity {
                         }
                     }
                     Thread.sleep(2000);
-                    startActivity(new Intent(getApplicationContext(), Login_inActivity.class));
-                    finish(); // finish(); because This Activity close After move To Next Activity And Next Activity will Be Launcher
+                    startActivity(new Intent(getApplicationContext(), CreateVehicleActivity.class)
+                            .putExtra("type","create"));
+                    finish(); // finish(); because This Activity close After move To Next Activity
+                    // And Next Activity will Be Launcher
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -49,6 +49,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -128,14 +130,14 @@ public class CreateDeliveryActivity extends AppCompatActivity {
 
         editTextChangeStatus();
 
-        getCities();
-        if (getIntent().getExtras().getString("type").equals("update")) {
-            Password.setVisibility(View.GONE);
-            RePassword.setVisibility(View.GONE);
-            delivery = getIntent().getExtras().getParcelable("delivery");
-            if (delivery != null)
-                setData();
-        }
+//        getCities();
+//        if (getIntent().getExtras().getString("type").equals("update")) {
+//            Password.setVisibility(View.GONE);
+//            RePassword.setVisibility(View.GONE);
+//            delivery = getIntent().getExtras().getParcelable("delivery");
+//            if (delivery != null)
+//                setData();
+//        }
     }
 
     private void setData() {
@@ -281,10 +283,11 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
                         byte[] imageBytes = baos.toByteArray();
                         String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-                        Log.i("TTTTTT",imageString);
+                        Log.i("TTTTTT1",ConvertBitmapToString(bitmap));
+                        Log.i("TTTTTT2",imageString);
                         DeliveryImage = imageString;
                         byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -387,4 +390,19 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         }
 
     }
+
+    public static String ConvertBitmapToString(Bitmap bitmap){
+        String encodedImage = "";
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, byteArrayOutputStream);
+        try {
+            encodedImage= URLEncoder.encode(Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return encodedImage;
+    }
+
 }

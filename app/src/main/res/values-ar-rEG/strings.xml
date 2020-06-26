@@ -121,4 +121,10 @@
     <string name="Ratings">التقييمات</string>
     <string name="ClientInfo">معلومات العميل</string>
 
+    <string name="donthaveVehicle">هذا المندوب لس له مركبه</string>
+    <string name="deleteDelivery">تم المسح المندوب بنجاح</string>
+    <string name="noDeliveries">لا يوجد اي مناديب بعد</string>
+    <string name="Updated">تم التحديث</string>
+    <string name="delete">مسح</string>
+
 </resources>

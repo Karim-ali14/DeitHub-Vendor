@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import com.dopave.diethub_vendor.Adapter.AdapterForResImage;
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class SettingsFragment extends Fragment {
         Layout_Setting = view.findViewById(R.id.Layout_Setting);
         Recycler.setHasFixedSize(true);
         Recycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        Recycler.setAdapter(new AdapterForResImage(getData(),getContext()));
+//        Recycler.setAdapter(new AdapterForResImage(getData(), getActivity()));
         Layout_Setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

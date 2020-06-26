@@ -15,11 +15,16 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -28,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,40 +45,50 @@ import com.dopave.diethub_vendor.Models.CreateVehicle.Request.DrivingLicence;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.VehicleLicence;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleRespons;
+import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
-import com.dopave.diethub_vendor.Models.UpdateVehicle.UpdateVehicle;
 import com.dopave.diethub_vendor.Models.VehicleTypes.RowVehicleTypes;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class CreateVehicleActivity extends AppCompatActivity {
+    private static final int SELECT_IMAGE = 1;
     RecyclerView Recycler;
-    ConstraintLayout LayoutCreateVehicles;
+    ConstraintLayout LayoutCreateVehicles,YearManufactureLayout,VehicleTypeLayout;
     EditText VehicleID,VehicleModel;
     Spinner spinnerYears,spinnerVehicleType;
     RowVehicleTypes rowVehicleTypes;
     TextView VehicleTypeSelected,YearSelected;
-    boolean firstSelect = false;
+    boolean IsSelectedVehicleType,IsSelectedVehicleYears ;
     int selectedYear = 0;
     CreateVehicleViewModel viewModel;
     String deliveryId;
     ProgressDialog dialog;
     GetVehicleData VehicleData;
+    VehicleTypes vehicleTypes;
+    ImageView Type_VehicleImage,YearImage;
+    int i = 0;
+    int SpinnerYearClick = 0;
+    int SpinnerVehicleClick = 0;
+    boolean firstOpen,isSpinnerYear,isSpinnerVehicle;
+    List<com.dopave.diethub_vendor.Models.GetVehicles.Image> list;
+    List<Image> listImageRequest;
+    int numberOfIndexes = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_vehicle);
         dialog = new ProgressDialog(this);
         dialog.show();
+        listImageRequest = new ArrayList<>();
         viewModel = ViewModelProviders.of(this).get(CreateVehicleViewModel.class);
         YearSelected = findViewById(R.id.YearSelected);
         VehicleTypeSelected = findViewById(R.id.VehicleTypeSelected);
@@ -81,10 +97,13 @@ public class CreateVehicleActivity extends AppCompatActivity {
         Recycler = findViewById(R.id.Recycler_Res_Icons);
         Recycler.setHasFixedSize(true);
         Recycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        Recycler.setAdapter(new AdapterForResImage(getData(),this));
         LayoutCreateVehicles = findViewById(R.id.LayoutCreateVehicles);
+        YearManufactureLayout = findViewById(R.id.YearManufactureLayout);
+        VehicleTypeLayout = findViewById(R.id.VehicleTypeLayout);
         VehicleID = findViewById(R.id.VehicleID);
         VehicleModel = findViewById(R.id.VehicleModel);
+        YearImage = findViewById(R.id.YearImage);
+        Type_VehicleImage = findViewById(R.id.Type_VehicleImage);
         LayoutCreateVehicles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +111,22 @@ public class CreateVehicleActivity extends AppCompatActivity {
             }
         });
 
+        getChangeEditText();
+
+        getWindow().getDecorView().setSystemUiVisibility
+                (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
+                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        if (getIntent().getExtras().getString("type").equals("update")) {
+            deliveryId = getIntent().getExtras().getString("deliveryId");
+            getVehicleData();
+        }else{
+            getVehicleTypes();
+        }
+
+    }
+
+    private void getChangeEditText() {
         VehicleID.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -111,26 +146,39 @@ public class CreateVehicleActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus){
                     VehicleModel.setBackground(getResources().getDrawable(R.drawable.style_textinput_active));
-                    VehicleModel.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(CreateVehicleActivity.this,R.drawable.pencil_active),null,null,null);
+                    VehicleModel.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(CreateVehicleActivity.this,R.drawable.steering_wheel_active),null,null,null);
                 }
                 else {
                     VehicleModel.setBackground(getResources().getDrawable(R.drawable.style_textinput));
-                    VehicleModel.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(CreateVehicleActivity.this,R.drawable.pencil_),null,null,null);
+                    VehicleModel.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(CreateVehicleActivity.this,R.drawable.steering_wheel),null,null,null);
 
                 }
             }
         });
+        spinnerYears.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
-        getWindow().getDecorView().setSystemUiVisibility
-                (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
-                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if (getIntent().getExtras().getString("type").equals("update")) {
-            deliveryId = getIntent().getExtras().getString("deliveryId");
-            getVehicleData();
-        }else{
-            getVehicleTypes();
-        }
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    YearImage.setImageResource(R.drawable.steering_wheel_active);
+                    YearManufactureLayout.setBackground(getResources().getDrawable(R.drawable.style_textinput_active));
+                    // Load your spinner here
+                    isSpinnerYear = true;
+                }
+                return false;
+            }
+        });
+        spinnerVehicleType.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    Type_VehicleImage.setImageResource(R.drawable.pencil_active);
+                    VehicleTypeLayout.setBackground(getResources().getDrawable(R.drawable.style_textinput_active));
+                    isSpinnerVehicle = true;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -148,23 +196,21 @@ public class CreateVehicleActivity extends AppCompatActivity {
         VehicleID.setText(VehicleData.getData().getNumber());
         VehicleModel.setText(VehicleData.getData().getModel());
         spinnerYears.setSelection(VehicleData.getData().getYear());
+        list.addAll(VehicleData.getData().getImages());
+        numberOfIndexes = list.size();
+        Recycler.setAdapter(new AdapterForResImage(list,this,listImageRequest,"update",numberOfIndexes,Recycler));
         getVehicleTypes();
     }
 
-    private List<String> getData(){
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
+    private List<com.dopave.diethub_vendor.Models.GetVehicles.Image> getData(){
+       list = new ArrayList<>();
+       list.add(new com.dopave.diethub_vendor.Models.GetVehicles.Image());
         return list;
     }
 
     public void onClick(View view) {
         if (getIntent().getExtras().getString("type").equals("update")) {
-            updateVehcle();
+            updateVehicle();
         }else {
             if (VehicleID.getText().toString().isEmpty())
                 Toast.makeText(this, "Enter Your Name", Toast.LENGTH_SHORT).show();
@@ -175,11 +221,29 @@ public class CreateVehicleActivity extends AppCompatActivity {
         }
     }
 
-    private void updateVehcle() {
-//        Common.getAPIRequest().updateVehicle("Bearer "+
-//                Common.currentPosition.getData().getToken().getAccessToken(),
-//                deliveryId,VehicleData.getData().getId(),new UpdateVehicle(
-//                        VehicleID.getText().toString(),VehicleModel.getText().toString(),VehicleTypeSelected,))
+    private void updateVehicle() {
+        dialog.show();
+        String ImageUrl = "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NCIgaGVpZ2h0PSI0Ni4yNSIgdmlld0JveD0iMCAwIDc0IDQ2LjI1Ij48ZGVmcz48c3R5bGU+LmF7ZmlsbDojZmZmO308L3N0eWxlPjwvZGVmcz48cGF0aCBjbGFzcz0iYSIgZD0iTTY5LjY2MywxNS45SDY4LjIxOHYtNi41QTUuNzc5LDUuNzc5LDAsMCwwLDU5LjQsNC40NzksNS43ODksNS43ODksMCwwLDAsNTMuNzY1LDBoMGE1Ljc4OCw1Ljc4OCwwLDAsMC01Ljc4MSw1Ljc4MVYxNS45SDI2LjAxN1Y1Ljc4MUE1Ljc4Miw1Ljc4MiwwLDAsMCwxNC42LDQuNDc5LDUuNzc5LDUuNzc5LDAsMCwwLDUuNzgxLDkuMzk1djYuNUg0LjMzNUE0LjM0MSw0LjM0MSwwLDAsMCwwLDIwLjIzNHY1Ljc4MWE0LjM0MSw0LjM0MSwwLDAsMCw0LjMzNiw0LjMzNkg1Ljc4MXY2LjVBNS43NzksNS43NzksMCwwLDAsMTQuNiw0MS43NzFhNS43ODksNS43ODksMCwwLDAsNS42MzIsNC40NzloMGE1Ljc4OCw1Ljc4OCwwLDAsMCw1Ljc4MS01Ljc4MVYzMC4zNTJINDcuOTgyVjQwLjQ2OWE1Ljc4Miw1Ljc4MiwwLDAsMCwxMS40MTUsMS4zLDUuNzc5LDUuNzc5LDAsMCwwLDguODIxLTQuOTE2di02LjVoMS40NDVBNC4zNDEsNC4zNDEsMCwwLDAsNzQsMjYuMDE2VjIwLjIzNEE0LjM0MSw0LjM0MSwwLDAsMCw2OS42NjMsMTUuOVpNNS43ODEsMjcuNDYxSDQuMzM1QTEuNDQ3LDEuNDQ3LDAsMCwxLDIuODksMjYuMDE2VjIwLjIzNGExLjQ0NywxLjQ0NywwLDAsMSwxLjQ0NS0xLjQ0NUg1Ljc4MVptOC42NzIsOS4zOTVhMi44OTEsMi44OTEsMCwwLDEtNS43ODEsMFY5LjM5NGEyLjg5MSwyLjg5MSwwLDAsMSw1Ljc4MSwwWm04LjY3NCwzLjYxM2EyLjg5NCwyLjg5NCwwLDAsMS0yLjg5MSwyLjg5MWgwYTIuODk0LDIuODk0LDAsMCwxLTIuODkxLTIuODkxVjUuNzgxYTIuODkxLDIuODkxLDAsMCwxLDUuNzgzLDBaTTQ3Ljk3NCwyMS42OEgzNy44NjdhMS40NDUsMS40NDUsMCwwLDAsMCwyLjg5MUg0Ny45NzR2Mi44OTFIMjYuMDA5VjE4Ljc4OUg0Ny45NzRabTguNjgyLDE4Ljc4OWEyLjg5MSwyLjg5MSwwLDAsMS01Ljc4MywwVjIzLjJhLjg0OS44NDksMCwwLDEtLjAwOC4wOTR2LS4zMzVhLjg0OS44NDksMCwwLDEsLjAwOC4wOTRWNS43ODFhMi44OTQsMi44OTQsMCwwLDEsMi44OTEtMi44OTFoMGEyLjg5NCwyLjg5NCwwLDAsMSwyLjg5MSwyLjg5MVptOC42NzItMy42MTNhMi44OTEsMi44OTEsMCwwLDEtNS43ODEsMFY5LjM5NWEyLjg5MSwyLjg5MSwwLDAsMSw1Ljc4MSwwWm01Ljc4MS0xMC44NGExLjQ0NywxLjQ0NywwLDAsMS0xLjQ0NSwxLjQ0NUg2OC4yMThWMTguNzg5aDEuNDQ1YTEuNDQ3LDEuNDQ3LDAsMCwxLDEuNDQ1LDEuNDQ1Wm0wLDAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMDAxIDApIi8+PHBhdGggY2xhc3M9ImEiIGQ9Ik0yMTMuNDYyLDE1Mi44OTFhMS40NDUsMS40NDUsMCwwLDEsMC0yLjg5MWgwYTEuNDQ1LDEuNDQ1LDAsMCwxLDAsMi44OTFabTAsMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4MS4zNzMgLTEyOC4zMikiLz48L3N2Zz4=";
+        List<Image> list = new ArrayList<>();
+        list.add(new Image(ImageUrl));
+        list.add(new Image(ImageUrl));
+        list.add(new Image(ImageUrl));
+        list.add(new Image(ImageUrl));
+        list.add(new Image(ImageUrl));
+
+        viewModel.updateVehicle(VehicleData.getData().getId()+""
+                ,VehicleID.getText().toString(),VehicleModel.getText().toString(),selectedYear
+                ,rowVehicleTypes.getId(),ImageUrl,ImageUrl,list,this,dialog)
+                .observe(this, new Observer<Data>() {
+            @Override
+            public void onChanged(Data data) {
+                Toast.makeText(CreateVehicleActivity.this,
+                        getResources().getString(R.string.Updated), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CreateVehicleActivity.this, HomeActivity.class)
+                .putExtra("type","CreateDeliveryActivity")
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
     }
 
     private void showSuccessDialog() {
@@ -210,7 +274,6 @@ public class CreateVehicleActivity extends AppCompatActivity {
         VehicleID.clearFocus();
         VehicleModel.clearFocus();
         LayoutCreateVehicles.setDescendantFocusability(dfValue);
-
     }
 
     private void createVehicle(){
@@ -247,9 +310,8 @@ public class CreateVehicleActivity extends AppCompatActivity {
 //                dialog.dismiss();
 //            }
 //        });
-
-        List<Image> list = new ArrayList<>();
-        list.add(new Image(ImageUrl));
+        List<com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image> list = new ArrayList<>();
+        list.add(new com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image(ImageUrl));
         viewModel.createVehicle("Bearer "+
                 Common.currentPosition.getData().getToken().getAccessToken(),
                 Common.currentPosition.getData().getProvider().getId()+"",
@@ -272,10 +334,13 @@ public class CreateVehicleActivity extends AppCompatActivity {
             @Override
             public void onChanged(Years years) {
                 dialog.dismiss();
-                Log.i("TTTTTT",years.getData().toString());
+                if (getIntent().getExtras().getString("type").equals("create")) {
+                    Recycler.setAdapter(new AdapterForResImage(getData(),
+                            CreateVehicleActivity.this, listImageRequest, "create",
+                            0, Recycler));
+                }
                 AdapterOfSpinnerYear arrayAdapter = new AdapterOfSpinnerYear(CreateVehicleActivity.this,
                         R.layout.city_item,years.getData());
-
                 spinnerYears.setAdapter(arrayAdapter);
                 spinnerYears.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -283,6 +348,11 @@ public class CreateVehicleActivity extends AppCompatActivity {
                         selectedYear = (Integer) parent.getItemAtPosition(position);
                         YearSelected.setText(selectedYear+"");
                         YearSelected.setTextColor(getResources().getColor(R.color.black));
+                        if (getIntent().getExtras().getString("type").equals("update") && i ==1) {
+                            i++;
+                            selectedYear = VehicleData.getData().getYear();
+                            YearSelected.setText(selectedYear+"");
+                        }
                     }
 
                     @Override
@@ -290,8 +360,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
 
                     }
                 });
-                selectedYear = VehicleData.getData().getYear();
-                YearSelected.setText(selectedYear+"");
+
             }
         });
     }
@@ -299,34 +368,74 @@ public class CreateVehicleActivity extends AppCompatActivity {
     private void getVehicleTypes(){
         viewModel.getAllVehicleTypes(this).observe(this, new Observer<VehicleTypes>() {
             @Override
-            public void onChanged(VehicleTypes vehicleTypes) {
+            public void onChanged(final VehicleTypes vehicleTypes) {
+                CreateVehicleActivity.this.vehicleTypes = vehicleTypes;
                 getYears();
                 AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(CreateVehicleActivity.this,
                         R.layout.city_item,vehicleTypes.getData().getRowVehicleTypes());
 
                 spinnerVehicleType.setAdapter(arrayAdapter);
+
                 spinnerVehicleType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Toast.makeText(CreateVehicleActivity.this, "",
+                                Toast.LENGTH_SHORT).show();
                         rowVehicleTypes = ((RowVehicleTypes) parent.getItemAtPosition(position));
                         VehicleTypeSelected.setText(((RowVehicleTypes) parent.getItemAtPosition(position)).getType());
                         VehicleTypeSelected.setTextColor(getResources().getColor(R.color.black));
+                        if (getIntent().getExtras().getString("type").equals("update") && i == 0) {
+                            i++;
+                            for (RowVehicleTypes row : vehicleTypes.getData().getRowVehicleTypes()) {
+                                if (row.getId() == VehicleData.getData().getVehicleTypeId()) {
+                                    VehicleTypeSelected.setText(row.getType());
+                                    rowVehicleTypes = row;
+                                    Log.i("JJJJJJ", "1");
+                                    Log.i("GGGGGGG", row.getType());
+                                }
+                            }
+                        }
+                        Type_VehicleImage.setImageResource(R.drawable.pencil_);
+                        VehicleTypeLayout.setBackground(getResources().getDrawable(R.drawable.style_textinput));
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
+                        Type_VehicleImage.setImageResource(R.drawable.pencil_);
+                        VehicleTypeLayout.setBackground(getResources().getDrawable(R.drawable.style_textinput));
+                        Toast.makeText(CreateVehicleActivity.this, "",
+                                Toast.LENGTH_SHORT).show();
 
                     }
                 });
-                for (RowVehicleTypes row : vehicleTypes.getData().getRowVehicleTypes()){
-                    Log.i("TTTTTTT",(row.getId() == VehicleData.getData().getVehicleTypeId()) +"");
-                    if (row.getId() == VehicleData.getData().getVehicleTypeId()){
-                           VehicleTypeSelected.setText(row.getType());
-                           rowVehicleTypes = row;
-                    }
-                }
             }
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged (boolean hasFocus) {
+        if (!firstOpen){
+            closeKeyBoard();
+            firstOpen = true;
+        }
+        if (isSpinnerYear){
+            if (SpinnerYearClick == 0)
+                SpinnerYearClick++;
+            else {
+                SpinnerYearClick = 0;
+                YearImage.setImageResource(R.drawable.steering_wheel);
+                YearManufactureLayout.setBackground(getResources().getDrawable(R.drawable.style_textinput));
+            }
+        }
+        if (isSpinnerVehicle){
+            if (SpinnerVehicleClick == 0)
+                SpinnerVehicleClick++;
+            else {
+                SpinnerVehicleClick = 0;
+                Type_VehicleImage.setImageResource(R.drawable.pencil_);
+                VehicleTypeLayout.setBackground(getResources().getDrawable(R.drawable.style_textinput));
+            }
+        }
     }
 
     public class AdapterOfSpinner extends ArrayAdapter<RowVehicleTypes> {
@@ -387,6 +496,45 @@ public class CreateVehicleActivity extends AppCompatActivity {
             return vv;
         }
 
+    }
+
+    public void openGallery(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SELECT_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 1, baos);
+                        byte[] imageBytes = baos.toByteArray();
+                        String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+                        list.add(new com.dopave.diethub_vendor.Models.GetVehicles.Image(bitmap));
+                        listImageRequest.add(new Image(imageString));
+                        if (getIntent().getExtras().getString("type").equals("update")) {
+                            Recycler.setAdapter(new AdapterForResImage(list,this,
+                                    listImageRequest,"update",numberOfIndexes,Recycler));
+                        }else {
+                            Recycler.setAdapter(new AdapterForResImage(list,this,
+                                    listImageRequest,"create",numberOfIndexes,Recycler));
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED)  {
+                Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }

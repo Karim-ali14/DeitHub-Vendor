@@ -119,4 +119,10 @@
     <string name="Calories">Calories</string>
     <string name="Ratings">Ratings</string>
     <string name="ClientInfo">Client info</string>
+
+    <string name="donthaveVehicle">this delivery don"'"t have vehicle </string>
+    <string name="deleteDelivery">Delivery successfully deleted</string>
+    <string name="noDeliveries">there aren"'"t any deliveries yet</string>
+    <string name="Updated">Updated</string>
+    <string name="delete">delete</string>
 </resources>

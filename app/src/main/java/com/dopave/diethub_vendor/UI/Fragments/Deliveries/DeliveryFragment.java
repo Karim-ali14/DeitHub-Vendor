@@ -19,8 +19,10 @@ import android.widget.Toast;
 import com.dopave.diethub_vendor.Adapter.AdapterForDelegate;
 
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
+import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateDelivery.CreateDeliveryActivity;
+import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleViewModel;
 
 
 /**
@@ -30,6 +32,7 @@ public class DeliveryFragment extends Fragment {
     RecyclerView recyclerView;
     LinearLayout AddDelegateLayout;
     DeliveryViewModel viewModel;
+    CreateVehicleViewModel vehicleViewModel;
     public DeliveryFragment() {
         // Required empty public constructor
     }
@@ -40,31 +43,40 @@ public class DeliveryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_delivery, container, false);
-        ProgressDialog dialog = new ProgressDialog(getActivity());
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.show();
         viewModel = ViewModelProviders.of(this).get(DeliveryViewModel.class);
         recyclerView = view.findViewById(R.id.recyclerForDelegate);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         AddDelegateLayout = view.findViewById(R.id.AddDelegateLayout);
+        vehicleViewModel = ViewModelProviders.of(this).get(CreateVehicleViewModel.class);
         AddDelegateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), CreateDeliveryActivity.class).putExtra("type","normal"));
             }
         });
-
-        getAllDelivery(dialog);
+        vehicleViewModel.getAllVehicleTypes(getActivity()).observe(getActivity(), new Observer<VehicleTypes>() {
+            @Override
+            public void onChanged(VehicleTypes vehicleTypes) {
+                getAllDelivery(dialog,vehicleTypes);
+            }
+        });
         return view;
     }
 
-    private void getAllDelivery(ProgressDialog dialog){
-        dialog.show();
+    private void getAllDelivery(ProgressDialog dialog, final VehicleTypes vehicleTypes){
         viewModel.getAllDeliveries(dialog,getActivity()).observe(getActivity(),
                 new Observer<GetDeliveriesData>() {
             @Override
             public void onChanged(GetDeliveriesData getDeliveriesData) {
                 if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
-                    recyclerView.setAdapter(new AdapterForDelegate(viewModel,getDeliveriesData.getData().getDeliveryRows(),getContext(),recyclerView));
+                {
+                    recyclerView.setAdapter(new AdapterForDelegate(
+                            getDeliveriesData.getData().getDeliveryRows(),getContext(),recyclerView,
+                            viewModel,vehicleTypes));
+                }
                 else
                     Toast.makeText(getActivity(), "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
             }

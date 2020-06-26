@@ -102,9 +102,9 @@ public interface APIRequest {
     Call<Years> getAllYears();
 
     //Todo Update Vehicle
-    @PUT("deliveryrep/{deliveryId}/vehicle/vehicleId")
+    @PUT("provider/{providerId}/vehicle/{vehicleId}")
     Call<Data> updateVehicle (@Header("Authorization") String Auth,
-                             @Path("deliveryId") String deliveryId,
+                             @Path("providerId") String deliveryId,
                              @Path("vehicleId") String vehicleId,
                              @Body UpdateVehicle updateVehicle);
 }

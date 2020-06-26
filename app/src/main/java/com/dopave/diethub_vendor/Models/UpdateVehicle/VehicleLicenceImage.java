@@ -10,6 +10,10 @@ public class VehicleLicenceImage {
     @Expose
     private String base64;
 
+    public VehicleLicenceImage(String base64) {
+        this.base64 = base64;
+    }
+
     public String getBase64() {
         return base64;
     }

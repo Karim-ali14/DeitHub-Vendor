@@ -2,6 +2,8 @@
 package com.dopave.diethub_vendor.Models.UpdateVehicle;
 
 import java.util.List;
+
+import com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,6 +18,9 @@ public class UpdateVehicle {
     @SerializedName("year")
     @Expose
     private Integer year;
+    @SerializedName("vehicle_type_id")
+    @Expose
+    private Integer vehicle_type_id;
     @SerializedName("driving_licence_image")
     @Expose
     private DrivingLicenceImage drivingLicenceImage;
@@ -26,13 +31,22 @@ public class UpdateVehicle {
     @Expose
     private List<Image> images = null;
 
-    public UpdateVehicle(String number, String model, Integer year, DrivingLicenceImage drivingLicenceImage, VehicleLicenceImage vehicleLicenceImage, List<Image> images) {
+    public UpdateVehicle(String number, String model, Integer year, Integer vehicle_type_id, DrivingLicenceImage drivingLicenceImage, VehicleLicenceImage vehicleLicenceImage, List<Image> images) {
         this.number = number;
         this.model = model;
         this.year = year;
+        this.vehicle_type_id = vehicle_type_id;
         this.drivingLicenceImage = drivingLicenceImage;
         this.vehicleLicenceImage = vehicleLicenceImage;
         this.images = images;
+    }
+
+    public Integer getVehicle_type_id() {
+        return vehicle_type_id;
+    }
+
+    public void setVehicle_type_id(Integer vehicle_type_id) {
+        this.vehicle_type_id = vehicle_type_id;
     }
 
     public String getNumber() {

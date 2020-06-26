@@ -1,6 +1,8 @@
 
 package com.dopave.diethub_vendor.Models.GetVehicles;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -24,6 +26,23 @@ public class Image {
     @SerializedName("vehicleImage")
     @Expose
     private VehicleImage vehicleImage;
+
+    private Bitmap imageAdd;
+
+    public Image(Bitmap imageAdd) {
+        this.imageAdd = imageAdd;
+    }
+
+    public Image() {
+    }
+
+    public Bitmap getImageAdd() {
+        return imageAdd;
+    }
+
+    public void setImageAdd(Bitmap imageAdd) {
+        this.imageAdd = imageAdd;
+    }
 
     public Integer getId() {
         return id;

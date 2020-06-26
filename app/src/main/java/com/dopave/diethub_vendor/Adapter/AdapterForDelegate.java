@@ -22,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.GetDeliveries.DeliveryRow;
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
+import com.dopave.diethub_vendor.Models.VehicleTypes.RowVehicleTypes;
+import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateDelivery.CreateDeliveryActivity;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
@@ -44,12 +46,17 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
     Context context;
     RecyclerView recyclerView;
     DeliveryViewModel viewModel;
-    public AdapterForDelegate(DeliveryViewModel viewModel,List<DeliveryRow> list, Context context, RecyclerView recyclerView) {
+    VehicleTypes vehicleTypes;
+
+    public AdapterForDelegate(List<DeliveryRow> list, Context context, RecyclerView recyclerView,
+                              DeliveryViewModel viewModel, VehicleTypes vehicleTypes) {
         this.list = list;
         this.context = context;
         this.recyclerView = recyclerView;
         this.viewModel = viewModel;
+        this.vehicleTypes = vehicleTypes;
     }
+
     @NonNull
     @Override
     public ViewHolderForDelegate onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -75,7 +82,10 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
                                 return true;
                                 case R.id.action_modify_vehicle :{
                                     if (row.getVehicle() == null){
-                                        Toast.makeText(context, "هذا المندوب لس له مركبه", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context,
+                                                context.getResources()
+                                                        .getString(R.string.donthaveVehicle)
+                                                , Toast.LENGTH_SHORT).show();
                                         return true;
                                     }else {
                                         updateVehicle(row.getId());
@@ -96,10 +106,25 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
         });
         if (row.getImage() != null){
             String path = Common.BaseUrl + "images/" + row.getImage().getFor() + "/" + Uri.encode(row.getImage().getName());
-            Log.i("TTTTTTT",path);
             Picasso.with(context).load(path).into(holder.IconOfDelegate);
         }
 
+        if (row.getVehicle() != null){
+            for (RowVehicleTypes rowVehicleTypes : vehicleTypes.getData().getRowVehicleTypes()) {
+                if (row.getVehicle().getVehicleTypeId() == rowVehicleTypes.getId()) {
+                    holder.NameOfVehicle.setText(rowVehicleTypes.getType());
+                }
+            }
+            holder.ModelOfVehicle.setText(", "+row.getVehicle().getModel()+" ,");
+            holder.YearOfVehicle.setText(row.getVehicle().getYear()+"");
+            holder.NameOfVehicle.setVisibility(View.VISIBLE);
+            holder.ModelOfVehicle.setVisibility(View.VISIBLE);
+            holder.YearOfVehicle.setVisibility(View.VISIBLE);
+        }else {
+            holder.NameOfVehicle.setVisibility(View.GONE);
+            holder.YearOfVehicle.setVisibility(View.GONE);
+            holder.ModelOfVehicle.setVisibility(View.GONE);
+        }
     }
 
     private void updateDelivery(DeliveryRow row) {
@@ -119,15 +144,18 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
 
     public class ViewHolderForDelegate extends RecyclerView.ViewHolder{
         CircleImageView IconOfDelegate;
-        TextView NameOfDelegate,AddressOfDelegate,DesOfDelegate;
-        LinearLayout MenuLayout;
+        TextView NameOfDelegate,AddressOfDelegate,NameOfVehicle,ModelOfVehicle,YearOfVehicle;
+        LinearLayout MenuLayout,Vehicle_DetailsLayout;
         public ViewHolderForDelegate(@NonNull View itemView) {
             super(itemView);
             IconOfDelegate = itemView.findViewById(R.id.IconOfDelegate);
             NameOfDelegate = itemView.findViewById(R.id.NameOfDelegate);
             AddressOfDelegate = itemView.findViewById(R.id.AddressOfDelegate);
-            DesOfDelegate = itemView.findViewById(R.id.DesOfDelegate);
+            NameOfVehicle = itemView.findViewById(R.id.NameOfVehicle);
+            ModelOfVehicle = itemView.findViewById(R.id.ModelOfVehicle);
+            YearOfVehicle = itemView.findViewById(R.id.YearOfVehicle);
             MenuLayout = itemView.findViewById(R.id.MenuLayout);
+            Vehicle_DetailsLayout = itemView.findViewById(R.id.Vehicle_DetailsLayout);
         }
     }
 
@@ -141,18 +169,23 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
             @Override
             public void onResponse(Call<GetDeliveriesData> call, Response<GetDeliveriesData> response) {
                 if (response.code() == 200){
-                    Toast.makeText(context, "تم المسح المندوب بنجاح", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.deleteDelivery)
+                            , Toast.LENGTH_SHORT).show();
                     viewModel.getAllDeliveries(dialog,context).observe((LifecycleOwner) context,
                             new Observer<GetDeliveriesData>() {
                                 @Override
                                 public void onChanged(GetDeliveriesData getDeliveriesData) {
                                     dialog.dismiss();
                                     if (getDeliveriesData.getData().getDeliveryRows().size() != 0) {
-                                        recyclerView.setAdapter(new AdapterForDelegate(viewModel,getDeliveriesData.getData().getDeliveryRows(), context, recyclerView));
+                                        recyclerView.setAdapter(new AdapterForDelegate(getDeliveriesData.getData().getDeliveryRows(),
+                                                context, recyclerView,viewModel,vehicleTypes));
                                     }
                                     else {
-                                        recyclerView.setAdapter(new AdapterForDelegate(viewModel,getDeliveriesData.getData().getDeliveryRows(), context, recyclerView));
-                                        Toast.makeText(context, "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
+                                        recyclerView.setAdapter(new AdapterForDelegate(getDeliveriesData.getData().getDeliveryRows(),
+                                                context, recyclerView,viewModel,vehicleTypes));
+                                        Toast.makeText(context,
+                                                context.getResources().getString(R.string.noDeliveries)
+                                                , Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
