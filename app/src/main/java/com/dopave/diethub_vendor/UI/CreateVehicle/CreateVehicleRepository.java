@@ -99,15 +99,17 @@ public class CreateVehicleRepository {
         return mutableLiveData;
     }
 
-    public MutableLiveData<CreateVehicleRespons> createVehicle(String Auth,String id,
-                                                               String deliveryId,
+    public MutableLiveData<CreateVehicleRespons> createVehicle(String Auth, String id,
+                                                               final String deliveryId,
                                                                CreateVehicleRequest createVehicleRequest,
-                                                               final Context context){
+                                                               final Context context,
+                                                               final ProgressDialog dialog){
         final MutableLiveData<CreateVehicleRespons> mutableLiveData = new MutableLiveData<>();
         Common.getAPIRequest().createVehicle(Auth, id, deliveryId, createVehicleRequest)
                 .enqueue(new Callback<CreateVehicleRespons>() {
             @Override
             public void onResponse(Call<CreateVehicleRespons> call, Response<CreateVehicleRespons> response) {
+                dialog.dismiss();
                 if (response.code() == 201)
                     mutableLiveData.setValue(response.body());
                 else {
@@ -117,7 +119,7 @@ public class CreateVehicleRepository {
                         Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
 
                         Log.i("TTTTTT",new JSONObject(response.errorBody().string())
-                                .getString("message"));
+                                .getString("message")+" "+response.code());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -128,7 +130,7 @@ public class CreateVehicleRepository {
 
             @Override
             public void onFailure(Call<CreateVehicleRespons> call, Throwable t) {
-
+                dialog.dismiss();
             }
         });
         return mutableLiveData;
@@ -194,8 +196,7 @@ public class CreateVehicleRepository {
                                 .getString("message");
                         Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
 
-                        Log.i("TTTTTT",new JSONObject(response.errorBody().string())
-                                .getString("error").toString());
+                        Log.i("TTTTTT",message+" "+response.code());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {

@@ -227,13 +227,12 @@
             android:id="@+id/drivingLicenseText"
             android:layout_marginTop="@dimen/_20sdp"/>
 
-        <LinearLayout
-            android:id="@+id/drivingLicenseLayout"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/DrivingLicenseLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_100sdp"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
-            android:background="@drawable/style_textinput"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingTop="@dimen/_25sdp"
@@ -241,25 +240,46 @@
             app:layout_constraintEnd_toEndOf="@+id/LineCenter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/drivingLicenseText"
-            android:layout_marginTop="@dimen/_10sdp">
+            android:layout_marginTop="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
+            app:cardElevation="0dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/driving_licence_Image"
+                    android:scaleType="fitXY"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:id="@+id/driving_licence_Add"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pop_plus" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/plus" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:fontFamily="@font/helveticaneuelt_arabic"
-                android:includeFontPadding="false"
-                android:paddingBottom="@dimen/_5sdp"
-                android:text="@string/add_photo"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/_17sdp" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/add_photo"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_17sdp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/CarLicenseText"
@@ -275,12 +295,11 @@
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"/>
 
-        <LinearLayout
-            android:id="@+id/CarLicenseLayout"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/vehicleLicenceLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_100sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/style_textinput"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingTop="@dimen/_25sdp"
@@ -291,25 +310,47 @@
             app:layout_constraintBottom_toTopOf="@id/Confirm"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_45sdp">
+            android:layout_marginBottom="@dimen/_45sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
+            app:cardElevation="0dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/vehicle_licence_Image"
+                    android:scaleType="fitXY"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/style_textinput"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:id="@+id/vehicle_licence_Add">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pop_plus" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/plus" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:fontFamily="@font/helveticaneuelt_arabic"
-                android:includeFontPadding="false"
-                android:paddingBottom="@dimen/_5sdp"
-                android:text="@string/add_photo"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/_17sdp" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/add_photo"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_17sdp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <Button
             android:layout_width="0dp"

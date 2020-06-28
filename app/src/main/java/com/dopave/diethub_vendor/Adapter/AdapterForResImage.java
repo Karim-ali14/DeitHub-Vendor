@@ -3,6 +3,7 @@ package com.dopave.diethub_vendor.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,10 +65,11 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     CreateVehicleActivity createVehicleActivity = (CreateVehicleActivity) context;
-                    createVehicleActivity.openGallery();
+                    createVehicleActivity.openGallery(1);
                 }
             });
-        }else {
+        }
+        else {
             holder.menuIconForImage.setVisibility(View.VISIBLE);
             holder.Add_Photo_Layout.setVisibility(View.GONE);
             holder.imageView.setVisibility(View.VISIBLE);
@@ -77,6 +79,7 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
             else if (image.getFor() != null && image.getName() != null){
                 String path = Common.BaseUrl + "images/" + image.getFor() + "/" +
                         Uri.encode(image.getName());
+                Log.i("imagePath",path);
                 Picasso.with(context).load(path).into(holder.imageView);
             }
         }

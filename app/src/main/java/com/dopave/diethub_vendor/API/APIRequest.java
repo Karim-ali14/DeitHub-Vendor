@@ -83,7 +83,7 @@ public interface APIRequest {
                                                 @Query("include_vehicle_licence") boolean include_vehicle_licence);
 
     //Todo Create Vehicle
-    @POST("provider/{id}/delivery/{deliveryId}/vehicle")
+    @POST("provider/{id}/deliveryrep/{deliveryId}/vehicle")
     Call<CreateVehicleRespons> createVehicle (@Header("Authorization") String Auth,
                                               @Path("id") String id,
                                               @Path("deliveryId") String deliveryId,
@@ -104,7 +104,7 @@ public interface APIRequest {
     //Todo Update Vehicle
     @PUT("provider/{providerId}/vehicle/{vehicleId}")
     Call<Data> updateVehicle (@Header("Authorization") String Auth,
-                             @Path("providerId") String deliveryId,
+                             @Path("providerId") String providerId,
                              @Path("vehicleId") String vehicleId,
                              @Body UpdateVehicle updateVehicle);
 }

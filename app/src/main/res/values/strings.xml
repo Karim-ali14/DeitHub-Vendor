@@ -125,4 +125,5 @@
     <string name="noDeliveries">there aren"'"t any deliveries yet</string>
     <string name="Updated">Updated</string>
     <string name="delete">delete</string>
+    <string name="createVehicle">create Vehicle</string>
 </resources>

@@ -34,8 +34,8 @@ public class CreateVehicleViewModel extends ViewModel {
     public LiveData<CreateVehicleRespons> createVehicle(String Auth, String id,
                                                         String deliveryId,
                                                         CreateVehicleRequest createVehicleRequest,
-                                                        final Context context){
-        return repository.createVehicle(Auth, id, deliveryId, createVehicleRequest, context);
+                                                        final Context context,ProgressDialog dialog){
+        return repository.createVehicle(Auth, id, deliveryId, createVehicleRequest, context,dialog);
     }
 
     public LiveData<GetVehicleData> getVehicleData(String deliveryId, final Context context,

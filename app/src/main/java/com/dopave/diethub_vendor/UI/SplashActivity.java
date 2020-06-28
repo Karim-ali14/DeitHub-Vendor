@@ -45,8 +45,7 @@ public class SplashActivity extends AppCompatActivity {
                         }
                     }
                     Thread.sleep(2000);
-                    startActivity(new Intent(getApplicationContext(), CreateVehicleActivity.class)
-                            .putExtra("type","create"));
+                    startActivity(new Intent(getApplicationContext(), Login_inActivity.class));
                     finish(); // finish(); because This Activity close After move To Next Activity
                     // And Next Activity will Be Launcher
                 } catch (InterruptedException e) {

@@ -3,18 +3,23 @@ package com.dopave.diethub_vendor.Adapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +33,7 @@ import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateDelivery.CreateDeliveryActivity;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryViewModel;
+import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -82,10 +88,7 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
                                 return true;
                                 case R.id.action_modify_vehicle :{
                                     if (row.getVehicle() == null){
-                                        Toast.makeText(context,
-                                                context.getResources()
-                                                        .getString(R.string.donthaveVehicle)
-                                                , Toast.LENGTH_SHORT).show();
+                                        showDialog(row);
                                         return true;
                                     }else {
                                         updateVehicle(row.getId());
@@ -125,6 +128,34 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
             holder.YearOfVehicle.setVisibility(View.GONE);
             holder.ModelOfVehicle.setVisibility(View.GONE);
         }
+    }
+
+    private void showDialog(final DeliveryRow row) {
+        final AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_registraion_success, null);
+        ImageView Icon = view.findViewById(R.id.Icon);
+        Icon.setVisibility(View.GONE);
+        TextView Massage = view.findViewById(R.id.Massage);
+        Massage.setText(context.getResources()
+                .getString(R.string.donthaveVehicle));
+        Button createVehicleButton = view.findViewById(R.id.LoginButton);
+        createVehicleButton.setText(context.getResources()
+                .getString(R.string.createVehicle));
+        Adialog.setView(view);
+        final AlertDialog dialog1 = Adialog.create();
+        dialog1.setCanceledOnTouchOutside(false);
+        dialog1.setCancelable(false);
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog1.show();
+        createVehicleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("tttttt",row.getId()+"");
+                context.startActivity(new Intent(context, CreateVehicleActivity.class)
+                        .putExtra("type","create").putExtra("deliveryId",row.getId()+""));
+                dialog1.dismiss();
+            }
+        });
     }
 
     private void updateDelivery(DeliveryRow row) {
