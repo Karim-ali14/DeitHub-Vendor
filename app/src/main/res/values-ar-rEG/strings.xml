@@ -127,4 +127,6 @@
     <string name="Updated">تم التحديث</string>
     <string name="delete">مسح</string>
     <string name="createVehicle">انشاء المركبة</string>
+
+    <string name="maximum_of_five_pictures">بحد اقصي 5 صور</string>
 </resources>

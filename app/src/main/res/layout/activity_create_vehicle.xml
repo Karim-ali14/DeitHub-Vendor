@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.CreateVehicle.CreateVehicleActivity"    android:fillViewport="true"
+    tools:context=".UI.CreateVehicle.CreateVehicleActivity"
+    android:fillViewport="true"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true">
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -261,6 +262,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:id="@+id/driving_licence_Add"
+                android:layout_marginTop="@dimen/_10sdp"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
@@ -327,12 +329,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/style_textinput"
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_20sdp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:id="@+id/vehicle_licence_Add">
+                android:id="@+id/vehicle_licence_Add"
+                android:layout_marginTop="@dimen/_10sdp"
+                >
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

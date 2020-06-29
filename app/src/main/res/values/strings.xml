@@ -126,4 +126,6 @@
     <string name="Updated">Updated</string>
     <string name="delete">delete</string>
     <string name="createVehicle">create Vehicle</string>
+
+    <string name="maximum_of_five_pictures">A maximum of five pictures</string>
 </resources>

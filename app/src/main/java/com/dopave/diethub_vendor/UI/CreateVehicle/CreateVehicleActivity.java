@@ -68,9 +68,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateVehicleActivity extends AppCompatActivity {
-    private static final int SELECT_IMAGE_FOR_VEHICLE = 1;
-    private static final int SELECT_IMAGE_FOR_DRIVING_LICENSE = 2;
-    private static final int SELECT_IMAGE_FOR_VEHICLE_LICENSE = 3;
+    public static final int SELECT_IMAGE_FOR_VEHICLE = 1;
+    public static final int SELECT_IMAGE_FOR_DRIVING_LICENSE = 2;
+    public static final int SELECT_IMAGE_FOR_VEHICLE_LICENSE = 3;
     RecyclerView Recycler;
     ConstraintLayout LayoutCreateVehicles,YearManufactureLayout,VehicleTypeLayout;
     CardView VehicleLicenceLayout,DrivingLicenseLayout;

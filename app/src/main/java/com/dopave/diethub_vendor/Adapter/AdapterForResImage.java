@@ -61,11 +61,15 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
             holder.Add_Photo_Layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    CreateVehicleActivity createVehicleActivity = (CreateVehicleActivity) context;
-                    createVehicleActivity.openGallery(1);
+                    if (list.size() <= 5) {
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        CreateVehicleActivity createVehicleActivity = (CreateVehicleActivity) context;
+                        createVehicleActivity.openGallery(CreateVehicleActivity.SELECT_IMAGE_FOR_VEHICLE);
+                    }else {
+                        Toast.makeText(context, context.getResources().getString(R.string.maximum_of_five_pictures), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
