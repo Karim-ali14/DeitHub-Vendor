@@ -15,7 +15,7 @@
         >
 
         <ImageView
-            android:id="@+id/imageView9"
+            android:id="@+id/imageSubscription"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
@@ -28,19 +28,39 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/helveticaneuelt_arabic"
             android:text="باقة ايزي دايت"
             android:textColor="#000"
             android:textSize="22dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/MenuLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9"
-            android:fontFamily="@font/helveticaneuelt_arabic"/>
+            app:layout_constraintTop_toBottomOf="@+id/imageSubscription"
+            app:layout_constraintHorizontal_bias=".6"
+            android:textAlignment="center"
+            />
+
+        <LinearLayout
+            android:id="@+id/MenuLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageSubscription">
+
+            <ImageView
+                android:id="@+id/menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_20sdp"
+                android:src="@drawable/menu_points" />
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="باقه لانقاص الوزن - (1200 سعره حراريه) مقدمه في"
+            android:text="باقه لانقاص الوزن - ( 1200 سعره حراريه ) مقدمه في"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

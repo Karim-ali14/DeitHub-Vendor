@@ -218,7 +218,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
 
 
     private void getVehicleData() {
-        viewModel.getVehicleData(deliveryId,this,dialog).observe(this, new Observer<GetVehicleData>() {
+        viewModel.getVehicleData(deliveryId,this,dialog,viewModel).observe(this, new Observer<GetVehicleData>() {
             @Override
             public void onChanged(GetVehicleData getVehicleData) {
                 VehicleData = getVehicleData;
@@ -227,7 +227,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
         });
     }
 
-    private void setData() {
+    public void setData() {
         VehicleID.setText(VehicleData.getData().getNumber());
         VehicleModel.setText(VehicleData.getData().getModel());
         spinnerYears.setSelection(VehicleData.getData().getYear());
@@ -308,8 +308,6 @@ public class CreateVehicleActivity extends AppCompatActivity {
         dialog.show();
         String ImageUrl = "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NCIgaGVpZ2h0PSI0Ni4yNSIgdmlld0JveD0iMCAwIDc0IDQ2LjI1Ij48ZGVmcz48c3R5bGU+LmF7ZmlsbDojZmZmO308L3N0eWxlPjwvZGVmcz48cGF0aCBjbGFzcz0iYSIgZD0iTTY5LjY2MywxNS45SDY4LjIxOHYtNi41QTUuNzc5LDUuNzc5LDAsMCwwLDU5LjQsNC40NzksNS43ODksNS43ODksMCwwLDAsNTMuNzY1LDBoMGE1Ljc4OCw1Ljc4OCwwLDAsMC01Ljc4MSw1Ljc4MVYxNS45SDI2LjAxN1Y1Ljc4MUE1Ljc4Miw1Ljc4MiwwLDAsMCwxNC42LDQuNDc5LDUuNzc5LDUuNzc5LDAsMCwwLDUuNzgxLDkuMzk1djYuNUg0LjMzNUE0LjM0MSw0LjM0MSwwLDAsMCwwLDIwLjIzNHY1Ljc4MWE0LjM0MSw0LjM0MSwwLDAsMCw0LjMzNiw0LjMzNkg1Ljc4MXY2LjVBNS43NzksNS43NzksMCwwLDAsMTQuNiw0MS43NzFhNS43ODksNS43ODksMCwwLDAsNS42MzIsNC40NzloMGE1Ljc4OCw1Ljc4OCwwLDAsMCw1Ljc4MS01Ljc4MVYzMC4zNTJINDcuOTgyVjQwLjQ2OWE1Ljc4Miw1Ljc4MiwwLDAsMCwxMS40MTUsMS4zLDUuNzc5LDUuNzc5LDAsMCwwLDguODIxLTQuOTE2di02LjVoMS40NDVBNC4zNDEsNC4zNDEsMCwwLDAsNzQsMjYuMDE2VjIwLjIzNEE0LjM0MSw0LjM0MSwwLDAsMCw2OS42NjMsMTUuOVpNNS43ODEsMjcuNDYxSDQuMzM1QTEuNDQ3LDEuNDQ3LDAsMCwxLDIuODksMjYuMDE2VjIwLjIzNGExLjQ0NywxLjQ0NywwLDAsMSwxLjQ0NS0xLjQ0NUg1Ljc4MVptOC42NzIsOS4zOTVhMi44OTEsMi44OTEsMCwwLDEtNS43ODEsMFY5LjM5NGEyLjg5MSwyLjg5MSwwLDAsMSw1Ljc4MSwwWm04LjY3NCwzLjYxM2EyLjg5NCwyLjg5NCwwLDAsMS0yLjg5MSwyLjg5MWgwYTIuODk0LDIuODk0LDAsMCwxLTIuODkxLTIuODkxVjUuNzgxYTIuODkxLDIuODkxLDAsMCwxLDUuNzgzLDBaTTQ3Ljk3NCwyMS42OEgzNy44NjdhMS40NDUsMS40NDUsMCwwLDAsMCwyLjg5MUg0Ny45NzR2Mi44OTFIMjYuMDA5VjE4Ljc4OUg0Ny45NzRabTguNjgyLDE4Ljc4OWEyLjg5MSwyLjg5MSwwLDAsMS01Ljc4MywwVjIzLjJhLjg0OS44NDksMCwwLDEtLjAwOC4wOTR2LS4zMzVhLjg0OS44NDksMCwwLDEsLjAwOC4wOTRWNS43ODFhMi44OTQsMi44OTQsMCwwLDEsMi44OTEtMi44OTFoMGEyLjg5NCwyLjg5NCwwLDAsMSwyLjg5MSwyLjg5MVptOC42NzItMy42MTNhMi44OTEsMi44OTEsMCwwLDEtNS43ODEsMFY5LjM5NWEyLjg5MSwyLjg5MSwwLDAsMSw1Ljc4MSwwWm01Ljc4MS0xMC44NGExLjQ0NywxLjQ0NywwLDAsMS0xLjQ0NSwxLjQ0NUg2OC4yMThWMTguNzg5aDEuNDQ1YTEuNDQ3LDEuNDQ3LDAsMCwxLDEuNDQ1LDEuNDQ1Wm0wLDAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMDAxIDApIi8+PHBhdGggY2xhc3M9ImEiIGQ9Ik0yMTMuNDYyLDE1Mi44OTFhMS40NDUsMS40NDUsMCwwLDEsMC0yLjg5MWgwYTEuNDQ1LDEuNDQ1LDAsMCwxLDAsMi44OTFabTAsMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4MS4zNzMgLTEyOC4zMikiLz48L3N2Zz4=";
 
-
-
         Log.i("TTTTT",getIntent().getExtras().getString("deliveryId"));
         viewModel.createVehicle("Bearer "+
                 Common.currentPosition.getData().getToken().getAccessToken(),
@@ -329,82 +327,89 @@ public class CreateVehicleActivity extends AppCompatActivity {
     }
 
     private void getYears(){
-        viewModel.getAllYears(this).observe(this, new Observer<Years>() {
+        viewModel.getAllYears(this,dialog,viewModel).observe(this, new Observer<Years>() {
             @Override
             public void onChanged(Years years) {
-                dialog.dismiss();
-                if (getIntent().getExtras().getString("type").equals("create")) {
-                    Recycler.setAdapter(new AdapterForResImage(list,
-                            CreateVehicleActivity.this, listImageRequest, "create",
-                            0, Recycler));
+                onGetYears(years);
+            }
+        });
+    }
+
+    public void onGetYears(Years years) {
+        if (getIntent().getExtras().getString("type").equals("create")) {
+            Recycler.setAdapter(new AdapterForResImage(list,
+                    CreateVehicleActivity.this, listImageRequest, "create",
+                    0, Recycler));
+        }
+        AdapterOfSpinnerYear arrayAdapter = new AdapterOfSpinnerYear(CreateVehicleActivity.this,
+                R.layout.city_item,years.getData());
+        spinnerYears.setAdapter(arrayAdapter);
+        spinnerYears.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedYear = (Integer) parent.getItemAtPosition(position);
+                YearSelected.setText(selectedYear+"");
+                YearSelected.setTextColor(getResources().getColor(R.color.black));
+                if (getIntent().getExtras().getString("type").equals("update") && i ==1) {
+                    i++;
+                    selectedYear = VehicleData.getData().getYear();
+                    YearSelected.setText(selectedYear+"");
                 }
-                AdapterOfSpinnerYear arrayAdapter = new AdapterOfSpinnerYear(CreateVehicleActivity.this,
-                        R.layout.city_item,years.getData());
-                spinnerYears.setAdapter(arrayAdapter);
-                spinnerYears.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        selectedYear = (Integer) parent.getItemAtPosition(position);
-                        YearSelected.setText(selectedYear+"");
-                        YearSelected.setTextColor(getResources().getColor(R.color.black));
-                        if (getIntent().getExtras().getString("type").equals("update") && i ==1) {
-                            i++;
-                            selectedYear = VehicleData.getData().getYear();
-                            YearSelected.setText(selectedYear+"");
-                        }
-                    }
+            }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
     }
 
     private void getVehicleTypes(){
-        viewModel.getAllVehicleTypes(this).observe(this, new Observer<VehicleTypes>() {
+        viewModel.getAllVehicleTypes(this,dialog,viewModel,"CreateVehicleActivity",null)
+                .observe(this, new Observer<VehicleTypes>() {
             @Override
             public void onChanged(final VehicleTypes vehicleTypes) {
-                CreateVehicleActivity.this.vehicleTypes = vehicleTypes;
-                getYears();
-                AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(CreateVehicleActivity.this,
-                        R.layout.city_item,vehicleTypes.getData().getRowVehicleTypes());
+                onGetVehicleType(vehicleTypes);
+            }
+        });
+    }
 
-                spinnerVehicleType.setAdapter(arrayAdapter);
+    public void onGetVehicleType(final VehicleTypes vehicleTypes){
+        getYears();
+        CreateVehicleActivity.this.vehicleTypes = vehicleTypes;
+        AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(CreateVehicleActivity.this,
+                R.layout.city_item,vehicleTypes.getData().getRowVehicleTypes());
 
-                spinnerVehicleType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        rowVehicleTypes = ((RowVehicleTypes) parent.getItemAtPosition(position));
-                        VehicleTypeSelected.setText(((RowVehicleTypes) parent.getItemAtPosition(position)).getType());
-                        VehicleTypeSelected.setTextColor(getResources().getColor(R.color.black));
-                        if (getIntent().getExtras().getString("type").equals("update") && i == 0) {
-                            i++;
-                            for (RowVehicleTypes row : vehicleTypes.getData().getRowVehicleTypes()) {
-                                if (row.getId() == VehicleData.getData().getVehicleTypeId()) {
-                                    VehicleTypeSelected.setText(row.getType());
-                                    rowVehicleTypes = row;
-                                    Log.i("JJJJJJ", "1");
-                                    Log.i("GGGGGGG", row.getType());
-                                }
-                            }
+        spinnerVehicleType.setAdapter(arrayAdapter);
+
+        spinnerVehicleType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                rowVehicleTypes = ((RowVehicleTypes) parent.getItemAtPosition(position));
+                VehicleTypeSelected.setText(((RowVehicleTypes) parent.getItemAtPosition(position)).getType());
+                VehicleTypeSelected.setTextColor(getResources().getColor(R.color.black));
+                if (getIntent().getExtras().getString("type").equals("update") && i == 0) {
+                    i++;
+                    for (RowVehicleTypes row : vehicleTypes.getData().getRowVehicleTypes()) {
+                        if (row.getId() == VehicleData.getData().getVehicleTypeId()) {
+                            VehicleTypeSelected.setText(row.getType());
+                            rowVehicleTypes = row;
+                            Log.i("JJJJJJ", "1");
+                            Log.i("GGGGGGG", row.getType());
                         }
-                        Type_VehicleImage.setImageResource(R.drawable.pencil_);
-                        VehicleTypeLayout.setBackground(getResources().getDrawable(R.drawable.style_textinput));
                     }
+                }
+                Type_VehicleImage.setImageResource(R.drawable.pencil_);
+                VehicleTypeLayout.setBackground(getResources().getDrawable(R.drawable.style_textinput));
+            }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        Type_VehicleImage.setImageResource(R.drawable.pencil_);
-                        VehicleTypeLayout.setBackground(getResources().getDrawable(R.drawable.style_textinput));
-                        Toast.makeText(CreateVehicleActivity.this, "",
-                                Toast.LENGTH_SHORT).show();
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Type_VehicleImage.setImageResource(R.drawable.pencil_);
+                VehicleTypeLayout.setBackground(getResources().getDrawable(R.drawable.style_textinput));
+                Toast.makeText(CreateVehicleActivity.this, "",
+                        Toast.LENGTH_SHORT).show();
 
-                    }
-                });
             }
         });
     }

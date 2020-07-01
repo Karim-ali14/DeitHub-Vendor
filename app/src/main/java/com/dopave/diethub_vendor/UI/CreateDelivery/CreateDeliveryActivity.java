@@ -130,14 +130,14 @@ public class CreateDeliveryActivity extends AppCompatActivity {
 
         editTextChangeStatus();
 
-//        getCities();
-//        if (getIntent().getExtras().getString("type").equals("update")) {
-//            Password.setVisibility(View.GONE);
-//            RePassword.setVisibility(View.GONE);
-//            delivery = getIntent().getExtras().getParcelable("delivery");
-//            if (delivery != null)
-//                setData();
-//        }
+        getCities();
+        if (getIntent().getExtras().getString("type").equals("update")) {
+            Password.setVisibility(View.GONE);
+            RePassword.setVisibility(View.GONE);
+            delivery = getIntent().getExtras().getParcelable("delivery");
+            if (delivery != null)
+                setData();
+        }
     }
 
     private void setData() {
@@ -174,7 +174,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     }
 
     private void getCities(){
-        viewModel.getCities(this).observe(this, new Observer<Cities>() {
+        viewModel.getCities(this,dialog,viewModel).observe(this, new Observer<Cities>() {
             @Override
             public void onChanged(Cities cities) {
                 AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(CreateDeliveryActivity.this,

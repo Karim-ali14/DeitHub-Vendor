@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
 import com.dopave.diethub_vendor.UI.HomeActivity;
@@ -19,7 +21,7 @@ import com.dopave.diethub_vendor.UI.HomeActivity;
  */
 public class Home_Fragment extends Fragment {
     LinearLayout Orders_Layout,Delegate_Layout,Setting_Layout;
-
+    TextView NameOfRestaurants;
     public Home_Fragment() {
 
     }
@@ -30,6 +32,8 @@ public class Home_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        NameOfRestaurants = view.findViewById(R.id.NameOfRestaurants);
+        NameOfRestaurants.setText((Common.currentPosition.getData().getProvider().getName()));
         Orders_Layout = view.findViewById(R.id.Orders_Layout);
         Delegate_Layout = view.findViewById(R.id.Delegate_Layout);
         Setting_Layout = view.findViewById(R.id.Setting_Layout);

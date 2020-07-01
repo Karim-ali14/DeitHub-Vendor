@@ -40,6 +40,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -193,49 +195,90 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
     private void delete(DeliveryRow row){
         final ProgressDialog dialog = new ProgressDialog(context);
         dialog.show();
-        Common.getAPIRequest().deleteDeliveryByProvider("Bearer "+
-                        Common.currentPosition.getData().getToken().getAccessToken(),
-                Common.currentPosition.getData().getProvider().getId()+""
-                ,row.getId()+"").enqueue(new Callback<GetDeliveriesData>() {
-            @Override
-            public void onResponse(Call<GetDeliveriesData> call, Response<GetDeliveriesData> response) {
-                if (response.code() == 200){
-                    Toast.makeText(context, context.getResources().getString(R.string.deleteDelivery)
-                            , Toast.LENGTH_SHORT).show();
-                    viewModel.getAllDeliveries(dialog,context).observe((LifecycleOwner) context,
-                            new Observer<GetDeliveriesData>() {
-                                @Override
-                                public void onChanged(GetDeliveriesData getDeliveriesData) {
-                                    dialog.dismiss();
-                                    if (getDeliveriesData.getData().getDeliveryRows().size() != 0) {
-                                        recyclerView.setAdapter(new AdapterForDelegate(getDeliveriesData.getData().getDeliveryRows(),
-                                                context, recyclerView,viewModel,vehicleTypes));
-                                    }
-                                    else {
-                                        recyclerView.setAdapter(new AdapterForDelegate(getDeliveriesData.getData().getDeliveryRows(),
-                                                context, recyclerView,viewModel,vehicleTypes));
-                                        Toast.makeText(context,
-                                                context.getResources().getString(R.string.noDeliveries)
-                                                , Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }else {
-                    dialog.dismiss();
-                    try {
-                        Log.i("TTTTTTT",new JSONObject(response.errorBody()
-                                .string()).getString("message")+response.code()+"dfsfsdfs");
-                        Toast.makeText(context,new JSONObject(response.errorBody()
-                                .string()).getString("message"), Toast.LENGTH_SHORT).show();
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+//        Common.getAPIRequest().deleteDeliveryByProvider("Bearer "+
+//                        Common.currentPosition.getData().getToken().getAccessToken(),
+//                Common.currentPosition.getData().getProvider().getId()+""
+//                ,row.getId()+"").enqueue(new Callback<GetDeliveriesData>() {
+//            @Override
+//            public void onResponse(Call<GetDeliveriesData> call, Response<GetDeliveriesData> response) {
+//                if (response.code() == 200){
+//                    Toast.makeText(context, context.getResources().getString(R.string.deleteDelivery)
+//                            , Toast.LENGTH_SHORT).show();
+//
+//                }else {
+//                    dialog.dismiss();
+//                    try {
+//                        Log.i("TTTTTTT",new JSONObject(response.errorBody()
+//                                .string()).getString("message")+response.code()+"dfsfsdfs");
+//                        Toast.makeText(context,new JSONObject(response.errorBody()
+//                                .string()).getString("message"), Toast.LENGTH_SHORT).show();
+//                    } catch (IOException | JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GetDeliveriesData> call, Throwable t) {
+//                dialog.dismiss();
+//                final AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
+//                View view = LayoutInflater.from(context).inflate(R.layout.error_dialog, null);
+//                TextView Title = view.findViewById(R.id.Title);
+//                TextView Message = view.findViewById(R.id.Message);
+//                Button button = view.findViewById(R.id.Again);
+//                Adialog.setView(view);
+//                final AlertDialog dialog1 = Adialog.create();
+//                dialog1.setCanceledOnTouchOutside(false);
+//                dialog1.setCancelable(false);
+//                dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                button.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog1.dismiss();
+//                        dialog.show();
+//                    }
+//                });
+//                if(t instanceof SocketTimeoutException) {
+//                    Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
+//                    Title.setText(R.string.Unable_contact_server);
+//                    Message.setText(R.string.Error_downloading_data);
+//                    dialog1.show();
+//                }
+//
+//                else if (t instanceof UnknownHostException) {
+//                    Title.setText(context.getResources().getString(R.string.no_internet_connection));
+//                    Message.setText(R.string.Make_sure_you_online);
+//                    dialog1.show();
+//                }else {
+//                    Title.setText(context.getResources().getString(R.string.no_internet_connection));
+//                    Message.setText(R.string.Error_downloading_data);
+//                    dialog1.show();
+//                }
+//            }
+//        });
 
+        viewModel.deleteDelivery(row.getId()+"",dialog,context).
+                observe((LifecycleOwner) context, new Observer<GetDeliveriesData>() {
             @Override
-            public void onFailure(Call<GetDeliveriesData> call, Throwable t) {
-                dialog.dismiss();
+            public void onChanged(GetDeliveriesData getDeliveriesData) {
+                viewModel.getAllDeliveries(dialog,context,viewModel,recyclerView,vehicleTypes).observe((LifecycleOwner) context,
+                        new Observer<GetDeliveriesData>() {
+                            @Override
+                            public void onChanged(GetDeliveriesData getDeliveriesData) {
+                                dialog.dismiss();
+                                if (getDeliveriesData.getData().getDeliveryRows().size() != 0) {
+                                    recyclerView.setAdapter(new AdapterForDelegate(getDeliveriesData.getData().getDeliveryRows(),
+                                            context, recyclerView,viewModel,vehicleTypes));
+                                }
+                                else {
+                                    recyclerView.setAdapter(new AdapterForDelegate(getDeliveriesData.getData().getDeliveryRows(),
+                                            context, recyclerView,viewModel,vehicleTypes));
+                                    Toast.makeText(context,
+                                            context.getResources().getString(R.string.noDeliveries)
+                                            , Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
     }

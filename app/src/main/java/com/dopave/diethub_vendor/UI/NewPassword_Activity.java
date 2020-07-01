@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -29,6 +30,7 @@ import retrofit2.Response;
 public class NewPassword_Activity extends AppCompatActivity {
     EditText Password,RePassword;
     ConstraintLayout Layout;
+    ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,7 @@ public class NewPassword_Activity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        dialog = new ProgressDialog(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Password = findViewById(R.id.Password);
         RePassword = findViewById(R.id.RePassword);
@@ -60,28 +63,46 @@ public class NewPassword_Activity extends AppCompatActivity {
     }
 
     public void onClick(View view1) {
-        if (Password.getText().toString().isEmpty() && Password.getText().toString().isEmpty()){
-
-        }else if (!Password.getText().toString().equals(Password.getText().toString())){
-
-        }else {
+        dialog.dismiss();
+        if (!validationPass()){dialog.dismiss();}
+        else {
             Common.getAPIRequest().reset_password(getIntent().getExtras().getString("email"),
                     getIntent().getExtras().getString("Code"),Password.getText().toString())
                     .enqueue(new Callback<ResetPassword>() {
                 @Override
                 public void onResponse(Call<ResetPassword> call, Response<ResetPassword> response) {
-                    Toast.makeText(NewPassword_Activity.this, response.code()+""+response.message(), Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    Toast.makeText(NewPassword_Activity.this,response.message(), Toast.LENGTH_SHORT).show();
                     if (response.code() == 200)
                         showDialog();
                 }
 
                 @Override
                 public void onFailure(Call<ResetPassword> call, Throwable t) {
-
+                    dialog.dismiss();
                 }
             });
         }
 
+    }
+    private boolean validationPass() {
+        if (Password.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.Enter_Password, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (RePassword.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.Enter_RePassword, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (!Password.getText().toString().equals(RePassword.getText().toString())) {
+            Toast.makeText(this, R.string.Passwords_are_not_match, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (Password.getText().toString().length() >= 8) {
+            Toast.makeText(this, R.string.Password_length, Toast.LENGTH_SHORT).show();
+            return false;
+        }else
+            return true;
     }
 
     private void showDialog(){

@@ -129,4 +129,19 @@
     <string name="createVehicle">انشاء المركبة</string>
 
     <string name="maximum_of_five_pictures">بحد اقصي 5 صور</string>
+
+    <string name="Enter_Email">ادخل البريد الالكتروني</string>
+    <string name="Enter_Password">ادخل كلمه  المرور</string>
+    <string name="Enter_RePassword">ادخل كلمه المرور مره اخري</string>
+    <string name="Passwords_are_not_match">كلمتا المرور غير متطابقتين</string>
+    <string name="Password_length">يجب ان لا يقل كلمه المرور عن  ثمانيه احرف</string>
+    <string name="Email_VALID">البريد الإلكتروني غير صالح.</string>
+    <string name="no_internet_connection">لا يوجد اتصال بالانترنت</string>
+    <string name="e_vehicle_model">ادخل موديل المركبه</string>
+    <string name="e_number_vehicle">ادخل رقم المركبة</string>
+    <string name="name_length">يجب ان لا يقل الاسم عن حرفين وان لا يزين عن 70 حرف</string>
+    <string name="try_again">اعد المحاولة</string>
+    <string name="Unable_contact_server">تعذر الأتصال بالخادم</string>
+    <string name="Error_downloading_data">خطأ في تحميل البيانات من الخادم اضغط علي زر لأعاده تحميل البيانات</string>
+    <string name="Make_sure_you_online">تأكد من أتصالك بالأنترنت ثم أعد المحاولة</string>
 </resources>

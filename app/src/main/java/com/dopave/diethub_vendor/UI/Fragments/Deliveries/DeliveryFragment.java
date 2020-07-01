@@ -57,7 +57,9 @@ public class DeliveryFragment extends Fragment {
                 startActivity(new Intent(getActivity(), CreateDeliveryActivity.class).putExtra("type","normal"));
             }
         });
-        vehicleViewModel.getAllVehicleTypes(getActivity()).observe(getActivity(), new Observer<VehicleTypes>() {
+        vehicleViewModel.getAllVehicleTypes(getActivity(),
+                dialog,vehicleViewModel,"DeliveryFragment",recyclerView)
+                .observe(getActivity(), new Observer<VehicleTypes>() {
             @Override
             public void onChanged(VehicleTypes vehicleTypes) {
                 getAllDelivery(dialog,vehicleTypes);
@@ -66,8 +68,8 @@ public class DeliveryFragment extends Fragment {
         return view;
     }
 
-    private void getAllDelivery(ProgressDialog dialog, final VehicleTypes vehicleTypes){
-        viewModel.getAllDeliveries(dialog,getActivity()).observe(getActivity(),
+    public void getAllDelivery(ProgressDialog dialog, final VehicleTypes vehicleTypes){
+        viewModel.getAllDeliveries(dialog,getActivity(),viewModel,recyclerView,vehicleTypes).observe(getActivity(),
                 new Observer<GetDeliveriesData>() {
             @Override
             public void onChanged(GetDeliveriesData getDeliveriesData) {

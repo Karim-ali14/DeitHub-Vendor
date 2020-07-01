@@ -128,4 +128,19 @@
     <string name="createVehicle">create Vehicle</string>
 
     <string name="maximum_of_five_pictures">A maximum of five pictures</string>
+
+    <string name="Enter_Email">Enter Your Email</string>
+    <string name="Enter_Password">Enter Your Password</string>
+    <string name="Enter_RePassword">Enter Your RePassword</string>
+    <string name="Passwords_are_not_match">Passwords aren"'"t match</string>
+    <string name="Password_length">The password must be at least eight characters long</string>
+    <string name="Email_VALID">Email is not VALID.</string>
+    <string name="no_internet_connection">There is no internet connection</string>
+    <string name="e_vehicle_model">Enter vehicle model</string>
+    <string name="e_number_vehicle">Enter number of vehicle</string>
+    <string name="name_length">The name must not be less than two letters and be less than 70 letters</string>
+    <string name="try_again">try again</string>
+    <string name="Unable_contact_server">Unable to contact the server</string>
+    <string name="Error_downloading_data">Error downloading data from the server, click on the button to reload the data</string>
+    <string name="Make_sure_you_online">Make sure you are online and then try again</string>
 </resources>

@@ -20,8 +20,8 @@ public class CreateDeliveryViewModel extends ViewModel {
         this.repository = CreateDeliveryRepository.getInstance();
     }
 
-    public LiveData<Cities> getCities(final Context context){
-        return repository.getCities(context);
+    public LiveData<Cities> getCities(final Context context,ProgressDialog dialog,CreateDeliveryViewModel viewModel){
+        return repository.getCities(context,dialog,viewModel);
     }
 
     public LiveData<CreateDeliveryResponse> createDelivery (String Auth,

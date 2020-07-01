@@ -5,8 +5,10 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
+import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 
 public class DeliveryViewModel extends ViewModel {
     private DeliveryRepository repository;
@@ -15,7 +17,15 @@ public class DeliveryViewModel extends ViewModel {
     }
 
     public LiveData<GetDeliveriesData> getAllDeliveries(final ProgressDialog dialog,
-                                                        final Context context){
-        return repository.getAllDeliveries(dialog,context);
+                                                        final Context context,
+                                                        DeliveryViewModel viewModel,
+                                                        RecyclerView recyclerView,
+                                                        VehicleTypes vehicleTypes){
+        return repository.getAllDeliveries(dialog,context,viewModel,recyclerView,vehicleTypes);
+    }
+
+    public LiveData<GetDeliveriesData> deleteDelivery(final String deliveryId,
+                                                      final ProgressDialog dialog, final Context context){
+        return repository.deleteDelivery(deliveryId, dialog, context);
     }
 }

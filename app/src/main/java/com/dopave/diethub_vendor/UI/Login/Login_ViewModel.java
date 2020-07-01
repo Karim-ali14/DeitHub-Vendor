@@ -17,7 +17,7 @@ public class Login_ViewModel extends ViewModel {
 
     public LiveData<SignIn> onSignIn(String Phone , String Pass ,
                                      final Context context ,
-                                     final ProgressDialog dialog){
-        return repository.SignIn(Phone,Pass,context,dialog);
+                                     final ProgressDialog dialog,Login_ViewModel viewModel){
+        return repository.SignIn(Phone,Pass,context,dialog,viewModel);
     }
 }

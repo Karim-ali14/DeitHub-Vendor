@@ -18,20 +18,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Common.Common;
-import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
-import com.dopave.diethub_vendor.UI.Password_RecoveryActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.dopave.diethub_vendor.UI.Password_Recovery.Password_RecoveryActivity;
 
 public class Login_inActivity extends AppCompatActivity {
     EditText Phone,Password;
@@ -95,7 +85,7 @@ public class Login_inActivity extends AppCompatActivity {
 
         viewModel.onSignIn(Phone.getText().toString(),
                 Password.getText().toString(),
-                this,dialog).observe(this, new Observer<SignIn>() {
+                this,dialog,viewModel).observe(this, new Observer<SignIn>() {
             @Override
             public void onChanged(SignIn signIn) {
                 Log.i("TTTTTT",signIn.getData().getToken().getAccessToken() +"   "+ signIn.getData().getProvider().getId());
