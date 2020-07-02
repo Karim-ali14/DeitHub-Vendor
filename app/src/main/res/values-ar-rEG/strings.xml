@@ -128,13 +128,18 @@
     <string name="delete">مسح</string>
     <string name="createVehicle">انشاء المركبة</string>
 
+    <string name="phone_number_incorrect">رقم الهاتف غير صحيح</string>
     <string name="maximum_of_five_pictures">بحد اقصي 5 صور</string>
-
+    <string name="Enter_Name">ادخل الاسم المندوب</string>
+    <string name="Enter_Phone">ادخل رقم الهاتق المندوب</string>
+    <string name="agree_terms_conditions">يجب الوافقه علي الشروط و الاحكام</string>
+    <string name="Choose_city">اختر المدينه</string>
     <string name="Enter_Email">ادخل البريد الالكتروني</string>
     <string name="Enter_Password">ادخل كلمه  المرور</string>
     <string name="Enter_RePassword">ادخل كلمه المرور مره اخري</string>
     <string name="Passwords_are_not_match">كلمتا المرور غير متطابقتين</string>
-    <string name="Password_length">يجب ان لا يقل كلمه المرور عن  ثمانيه احرف</string>
+    <string name="Password_length">يجب ان لا يقل كلمه المرور عن  ثمانيه احرف وان لا تزيد عن 25 حرف</string>
+    <string name="Choose_personal_picture">اختر الصوره الشخصيه</string>
     <string name="Email_VALID">البريد الإلكتروني غير صالح.</string>
     <string name="no_internet_connection">لا يوجد اتصال بالانترنت</string>
     <string name="e_vehicle_model">ادخل موديل المركبه</string>

@@ -2,6 +2,7 @@ package com.dopave.diethub_vendor.UI.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -22,12 +23,17 @@ import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.dopave.diethub_vendor.UI.Password_Recovery.Password_RecoveryActivity;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 public class Login_inActivity extends AppCompatActivity {
     EditText Phone,Password;
     ConstraintLayout Layout;
     Button EnterButton;
     Login_ViewModel viewModel;
+    boolean isValid,firstOpen;
+    ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +42,7 @@ public class Login_inActivity extends AppCompatActivity {
     }
 
     private void init() {
+        dialog = new ProgressDialog(this);
         viewModel = ViewModelProviders.of(this).get(Login_ViewModel.class);
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
@@ -48,10 +55,8 @@ public class Login_inActivity extends AppCompatActivity {
         EnterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Phone.getText().toString().isEmpty())
-                    Toast.makeText(Login_inActivity.this, "Enter Your phone", Toast.LENGTH_SHORT).show();
-                else if (Password.getText().toString().isEmpty())
-                    Toast.makeText(Login_inActivity.this, "Enter Your password", Toast.LENGTH_SHORT).show();
+                if (!validationPhone()){dialog.dismiss();}
+                else if (!validationPass()){dialog.dismiss();}
                 else
                     SignIn();
             }
@@ -63,7 +68,67 @@ public class Login_inActivity extends AppCompatActivity {
                     closeKeyBoard();
             }
         });
+        getChangeEditTextStatus();
     }
+    private void getChangeEditTextStatus(){
+        Phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    Phone.setBackground(getResources().getDrawable(R.drawable.style_textinput_active));
+                    Phone.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(Login_inActivity.this,R.drawable.call_active),null,null,null);
+                }
+                else {
+                    Phone.setBackground(getResources().getDrawable(R.drawable.style_textinput));
+                    Phone.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(Login_inActivity.this,R.drawable.call),null,null,null);
+                    if (!Phone.getText().toString().isEmpty()){
+                        Phone.setText(dellWithPhone(Phone.getText().toString()));
+                    }
+                }
+            }
+        });
+        Password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    Password.setBackground(getResources().getDrawable(R.drawable.style_textinput_active));
+                    Password.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(Login_inActivity.this,R.drawable.padlock_active),null,null,null);
+                }
+                else {
+                    Password.setBackground(getResources().getDrawable(R.drawable.style_textinput));
+                    Password.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(Login_inActivity.this,R.drawable.padlock),null,null,null);
+
+                }
+            }
+        });
+    }
+    private boolean validationPhone() {
+        if (Phone.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.Enter_Phone, Toast.LENGTH_LONG).show();
+            return false;
+        }
+//        else if (!isValid){
+//            Toast.makeText(this, R.string.phone_number_incorrect, Toast.LENGTH_LONG).show();
+//            return false;
+//        }
+        else {
+            return true;
+        }
+    }
+    private boolean validationPass() {
+        if (Password.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.Enter_Password, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (Password.getText().toString().length() < 8 ||
+                Password.getText().toString().length() > 25) {
+            Toast.makeText(this, R.string.Password_length, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else
+            return true;
+    }
+
 
     private void closeKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -96,5 +161,40 @@ public class Login_inActivity extends AppCompatActivity {
                         "Login_inActivity"));
             }
         });
+    }
+
+    public String dellWithPhone(String phone) {
+        Phonenumber.PhoneNumber phoneNumber = null;
+        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
+        String finalNumber = null;
+        PhoneNumberUtil.PhoneNumberType isMobile = null;
+        try {
+            phoneNumber = phoneNumberUtil.parse(phone, "EG");
+            isValid = phoneNumberUtil.isValidNumber(phoneNumber);
+            isMobile = phoneNumberUtil.getNumberType(phoneNumber);
+        } catch (NumberParseException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+
+        if (isValid && (PhoneNumberUtil.PhoneNumberType.MOBILE == isMobile
+                || PhoneNumberUtil.PhoneNumberType.FIXED_LINE_OR_MOBILE == isMobile)) {
+            finalNumber = phoneNumberUtil.format(phoneNumber,
+                    PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
+        }else {
+            Toast.makeText(this, R.string.phone_number_incorrect, Toast.LENGTH_SHORT).show();
+            finalNumber = phone;
+        }
+        return finalNumber;
+    }
+
+    @Override
+    public void onWindowFocusChanged (boolean hasFocus) {
+        if (!firstOpen){
+            closeKeyBoard();
+            firstOpen = true;
+        }
     }
 }

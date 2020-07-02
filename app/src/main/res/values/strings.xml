@@ -126,14 +126,20 @@
     <string name="Updated">Updated</string>
     <string name="delete">delete</string>
     <string name="createVehicle">create Vehicle</string>
-
+    <string name="phone_number_incorrect">phone number incorrect</string>
     <string name="maximum_of_five_pictures">A maximum of five pictures</string>
 
+
+    <string name="Enter_Name">Enter Your Name</string>
+    <string name="Enter_Phone">Enter Your Phone</string>
+    <string name="agree_terms_conditions">You must agree to the terms and conditions</string>
+    <string name="Choose_city">Choose a city</string>
     <string name="Enter_Email">Enter Your Email</string>
     <string name="Enter_Password">Enter Your Password</string>
     <string name="Enter_RePassword">Enter Your RePassword</string>
     <string name="Passwords_are_not_match">Passwords aren"'"t match</string>
-    <string name="Password_length">The password must be at least eight characters long</string>
+    <string name="Password_length">The password must be at least eight characters long and not be more twenty-five characters</string>
+    <string name="Choose_personal_picture">Choose the personal picture</string>
     <string name="Email_VALID">Email is not VALID.</string>
     <string name="no_internet_connection">There is no internet connection</string>
     <string name="e_vehicle_model">Enter vehicle model</string>

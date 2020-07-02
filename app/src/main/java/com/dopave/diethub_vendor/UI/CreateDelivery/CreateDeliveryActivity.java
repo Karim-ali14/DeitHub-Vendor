@@ -19,7 +19,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -45,6 +47,9 @@ import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequ
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 import com.dopave.diethub_vendor.UI.HomeActivity;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -58,7 +63,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CreateDeliveryActivity extends AppCompatActivity {
     private static final int SELECT_IMAGE = 1;
     EditText UserName, Phone, Email, Password, RePassword;
-    ConstraintLayout Layout;
+    ConstraintLayout Layout,City_Layout;
     ImageView chickBox;
     boolean isChecked = false;
     ProgressDialog dialog;
@@ -71,13 +76,14 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     CircleImageView profile_image;
     String DeliveryImage = null;
     DeliveryRow delivery;
+    boolean isValid,firstOpen,isSpinnerCities;
+    int SpinnerCitiesClick = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_delivery);
         init();
     }
-
 
     private void init() {
         viewModel = ViewModelProviders.of(this).get(CreateDeliveryViewModel.class);
@@ -107,24 +113,13 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         Password = findViewById(R.id.Password);
         RePassword = findViewById(R.id.RePassword);
         Layout = findViewById(R.id.Layout_Registration);
+        City_Layout = findViewById(R.id.City_Layout);
         chickBox = findViewById(R.id.chickBox);
         Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!(v instanceof EditText))
                     closeKeyBoard();
-            }
-        });
-        chickBoxLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isChecked) {
-                    isChecked = true;
-                    chickBox.setImageResource(R.drawable.active);
-                }else {
-                    isChecked = false;
-                    chickBox.setImageResource(R.drawable.tockbg);
-                }
             }
         });
 
@@ -177,28 +172,31 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         viewModel.getCities(this,dialog,viewModel).observe(this, new Observer<Cities>() {
             @Override
             public void onChanged(Cities cities) {
-                AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(CreateDeliveryActivity.this,
-                        R.layout.city_item,cities.getData().getCityRows());
-
-                spinnerCity.setAdapter(arrayAdapter);
-                spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        mark.setImageResource(R.drawable.pin_active);
-                        cityRow = ((CityRow) parent.getItemAtPosition(position));
-                        CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getName());
-                        CitySelected.setTextColor(getResources().getColor(R.color.black));
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-                if (getIntent().getExtras().getString("type").equals("update"))
-                    spinnerCity.setSelection(delivery.getCityId());
+                onGetCity(cities);
             }
         });
+    }
+
+    public void onGetCity(Cities cities){
+        AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(CreateDeliveryActivity.this,
+                R.layout.city_item,cities.getData().getCityRows());
+
+        spinnerCity.setAdapter(arrayAdapter);
+        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cityRow = ((CityRow) parent.getItemAtPosition(position));
+                CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getName());
+                CitySelected.setTextColor(getResources().getColor(R.color.black));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        if (getIntent().getExtras().getString("type").equals("update"))
+            spinnerCity.setSelection(delivery.getCityId());
     }
 
     private void closeKeyBoard() {
@@ -214,40 +212,32 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
+        dialog.show();
         if (getIntent().getExtras().getString("type").equals("update")){
-            if (UserName.getText().toString().isEmpty())
-                Toast.makeText(this, "Enter Your Name", Toast.LENGTH_SHORT).show();
-            else if (Phone.getText().toString().isEmpty())
-                Toast.makeText(this, "Enter Your Phone", Toast.LENGTH_SHORT).show();
-            else if (Email.getText().toString().isEmpty())
-                Toast.makeText(this, "Enter Your Email", Toast.LENGTH_SHORT).show();
+            if (DeliveryImage == null)
+                Toast.makeText(this, R.string.Choose_personal_picture, Toast.LENGTH_SHORT).show();
+            else if (!validationName()){dialog.dismiss();}
+            else if (!validationPhone()){dialog.dismiss();}
+            else if (!validationEmail()){dialog.dismiss();}
             else if (cityRow == null)
-                Toast.makeText(this, "اختر المدينه", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.Choose_city, Toast.LENGTH_SHORT).show();
             else if (!isChecked)
-                Toast.makeText(this, "يجب الوافقه علي الشروط و الاحكام", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.agree_terms_conditions, Toast.LENGTH_SHORT).show();
             else {
                 dialog.show();
                 update();
             }
         }else {
-            if (UserName.getText().toString().isEmpty())
-                Toast.makeText(this, "Enter Your Name", Toast.LENGTH_SHORT).show();
-            else if (Phone.getText().toString().isEmpty())
-                Toast.makeText(this, "Enter Your Phone", Toast.LENGTH_SHORT).show();
-            else if (Email.getText().toString().isEmpty())
-                Toast.makeText(this, "Enter Your Email", Toast.LENGTH_SHORT).show();
-            else if (Password.getText().toString().isEmpty())
-                Toast.makeText(this, "Enter Your Password", Toast.LENGTH_SHORT).show();
-            else if (RePassword.getText().toString().isEmpty())
-                Toast.makeText(this, "Enter Your RePassword", Toast.LENGTH_SHORT).show();
-            else if (!Password.getText().toString().equals(RePassword.getText().toString()))
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-            else if (!isChecked)
-                Toast.makeText(this, "يجب الوافقه علي الشروط و الاحكام", Toast.LENGTH_SHORT).show();
+            if (DeliveryImage == null)
+                Toast.makeText(this, R.string.Choose_personal_picture, Toast.LENGTH_SHORT).show();
+            else if (!validationName()){dialog.dismiss();}
+            else if (!validationPhone()){dialog.dismiss();}
+            else if (!validationEmail()){dialog.dismiss();}
             else if (cityRow == null)
-                Toast.makeText(this, "اختر المدينه", Toast.LENGTH_SHORT).show();
-            else if (DeliveryImage == null)
-                Toast.makeText(this, "اختر الصوره الشخصيه", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.Choose_city, Toast.LENGTH_SHORT).show();
+            else if (!validationPass()){dialog.dismiss();}
+            else if (!isChecked)
+                Toast.makeText(this, R.string.agree_terms_conditions, Toast.LENGTH_SHORT).show();
             else {
                 dialog.show();
                 createDelivery();
@@ -303,6 +293,18 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     }
 
     private void editTextChangeStatus(){
+        chickBoxLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isChecked) {
+                    isChecked = true;
+                    chickBox.setImageResource(R.drawable.active);
+                }else {
+                    isChecked = false;
+                    chickBox.setImageResource(R.drawable.tockbg);
+                }
+            }
+        });
         UserName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -327,7 +329,22 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                 else {
                     Phone.setBackground(getResources().getDrawable(R.drawable.style_textinput));
                     Phone.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(CreateDeliveryActivity.this,R.drawable.call),null,null,null);
-
+                    if (!Phone.getText().toString().isEmpty()){
+                        Phone.setText(dellWithPhone(Phone.getText().toString()));
+                    }
+                }
+            }
+        });
+        Email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    Email.setBackground(getResources().getDrawable(R.drawable.style_textinput_active));
+                    Email.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(CreateDeliveryActivity.this,R.drawable.envelope_active),null,null,null);
+                }
+                else {
+                    Email.setBackground(getResources().getDrawable(R.drawable.style_textinput));
+                    Email.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(CreateDeliveryActivity.this,R.drawable.envelope),null,null,null);
                 }
             }
         });
@@ -357,6 +374,19 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                     RePassword.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(CreateDeliveryActivity.this,R.drawable.padlock),null,null,null);
 
                 }
+            }
+        });
+        spinnerCity.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    mark.setImageResource(R.drawable.pin_active);
+                    City_Layout.setBackground(getResources().getDrawable(R.drawable.style_textinput_active));
+                    // Load your spinner here
+                    isSpinnerCities = true;
+                }
+                return false;
             }
         });
     }
@@ -405,4 +435,104 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         return encodedImage;
     }
 
+
+    private boolean validationPass() {
+        if (Password.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.Enter_Password, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (RePassword.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.Enter_RePassword, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (!Password.getText().toString().equals(RePassword.getText().toString())) {
+            Toast.makeText(this, R.string.Passwords_are_not_match, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (Password.getText().toString().length() < 8 ||
+                Password.getText().toString().length() > 25) {
+            Toast.makeText(this, R.string.Password_length, Toast.LENGTH_SHORT).show();
+            return false;
+        }else
+            return true;
+    }
+    private boolean validationName() {
+        if (UserName.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.Enter_Name, Toast.LENGTH_LONG).show();
+            return false;
+        }else if (UserName.getText().toString().length() < 2
+                ||
+                UserName.getText().toString().length() > 70){
+            Toast.makeText(this, R.string.name_length, Toast.LENGTH_LONG).show();
+            return false;
+        }else {
+            return true;
+        }
+    }
+    private boolean validationPhone() {
+        if (Phone.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.Enter_Phone, Toast.LENGTH_LONG).show();
+            return false;
+        }else if (!isValid){
+            Toast.makeText(this, R.string.phone_number_incorrect, Toast.LENGTH_LONG).show();
+            return false;
+        }else {
+            return true;
+        }
+    }
+    private boolean validationEmail() {
+        if (Email.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.Enter_Email, Toast.LENGTH_LONG).show();
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(Email.getText().toString()).matches()) {
+            Toast.makeText(this, R.string.Email_VALID, Toast.LENGTH_LONG).show();
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public String dellWithPhone(String phone) {
+        Phonenumber.PhoneNumber phoneNumber = null;
+        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
+        String finalNumber = null;
+        PhoneNumberUtil.PhoneNumberType isMobile = null;
+        try {
+            phoneNumber = phoneNumberUtil.parse(phone, "EG");
+            isValid = phoneNumberUtil.isValidNumber(phoneNumber);
+            isMobile = phoneNumberUtil.getNumberType(phoneNumber);
+        } catch (NumberParseException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+
+        if (isValid && (PhoneNumberUtil.PhoneNumberType.MOBILE == isMobile
+                || PhoneNumberUtil.PhoneNumberType.FIXED_LINE_OR_MOBILE == isMobile)) {
+            finalNumber = phoneNumberUtil.format(phoneNumber,
+                    PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
+        }else {
+            Toast.makeText(this, R.string.phone_number_incorrect, Toast.LENGTH_SHORT).show();
+            finalNumber = phone;
+        }
+        return finalNumber;
+    }
+
+    @Override
+    public void onWindowFocusChanged (boolean hasFocus) {
+        if (!firstOpen){
+            closeKeyBoard();
+            firstOpen = true;
+        }
+        if (isSpinnerCities){
+            if (SpinnerCitiesClick == 0)
+                SpinnerCitiesClick++;
+            else {
+                SpinnerCitiesClick = 0;
+                mark.setImageResource(R.drawable.pin);
+                City_Layout.setBackground(getResources().getDrawable(R.drawable.style_textinput));
+            }
+        }
+    }
 }

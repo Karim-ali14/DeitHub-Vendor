@@ -12,7 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Cities.Cities;
@@ -85,11 +87,15 @@ public class CreateDeliveryRepository {
                     public void onClick(View v) {
                         dialog1.dismiss();
                         dialog.show();
-                        viewModel.getCities(context,dialog,viewModel);
+                        viewModel.getCities(context,dialog,viewModel).observe((LifecycleOwner) context, new Observer<Cities>() {
+                            @Override
+                            public void onChanged(Cities cities) {
+                                ((CreateDeliveryActivity)context).onGetCity(cities);
+                            }
+                        });
                     }
                 });
                 if(t instanceof SocketTimeoutException) {
-                    Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
                     Title.setText(R.string.Unable_contact_server);
                     Message.setText(R.string.Error_downloading_data);
                     dialog1.show();
