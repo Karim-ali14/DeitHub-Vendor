@@ -6,12 +6,10 @@
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="20dp"
-    android:layout_marginLeft="50dp"
-    android:layout_marginRight="50dp"
-   >
+    >
 
     <LinearLayout
-        android:paddingTop="35dp"
+        android:paddingTop="15dp"
         android:paddingBottom="20dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -47,7 +45,9 @@
             android:layout_below="@+id/Title"
             android:visibility="visible"
             android:gravity="center"
-
+            android:paddingRight="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/Error_downloading_data"
             />
         <Button
             android:layout_width="wrap_content"

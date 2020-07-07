@@ -55,6 +55,7 @@ public class Login_inActivity extends AppCompatActivity {
         EnterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.show();
                 if (!validationPhone()){dialog.dismiss();}
                 else if (!validationPass()){dialog.dismiss();}
                 else
@@ -145,9 +146,6 @@ public class Login_inActivity extends AppCompatActivity {
     }
 
     private void SignIn(){
-        final ProgressDialog dialog = new ProgressDialog(this);
-        dialog.show();
-
         viewModel.onSignIn(Phone.getText().toString(),
                 Password.getText().toString(),
                 this,dialog,viewModel).observe(this, new Observer<SignIn>() {

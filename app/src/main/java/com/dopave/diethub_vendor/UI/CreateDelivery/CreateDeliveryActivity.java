@@ -260,7 +260,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                 Log.i("FFFFFFF", deliveryByProviderResponse.getData().getId() + "");
                 startActivity(new Intent(CreateDeliveryActivity.this, CreateVehicleActivity.class).
                         putExtra("deliveryId",deliveryByProviderResponse.getData().getId()+"")
-                        .putExtra("type","normal"));
+                        .putExtra("type","create"));
             }
         });
     }
@@ -385,6 +385,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                     City_Layout.setBackground(getResources().getDrawable(R.drawable.style_textinput_active));
                     // Load your spinner here
                     isSpinnerCities = true;
+                    closeKeyBoard();
                 }
                 return false;
             }
@@ -498,7 +499,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         String finalNumber = null;
         PhoneNumberUtil.PhoneNumberType isMobile = null;
         try {
-            phoneNumber = phoneNumberUtil.parse(phone, "EG");
+            phoneNumber = phoneNumberUtil.parse(phone, "SA");
             isValid = phoneNumberUtil.isValidNumber(phoneNumber);
             isMobile = phoneNumberUtil.getNumberType(phoneNumber);
         } catch (NumberParseException e) {

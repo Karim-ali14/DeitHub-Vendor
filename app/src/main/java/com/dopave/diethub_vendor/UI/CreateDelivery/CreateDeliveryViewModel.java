@@ -31,6 +31,7 @@ public class CreateDeliveryViewModel extends ViewModel {
                                                             final ProgressDialog dialog){
         return repository.createDelivery(Auth, requestBody, id, context, dialog);
     }
+
     public LiveData<GetDeliveriesData> updateDelivery(UpdateDeliveryRequest updateDeliveryRequest
             , String deliveryId, final ProgressDialog dialog, final Context context){
         return repository.updateDelivery(updateDeliveryRequest, deliveryId, dialog, context);
