@@ -244,12 +244,12 @@ public class CreateVehicleRepository {
                     mutableLiveData.setValue(response.body());
                 else {
                     try {
-                        String message = new JSONObject(response.errorBody().string())
-                                .getString("message");
-                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
-
-                        Log.i("TTTTTT",new JSONObject(response.errorBody().string())
-                                .getString("message")+" "+response.code());
+                        if (response.code() == 422)
+                            Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
+                        else {
+                            Toast.makeText(context, new JSONObject(response.errorBody().string())
+                                    .getString("message"), Toast.LENGTH_SHORT).show();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -377,11 +377,12 @@ public class CreateVehicleRepository {
                     mutableLiveData.setValue(response.body());
                 else {
                     try {
-                        String message = new JSONObject(response.errorBody().string())
-                                .getString("message");
-                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
-
-                        Log.i("TTTTTT",message+" "+response.code());
+                        if (response.code() == 422)
+                            Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
+                        else {
+                            Toast.makeText(context, new JSONObject(response.errorBody().string())
+                                    .getString("message"), Toast.LENGTH_SHORT).show();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {

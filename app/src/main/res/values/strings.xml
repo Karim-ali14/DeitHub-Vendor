@@ -21,6 +21,10 @@
     <string name="enter_code_to_password">Enter the password recovery code sent to your mobile number</string>
     <string name="PasswordRecovery">Password Recovery</string>
 
+    <string name="phone_number_existing">mobile phone already existing</string>
+    <string name="email_existing">Email is already existing</string>
+    <string name="data_input_incorrect">There is an error in the data sent</string>
+
     <string name="Old_Pass">Old Password</string>
     <string name="New_Pass">New Password</string>
     <string name="Confirm_New_Pass">Confirm the New Password</string>

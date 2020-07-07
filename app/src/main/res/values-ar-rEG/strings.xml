@@ -23,6 +23,10 @@
     <string name="enter_code_to_password">أدخل كود إسترجاع كلمة المرور المرسل على رقم جوالك</string>
     <string name="PasswordRecovery">إسترجاع كلمة المرور</string>
 
+    <string name="phone_number_existing">رقم الهاتف موجود بالفعل</string>
+    <string name="email_existing">البريد الالكتروني موجود بالفعل</string>
+    <string name="data_input_incorrect">يوجد خطأ في البيانات المرسلة</string>
+
     <string name="Old_Pass">كلمة المرور القديمة</string>
     <string name="New_Pass">كلمة المرور الجديدة</string>
     <string name="Confirm_New_Pass">تأكيد كلمة المرور الجديدة</string>

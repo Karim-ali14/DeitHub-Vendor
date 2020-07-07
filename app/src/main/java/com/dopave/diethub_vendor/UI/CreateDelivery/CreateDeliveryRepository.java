@@ -25,6 +25,7 @@ import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequ
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.NewPassword_Activity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -131,12 +132,21 @@ public class CreateDeliveryRepository {
                     mutableLiveData.setValue(response.body());
                 else {
                     try {
-                        String message = new JSONObject(response.errorBody().string())
-                                .getString("message");
-
-                        Toast.makeText(context,message + response.code(), Toast.LENGTH_SHORT).show();
-
-                        Log.d("FFFFFF",requestBody.toString() + response.code());
+                        if (response.code() == 409) {
+                            JSONArray errors = new JSONObject(response.errorBody().string()).getJSONArray("errors");
+                            if (errors.getJSONObject(0).getJSONObject("context").getString("key").equals("mobilePhone")){
+                                Toast.makeText(context, R.string.phone_number_existing, Toast.LENGTH_SHORT).show();
+                            }else if (errors.getJSONObject(0).getJSONObject("context").getString("key").equals("email")){
+                                Toast.makeText(context, R.string.email_existing, Toast.LENGTH_SHORT).show();
+                            }else
+                                Toast.makeText(context, errors.getJSONObject(0).getString("message"), Toast.LENGTH_SHORT).show();
+                            Log.i("TTTTTT", errors + "");
+                        }else if (response.code() == 422)
+                            Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
+                        else {
+                            Toast.makeText(context, new JSONObject(response.errorBody().string())
+                                    .getString("message"), Toast.LENGTH_SHORT).show();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -180,10 +190,21 @@ public class CreateDeliveryRepository {
                     mutableLiveData.setValue(response.body());
                 }else {
                     try {
-                        String message = new JSONObject(response.errorBody()
-                                .string()).getString("message");
-                        Log.i("TTTTTTT",message);
-                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
+                        if (response.code() == 409) {
+                            JSONArray errors = new JSONObject(response.errorBody().string()).getJSONArray("errors");
+                            if (errors.getJSONObject(0).getJSONObject("context").getString("key").equals("mobilePhone")){
+                                Toast.makeText(context, R.string.phone_number_existing, Toast.LENGTH_SHORT).show();
+                            }else if (errors.getJSONObject(0).getJSONObject("context").getString("key").equals("email")){
+                                Toast.makeText(context, R.string.email_existing, Toast.LENGTH_SHORT).show();
+                            }else
+                                Toast.makeText(context, errors.getJSONObject(0).getString("message"), Toast.LENGTH_SHORT).show();
+                            Log.i("TTTTTT", errors + "");
+                        }else if (response.code() == 422)
+                            Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
+                        else {
+                            Toast.makeText(context, new JSONObject(response.errorBody().string())
+                                    .getString("message"), Toast.LENGTH_SHORT).show();
+                        }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
