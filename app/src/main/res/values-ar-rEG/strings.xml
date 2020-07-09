@@ -153,4 +153,9 @@
     <string name="Unable_contact_server">تعذر الأتصال بالخادم</string>
     <string name="Error_downloading_data">خطأ في تحميل البيانات من الخادم اضغط علي زر لأعاده تحميل البيانات</string>
     <string name="Make_sure_you_online">تأكد من أتصالك بالأنترنت ثم أعد المحاولة</string>
+    <string name="Calorie">ك</string>
+    <string name="SAR">ر.س</string>
+    <string name="description">الوصف</string>
+    <string name="duration">المده :</string>
+    <string name="no_Subscription">لا يوجد اشتراكات بعد</string>
 </resources>

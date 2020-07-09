@@ -157,6 +157,7 @@ public class Login_inActivity extends AppCompatActivity {
                 startActivity(new Intent(Login_inActivity.this,
                         HomeActivity.class).putExtra("type",
                         "Login_inActivity"));
+                finish();
             }
         });
     }

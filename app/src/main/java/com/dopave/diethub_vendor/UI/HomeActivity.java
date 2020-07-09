@@ -13,6 +13,7 @@ import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
 import com.dopave.diethub_vendor.UI.Fragments.Home_Fragment;
 import com.dopave.diethub_vendor.UI.Fragments.OrderFragment;
 import com.dopave.diethub_vendor.UI.Fragments.SettingsFragment;
+import com.dopave.diethub_vendor.UI.Subscriptions.SubscriptionsActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -112,7 +113,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(this,Conditions_Activity.class));
             drawer.closeDrawer(GravityCompat.START);
         }else if (view.getId() == R.id.nav_mySubscriptionOrders ){
-            startActivity(new Intent(this,SubscriptionsActivity.class)
+            startActivity(new Intent(this, SubscriptionsActivity.class)
                     .putExtra("type","nav_mySubscriptionOrders"));
             drawer.closeDrawer(GravityCompat.START);
         }else if (view.getId() == R.id.nav_Subscription ){

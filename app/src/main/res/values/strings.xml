@@ -153,4 +153,10 @@
     <string name="Unable_contact_server">Unable to contact the server</string>
     <string name="Error_downloading_data">Error downloading data from the server, click on the button to reload the data</string>
     <string name="Make_sure_you_online">Make sure you are online and then try again</string>
+    <string name="Calorie">C</string>
+    <string name="SAR">SAR</string>
+    <string name="description">Description</string>
+    <string name="duration">Duration :</string>
+    <string name="no_Subscription">There are no subscriptions yet</string>
+
 </resources>

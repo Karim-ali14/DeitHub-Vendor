@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/NameOfSubscription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/helveticaneuelt_arabic"
@@ -49,9 +49,9 @@
             app:layout_constraintTop_toBottomOf="@+id/imageSubscription">
 
             <ImageView
-                android:id="@+id/menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/MenuIcon"
+                android:layout_width="5dp"
+                android:layout_height="15dp"
                 android:layout_margin="@dimen/_20sdp"
                 android:src="@drawable/menu_points" />
         </LinearLayout>
@@ -64,8 +64,8 @@
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9"
-            android:id="@+id/Dec"
+            app:layout_constraintTop_toBottomOf="@+id/NameOfSubscription"
+            android:id="@+id/DecOfSubscription"
             android:ellipsize="marquee"
             android:singleLine="true"
             android:fontFamily="@font/helveticaneuelt_arabic"
@@ -107,7 +107,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Dec"
+            app:layout_constraintTop_toBottomOf="@id/DecOfSubscription"
             android:id="@+id/LayoutOfPriceAndCalories"
             android:paddingBottom="@dimen/_5sdp"
             >
@@ -117,14 +117,13 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/style_of_sylary"
                 android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingTop="2dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="2dp"
+                android:paddingLeft="@dimen/_13sdp"
+                android:paddingRight="@dimen/_13sdp"
+                android:paddingBottom="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/Name"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp">
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginLeft="15dp">
 
                 <TextView
                     android:id="@+id/Price"
@@ -132,74 +131,69 @@
                     android:layout_height="wrap_content"
                     android:text="150"
                     android:textColor="@color/background"
-                    android:textSize="16dp" />
+                    android:textSize="15dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    />
 
-                <TextView
-                    android:id="@+id/ddd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ر.س"
-                    android:textColor="@color/background"
-                    android:textSize="14dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".6"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_star" />
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:src="@drawable/ic_star"/>
 
                 <TextView
-                    android:id="@+id/NumberOfRatingOfFood"
+                    android:id="@+id/SubscriptionRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4.2"
                     android:textColor="#000"
-                    android:textSize="18dp" />
+                    android:textSize="15dp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/calorie" />
+                    android:src="@drawable/calorie"
+                   />
 
                 <TextView
-                    android:id="@+id/text1"
+                    android:id="@+id/Calories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="3dp"
                     android:text="3.2"
                     android:textColor="#000"
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:id="@+id/text2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="2dp"
-                    android:text="ك"
-                    android:textColor="#000"
-                    android:textSize="12dp"
+                    android:textSize="15dp"
                     android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:layout_marginBottom="1dp"
+                    android:textStyle="bold"/>
 
-                    />
             </LinearLayout>
 
         </LinearLayout>
@@ -218,7 +212,7 @@
             android:paddingBottom="@dimen/_5sdp"
             >
             <Button
-                android:id="@+id/PhoneButton"
+                android:id="@+id/AcceptButton"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -245,7 +239,7 @@
                 android:paddingBottom="10dp"
                 android:text="@string/cancel"
                 android:textColor="@color/colorPrimary"
-                android:id="@+id/WhatsAppButton"
+                android:id="@+id/CancelButton"
                 android:textSize="@dimen/_15sdp"
                 android:fontFamily="@font/helveticaneuelt_arabic"
                 android:includeFontPadding="false"

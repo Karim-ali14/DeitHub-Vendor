@@ -3,6 +3,7 @@
     package="com.dopave.diethub_vendor">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".UI.Subscription_detialsActivity"></activity>
-        <activity android:name=".UI.SubscriptionsActivity" />
+        <activity android:name=".UI.Subscriptions.SubscriptionsActivity" />
         <activity android:name=".UI.CreateVehicle.CreateVehicleActivity" />
         <activity android:name=".UI.CreateDelivery.CreateDeliveryActivity" />
         <activity android:name=".UI.NewPassword_Activity" />

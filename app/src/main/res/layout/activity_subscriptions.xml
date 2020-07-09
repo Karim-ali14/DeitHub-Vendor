@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.SubscriptionsActivity"  android:background="@color/background">
+    tools:context=".UI.Subscriptions.SubscriptionsActivity"  android:background="@color/background">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/AppBer"
         android:layout_width="match_parent"
