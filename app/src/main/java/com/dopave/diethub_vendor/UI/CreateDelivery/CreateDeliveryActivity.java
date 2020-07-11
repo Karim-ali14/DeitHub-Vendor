@@ -222,10 +222,14 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             else if (!validationName()){dialog.dismiss();}
             else if (!validationPhone()){dialog.dismiss();}
             else if (!validationEmail()){dialog.dismiss();}
-            else if (cityRow == null)
+            else if (cityRow == null) {
+                dialog.dismiss();
                 Toast.makeText(this, R.string.Choose_city, Toast.LENGTH_SHORT).show();
-            else if (!isChecked)
+            }
+            else if (!isChecked){
                 Toast.makeText(this, R.string.agree_terms_conditions, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
             else {
                 update();
             }
@@ -235,13 +239,16 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             else if (!validationName()){dialog.dismiss();}
             else if (!validationPhone()){dialog.dismiss();}
             else if (!validationEmail()){dialog.dismiss();}
-            else if (cityRow == null)
+            else if (cityRow == null) {
                 Toast.makeText(this, R.string.Choose_city, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
             else if (!validationPass()){dialog.dismiss();}
-            else if (!isChecked)
+            else if (!isChecked) {
                 Toast.makeText(this, R.string.agree_terms_conditions, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
             else {
-                dialog.show();
                 createDelivery();
             }
         }

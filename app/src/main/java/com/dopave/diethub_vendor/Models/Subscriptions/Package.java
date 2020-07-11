@@ -16,6 +16,9 @@ public class Package implements Parcelable {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("nameEn")
+    @Expose
+    private String nameEn;
     @SerializedName("description")
     @Expose
     private String description;
@@ -69,7 +72,7 @@ public class Package implements Parcelable {
     private MainImage mainImage;
     @SerializedName("images")
     @Expose
-    private List<Object> images = null;
+    private List<Image> images = null;
 
     protected Package(Parcel in) {
         if (in.readByte() == 0) {
@@ -78,6 +81,7 @@ public class Package implements Parcelable {
             id = in.readInt();
         }
         name = in.readString();
+        nameEn = in.readString();
         description = in.readString();
         if (in.readByte() == 0) {
             price = null;
@@ -140,6 +144,7 @@ public class Package implements Parcelable {
             dest.writeInt(id);
         }
         dest.writeString(name);
+        dest.writeString(nameEn);
         dest.writeString(description);
         if (price == null) {
             dest.writeByte((byte) 0);
@@ -233,6 +238,14 @@ public class Package implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNameEn() {
+        return nameEn;
+    }
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
     }
 
     public String getDescription() {
@@ -371,11 +384,11 @@ public class Package implements Parcelable {
         this.mainImage = mainImage;
     }
 
-    public List<Object> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
-    public void setImages(List<Object> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
     }
 

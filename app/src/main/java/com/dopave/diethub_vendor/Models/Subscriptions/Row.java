@@ -1,13 +1,10 @@
 
 package com.dopave.diethub_vendor.Models.Subscriptions;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Row implements Parcelable {
+public class Row {
 
     @SerializedName("id")
     @Expose
@@ -20,7 +17,7 @@ public class Row implements Parcelable {
     private String status;
     @SerializedName("changedBy")
     @Expose
-    private Object changedBy;
+    private String changedBy;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
@@ -39,71 +36,6 @@ public class Row implements Parcelable {
     @SerializedName("client")
     @Expose
     private Client client;
-
-    protected Row(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readInt();
-        }
-        cancelledReason = in.readString();
-        status = in.readString();
-        createdAt = in.readString();
-        updatedAt = in.readString();
-        if (in.readByte() == 0) {
-            packageId = null;
-        } else {
-            packageId = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            clientId = null;
-        } else {
-            clientId = in.readInt();
-        }
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(id);
-        }
-        dest.writeString(cancelledReason);
-        dest.writeString(status);
-        dest.writeString(createdAt);
-        dest.writeString(updatedAt);
-        if (packageId == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(packageId);
-        }
-        if (clientId == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(clientId);
-        }
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<Row> CREATOR = new Creator<Row>() {
-        @Override
-        public Row createFromParcel(Parcel in) {
-            return new Row(in);
-        }
-
-        @Override
-        public Row[] newArray(int size) {
-            return new Row[size];
-        }
-    };
 
     public Integer getId() {
         return id;
@@ -129,11 +61,11 @@ public class Row implements Parcelable {
         this.status = status;
     }
 
-    public Object getChangedBy() {
+    public String getChangedBy() {
         return changedBy;
     }
 
-    public void setChangedBy(Object changedBy) {
+    public void setChangedBy(String changedBy) {
         this.changedBy = changedBy;
     }
 

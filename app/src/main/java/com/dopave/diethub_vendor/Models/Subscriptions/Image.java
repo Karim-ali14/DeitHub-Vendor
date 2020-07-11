@@ -4,7 +4,7 @@ package com.dopave.diethub_vendor.Models.Subscriptions;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MainImage {
+public class Image {
 
     @SerializedName("id")
     @Expose

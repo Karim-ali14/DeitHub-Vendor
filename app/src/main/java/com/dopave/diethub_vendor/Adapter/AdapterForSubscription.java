@@ -27,6 +27,7 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.Subscriptions.Image;
 import com.dopave.diethub_vendor.Models.Subscriptions.Row;
 import com.dopave.diethub_vendor.Models.Subscriptions.Subscriptions;
 import com.dopave.diethub_vendor.Models.Subscriptions.UpdateStatus.UpdateSubscriptionStatus;
@@ -38,6 +39,7 @@ import com.dopave.diethub_vendor.UI.Subscriptions.SubscriptionsViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubscription.ViewHolderForSubscription> {
@@ -48,7 +50,7 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
     ProgressDialog dialog;
     String Status;
     RecyclerView recyclerView;
-
+    public static List<Image> listImage;
     public AdapterForSubscription(List<Row> list, Context context,
                                   int type, SubscriptionsViewModel viewModel,
                                   ProgressDialog dialog, String status, RecyclerView recyclerView) {
@@ -59,6 +61,7 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
         this.dialog = dialog;
         Status = status;
         this.recyclerView = recyclerView;
+        listImage = new ArrayList<>();
     }
 
     @NonNull
@@ -103,6 +106,13 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (SubRow.get_package().getImages() != null && SubRow.get_package().getImages().size() != 0) {
+                    AdapterForSubscription.listImage.clear();
+                    AdapterForSubscription.listImage.addAll(SubRow.get_package().getImages());
+                }
+                else {
+                    AdapterForSubscription.listImage.clear();
+                }
                 context.startActivity(new Intent(context, Subscription_detialsActivity.class)
                         .putExtra("Package",SubRow.get_package())
                         .putExtra("Client",SubRow.getClient()));

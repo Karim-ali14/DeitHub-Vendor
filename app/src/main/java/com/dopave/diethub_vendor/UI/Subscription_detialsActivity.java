@@ -19,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Adapter.AdapterForSilder;
+import com.dopave.diethub_vendor.Adapter.AdapterForSubscription;
 import com.dopave.diethub_vendor.Models.Subscriptions.Client;
+import com.dopave.diethub_vendor.Models.Subscriptions.Image;
 import com.dopave.diethub_vendor.Models.Subscriptions.Package;
 import com.dopave.diethub_vendor.Models.Subscriptions.Row;
 import com.dopave.diethub_vendor.R;
@@ -31,12 +33,13 @@ import java.util.Objects;
 public class Subscription_detialsActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
     ViewPager viewPager;
     LinearLayout points;
-    List<Integer> list;
+    List<Image> list;
     Button ClientInfo,Package_Content;
     ConstraintLayout LayoutOfSubInfo, LayoutOfClientDetails;
     TextView title,Package_Price,NameOfPackage,Ratting,TotalCalorie,DetailsPackage,Duration,
             NameOfClientDetails,PhoneOfClient;
     RatingBar RattingBar;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,20 +63,19 @@ public class Subscription_detialsActivity extends AppCompatActivity implements V
         RattingBar = findViewById(R.id.RattingBar);
         NameOfClientDetails = findViewById(R.id.NameOfClientDetails);
         PhoneOfClient = findViewById(R.id.PhoneOfClient);
-
-        list = new ArrayList<>();
-        list.add(R.drawable.ch2);
-        list.add(R.drawable.ch2);
-        list.add(R.drawable.ch2);
+        if(AdapterForSubscription.listImage.size() != 0)
+            list = AdapterForSubscription.listImage;
+        else
+            list = new ArrayList<>();
         viewPager.setAdapter(new AdapterForSilder(list,this));
         setPoints(0);
         viewPager.setOnPageChangeListener(this);
         Package aPackage = (Package) Objects.requireNonNull(getIntent().getExtras().getParcelable("Package"));
         Client client = (Client) Objects.requireNonNull(getIntent().getExtras().getParcelable("Client"));
-        Toast.makeText(this, aPackage.getName() + " "+client.getName(), Toast.LENGTH_SHORT).show();
         setData(aPackage,client);
         TotalCalorie.setPaintFlags(TotalCalorie.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
     }
+
     private void setPoints(int position){
         if (points.getChildCount() > 0){
             points.removeAllViews();
@@ -138,7 +140,7 @@ public class Subscription_detialsActivity extends AppCompatActivity implements V
             Package_Price.setText(aPackage.getPrice() + "");
             int totalCal =  aPackage.getFatCal() + aPackage.getProteinCal()
                             + aPackage.getCarbCal();
-            TotalCalorie.setText(totalCal + " " +getResources().getString(R.string.Calorie));
+            TotalCalorie.setText(totalCal + "" +getResources().getString(R.string.Calorie));
             Ratting.setText(aPackage.getTotalRate() +"");
             RattingBar.setRating(aPackage.getTotalRate());
             DetailsPackage.setText(aPackage.getDescription());

@@ -1,6 +1,7 @@
 package com.dopave.diethub_vendor.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +10,19 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.Subscriptions.Image;
 import com.dopave.diethub_vendor.R;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.List;
 
 public class AdapterForSilder extends PagerAdapter {
-    List<Integer> list;
+    List<Image> list;
     Context context;
 
-    public AdapterForSilder(List<Integer> list, Context context) {
+    public AdapterForSilder(List<Image> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -28,7 +32,10 @@ public class AdapterForSilder extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_image_slilder, container, false);
         ImageView image = view.findViewById(R.id.imageSlider);
-        image.setImageResource(list.get(position));
+
+        String photoPath = Common.BaseUrl + "images/" + list.get(position).getFor() + "/" +
+                Uri.encode(list.get(position).getName());
+        Picasso.with(context).load(photoPath).into(image);
         container.addView(view); // without this line nothing happen
         return view;
     }
