@@ -45,7 +45,7 @@
             android:paddingTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_17sdp"
             android:paddingLeft="@dimen/_45sdp"
-            android:paddingRight="@dimen/_35sdp"
+            android:paddingRight="@dimen/_45sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Massage"

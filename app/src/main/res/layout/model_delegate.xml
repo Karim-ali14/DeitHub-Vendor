@@ -122,6 +122,16 @@
                 android:text="2018"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
+            <TextView
+                android:id="@+id/NumberOfVehicle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/helveticaneuelt_arabic"
+                android:includeFontPadding="false"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="123456"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"

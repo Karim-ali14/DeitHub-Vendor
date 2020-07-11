@@ -77,6 +77,7 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
     public void onBindViewHolder(@NonNull ViewHolderForDelegate holder, int position) {
         final DeliveryRow row = list.get(position);
         holder.NameOfDelegate.setText(row.getName());
+        holder.NumberOfVehicle.setText(row.getVehicle().getNumber());
         holder.MenuLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,7 +178,7 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
 
     public class ViewHolderForDelegate extends RecyclerView.ViewHolder{
         CircleImageView IconOfDelegate;
-        TextView NameOfDelegate,AddressOfDelegate,NameOfVehicle,ModelOfVehicle,YearOfVehicle;
+        TextView NameOfDelegate,AddressOfDelegate,NameOfVehicle,ModelOfVehicle,YearOfVehicle,NumberOfVehicle;
         LinearLayout MenuLayout,Vehicle_DetailsLayout;
         public ViewHolderForDelegate(@NonNull View itemView) {
             super(itemView);
@@ -187,6 +188,7 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
             NameOfVehicle = itemView.findViewById(R.id.NameOfVehicle);
             ModelOfVehicle = itemView.findViewById(R.id.ModelOfVehicle);
             YearOfVehicle = itemView.findViewById(R.id.YearOfVehicle);
+            NumberOfVehicle = itemView.findViewById(R.id.NumberOfVehicle);
             MenuLayout = itemView.findViewById(R.id.MenuLayout);
             Vehicle_DetailsLayout = itemView.findViewById(R.id.Vehicle_DetailsLayout);
         }

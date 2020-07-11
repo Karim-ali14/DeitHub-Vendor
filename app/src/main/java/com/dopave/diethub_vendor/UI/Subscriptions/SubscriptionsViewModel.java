@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.dopave.diethub_vendor.Models.Subscriptions.Subscriptions;
+import com.dopave.diethub_vendor.Models.Subscriptions.UpdateStatus.UpdateSubscriptionStatus;
 
 public class SubscriptionsViewModel extends ViewModel {
     SubscriptionsRepository repository;
@@ -20,5 +21,11 @@ public class SubscriptionsViewModel extends ViewModel {
                                                        final SubscriptionsViewModel viewModel,
                                                        int type,String status){
         return repository.getAllSubscriptions(context, dialog, viewModel,type,status);
+    }
+
+    public LiveData<Subscriptions> UpdateSubscriptionStatus(final Context context,
+                                                            final ProgressDialog dialog, String id,
+                                                            UpdateSubscriptionStatus updateSubscriptionStatus){
+        return repository.UpdateSubscriptionStatus(context, dialog, id, updateSubscriptionStatus);
     }
 }

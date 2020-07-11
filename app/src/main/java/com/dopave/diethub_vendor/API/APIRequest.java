@@ -11,6 +11,7 @@ import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
 import com.dopave.diethub_vendor.Models.ResetPassword.ResetPassword;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.Models.Subscriptions.Subscriptions;
+import com.dopave.diethub_vendor.Models.Subscriptions.UpdateStatus.UpdateSubscriptionStatus;
 import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequest;
 import com.dopave.diethub_vendor.Models.UpdateVehicle.UpdateVehicle;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
@@ -23,6 +24,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -115,4 +117,10 @@ public interface APIRequest {
                                                        @Query("include_client") boolean include_client,
                                                        @Query("include_package") boolean include_package,
                                                        @Query("status") String status);
+
+    @PATCH("provider/{providerId}/subscription/{id}")
+    Call<Subscriptions> UpdateSubscriptionStatus (@Header("Authorization") String Auth,
+                                                  @Path("providerId") String providerId,
+                                                  @Path("id") String id,
+                                                  @Body UpdateSubscriptionStatus updateSubscriptionStatus);
 }

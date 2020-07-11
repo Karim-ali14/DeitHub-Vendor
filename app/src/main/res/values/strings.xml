@@ -158,5 +158,9 @@
     <string name="description">Description</string>
     <string name="duration">Duration :</string>
     <string name="no_Subscription">There are no subscriptions yet</string>
+    <string name="order_was_accepted">the order has been accepted</string>
+    <string name="order_was_canceled">the order has been canceled</string>
+    <string name="canceling_reason">Write your reason for canceling here ......</string>
+    <string name="enter_cancel_reason">Please enter the reason for the cancellation</string>
 
 </resources>

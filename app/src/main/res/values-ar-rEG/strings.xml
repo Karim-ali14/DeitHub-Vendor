@@ -158,4 +158,9 @@
     <string name="description">الوصف</string>
     <string name="duration">المده :</string>
     <string name="no_Subscription">لا يوجد اشتراكات بعد</string>
+    <string name="order_was_accepted">تم قبول الطلب</string>
+    <string name="order_was_canceled">تم الغاء الطلب</string>
+    <string name="canceling_reason">اكتب سبب الإلغاء هنا ......</string>
+    <string name="enter_cancel_reason">من فضلك ادخل سبب الإلغاء</string>
+
 </resources>

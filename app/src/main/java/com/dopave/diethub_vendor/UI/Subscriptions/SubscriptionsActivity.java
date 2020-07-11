@@ -61,20 +61,21 @@ public class SubscriptionsActivity extends AppCompatActivity {
         finish();
     }
 
-    private void getAllSub(final int type,String status){
+    private void getAllSub(final int type, final String status){
         viewModel.getAllSubscriptions(this,dialog,viewModel,type,status).observe(this,
                 new Observer<Subscriptions>() {
             @Override
             public void onChanged(Subscriptions subscriptions) {
-                setListOfSubscription(type,subscriptions.getData().getRows(),viewModel);
+                setListOfSubscription(type,subscriptions.getData().getRows(),viewModel,status);
             }
         });
     }
 
-    public void setListOfSubscription(int type, List<Row> list,SubscriptionsViewModel viewModel){
+    public void setListOfSubscription(int type, List<Row> list,
+                                      SubscriptionsViewModel viewModel,String status){
         if (list.size() != 0) {
             recyclerView.setAdapter(new AdapterForSubscription(list,
-                    SubscriptionsActivity.this, type, viewModel));
+                    SubscriptionsActivity.this, type, viewModel,dialog,status,recyclerView));
         }else {
             Toast.makeText(this, R.string.no_Subscription, Toast.LENGTH_SHORT).show();
         }

@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer;
 
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Subscriptions.Subscriptions;
+import com.dopave.diethub_vendor.Models.Subscriptions.UpdateStatus.UpdateSubscriptionStatus;
 import com.dopave.diethub_vendor.Models.Years.Years;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
@@ -75,7 +76,6 @@ public class SubscriptionsRepository {
             @Override
             public void onFailure(Call<Subscriptions> call, Throwable t) {
                 dialog.dismiss();
-                dialog.dismiss();
                 final AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
                 View view = LayoutInflater.from(context).inflate(R.layout.error_dialog, null);
                 TextView Title = view.findViewById(R.id.Title);
@@ -96,7 +96,7 @@ public class SubscriptionsRepository {
                             @Override
                             public void onChanged(Subscriptions subscriptions) {
                                 ((SubscriptionsActivity)context).setListOfSubscription(type,
-                                        subscriptions.getData().getRows(),viewModel);
+                                        subscriptions.getData().getRows(),viewModel,status);
                             }
                         });
                     }
@@ -118,6 +118,51 @@ public class SubscriptionsRepository {
                     dialog1.show();
                 }
 
+            }
+        });
+        return mutableLiveData;
+    }
+
+    public MutableLiveData<Subscriptions> UpdateSubscriptionStatus(final Context context,
+                                                                   final ProgressDialog dialog, String id,
+                                                                   UpdateSubscriptionStatus updateSubscriptionStatus){
+        final MutableLiveData<Subscriptions> mutableLiveData = new MutableLiveData<>();
+        Common.getAPIRequest().UpdateSubscriptionStatus(
+                "Bearer "+Common.currentPosition.getData().getToken().getAccessToken(),
+                Common.currentPosition.getData().getProvider().getId()+"",id,
+                updateSubscriptionStatus).enqueue(new Callback<Subscriptions>() {
+            @Override
+            public void onResponse(Call<Subscriptions> call, Response<Subscriptions> response) {
+                if (200 == response.code()) {
+                    mutableLiveData.setValue(response.body());
+                }else {
+                    dialog.dismiss();
+                    try {
+                        Toast.makeText(context, new JSONObject(response.errorBody().string())
+                                .getString("message"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Subscriptions> call, Throwable t) {
+                dialog.dismiss();
+
+                if(t instanceof SocketTimeoutException) {
+                    Toast.makeText(context,R.string.Unable_contact_server, Toast.LENGTH_SHORT).show();
+                }
+
+                else if (t instanceof UnknownHostException) {
+                    Toast.makeText(context,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    Toast.makeText(context,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return mutableLiveData;

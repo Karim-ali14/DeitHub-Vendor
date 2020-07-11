@@ -69,7 +69,10 @@
             android:ellipsize="marquee"
             android:singleLine="true"
             android:fontFamily="@font/helveticaneuelt_arabic"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:maxLines="2"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"/>
         <LinearLayout
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_width="wrap_content"
@@ -159,7 +162,7 @@
                     android:id="@+id/SubscriptionRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4.2"
+                    android:text="0"
                     android:textColor="#000"
                     android:textSize="15dp"
                     android:fontFamily="@font/helveticaneuelt_arabic"

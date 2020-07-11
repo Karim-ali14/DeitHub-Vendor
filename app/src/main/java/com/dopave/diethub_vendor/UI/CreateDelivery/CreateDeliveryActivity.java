@@ -206,6 +206,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         Layout.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         UserName.clearFocus();
         Phone.clearFocus();
+        Email.clearFocus();
         Password.clearFocus();
         RePassword.clearFocus();
         Layout.setDescendantFocusability(dfValue);
@@ -214,8 +215,10 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     public void onClick(View view) {
         dialog.show();
         if (getIntent().getExtras().getString("type").equals("update")){
-            if (DeliveryImage == null)
+            if (DeliveryImage == null) {
                 Toast.makeText(this, R.string.Choose_personal_picture, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
             else if (!validationName()){dialog.dismiss();}
             else if (!validationPhone()){dialog.dismiss();}
             else if (!validationEmail()){dialog.dismiss();}
@@ -224,7 +227,6 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             else if (!isChecked)
                 Toast.makeText(this, R.string.agree_terms_conditions, Toast.LENGTH_SHORT).show();
             else {
-                dialog.show();
                 update();
             }
         }else {

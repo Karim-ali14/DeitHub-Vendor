@@ -1,5 +1,6 @@
 package com.dopave.diethub_vendor.Adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,11 +22,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Subscriptions.Row;
 import com.dopave.diethub_vendor.Models.Subscriptions.Subscriptions;
+import com.dopave.diethub_vendor.Models.Subscriptions.UpdateStatus.UpdateSubscriptionStatus;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
@@ -40,18 +45,27 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
     Context context;
     int Type;
     SubscriptionsViewModel viewModel;
+    ProgressDialog dialog;
+    String Status;
+    RecyclerView recyclerView;
 
-    public AdapterForSubscription(List<Row> list, Context context, int type, SubscriptionsViewModel viewModel) {
+    public AdapterForSubscription(List<Row> list, Context context,
+                                  int type, SubscriptionsViewModel viewModel,
+                                  ProgressDialog dialog, String status, RecyclerView recyclerView) {
         this.list = list;
         this.context = context;
         Type = type;
         this.viewModel = viewModel;
+        this.dialog = dialog;
+        Status = status;
+        this.recyclerView = recyclerView;
     }
 
     @NonNull
     @Override
     public ViewHolderForSubscription onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolderForSubscription(LayoutInflater.from(context).inflate(R.layout.model_subsciption,parent,false));
+        return new ViewHolderForSubscription(LayoutInflater.from(context)
+                .inflate(R.layout.model_subsciption,parent,false));
     }
 
     @Override
@@ -71,13 +85,13 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
             holder.CancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    showDialogToReason(SubRow);
                 }
             });
             holder.AcceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    acceptSubscription(SubRow);
                 }
             });
         }
@@ -100,7 +114,7 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
         holder.Calories.setText(
                 (SubRow.get_package().getFatCal()+
                         SubRow.get_package().getCarbCal()+
-                        SubRow.get_package().getProteinCal())+" "+context.getResources().getString(R.string.Calorie));
+                        SubRow.get_package().getProteinCal())+""+context.getResources().getString(R.string.Calorie));
         holder.SubscriptionRating.setText(SubRow.get_package().getTotalRate()+"");
         holder.NameOfClient.setText(SubRow.getClient().getName());
         holder.Calories.setPaintFlags(holder.Calories.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
@@ -167,5 +181,91 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
         Intent dialIntent = new Intent(Intent.ACTION_DIAL);
         dialIntent.setData(Uri.parse("tel:"+Uri.encode(PhoneNumber.trim())));
         context.startActivity(dialIntent);
+    }
+
+    private void showDialogToReason(final Row row){
+        final AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_reason, null);
+        final EditText reasonToCancel = view.findViewById(R.id.reasonToCancel);
+        Button ConfirmButton = view.findViewById(R.id.ConfirmButton);
+        Button CancelButton = view.findViewById(R.id.CancelButton);
+        Adialog.setView(view);
+        final AlertDialog dialog1 = Adialog.create();
+        dialog1.setCanceledOnTouchOutside(false);
+        dialog1.setCancelable(false);
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog1.show();
+        ConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+                if (reasonToCancel.getText().toString().isEmpty()) {
+                    dialog.dismiss();
+                    Toast.makeText(context, R.string.enter_cancel_reason, Toast.LENGTH_LONG).show();
+                }
+                else {
+                    dialog1.dismiss();
+                    cancelSubscription(row);
+                }
+            }
+        });
+        CancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog1.dismiss();
+            }
+        });
+    }
+
+    private void cancelSubscription(Row row){
+        viewModel.UpdateSubscriptionStatus(context,dialog,row.getId()+"",
+                new UpdateSubscriptionStatus("cancelled"," "))
+                .observe((LifecycleOwner) context,
+                        new Observer<Subscriptions>() {
+                            @Override
+                            public void onChanged(Subscriptions subscriptions) {
+                                viewModel.getAllSubscriptions(context,dialog,viewModel,Type,Status)
+                                        .observe((LifecycleOwner) context, new Observer<Subscriptions>() {
+                                            @Override
+                                            public void onChanged(Subscriptions subscriptions) {
+                                                list.clear();
+                                                Toast.makeText(context, context.getResources()
+                                                                .getString(R.string.order_was_canceled)
+                                                        , Toast.LENGTH_SHORT).show();
+                                                recyclerView.setAdapter(
+                                                        new AdapterForSubscription(
+                                                                subscriptions.getData().getRows(),
+                                                                context, Type, viewModel,dialog,Status
+                                                                ,recyclerView));
+                                            }
+                                        });
+                            }
+                        });
+    }
+    private void acceptSubscription(Row row){
+        dialog.show();
+        viewModel.UpdateSubscriptionStatus(context,dialog,row.getId()+"",
+                new UpdateSubscriptionStatus("approved"))
+                .observe((LifecycleOwner) context,
+                        new Observer<Subscriptions>() {
+                            @Override
+                            public void onChanged(Subscriptions subscriptions) {
+                                viewModel.getAllSubscriptions(context,dialog,viewModel,Type,Status)
+                                        .observe((LifecycleOwner) context, new Observer<Subscriptions>() {
+                                            @Override
+                                            public void onChanged(Subscriptions subscriptions) {
+                                                list.clear();
+                                                Toast.makeText(context, context.getResources()
+                                                                .getString(R.string.order_was_accepted)
+                                                        , Toast.LENGTH_SHORT).show();
+                                                recyclerView.setAdapter(
+                                                        new AdapterForSubscription(
+                                                                subscriptions.getData().getRows(),
+                                                                context, Type, viewModel,dialog,Status
+                                                                ,recyclerView));
+                                            }
+                                        });
+                            }
+                        });
     }
 }
