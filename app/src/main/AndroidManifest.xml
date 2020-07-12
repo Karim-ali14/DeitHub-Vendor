@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UI.Subscription_detialsActivity"></activity>
+        <activity android:name=".UI.Subscription_detials.Subscription_detialsActivity"></activity>
         <activity android:name=".UI.Subscriptions.SubscriptionsActivity" />
         <activity android:name=".UI.CreateVehicle.CreateVehicleActivity" />
         <activity android:name=".UI.CreateDelivery.CreateDeliveryActivity" />
@@ -25,7 +25,7 @@
         <activity android:name=".UI.Notification_Activity" />
         <activity android:name=".UI.Add_Delegate.Add_DelegateActivity" />
         <activity android:name=".UI.Details_OrderActivity" />
-        <activity android:name=".UI.Orders_Activity" />
+        <activity android:name=".UI.Orders.Orders_Activity" />
         <activity
             android:name=".UI.HomeActivity"
             android:label="@string/title_activity_home"

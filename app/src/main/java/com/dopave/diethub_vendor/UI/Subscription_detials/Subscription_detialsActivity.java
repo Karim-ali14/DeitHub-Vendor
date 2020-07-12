@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor.UI;
+package com.dopave.diethub_vendor.UI.Subscription_detials;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,16 +16,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.dopave.diethub_vendor.Adapter.AdapterForSilder;
 import com.dopave.diethub_vendor.Adapter.AdapterForSubscription;
 import com.dopave.diethub_vendor.Models.Subscriptions.Client;
 import com.dopave.diethub_vendor.Models.Subscriptions.Image;
 import com.dopave.diethub_vendor.Models.Subscriptions.Package;
-import com.dopave.diethub_vendor.Models.Subscriptions.Row;
 import com.dopave.diethub_vendor.R;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,7 +35,7 @@ public class Subscription_detialsActivity extends AppCompatActivity implements V
     TextView title,Package_Price,NameOfPackage,Ratting,TotalCalorie,DetailsPackage,Duration,
             NameOfClientDetails,PhoneOfClient;
     RatingBar RattingBar;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

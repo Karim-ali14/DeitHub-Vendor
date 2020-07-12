@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dopave.diethub_vendor.Adapter.AdapterForOrder;
+import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.Orders.Orders;
 import com.dopave.diethub_vendor.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OrderFragment extends Fragment {
     RecyclerView recyclerView;
@@ -36,7 +43,24 @@ public class OrderFragment extends Fragment {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_my_order, container, false);
         init(inflate);
+        ggg();
         return inflate;
+    }
+    private void ggg(){
+        Common.getAPIRequest().getAllOrders(
+                "Bearer "+Common.currentPosition.getData().getToken().getAccessToken(),
+                Common.currentPosition.getData().getProvider().getId()+"",
+                true,true,true,"pending").enqueue(new Callback<Orders>() {
+            @Override
+            public void onResponse(Call<Orders> call, Response<Orders> response) {
+                Log.i("OOOOOO",response.code()+"  "+response.body().getData().getRaw().size());
+            }
+
+            @Override
+            public void onFailure(Call<Orders> call, Throwable t) {
+                Log.i("OOOOOO",t.getMessage());
+            }
+        });
     }
 
     private void init (View view){

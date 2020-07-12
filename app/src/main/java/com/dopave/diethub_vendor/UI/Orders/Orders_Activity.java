@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor.UI;
+package com.dopave.diethub_vendor.UI.Orders;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -13,10 +14,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dopave.diethub_vendor.Adapter.AdapterForOrder;
+import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.Orders.Orders;
 import com.dopave.diethub_vendor.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Orders_Activity extends AppCompatActivity {
     RecyclerView recyclerView;
