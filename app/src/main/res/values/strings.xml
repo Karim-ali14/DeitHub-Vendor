@@ -57,7 +57,9 @@
     <string name="Orders">Orders</string>
     <string name="finished">Finished</string>
     <string name="Preparing">Preparing</string>
+    <string name="Pending">Pending</string>
     <string name="Accepted">Accepted</string>
+    <string name="Delivering">Delivering</string>
     <string name="NumberOfOrder">Order\'s number :</string>
     <string name="OrderDetails">Order details</string>
     <string name="Count">Count :</string>

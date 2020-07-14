@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
 import com.dopave.diethub_vendor.UI.Fragments.Home_Fragment;
-import com.dopave.diethub_vendor.UI.Fragments.OrderFragment;
+import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.Fragments.SettingsFragment;
 import com.dopave.diethub_vendor.UI.Subscriptions.SubscriptionsActivity;
 import com.google.android.material.navigation.NavigationView;

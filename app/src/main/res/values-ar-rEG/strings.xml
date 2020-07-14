@@ -59,7 +59,9 @@
     <string name="Orders">الطلبات</string>
     <string name="finished">تم الانتهاء</string>
     <string name="Preparing">جار ي التجهيز</string>
+    <string name="Pending">قيد الانتظار</string>
     <string name="Accepted">تم القبول</string>
+    <string name="Delivering">يتم التوصيل</string>
     <string name="NumberOfOrder">رقم الطلب :</string>
     <string name="OrderDetails">تفاصيل الطلب</string>
     <string name="Count">الكمية :</string>

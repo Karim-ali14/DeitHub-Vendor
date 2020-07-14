@@ -131,5 +131,7 @@ public interface APIRequest {
                               @Query("include_address") boolean include_address,
                               @Query("include_details") boolean include_details,
                               @Query("include_client") boolean include_client,
-                              @Query("status") String status);
+                              @Query("status") String [] status,
+                              @Query("limit") int limit,
+                              @Query("skip") int skip);
 }

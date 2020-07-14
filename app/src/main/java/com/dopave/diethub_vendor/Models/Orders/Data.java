@@ -9,17 +9,17 @@ public class Data {
 
     @SerializedName("raw")
     @Expose
-    private List<Raw> raw = null;
+    private List<OrderRaw> orderRaw = null;
     @SerializedName("count")
     @Expose
     private Integer count;
 
-    public List<Raw> getRaw() {
-        return raw;
+    public List<OrderRaw> getOrderRaw() {
+        return orderRaw;
     }
 
-    public void setRaw(List<Raw> raw) {
-        this.raw = raw;
+    public void setOrderRaw(List<OrderRaw> orderRaw) {
+        this.orderRaw = orderRaw;
     }
 
     public Integer getCount() {

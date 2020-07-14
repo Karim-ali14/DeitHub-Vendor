@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
+import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 
 

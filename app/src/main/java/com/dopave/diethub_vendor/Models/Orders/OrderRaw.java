@@ -1,11 +1,14 @@
 
 package com.dopave.diethub_vendor.Models.Orders;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Raw {
+public class OrderRaw implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -40,6 +43,69 @@ public class Raw {
     @SerializedName("details")
     @Expose
     private List<Detail> details = null;
+
+    protected OrderRaw(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        status = in.readString();
+        if (in.readByte() == 0) {
+            addressId = null;
+        } else {
+            addressId = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            clientId = null;
+        } else {
+            clientId = in.readInt();
+        }
+        updatedAt = in.readString();
+        createdAt = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+        dest.writeString(status);
+        if (addressId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(addressId);
+        }
+        if (clientId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(clientId);
+        }
+        dest.writeString(updatedAt);
+        dest.writeString(createdAt);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<OrderRaw> CREATOR = new Creator<OrderRaw>() {
+        @Override
+        public OrderRaw createFromParcel(Parcel in) {
+            return new OrderRaw(in);
+        }
+
+        @Override
+        public OrderRaw[] newArray(int size) {
+            return new OrderRaw[size];
+        }
+    };
 
     public Integer getId() {
         return id;
