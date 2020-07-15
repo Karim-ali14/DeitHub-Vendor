@@ -608,4 +608,5 @@ public class CreateVehicleActivity extends AppCompatActivity {
         Log.e("TTTTTT", encodedImage);
         return encodedImage;
     }
+
 }

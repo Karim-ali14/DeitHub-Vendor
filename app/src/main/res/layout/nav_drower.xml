@@ -126,7 +126,7 @@
                     android:layout_height="24dp"
                     android:contentDescription="@string/myorders"
                     android:scaleType="fitXY"
-                    android:src="@drawable/pencil" />
+                    android:src="@drawable/product" />
 
                 <TextView
                     android:id="@+id/nav_SubscriptionOrders"

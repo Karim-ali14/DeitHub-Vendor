@@ -164,5 +164,8 @@
     <string name="order_was_canceled">the order has been canceled</string>
     <string name="canceling_reason">Write your reason for canceling here ......</string>
     <string name="enter_cancel_reason">Please enter the reason for the cancellation</string>
+    <string name="update">update</string>
+    <string name="order_status">Order Status</string>
+    <string name="upDate_Order_Status">Update Order Status</string>
 
 </resources>

@@ -117,7 +117,9 @@ public interface APIRequest {
                                                        @Path("providerId") String providerId,
                                                        @Query("include_client") boolean include_client,
                                                        @Query("include_package") boolean include_package,
-                                                       @Query("status") String status);
+                                                       @Query("status") String status,
+                                                       @Query("limit") int limit,
+                                                       @Query("skip") int skip);
 
     @PATCH("provider/{providerId}/subscription/{id}")
     Call<Subscriptions> UpdateSubscriptionStatus (@Header("Authorization") String Auth,
@@ -134,4 +136,10 @@ public interface APIRequest {
                               @Query("status") String [] status,
                               @Query("limit") int limit,
                               @Query("skip") int skip);
+
+    @PUT("provider/{providerId}/order/{orderId}/status")
+    Call<Orders> updateOrder(@Header("Authorization") String Auth,
+                             @Path("providerId") String providerId,
+                             @Path("orderId") String orderId,
+                             @Body UpdateSubscriptionStatus updateSubscriptionStatus);
 }

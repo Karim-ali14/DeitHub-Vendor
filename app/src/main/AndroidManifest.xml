@@ -24,7 +24,7 @@
         <activity android:name=".UI.LanguageActivity" />
         <activity android:name=".UI.Notification_Activity" />
         <activity android:name=".UI.Add_Delegate.Add_DelegateActivity" />
-        <activity android:name=".UI.Details_OrderActivity" />
+        <activity android:name=".UI.Details_OrderActivity.Details_OrderActivity" />
         <activity android:name=".UI.Orders.Orders_Activity" />
         <activity
             android:name=".UI.HomeActivity"

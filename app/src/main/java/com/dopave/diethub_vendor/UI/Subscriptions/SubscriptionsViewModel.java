@@ -19,8 +19,9 @@ public class SubscriptionsViewModel extends ViewModel {
     public LiveData<Subscriptions> getAllSubscriptions(final Context context,
                                                        final ProgressDialog dialog,
                                                        final SubscriptionsViewModel viewModel,
-                                                       int type,String status){
-        return repository.getAllSubscriptions(context, dialog, viewModel,type,status);
+                                                       int type,String status,
+                                                       int limit, int skip){
+        return repository.getAllSubscriptions(context, dialog, viewModel,type,status,limit,skip);
     }
 
     public LiveData<Subscriptions> UpdateSubscriptionStatus(final Context context,

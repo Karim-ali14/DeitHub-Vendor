@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_30sdp"
+    android:layout_marginRight="@dimen/_20sdp"
+    android:layout_marginLeft="@dimen/_20sdp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_20sdp"
+        android:id="@+id/parentLayout"
+        >
+
+        <ImageView
+            android:id="@+id/Icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/pencil_active"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/Massage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/helveticaneuelt_arabic"
+            android:includeFontPadding="false"
+            android:text="@string/upDate_Order_Status"
+            android:textColor="@color/ColorTextDescription"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Icon"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/Update_Layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/style_textinput_spinner"
+            android:paddingLeft="@dimen/_17sdp"
+            android:paddingTop="@dimen/_12sdp"
+            android:paddingRight="@dimen/_17sdp"
+            android:paddingBottom="@dimen/_12sdp"
+            app:layout_constraintBottom_toTopOf="@+id/UpDateButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Massage"
+            app:layout_constraintWidth_percent=".9">
+
+            <Spinner
+                android:id="@+id/spinnerUpdateOrder"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/updateIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pencil_"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/statusSelected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:fontFamily="@font/helveticaneuelt_arabic"
+                android:includeFontPadding="false"
+                android:paddingBottom="5dp"
+                android:text="@string/order_status"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_17sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/updateIcon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/open"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <Button
+            android:id="@+id/UpDateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_button"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_17sdp"
+            android:paddingLeft="@dimen/_45sdp"
+            android:paddingRight="@dimen/_45sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Update_Layout"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/helveticaneuelt_arabic"
+            android:includeFontPadding="false"
+            android:text="@string/update"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_17sdp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

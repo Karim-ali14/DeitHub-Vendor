@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Details_OrderActivity">
+    tools:context=".UI.Details_OrderActivity.Details_OrderActivity"
+    android:background="@color/background">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/Edit"
+        app:layout_constraintBottom_toTopOf="@+id/ButtonUpDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -119,7 +120,7 @@
                     android:textSize="@dimen/_22sdp" />
 
                 <TextView
-                    android:id="@+id/textView22"
+                    android:id="@+id/detailsOfOrders"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -175,7 +176,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView27"
+                        android:id="@+id/countOfOrder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/helveticaneuelt_arabic"
@@ -209,7 +210,7 @@
                             android:textSize="@dimen/_17sdp" />
 
                         <TextView
-                            android:id="@+id/Number"
+                            android:id="@+id/TotalNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
@@ -261,7 +262,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView17"
+                        android:id="@+id/NameOfClient"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_10sdp"
@@ -319,7 +320,8 @@
                         app:layout_constraintStart_toEndOf="@+id/textView23"
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_5sdp"/>
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:id="@+id/paymentMethod"/>
 
                     <ImageView
                         android:id="@+id/VisaIcon"
@@ -376,7 +378,8 @@
                         app:layout_constraintStart_toEndOf="@+id/textView"
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_5sdp"/>
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:id="@+id/status"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -414,7 +417,8 @@
                         android:fontFamily="@font/helveticaneuelt_arabic"
                         android:text="الرياض , حي الروضة , شارع الأمير محمد بن سلمان"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/_17sdp" />
+                        android:textSize="@dimen/_17sdp"
+                        android:id="@+id/clientAddress"/>
                 </LinearLayout>
 
                 <View
@@ -438,7 +442,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/Edit"
+        android:id="@+id/ButtonUpDate"
         android:fontFamily="@font/helveticaneuelt_arabic"
         android:paddingBottom="@dimen/_15sdp"
         android:paddingTop="@dimen/_10sdp"/>

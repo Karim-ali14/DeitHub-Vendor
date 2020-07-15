@@ -46,12 +46,14 @@ public class SubscriptionsRepository {
                                                               final ProgressDialog dialog,
                                                               final SubscriptionsViewModel viewModel,
                                                               final int type,
-                                                              final String status){
+                                                              final String status,
+                                                              final int limit,
+                                                              final int skip){
         final MutableLiveData<Subscriptions> mutableLiveData = new MutableLiveData<>();
         Common.getAPIRequest().getAllSubscriptionbyProviderId(
                 "Bearer "+Common.currentPosition.getData().getToken().getAccessToken(),
                 Common.currentPosition.getData().getProvider().getId()+"",
-                true,true,status).enqueue(new Callback<Subscriptions>() {
+                true,true,status,limit,skip).enqueue(new Callback<Subscriptions>() {
             @Override
             public void onResponse(Call<Subscriptions> call, Response<Subscriptions> response) {
                 dialog.dismiss();
@@ -91,7 +93,7 @@ public class SubscriptionsRepository {
                     public void onClick(final View v) {
                         dialog1.dismiss();
                         dialog.show();
-                        viewModel.getAllSubscriptions(context, dialog, viewModel,type,status).observe((LifecycleOwner) context,
+                        viewModel.getAllSubscriptions(context, dialog, viewModel,type,status,limit,skip).observe((LifecycleOwner) context,
                                 new Observer<Subscriptions>() {
                             @Override
                             public void onChanged(Subscriptions subscriptions) {

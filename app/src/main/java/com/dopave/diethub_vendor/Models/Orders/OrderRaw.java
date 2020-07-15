@@ -18,7 +18,7 @@ public class OrderRaw implements Parcelable {
     private String status;
     @SerializedName("paymentMethod")
     @Expose
-    private Object paymentMethod;
+    private String paymentMethod;
     @SerializedName("totalPricePiastre")
     @Expose
     private TotalPricePiastre totalPricePiastre;
@@ -123,11 +123,11 @@ public class OrderRaw implements Parcelable {
         this.status = status;
     }
 
-    public Object getPaymentMethod() {
+    public String getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(Object paymentMethod) {
+    public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

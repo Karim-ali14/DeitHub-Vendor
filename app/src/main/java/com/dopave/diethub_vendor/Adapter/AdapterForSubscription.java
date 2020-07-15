@@ -91,7 +91,7 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
             holder.AcceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    acceptSubscription(SubRow);
+                   // acceptSubscription(SubRow);
                 }
             });
         }
@@ -212,7 +212,7 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
                 }
                 else {
                     dialog1.dismiss();
-                    cancelSubscription(row);
+                    //cancelSubscription(row);
                 }
             }
         });
@@ -224,55 +224,61 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
         });
     }
 
-    private void cancelSubscription(Row row){
-        viewModel.UpdateSubscriptionStatus(context,dialog,row.getId()+"",
-                new UpdateSubscriptionStatus("cancelled"," "))
-                .observe((LifecycleOwner) context,
-                        new Observer<Subscriptions>() {
-                            @Override
-                            public void onChanged(Subscriptions subscriptions) {
-                                viewModel.getAllSubscriptions(context,dialog,viewModel,Type,Status)
-                                        .observe((LifecycleOwner) context, new Observer<Subscriptions>() {
-                                            @Override
-                                            public void onChanged(Subscriptions subscriptions) {
-                                                list.clear();
-                                                Toast.makeText(context, context.getResources()
-                                                                .getString(R.string.order_was_canceled)
-                                                        , Toast.LENGTH_SHORT).show();
-                                                recyclerView.setAdapter(
-                                                        new AdapterForSubscription(
-                                                                subscriptions.getData().getRows(),
-                                                                context, Type, viewModel,dialog,Status
-                                                                ,recyclerView));
-                                            }
-                                        });
-                            }
-                        });
-    }
-    private void acceptSubscription(Row row){
-        dialog.show();
-        viewModel.UpdateSubscriptionStatus(context,dialog,row.getId()+"",
-                new UpdateSubscriptionStatus("approved"))
-                .observe((LifecycleOwner) context,
-                        new Observer<Subscriptions>() {
-                            @Override
-                            public void onChanged(Subscriptions subscriptions) {
-                                viewModel.getAllSubscriptions(context,dialog,viewModel,Type,Status)
-                                        .observe((LifecycleOwner) context, new Observer<Subscriptions>() {
-                                            @Override
-                                            public void onChanged(Subscriptions subscriptions) {
-                                                list.clear();
-                                                Toast.makeText(context, context.getResources()
-                                                                .getString(R.string.order_was_accepted)
-                                                        , Toast.LENGTH_SHORT).show();
-                                                recyclerView.setAdapter(
-                                                        new AdapterForSubscription(
-                                                                subscriptions.getData().getRows(),
-                                                                context, Type, viewModel,dialog,Status
-                                                                ,recyclerView));
-                                            }
-                                        });
-                            }
-                        });
+//    private void cancelSubscription(Row row){
+//        viewModel.UpdateSubscriptionStatus(context,dialog,row.getId()+"",
+//                new UpdateSubscriptionStatus("cancelled"," "))
+//                .observe((LifecycleOwner) context,
+//                        new Observer<Subscriptions>() {
+//                            @Override
+//                            public void onChanged(Subscriptions subscriptions) {
+//                                viewModel.getAllSubscriptions(context,dialog,viewModel,Type,Status)
+//                                        .observe((LifecycleOwner) context, new Observer<Subscriptions>() {
+//                                            @Override
+//                                            public void onChanged(Subscriptions subscriptions) {
+//                                                list.clear();
+//                                                Toast.makeText(context, context.getResources()
+//                                                                .getString(R.string.order_was_canceled)
+//                                                        , Toast.LENGTH_SHORT).show();
+//                                                recyclerView.setAdapter(
+//                                                        new AdapterForSubscription(
+//                                                                subscriptions.getData().getRows(),
+//                                                                context, Type, viewModel,dialog,Status
+//                                                                ,recyclerView));
+//                                            }
+//                                        });
+//                            }
+//                        });
+//    }
+//
+//    private void acceptSubscription(Row row){
+//        dialog.show();
+//        viewModel.UpdateSubscriptionStatus(context,dialog,row.getId()+"",
+//                new UpdateSubscriptionStatus("approved"))
+//                .observe((LifecycleOwner) context,
+//                        new Observer<Subscriptions>() {
+//                            @Override
+//                            public void onChanged(Subscriptions subscriptions) {
+//                                viewModel.getAllSubscriptions(context,dialog,viewModel,Type,Status)
+//                                        .observe((LifecycleOwner) context, new Observer<Subscriptions>() {
+//                                            @Override
+//                                            public void onChanged(Subscriptions subscriptions) {
+//                                                list.clear();
+//                                                Toast.makeText(context, context.getResources()
+//                                                                .getString(R.string.order_was_accepted)
+//                                                        , Toast.LENGTH_SHORT).show();
+//                                                recyclerView.setAdapter(
+//                                                        new AdapterForSubscription(
+//                                                                subscriptions.getData().getRows(),
+//                                                                context, Type, viewModel,dialog,Status
+//                                                                ,recyclerView));
+//                                            }
+//                                        });
+//                            }
+//                        });
+//    }
+
+    public void allList(List<Row> list){
+        for (Row raw : list)
+            this.list.add(raw);
     }
 }

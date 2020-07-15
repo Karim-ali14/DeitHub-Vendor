@@ -164,5 +164,10 @@
     <string name="order_was_canceled">تم الغاء الطلب</string>
     <string name="canceling_reason">اكتب سبب الإلغاء هنا ......</string>
     <string name="enter_cancel_reason">من فضلك ادخل سبب الإلغاء</string>
+    <string name="update">تحديث</string>
+    <string name="order_status">حالة الطلب</string>
+    <string name="upDate_Order_Status">تعديل حالة الطلب</string>
+
+
 
 </resources>

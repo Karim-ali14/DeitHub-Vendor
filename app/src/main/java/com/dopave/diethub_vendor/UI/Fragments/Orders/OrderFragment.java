@@ -40,11 +40,15 @@ public class OrderFragment extends Fragment {
     public static int FINISHED_ID = 2;
     static final int limit = 5;
     int skip = 0;
+
     String status[];
+
     public static boolean PENDING = false;
     public static boolean PREPARING = false;
     public static boolean FINISHED = false;
+
     boolean isScrolling = false;
+
     LinearLayout PendingLayout , PreparingLayout , FinishedLayout;
     TextView PendingText , PreparingText , FinishedText;
     OrdersViewModel viewModel;
@@ -75,6 +79,7 @@ public class OrderFragment extends Fragment {
                     }
                 });
     }
+
     private void fetchData(String [] Status, final int type,int limit, int skip){
         progressBar.setVisibility(View.VISIBLE);
         viewModel.getAllOrders(Status,viewModel,dialog,getActivity(),limit,skip).observe(getViewLifecycleOwner(),
@@ -183,7 +188,7 @@ public class OrderFragment extends Fragment {
                 }
             }
         });
-        
+
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {

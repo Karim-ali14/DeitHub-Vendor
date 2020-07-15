@@ -5,27 +5,19 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.dopave.diethub_vendor.Models.Orders.OrderRaw;
-import com.dopave.diethub_vendor.Models.Orders.Orders;
-import com.dopave.diethub_vendor.UI.Details_OrderActivity;
+import com.dopave.diethub_vendor.UI.Details_OrderActivity.Details_OrderActivity;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.PrograssBarAnimation;
 import com.dopave.diethub_vendor.R;
-
-import java.util.ArrayList;
 import java.util.List;
-import static android.content.Context.INPUT_METHOD_SERVICE;
+
 
 public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHolderForOrders> {
     List<OrderRaw> list;
@@ -46,12 +38,13 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderForOrders holder, int position) {
-        OrderRaw orderRaw = list.get(position);
+        final OrderRaw orderRaw = list.get(position);
         AnimationProcess(holder,position,orderRaw.getStatus());
         holder.AllDetailsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, Details_OrderActivity.class));
+                context.startActivity(new Intent(context, Details_OrderActivity.class)
+                        .putExtra("orderRaw",orderRaw));
             }
         });
     }
