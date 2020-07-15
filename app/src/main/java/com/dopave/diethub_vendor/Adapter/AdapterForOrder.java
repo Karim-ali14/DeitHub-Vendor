@@ -2,6 +2,7 @@ package com.dopave.diethub_vendor.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dopave.diethub_vendor.Models.Orders.OrderRaw;
 import com.dopave.diethub_vendor.UI.Details_OrderActivity.Details_OrderActivity;
@@ -23,6 +25,8 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     List<OrderRaw> list;
     Context context;
     int i ;
+    public static int countItemsVisible = 0;
+
 
     public AdapterForOrder(List<OrderRaw> list, Context context, int i) {
         this.list = list;
@@ -68,12 +72,16 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         if (i == 0 && OrderFragment.PREPARING){
             holder.RatingButton.setVisibility(View.GONE);
             holder.delegateLayout.setVisibility(View.GONE);
+            holder.progressBar2.setProgress(0);
             proceesDE(holder.progressBar2);
             holder.iconPreparing.setImageResource(R.drawable.ic_check_black_normal);
             holder.iconPreparing.setBackground(context.getResources().getDrawable(R.drawable.style_normal));
-            if (list.size() -1 == position){
+            if (list.size() == 0){
+                OrderFragment.PREPARING = false;
+            }else if (list.size() -1 == position){
                 OrderFragment.PREPARING = false;
             }
+            Log.i("JJJJJJJ",OrderFragment.PREPARING+"");
         }else if (i == 1) {
             holder.RatingButton.setVisibility(View.VISIBLE);
             holder.delegateLayout.setVisibility(View.GONE);
@@ -86,6 +94,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             holder.finishIcon.setImageResource(R.drawable.ic_check_black_normal);
             holder.finishIcon.setBackground(context.getResources().getDrawable(R.drawable.style_normal));
             if (list.size() -1 == position) {
+                Log.i("JJJ",OrderFragment.PREPARING+" ");
                 OrderFragment.PREPARING = true;
             }
             if (OrderFragment.FINISHED) {
@@ -112,17 +121,23 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                 holder.progressBar.setProgress(100);
                 holder.finishIcon.setBackground(context.getResources().getDrawable(R.drawable.style_check));
                 holder.finishIcon.setImageResource(R.drawable.ic_check_black_check);
-                if (list.size() -1 == position) {
+                if (list.size() == 0){
+                    OrderFragment.FINISHED = true;
+                    OrderFragment.PREPARING = true;
+                }else if (list.size() -1 == position) {
                     OrderFragment.FINISHED = true;
                     OrderFragment.PREPARING = true;
                 }
+                Log.i("JJJJJJ",OrderFragment.PREPARING + " "+OrderFragment.FINISHED + list.size());
             }else if (!OrderFragment.FINISHED){
                 holder.progressBar2.setProgress(100);
                 holder.iconPreparing.setImageResource(R.drawable.ic_check_black_check);
                 holder.iconPreparing.setBackground(context.getResources().getDrawable(R.drawable.style_check));
                 holder.finishIcon.setBackground(context.getResources().getDrawable(R.drawable.style_check));
                 holder.finishIcon.setImageResource(R.drawable.ic_check_black_check);
-                if (list.size() -1 == position)
+                if (list.size() == 0){
+                    OrderFragment.FINISHED = true;
+                }else if (list.size() -1 == position)
                     OrderFragment.FINISHED = true;
             }
         }else if (i == 3){
@@ -134,7 +149,10 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             holder.iconPreparing.setBackground(context.getResources().getDrawable(R.drawable.style_check));
             holder.finishIcon.setBackground(context.getResources().getDrawable(R.drawable.style_normal));
             holder.finishIcon.setImageResource(R.drawable.ic_check_black_normal);
-            if (list.size() -1 == position) {
+            if (list.size() == 0){
+                OrderFragment.PREPARING = true;
+                OrderFragment.FINISHED = false;
+            }else if (list.size() -1 == position) {
                 OrderFragment.PREPARING = true;
                 OrderFragment.FINISHED = false;
             }

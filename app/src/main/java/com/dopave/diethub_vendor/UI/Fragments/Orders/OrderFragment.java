@@ -116,6 +116,14 @@ public class OrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!activeButton.equals("Pending")) {
+
+                    if (activeButton.equals("Finished")){
+                        OrderFragment.PREPARING = true;
+                        OrderFragment.FINISHED = true;
+                    }else if (activeButton.equals("Preparing")){
+                        OrderFragment.PREPARING = true;
+                    }
+
                     activeButton = "Pending";
 
                     status = new String[1];
@@ -138,8 +146,19 @@ public class OrderFragment extends Fragment {
         PreparingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!activeButton.equals("Preparing")) {
+
+                    if (activeButton.equals("Finished")){
+                        OrderFragment.FINISHED = true;
+                        OrderFragment.PREPARING = true;
+                    }else if (activeButton.equals("Pending")){
+                        OrderFragment.FINISHED = false;
+                        OrderFragment.PREPARING = false;
+                    }
+
                     activeButton = "Preparing";
+
                     status = new String[3];
                     status[0] = "accepted";
                     status[1] = "prepared";
@@ -155,12 +174,16 @@ public class OrderFragment extends Fragment {
                     FinishedText.setTextColor(getResources().getColor(R.color.colorPrimary));
 
 
-                    if (FINISHED)
+                    if (FINISHED) {
 //                    recyclerView.setAdapter(new AdapterForOrder(getData(), getContext(), PREPARING_ID_2,"جاري التجهيز"));
-                        getOrders(status, PREPARING_ID_2,limit,skip);
-                    else if (!PREPARING)
+                        Log.i("JJJJJJJ", FINISHED + "FFFFFF");
+                        getOrders(status, PREPARING_ID_2, limit, skip);
+                    }
+                    else if (!PREPARING) {
 //                    recyclerView.setAdapter(new AdapterForOrder(getData(), getContext(), PREPARING_ID,"جاري التجهيز"));
-                        getOrders(status, PREPARING_ID,limit,skip);
+                        Log.i("JJJJJJJ", FINISHED + "PPPPPPP");
+                        getOrders(status, PREPARING_ID, limit, skip);
+                    }
                 }
             }
         });
@@ -169,6 +192,15 @@ public class OrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!activeButton.equals("Finished")) {
+
+                    if (activeButton.equals("Preparing")){
+                        OrderFragment.FINISHED = false;
+                        OrderFragment.PREPARING = true;
+                    }else if (activeButton.equals("Pending")){
+                        OrderFragment.FINISHED = false;
+                        OrderFragment.PREPARING = false;
+                    }
+
                     activeButton = "Finished";
                     status = new String[1];
                     status[0] = "delivered";
@@ -203,6 +235,7 @@ public class OrderFragment extends Fragment {
                 int itemCount = manager.getItemCount();
                 int firstVisibleItemPosition = manager.findFirstVisibleItemPosition();
 
+                Log.i("JJJJJJJ",childCount+" "+firstVisibleItemPosition +" "+AdapterForOrder.countItemsVisible);
                 if (isScrolling && (childCount+firstVisibleItemPosition == itemCount) && itemCount < count){
                     isScrolling = false;
                     progressBar.setVisibility(View.VISIBLE);
