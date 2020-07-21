@@ -64,10 +64,10 @@ public class OrderFragment extends Fragment {
         return inflate;
     }
 
-    private void getOrders(String [] Status, final int type,int limit, int skip){
+    public void getOrders(String [] Status, final int type,int limit, int skip,int typeRequest){
         progressBar.setVisibility(View.GONE);
         dialog.show();
-        viewModel.getAllOrders(Status,viewModel,dialog,getActivity(),limit,skip).observe(getViewLifecycleOwner(),
+        viewModel.getAllOrders(Status,viewModel,dialog,getActivity(),limit,skip,typeRequest).observe(getViewLifecycleOwner(),
                 new Observer<Orders>() {
                     @Override
                     public void onChanged(Orders orders) {
@@ -76,13 +76,15 @@ public class OrderFragment extends Fragment {
                         count = orders.getData().getCount();
                         progressBar.setVisibility(View.GONE);
                         recyclerView.setAdapter(adapter);
+                        if (orders.getData().getOrderRaw() == null || orders.getData().getOrderRaw().size() == 0)
+                            Toast.makeText(getActivity(), R.string.there_no_order, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    private void fetchData(String [] Status, final int type,int limit, int skip){
+    public void fetchData(String [] Status, final int type,int limit, int skip,int typeRequest){
         progressBar.setVisibility(View.VISIBLE);
-        viewModel.getAllOrders(Status,viewModel,dialog,getActivity(),limit,skip).observe(getViewLifecycleOwner(),
+        viewModel.getAllOrders(Status,viewModel,dialog,getActivity(),limit,skip,typeRequest).observe(getViewLifecycleOwner(),
                 new Observer<Orders>() {
                     @Override
                     public void onChanged(Orders orders) {
@@ -103,7 +105,7 @@ public class OrderFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         status = new String[1];
         status[0] = "pending";
-        getOrders(status,PENDING_ID,limit,skip);
+        getOrders(status,PENDING_ID,limit,skip,0);
         PendingLayout = view.findViewById(R.id.PendingLayout);
         PreparingLayout = view.findViewById(R.id.PreparingLayout);
         FinishedLayout = view.findViewById(R.id.FinishedLayout);
@@ -129,7 +131,7 @@ public class OrderFragment extends Fragment {
                     status = new String[1];
                     status[0] = "pending";
                     skip = 0;
-                    getOrders(status, PENDING_ID, limit, skip);
+                    getOrders(status, PENDING_ID, limit, skip,0);
 
                     PendingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_active));
                     PendingText.setTextColor(getResources().getColor(R.color.white));
@@ -177,12 +179,12 @@ public class OrderFragment extends Fragment {
                     if (FINISHED) {
 //                    recyclerView.setAdapter(new AdapterForOrder(getData(), getContext(), PREPARING_ID_2,"جاري التجهيز"));
                         Log.i("JJJJJJJ", FINISHED + "FFFFFF");
-                        getOrders(status, PREPARING_ID_2, limit, skip);
+                        getOrders(status, PREPARING_ID_2, limit, skip,0);
                     }
                     else if (!PREPARING) {
 //                    recyclerView.setAdapter(new AdapterForOrder(getData(), getContext(), PREPARING_ID,"جاري التجهيز"));
                         Log.i("JJJJJJJ", FINISHED + "PPPPPPP");
-                        getOrders(status, PREPARING_ID, limit, skip);
+                        getOrders(status, PREPARING_ID, limit, skip,0);
                     }
                 }
             }
@@ -216,7 +218,7 @@ public class OrderFragment extends Fragment {
                     FinishedText.setTextColor(getResources().getColor(R.color.white));
 
                     if (!FINISHED)
-                        getOrders(status, FINISHED_ID,limit,skip);
+                        getOrders(status, FINISHED_ID,limit,skip,0);
                 }
             }
         });
@@ -240,11 +242,11 @@ public class OrderFragment extends Fragment {
                     isScrolling = false;
                     progressBar.setVisibility(View.VISIBLE);
                     if (activeButton.equals("Pending"))
-                        fetchData(status,PENDING_ID,limit,++skip);
+                        fetchData(status,PENDING_ID,limit,++skip,1);
                     else if (activeButton.equals("Preparing"))
-                        fetchData(status,PREPARING_ID,limit,++skip);
+                        fetchData(status,PREPARING_ID,limit,++skip,1);
                     else if (activeButton.equals("Finished"))
-                        fetchData(status,FINISHED_ID,limit,++skip);
+                        fetchData(status,FINISHED_ID,limit,++skip,1);
                 }
             }
         });

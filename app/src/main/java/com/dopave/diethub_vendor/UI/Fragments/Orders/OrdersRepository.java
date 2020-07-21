@@ -10,26 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-
-import com.dopave.diethub_vendor.Adapter.AdapterForDelegate;
 import com.dopave.diethub_vendor.Common.Common;
-import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.Orders.Orders;
 import com.dopave.diethub_vendor.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
+import com.dopave.diethub_vendor.UI.HomeActivity;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,9 +30,10 @@ public class OrdersRepository {
         return repository;
     }
 
-    public MutableLiveData<Orders> getAllOrders (String [] Status, OrdersViewModel viewModel,
+    public MutableLiveData<Orders> getAllOrders (final String [] Status, final OrdersViewModel viewModel,
                                                  final ProgressDialog dialog,
-                                                 final Context context ,int limit, int skip){
+                                                 final Context context,
+                                                 final int limit, final int skip, final int typeRequest){
         final MutableLiveData<Orders> mutableLiveData = new MutableLiveData<>();
         Common.getAPIRequest().
                 getAllOrders(
@@ -57,19 +46,16 @@ public class OrdersRepository {
                 if (response.code() == 200)
                     mutableLiveData.setValue(response.body());
                 else {
-                    try {
-                        Log.i("EEEEEE",new JSONObject(response.errorBody().string()).getJSONArray("errors").getJSONObject(0).getString("message")+" "+response.code());
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
+                    Log.i("EEEEEE"," "+response.code());
+                    Toast.makeText(context, ""+response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Orders> call, Throwable t) {
+            public void onFailure(final Call<Orders> call, Throwable t) {
                 dialog.dismiss();
                 final AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
-                View view = LayoutInflater.from(context).inflate(R.layout.error_dialog, null);
+                final View view = LayoutInflater.from(context).inflate(R.layout.error_dialog, null);
                 TextView Title = view.findViewById(R.id.Title);
                 TextView Message = view.findViewById(R.id.Message);
                 Button button = view.findViewById(R.id.Again);
@@ -83,7 +69,11 @@ public class OrdersRepository {
                     public void onClick(View v) {
                         dialog1.dismiss();
                         dialog.show();
-//                        viewModel
+                        if (typeRequest == 0){
+                            OrderFragment orderFragment = (OrderFragment)
+                                    ((HomeActivity)context).getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                            orderFragment.getOrders(Status,0,limit,skip,typeRequest);
+                        }
                     }
                 });
                 if(t instanceof SocketTimeoutException) {

@@ -12,14 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
+import com.dopave.diethub_vendor.Models.Notifications.Datum;
 import com.dopave.diethub_vendor.R;
 import java.util.List;
 
 public class AdapterForNotification extends RecyclerSwipeAdapter<AdapterForNotification.ViewHolderForNotification> {
-    List<String> list;
+    List<Datum> list;
     Context context;
 
-    public AdapterForNotification(List<String> list, Context context) {
+    public AdapterForNotification(List<Datum> list, Context context) {
         this.list = list;
         this.context = context;
     }

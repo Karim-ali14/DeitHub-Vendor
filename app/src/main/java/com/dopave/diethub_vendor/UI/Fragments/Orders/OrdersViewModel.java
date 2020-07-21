@@ -17,7 +17,7 @@ public class OrdersViewModel extends ViewModel {
 
     public LiveData<Orders> getAllOrders (String [] Status, OrdersViewModel viewModel,
                                           final ProgressDialog dialog,
-                                          final Context context,int limit, int skip){
-        return repository.getAllOrders(Status, viewModel, dialog, context,limit,skip);
+                                          final Context context,int limit, int skip,int typeRequest){
+        return repository.getAllOrders(Status, viewModel, dialog, context,limit,skip,typeRequest);
     }
 }

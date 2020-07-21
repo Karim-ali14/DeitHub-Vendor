@@ -61,8 +61,10 @@ public class Subscription_detialsActivity extends AppCompatActivity implements V
         PhoneOfClient = findViewById(R.id.PhoneOfClient);
         if(AdapterForSubscription.listImage.size() != 0)
             list = AdapterForSubscription.listImage;
-        else
+        else {
             list = new ArrayList<>();
+            list.add(new Image(R.drawable.picture));
+        }
         viewPager.setAdapter(new AdapterForSilder(list,this));
         setPoints(0);
         viewPager.setOnPageChangeListener(this);

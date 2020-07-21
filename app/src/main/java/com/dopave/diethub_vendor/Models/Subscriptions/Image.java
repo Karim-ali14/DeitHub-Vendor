@@ -22,6 +22,22 @@ public class Image {
     @Expose
     private String _for;
 
+    int defaultImage = 0;
+    public Image() {
+    }
+
+    public Image(int defaultImage) {
+        this.defaultImage = defaultImage;
+    }
+
+    public int getDefaultImage() {
+        return defaultImage;
+    }
+
+    public void setDefaultImage(int defaultImage) {
+        this.defaultImage = defaultImage;
+    }
+
     public Integer getId() {
         return id;
     }

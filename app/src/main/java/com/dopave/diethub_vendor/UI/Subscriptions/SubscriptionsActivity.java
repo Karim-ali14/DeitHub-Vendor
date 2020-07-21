@@ -36,7 +36,7 @@ public class SubscriptionsActivity extends AppCompatActivity {
     SubscriptionsViewModel viewModel;
     ProgressDialog dialog;
     TextView title;
-    static final int limit = 5 ;
+    public static final int limit = 5 ;
     int skip = 0;
     int count;
     boolean isScrolling = false;
@@ -83,7 +83,7 @@ public class SubscriptionsActivity extends AppCompatActivity {
                 if (isScrolling && (childCount+firstVisibleItemPosition == itemCount) && itemCount < count){
                     progressBar.setVisibility(View.VISIBLE);
                     isScrolling = false;
-//                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
                     if (getIntent().getExtras().getString("type").equals("nav_mySubscriptionOrders")) {
                         fetchData(0, "pending");
                     }

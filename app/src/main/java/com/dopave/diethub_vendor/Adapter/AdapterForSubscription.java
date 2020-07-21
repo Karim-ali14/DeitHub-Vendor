@@ -31,7 +31,9 @@ import com.dopave.diethub_vendor.Models.Subscriptions.Row;
 import com.dopave.diethub_vendor.Models.Subscriptions.Subscriptions;
 import com.dopave.diethub_vendor.Models.Subscriptions.UpdateStatus.UpdateSubscriptionStatus;
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.Subscription_detials.Subscription_detialsActivity;
+import com.dopave.diethub_vendor.UI.Subscriptions.SubscriptionsActivity;
 import com.dopave.diethub_vendor.UI.Subscriptions.SubscriptionsViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
@@ -42,7 +44,7 @@ import java.util.List;
 public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubscription.ViewHolderForSubscription> {
     List<Row> list;
     Context context;
-    int Type;
+    int Type,skip;
     SubscriptionsViewModel viewModel;
     ProgressDialog dialog;
     String Status;
@@ -58,6 +60,7 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
         this.dialog = dialog;
         Status = status;
         this.recyclerView = recyclerView;
+        this.skip = 0;
         listImage = new ArrayList<>();
     }
 
@@ -91,7 +94,7 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
             holder.AcceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   // acceptSubscription(SubRow);
+                    acceptSubscription(SubRow);
                 }
             });
         }
@@ -212,7 +215,7 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
                 }
                 else {
                     dialog1.dismiss();
-                    //cancelSubscription(row);
+                    cancelSubscription(row);
                 }
             }
         });
@@ -224,58 +227,58 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
         });
     }
 
-//    private void cancelSubscription(Row row){
-//        viewModel.UpdateSubscriptionStatus(context,dialog,row.getId()+"",
-//                new UpdateSubscriptionStatus("cancelled"," "))
-//                .observe((LifecycleOwner) context,
-//                        new Observer<Subscriptions>() {
-//                            @Override
-//                            public void onChanged(Subscriptions subscriptions) {
-//                                viewModel.getAllSubscriptions(context,dialog,viewModel,Type,Status)
-//                                        .observe((LifecycleOwner) context, new Observer<Subscriptions>() {
-//                                            @Override
-//                                            public void onChanged(Subscriptions subscriptions) {
-//                                                list.clear();
-//                                                Toast.makeText(context, context.getResources()
-//                                                                .getString(R.string.order_was_canceled)
-//                                                        , Toast.LENGTH_SHORT).show();
-//                                                recyclerView.setAdapter(
-//                                                        new AdapterForSubscription(
-//                                                                subscriptions.getData().getRows(),
-//                                                                context, Type, viewModel,dialog,Status
-//                                                                ,recyclerView));
-//                                            }
-//                                        });
-//                            }
-//                        });
-//    }
-//
-//    private void acceptSubscription(Row row){
-//        dialog.show();
-//        viewModel.UpdateSubscriptionStatus(context,dialog,row.getId()+"",
-//                new UpdateSubscriptionStatus("approved"))
-//                .observe((LifecycleOwner) context,
-//                        new Observer<Subscriptions>() {
-//                            @Override
-//                            public void onChanged(Subscriptions subscriptions) {
-//                                viewModel.getAllSubscriptions(context,dialog,viewModel,Type,Status)
-//                                        .observe((LifecycleOwner) context, new Observer<Subscriptions>() {
-//                                            @Override
-//                                            public void onChanged(Subscriptions subscriptions) {
-//                                                list.clear();
-//                                                Toast.makeText(context, context.getResources()
-//                                                                .getString(R.string.order_was_accepted)
-//                                                        , Toast.LENGTH_SHORT).show();
-//                                                recyclerView.setAdapter(
-//                                                        new AdapterForSubscription(
-//                                                                subscriptions.getData().getRows(),
-//                                                                context, Type, viewModel,dialog,Status
-//                                                                ,recyclerView));
-//                                            }
-//                                        });
-//                            }
-//                        });
-//    }
+    private void cancelSubscription(Row row){
+        viewModel.UpdateSubscriptionStatus(context,dialog,row.getId()+"",
+                new UpdateSubscriptionStatus("cancelled"," "))
+                .observe((LifecycleOwner) context,
+                        new Observer<Subscriptions>() {
+                            @Override
+                            public void onChanged(Subscriptions subscriptions) {
+                                viewModel.getAllSubscriptions(context,dialog,viewModel,Type,Status, SubscriptionsActivity.limit,skip)
+                                        .observe((LifecycleOwner) context, new Observer<Subscriptions>() {
+                                            @Override
+                                            public void onChanged(Subscriptions subscriptions) {
+                                                list.clear();
+                                                Toast.makeText(context, context.getResources()
+                                                                .getString(R.string.order_was_canceled)
+                                                        , Toast.LENGTH_SHORT).show();
+                                                recyclerView.setAdapter(
+                                                        new AdapterForSubscription(
+                                                                subscriptions.getData().getRows(),
+                                                                context, Type, viewModel,dialog,Status
+                                                                ,recyclerView));
+                                            }
+                                        });
+                            }
+                        });
+    }
+
+    private void acceptSubscription(Row row){
+        dialog.show();
+        viewModel.UpdateSubscriptionStatus(context,dialog,row.getId()+"",
+                new UpdateSubscriptionStatus("approved"))
+                .observe((LifecycleOwner) context,
+                        new Observer<Subscriptions>() {
+                            @Override
+                            public void onChanged(Subscriptions subscriptions) {
+                                viewModel.getAllSubscriptions(context,dialog,viewModel,Type,Status,SubscriptionsActivity.limit,skip)
+                                        .observe((LifecycleOwner) context, new Observer<Subscriptions>() {
+                                            @Override
+                                            public void onChanged(Subscriptions subscriptions) {
+                                                list.clear();
+                                                Toast.makeText(context, context.getResources()
+                                                                .getString(R.string.order_was_accepted)
+                                                        , Toast.LENGTH_SHORT).show();
+                                                recyclerView.setAdapter(
+                                                        new AdapterForSubscription(
+                                                                subscriptions.getData().getRows(),
+                                                                context, Type, viewModel,dialog,Status
+                                                                ,recyclerView));
+                                            }
+                                        });
+                            }
+                        });
+    }
 
     public void allList(List<Row> list){
         for (Row raw : list)

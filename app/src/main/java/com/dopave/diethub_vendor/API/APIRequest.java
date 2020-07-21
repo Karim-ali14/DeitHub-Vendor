@@ -8,6 +8,7 @@ import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleResp
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
+import com.dopave.diethub_vendor.Models.Notifications.NotificationData;
 import com.dopave.diethub_vendor.Models.Orders.Orders;
 import com.dopave.diethub_vendor.Models.ResetPassword.ResetPassword;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
@@ -142,4 +143,7 @@ public interface APIRequest {
                              @Path("providerId") String providerId,
                              @Path("orderId") String orderId,
                              @Body UpdateSubscriptionStatus updateSubscriptionStatus);
+
+    @GET("notification")
+    Call<NotificationData> getAllNotifications (@Header("Authorization") String Auth);
 }
