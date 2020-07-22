@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:background="@drawable/style_nomal_assign_delivery"
+    android:paddingLeft="@dimen/_20sdp"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingRight="@dimen/_20sdp"
+    android:paddingBottom="@dimen/_10sdp"
+    android:id="@+id/ChangeStatusLayout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/IconOfDelivery"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/client"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/StatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/helveticaneuelt_arabic"
+            android:includeFontPadding="false"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/IconOfDelivery"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_12sdp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/active"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/StatusCheck"
+            android:visibility="gone"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

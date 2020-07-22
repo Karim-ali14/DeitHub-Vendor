@@ -73,6 +73,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         holder.iconP.setImageResource(R.drawable.ic_check_black_check);
         holder.iconP.setBackground(context.getResources().getDrawable(R.drawable.style_check));
         if (i == 0 && OrderFragment.PREPARING){
+            holder.menu.setVisibility(View.GONE);
             holder.RatingButton.setVisibility(View.GONE);
             holder.delegateLayout.setVisibility(View.GONE);
             holder.progressBar2.setProgress(0);
@@ -86,6 +87,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             }
             Log.i("JJJJJJJ",OrderFragment.PREPARING+"");
         }else if (i == 1) {
+            holder.menu.setVisibility(View.GONE);
             holder.RatingButton.setVisibility(View.VISIBLE);
             holder.delegateLayout.setVisibility(View.GONE);
             holder.RatingButton.setText(getStatus(status));
@@ -107,6 +109,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                     OrderFragment.FINISHED = false;
             }
         }else if (i == 2){
+            holder.menu.setVisibility(View.VISIBLE);
             holder.RatingButton.setVisibility(View.VISIBLE);
             holder.RatingButton.setText(getStatus(status));
             holder.delegateLayout.setVisibility(View.VISIBLE);
@@ -144,6 +147,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                     OrderFragment.FINISHED = true;
             }
         }else if (i == 3){
+            holder.menu.setVisibility(View.GONE);
             holder.RatingButton.setVisibility(View.VISIBLE);
             holder.delegateLayout.setVisibility(View.GONE);
             holder.RatingButton.setText(getStatus(status));
@@ -182,7 +186,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
 
     class ViewHolderForOrders extends RecyclerView.ViewHolder {
         ProgressBar progressBar,progressBar2;
-        ImageView iconP,iconPreparing,finishIcon;
+        ImageView iconP,iconPreparing,finishIcon,menu;
         TextView RatingButton,AllDetailsText;
         ConstraintLayout delegateLayout;
         public ViewHolderForOrders(@NonNull View itemView) {
@@ -195,6 +199,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             RatingButton = itemView.findViewById(R.id.RatingButton);
             AllDetailsText = itemView.findViewById(R.id.AllDetailsText);
             delegateLayout = itemView.findViewById(R.id.delegateLayout);
+            menu = itemView.findViewById(R.id.menu);
         }
     }
 

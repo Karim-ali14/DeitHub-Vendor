@@ -169,5 +169,6 @@
     <string name="upDate_Order_Status">تعديل حالة الطلب</string>
     <string name="there_no_order">لا يوجد طليات</string>
     <string name="no_notifies">لا يوجد اشعارات بعد</string>
+    <string name="order_number">طلب رقم :</string>
 
 </resources>
