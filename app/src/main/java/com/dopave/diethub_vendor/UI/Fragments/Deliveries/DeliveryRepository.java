@@ -51,7 +51,7 @@ public class DeliveryRepository {
         Common.getAPIRequest().getAllDeliveries("Bearer "+
                         Common.currentPosition.getData().getToken().getAccessToken(),
                 Common.currentPosition.getData().getProvider().getId()+"",
-                true,true)
+                true,true,true)
                 .enqueue(new Callback<GetDeliveriesData>() {
                     @Override
                     public void onResponse(Call<GetDeliveriesData> call, Response<GetDeliveriesData> response) {

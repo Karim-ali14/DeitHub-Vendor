@@ -128,8 +128,7 @@ public class Details_OrderActivity extends AppCompatActivity {
         });
         Adialog.setView(view);
         final AlertDialog dialog1 = Adialog.create();
-        dialog1.setCanceledOnTouchOutside(false);
-        dialog1.setCancelable(false);
+
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog1.show();
         UpDateButton.setOnClickListener(new View.OnClickListener() {

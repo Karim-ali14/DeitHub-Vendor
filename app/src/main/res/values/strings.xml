@@ -170,4 +170,5 @@
     <string name="there_no_order">there is no orders yet</string>
     <string name="no_notifies">there are no notifications yet</string>
     <string name="order_number">Order Number :</string>
+    <string name="successfully_registered">The delegate has been registered successfully</string>
 </resources>

@@ -1,25 +1,40 @@
 package com.dopave.diethub_vendor.Adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.GetDeliveries.DeliveryRow;
+import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.Orders.OrderRaw;
 import com.dopave.diethub_vendor.UI.Details_OrderActivity.Details_OrderActivity;
+import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryViewModel;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.PrograssBarAnimation;
 import com.dopave.diethub_vendor.R;
+
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -28,12 +43,13 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     Context context;
     int i ;
     public static int countItemsVisible = 0;
+    DeliveryViewModel DViewModel;
 
-
-    public AdapterForOrder(List<OrderRaw> list, Context context, int i) {
+    public AdapterForOrder(List<OrderRaw> list, Context context, int i, DeliveryViewModel DViewModel) {
         this.list = list;
         this.context = context;
         this.i = i;
+        this.DViewModel = DViewModel;
     }
 
     @NonNull
@@ -49,11 +65,58 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         holder.AllDetailsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, Details_OrderActivity.class)
-                        .putExtra("orderRaw",orderRaw));
+//                context.startActivity(new Intent(context, Details_OrderActivity.class)
+//                        .putExtra("orderRaw",orderRaw));
+                showAssignDelivery(orderRaw);
             }
         });
 
+    }
+
+    private void showAssignDelivery(final OrderRaw orderRaw) {
+        final ProgressDialog dialog = new ProgressDialog(context);
+        dialog.show();
+
+        final AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_assign_delivery, null);
+        final RecyclerView recyclerForAssign = view.findViewById(R.id.RecyclerForAssign);
+        ImageView cancel_image = view.findViewById(R.id.cancel_image);
+        recyclerForAssign.setLayoutManager(new LinearLayoutManager(context));
+        recyclerForAssign.setHasFixedSize(true);
+        Button ConfirmButton = view.findViewById(R.id.ConfirmCancelButton);
+        Adialog.setView(view);
+        final AlertDialog dialog1 = Adialog.create();
+        dialog1.setCanceledOnTouchOutside(false);
+        dialog1.setCancelable(false);
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        DViewModel.getAllDeliveries(dialog,context,DViewModel,recyclerForAssign,null)
+                .observe((LifecycleOwner) context, new Observer<GetDeliveriesData>() {
+                    @Override
+                    public void onChanged(GetDeliveriesData getDeliveriesData) {
+
+                        if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
+                        {
+                            Toast.makeText(context, getDeliveriesData.getData().getDeliveryRows().size()+"", Toast.LENGTH_SHORT).show();
+                            List<DeliveryRow> deliveryRows = getDeliveriesData.getData().getDeliveryRows();
+                            recyclerForAssign.setAdapter(new AdapterForAssign(deliveryRows,context,0));
+                            dialog1.show();
+                        }
+                        else
+                            Toast.makeText(context, "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        ConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog1.dismiss();
+            }
+        });
+        cancel_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog1.dismiss();
+            }
+        });
     }
 
     private void proceesIN(final ProgressBar progressBar) {

@@ -95,6 +95,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
     List<Image> listImageRequest;
     int numberOfIndexes = 0;
     String driving_licence_ImageBase46,vehicle_licence_ImageBase46;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -279,6 +280,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
         final AlertDialog.Builder Adialog = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_registraion_success, null);
         TextView Massage = view.findViewById(R.id.Massage);
+        Massage.setText(R.string.successfully_registered);
         Button LoginButton = view.findViewById(R.id.LoginButton);
         Adialog.setView(view);
         LoginButton.setOnClickListener(new View.OnClickListener() {
@@ -323,7 +325,11 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 .observe(this, new Observer<CreateVehicleRespons>() {
             @Override
             public void onChanged(CreateVehicleRespons createVehicleRespons) {
-                showSuccessDialog();
+//                showSuccessDialog();
+                Toast.makeText(CreateVehicleActivity.this, R.string.successfully_registered, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CreateVehicleActivity.this, HomeActivity.class)
+                        .putExtra("type","CreateDeliveryActivity")
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
     }
@@ -396,8 +402,6 @@ public class CreateVehicleActivity extends AppCompatActivity {
                         if (row.getId() == VehicleData.getData().getVehicleTypeId()) {
                             VehicleTypeSelected.setText(row.getType());
                             rowVehicleTypes = row;
-                            Log.i("JJJJJJ", "1");
-                            Log.i("GGGGGGG", row.getType());
                         }
                     }
                 }

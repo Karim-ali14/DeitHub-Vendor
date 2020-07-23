@@ -34,6 +34,9 @@ public class DeliveryRow implements Parcelable {
     @SerializedName("image")
     @Expose
     private Image image;
+    @SerializedName("city")
+    @Expose
+    private City city;
 
     protected DeliveryRow(Parcel in) {
         if (in.readByte() == 0) {
@@ -153,4 +156,11 @@ public class DeliveryRow implements Parcelable {
         this.image = image;
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
 }

@@ -20,10 +20,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dopave.diethub_vendor.Adapter.AdapterForDelegate;
 import com.dopave.diethub_vendor.Adapter.AdapterForOrder;
+import com.dopave.diethub_vendor.Models.GetDeliveries.DeliveryRow;
+import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.Orders.OrderRaw;
 import com.dopave.diethub_vendor.Models.Orders.Orders;
+import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleViewModel;
+import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +61,10 @@ public class OrderFragment extends Fragment {
     ProgressDialog dialog;
     String activeButton = "Pending";
     int count;
+
+    DeliveryViewModel DViewModel;
+    CreateVehicleViewModel vehicleViewModel;
+    VehicleTypes vTypes;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,7 +82,7 @@ public class OrderFragment extends Fragment {
                     @Override
                     public void onChanged(Orders orders) {
                         adapter = new AdapterForOrder
-                                (orders.getData().getOrderRaw(),getActivity(),type);
+                                (orders.getData().getOrderRaw(),getActivity(),type,DViewModel);
                         count = orders.getData().getCount();
                         progressBar.setVisibility(View.GONE);
                         recyclerView.setAdapter(adapter);
@@ -97,6 +107,8 @@ public class OrderFragment extends Fragment {
 
     private void init (View view){
         viewModel = ViewModelProviders.of(getActivity()).get(OrdersViewModel.class);
+        DViewModel = ViewModelProviders.of(getActivity()).get(DeliveryViewModel.class);
+        vehicleViewModel = ViewModelProviders.of(this).get(CreateVehicleViewModel.class);
         dialog = new ProgressDialog(getActivity());
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -251,5 +263,29 @@ public class OrderFragment extends Fragment {
             }
         });
 
+        vehicleViewModel.getAllVehicleTypes(getActivity(),
+                dialog,vehicleViewModel,"DeliveryFragment",recyclerView)
+                .observe(getActivity(), new Observer<VehicleTypes>() {
+                    @Override
+                    public void onChanged(VehicleTypes vehicleTypes) {
+                        vTypes = vehicleTypes;
+                        getAllDelivery(dialog,vehicleTypes);
+                    }
+                });
     }
-}
+
+    public void getAllDelivery(ProgressDialog dialog, final VehicleTypes vehicleTypes){
+        DViewModel.getAllDeliveries(dialog,getActivity(),DViewModel,recyclerView,vehicleTypes).observe(getActivity(),
+                new Observer<GetDeliveriesData>() {
+                    @Override
+                    public void onChanged(GetDeliveriesData getDeliveriesData) {
+                        if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
+                        {
+                            List<DeliveryRow> deliveryRows = getDeliveriesData.getData().getDeliveryRows();
+                            recyclerView.setAdapter(adapter);
+                        }
+                        else
+                            Toast.makeText(getActivity(), "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }}

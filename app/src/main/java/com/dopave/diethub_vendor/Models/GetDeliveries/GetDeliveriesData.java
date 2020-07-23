@@ -22,6 +22,7 @@ public class GetDeliveriesData {
     @Expose
     private Object error;
 
+
     public Boolean getSuccess() {
         return success;
     }

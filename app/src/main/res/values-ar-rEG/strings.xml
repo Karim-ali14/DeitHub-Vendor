@@ -170,5 +170,6 @@
     <string name="there_no_order">لا يوجد طليات</string>
     <string name="no_notifies">لا يوجد اشعارات بعد</string>
     <string name="order_number">طلب رقم :</string>
+    <string name="successfully_registered">تم تسجيل المندوب بنجاح</string>
 
 </resources>

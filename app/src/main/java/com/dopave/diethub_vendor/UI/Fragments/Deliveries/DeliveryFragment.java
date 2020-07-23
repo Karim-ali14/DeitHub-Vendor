@@ -66,7 +66,7 @@ public class DeliveryFragment extends Fragment {
                 startActivity(new Intent(getActivity(), CreateDeliveryActivity.class).putExtra("type","normal"));
             }
         });
-        vehicleViewModel.getAllVehicleTypes(getActivity(),
+        vehicleViewModel.getAllVehicleTypes(getActivity(), // get all types to know what is vehicle type
                 dialog,vehicleViewModel,"DeliveryFragment",recyclerView)
                 .observe(getActivity(), new Observer<VehicleTypes>() {
             @Override

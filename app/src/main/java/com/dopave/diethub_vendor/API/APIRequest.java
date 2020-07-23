@@ -19,6 +19,8 @@ import com.dopave.diethub_vendor.Models.UpdateVehicle.UpdateVehicle;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -76,6 +78,7 @@ public interface APIRequest {
     Call<GetDeliveriesData> getAllDeliveries (@Header("Authorization") String Auth,
                                               @Path("id") String id,
                                               @Query("include_image") boolean include_image,
+                                              @Query("include_city") boolean include_city,
                                               @Query("include_vehicle") boolean include_vehicle);
 
 //  Todo get all Delivery by provider id
@@ -146,4 +149,11 @@ public interface APIRequest {
 
     @GET("notification")
     Call<NotificationData> getAllNotifications (@Header("Authorization") String Auth);
+
+    @POST("provider/{providerId}/order/{orderId}/assgin")
+    Call<Orders> assignOrder(@Header("Authorization") String Auth,
+                             @Path("providerId") String providerId,
+                             @Path("orderId") String orderId,
+                             @Body HashMap<String,String> deliveryId);
+
 }

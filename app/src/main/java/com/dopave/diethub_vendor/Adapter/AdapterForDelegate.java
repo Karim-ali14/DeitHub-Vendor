@@ -77,7 +77,6 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
     public void onBindViewHolder(@NonNull ViewHolderForDelegate holder, int position) {
         final DeliveryRow row = list.get(position);
         holder.NameOfDelegate.setText(row.getName());
-        holder.NumberOfVehicle.setText(row.getVehicle().getNumber());
         holder.MenuLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +121,8 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
                 }
             }
             holder.ModelOfVehicle.setText(", "+row.getVehicle().getModel()+" ,");
-            holder.YearOfVehicle.setText(row.getVehicle().getYear()+"");
+            holder.YearOfVehicle.setText(row.getVehicle().getYear()+" ,");
+            holder.NumberOfVehicle.setText(row.getVehicle().getNumber());
             holder.NameOfVehicle.setVisibility(View.VISIBLE);
             holder.ModelOfVehicle.setVisibility(View.VISIBLE);
             holder.YearOfVehicle.setVisibility(View.VISIBLE);
@@ -130,6 +130,10 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
             holder.NameOfVehicle.setVisibility(View.GONE);
             holder.YearOfVehicle.setVisibility(View.GONE);
             holder.ModelOfVehicle.setVisibility(View.GONE);
+        }
+
+        if (row.getCity() != null){
+            holder.AddressOfDelegate.setText(row.getCity().getName());
         }
     }
 

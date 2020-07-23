@@ -23,18 +23,31 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/StatusText"
+            android:id="@+id/nameOfDelivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/helveticaneuelt_arabic"
             android:includeFontPadding="false"
-            android:paddingBottom="@dimen/_5sdp"
             android:text="name"
             android:textColor="@color/black"
             android:textSize="@dimen/_20sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/IconOfDelivery"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_12sdp"/>
+
+        <TextView
+            android:id="@+id/DeliveryAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="name"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/IconOfDelivery"
+            app:layout_constraintTop_toBottomOf="@id/nameOfDelivery"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_12sdp"/>
 
@@ -45,6 +58,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/StatusCheck"
+            android:id="@+id/AssignCheck"
             android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
