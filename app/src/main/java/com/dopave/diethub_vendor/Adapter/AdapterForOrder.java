@@ -28,14 +28,23 @@ import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.GetDeliveries.DeliveryRow;
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.Orders.OrderRaw;
+import com.dopave.diethub_vendor.Models.Orders.Orders;
 import com.dopave.diethub_vendor.UI.Details_OrderActivity.Details_OrderActivity;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryViewModel;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.PrograssBarAnimation;
 import com.dopave.diethub_vendor.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHolderForOrders> {
@@ -65,8 +74,14 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         holder.AllDetailsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                context.startActivity(new Intent(context, Details_OrderActivity.class)
-//                        .putExtra("orderRaw",orderRaw));
+                context.startActivity(new Intent(context, Details_OrderActivity.class)
+                        .putExtra("orderRaw",orderRaw));
+
+            }
+        });
+        holder.menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 showAssignDelivery(orderRaw);
             }
         });
@@ -89,32 +104,48 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         dialog1.setCanceledOnTouchOutside(false);
         dialog1.setCancelable(false);
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        DViewModel.getAllDeliveries(dialog,context,DViewModel,recyclerForAssign,null)
-                .observe((LifecycleOwner) context, new Observer<GetDeliveriesData>() {
-                    @Override
-                    public void onChanged(GetDeliveriesData getDeliveriesData) {
-
-                        if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
-                        {
-                            Toast.makeText(context, getDeliveriesData.getData().getDeliveryRows().size()+"", Toast.LENGTH_SHORT).show();
-                            List<DeliveryRow> deliveryRows = getDeliveriesData.getData().getDeliveryRows();
-                            recyclerForAssign.setAdapter(new AdapterForAssign(deliveryRows,context,0));
-                            dialog1.show();
-                        }
-                        else
-                            Toast.makeText(context, "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        getDeliveries(dialog,recyclerForAssign,dialog1);
         ConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog1.dismiss();
+                assignDeliveryForOrder(orderRaw);
             }
         });
         cancel_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog1.dismiss();
+            }
+        });
+    }
+
+    private void assignDeliveryForOrder(final OrderRaw orderRaw) {
+        HashMap<String,String> body = new HashMap<>();
+        body.put("deliveryrep_id",AdapterForAssign.DeliverySelected.getId()+"");
+        Common.getAPIRequest().assignOrder("Bearer "+
+                        Common.currentPosition.getData().getToken().getAccessToken(),
+                Common.currentPosition.getData().getProvider().getId()+"",
+                orderRaw.getId()+"",body).enqueue(new Callback<Orders>() {
+            @Override
+            public void onResponse(Call<Orders> call, Response<Orders> response) {
+                if(response.code() == 200){
+                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }else {
+                    try {
+                        Log.i("GGGGGGGGG",new JSONObject(response.errorBody().string())
+                                .getJSONArray("errors")
+                                .getJSONObject(0).getString("message"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Orders> call, Throwable t) {
+
             }
         });
     }
@@ -270,5 +301,25 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         for (OrderRaw raw : list)
             this.list.add(raw);
         this.i = type;
+    }
+
+    private void getDeliveries(ProgressDialog dialog,final RecyclerView recyclerForAssign
+            ,final AlertDialog dialog1){
+        DViewModel.getAllDeliveries(dialog,context,DViewModel,recyclerForAssign,null)
+                .observe((LifecycleOwner) context, new Observer<GetDeliveriesData>() {
+                    @Override
+                    public void onChanged(GetDeliveriesData getDeliveriesData) {
+
+                        if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
+                        {
+                            Toast.makeText(context, getDeliveriesData.getData().getDeliveryRows().size()+"", Toast.LENGTH_SHORT).show();
+                            List<DeliveryRow> deliveryRows = getDeliveriesData.getData().getDeliveryRows();
+                            recyclerForAssign.setAdapter(new AdapterForAssign(deliveryRows,context,0));
+                            dialog1.show();
+                        }
+                        else
+                            Toast.makeText(context, "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

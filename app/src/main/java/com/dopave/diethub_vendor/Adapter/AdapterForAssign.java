@@ -21,6 +21,7 @@ public class AdapterForAssign extends RecyclerView.Adapter<AdapterForAssign.View
     int typeStatus;
     ViewHolderForAssign oldCard = null;
     int oldPosition = -1;
+    public static DeliveryRow DeliverySelected;
     public AdapterForAssign(List<DeliveryRow> list, Context context, int typeStatus) {
         this.list = list;
         this.context = context;
@@ -38,7 +39,7 @@ public class AdapterForAssign extends RecyclerView.Adapter<AdapterForAssign.View
     public void onBindViewHolder(@NonNull final ViewHolderForAssign holder, final int position) {
         holder.DeliveryName.setText(list.get(position).getName());
         holder.DeliveryAddress.setText(list.get(position).getCity().getName());
-        onSelectDelivery();
+        onSelectDelivery(holder,position);
     }
 
     @Override
@@ -66,6 +67,7 @@ public class AdapterForAssign extends RecyclerView.Adapter<AdapterForAssign.View
             holder.DeliveryName.setTextColor(context.getResources().getColor(R.color.white));
             holder.AssignCheck.setVisibility(View.VISIBLE);
             oldCard = holder;
+            AdapterForAssign.DeliverySelected = list.get(position);
         }
         holder.ChangeStatusLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +83,7 @@ public class AdapterForAssign extends RecyclerView.Adapter<AdapterForAssign.View
 
                     oldPosition = position;
                     oldCard = holder;
+                    AdapterForAssign.DeliverySelected = list.get(position);
                 }
             }
         });
