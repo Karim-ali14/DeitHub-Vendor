@@ -65,6 +65,13 @@ public class OrderFragment extends Fragment {
     DeliveryViewModel DViewModel;
     CreateVehicleViewModel vehicleViewModel;
     VehicleTypes vTypes;
+
+    int typeID;
+
+    public OrderFragment(int typeId) {
+        this.typeID = typeID;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,10 +84,12 @@ public class OrderFragment extends Fragment {
     public void getOrders(String [] Status, final int type,int limit, int skip,int typeRequest){
         progressBar.setVisibility(View.GONE);
         dialog.show();
-        viewModel.getAllOrders(Status,viewModel,dialog,getActivity(),limit,skip,typeRequest).observe(getViewLifecycleOwner(),
+        viewModel.getAllOrders(Status,viewModel,dialog,getActivity(),limit,skip,typeRequest)
+                .observe(getViewLifecycleOwner(),
                 new Observer<Orders>() {
                     @Override
                     public void onChanged(Orders orders) {
+                        Toast.makeText(getActivity(), orders.getData().getOrderRaw().size()+"", Toast.LENGTH_SHORT).show();
                         adapter = new AdapterForOrder
                                 (orders.getData().getOrderRaw(),getActivity(),type,DViewModel);
                         count = orders.getData().getCount();
@@ -115,9 +124,9 @@ public class OrderFragment extends Fragment {
         manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
-        status = new String[1];
-        status[0] = "pending";
-        getOrders(status,PENDING_ID,limit,skip,0);
+
+        getOrdersByButtonId(typeID);
+
         PendingLayout = view.findViewById(R.id.PendingLayout);
         PreparingLayout = view.findViewById(R.id.PreparingLayout);
         FinishedLayout = view.findViewById(R.id.FinishedLayout);
@@ -129,109 +138,24 @@ public class OrderFragment extends Fragment {
         PendingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!activeButton.equals("Pending")) {
-
-                    if (activeButton.equals("Finished")){
-                        OrderFragment.PREPARING = true;
-                        OrderFragment.FINISHED = true;
-                    }else if (activeButton.equals("Preparing")){
-                        OrderFragment.PREPARING = true;
-                    }
-
-                    activeButton = "Pending";
-
-                    status = new String[1];
-                    status[0] = "pending";
-                    skip = 0;
-                    getOrders(status, PENDING_ID, limit, skip,0);
-
-                    PendingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_active));
-                    PendingText.setTextColor(getResources().getColor(R.color.white));
-
-                    PreparingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
-                    PreparingText.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-                    FinishedLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
-                    FinishedText.setTextColor(getResources().getColor(R.color.colorPrimary));
-                }
+                onPendingButtonClick();
+                typeID = PENDING_ID;
             }
         });
 
         PreparingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (!activeButton.equals("Preparing")) {
-
-                    if (activeButton.equals("Finished")){
-                        OrderFragment.FINISHED = true;
-                        OrderFragment.PREPARING = true;
-                    }else if (activeButton.equals("Pending")){
-                        OrderFragment.FINISHED = false;
-                        OrderFragment.PREPARING = false;
-                    }
-
-                    activeButton = "Preparing";
-
-                    status = new String[3];
-                    status[0] = "accepted";
-                    status[1] = "prepared";
-                    status[2] = "delivering";
-                    skip = 0;
-                    PendingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
-                    PendingText.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-                    PreparingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_active));
-                    PreparingText.setTextColor(getResources().getColor(R.color.white));
-
-                    FinishedLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
-                    FinishedText.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-
-                    if (FINISHED) {
-//                    recyclerView.setAdapter(new AdapterForOrder(getData(), getContext(), PREPARING_ID_2,"جاري التجهيز"));
-                        Log.i("JJJJJJJ", FINISHED + "FFFFFF");
-                        getOrders(status, PREPARING_ID_2, limit, skip,0);
-                    }
-                    else if (!PREPARING) {
-//                    recyclerView.setAdapter(new AdapterForOrder(getData(), getContext(), PREPARING_ID,"جاري التجهيز"));
-                        Log.i("JJJJJJJ", FINISHED + "PPPPPPP");
-                        getOrders(status, PREPARING_ID, limit, skip,0);
-                    }
-                }
+                onPreparingButtonClick();
+                typeID = PREPARING_ID;
             }
         });
 
         FinishedLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!activeButton.equals("Finished")) {
-
-                    if (activeButton.equals("Preparing")){
-                        OrderFragment.FINISHED = false;
-                        OrderFragment.PREPARING = true;
-                    }else if (activeButton.equals("Pending")){
-                        OrderFragment.FINISHED = false;
-                        OrderFragment.PREPARING = false;
-                    }
-
-                    activeButton = "Finished";
-                    status = new String[1];
-                    status[0] = "delivered";
-                    skip = 0;
-
-                    PendingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
-                    PendingText.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-                    PreparingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
-                    PreparingText.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-                    FinishedLayout.setBackground(getResources().getDrawable(R.drawable.style_button_active));
-                    FinishedText.setTextColor(getResources().getColor(R.color.white));
-
-                    if (!FINISHED)
-                        getOrders(status, FINISHED_ID,limit,skip,0);
-                }
+                onFinishButtonClick();
+                typeID = FINISHED_ID;
             }
         });
 
@@ -249,8 +173,8 @@ public class OrderFragment extends Fragment {
                 int itemCount = manager.getItemCount();
                 int firstVisibleItemPosition = manager.findFirstVisibleItemPosition();
 
-                Log.i("JJJJJJJ",childCount+" "+firstVisibleItemPosition +" "+AdapterForOrder.countItemsVisible);
-                if (isScrolling && (childCount+firstVisibleItemPosition == itemCount) && itemCount < count){
+                if (isScrolling && (childCount+firstVisibleItemPosition == itemCount)
+                        && itemCount < count){
                     isScrolling = false;
                     progressBar.setVisibility(View.VISIBLE);
                     if (activeButton.equals("Pending"))
@@ -274,6 +198,23 @@ public class OrderFragment extends Fragment {
                 });
     }
 
+
+
+    private void getOrdersByButtonId(int type) {
+        if (type == 0) {
+            activeButton = "Pending";
+
+            status = new String[1];
+            status[0] = "pending";
+            skip = 0;
+            getOrders(status, PENDING_ID, limit, skip,0);
+        }else if (type == 1){
+            onPreparingButtonClick();
+        }else if (type == 2){
+            onFinishButtonClick();
+        }
+    }
+
     public void getAllDelivery(ProgressDialog dialog, final VehicleTypes vehicleTypes){
         DViewModel.getAllDeliveries(dialog,getActivity(),DViewModel,recyclerView,vehicleTypes).observe(getActivity(),
                 new Observer<GetDeliveriesData>() {
@@ -288,4 +229,103 @@ public class OrderFragment extends Fragment {
                             Toast.makeText(getActivity(), "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
                     }
                 });
-    }}
+    }
+
+    private void onPendingButtonClick() {
+        if (!activeButton.equals("Pending")) {
+
+            if (activeButton.equals("Finished")){
+                OrderFragment.PREPARING = true;
+                OrderFragment.FINISHED = true;
+            }else if (activeButton.equals("Preparing")){
+                OrderFragment.PREPARING = true;
+            }
+
+            activeButton = "Pending";
+
+            status = new String[1];
+            status[0] = "pending";
+            skip = 0;
+            getOrders(status, PENDING_ID, limit, skip,0);
+
+            PendingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_active));
+            PendingText.setTextColor(getResources().getColor(R.color.white));
+
+            PreparingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
+            PreparingText.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+            FinishedLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
+            FinishedText.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }
+    }
+    private void onPreparingButtonClick() {
+        if (!activeButton.equals("Preparing")) {
+
+            if (activeButton.equals("Finished")){
+                OrderFragment.FINISHED = true;
+                OrderFragment.PREPARING = true;
+            }else if (activeButton.equals("Pending")){
+                OrderFragment.FINISHED = false;
+                OrderFragment.PREPARING = false;
+            }
+
+            activeButton = "Preparing";
+
+            status = new String[2];
+            status[0] = "accepted";
+            status[1] = "preparing";
+            skip = 0;
+            PendingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
+            PendingText.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+            PreparingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_active));
+            PreparingText.setTextColor(getResources().getColor(R.color.white));
+
+            FinishedLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
+            FinishedText.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+
+            if (FINISHED) {
+//                    recyclerView.setAdapter(new AdapterForOrder(getData(), getContext(), PREPARING_ID_2,"جاري التجهيز"));
+                Log.i("JJJJJJJ", FINISHED + "FFFFFF");
+                getOrders(status, PREPARING_ID_2, limit, skip,0);
+            }
+            else if (!PREPARING) {
+//                    recyclerView.setAdapter(new AdapterForOrder(getData(), getContext(), PREPARING_ID,"جاري التجهيز"));
+                Log.i("JJJJJJJ", FINISHED + "PPPPPPP");
+                getOrders(status, PREPARING_ID, limit, skip,0);
+            }
+        }
+    }
+    private void onFinishButtonClick() {
+        if (!activeButton.equals("Finished")) {
+
+            if (activeButton.equals("Preparing")){
+                OrderFragment.FINISHED = false;
+                OrderFragment.PREPARING = true;
+            }else if (activeButton.equals("Pending")){
+                OrderFragment.FINISHED = false;
+                OrderFragment.PREPARING = false;
+            }
+
+            activeButton = "Finished";
+            status = new String[2];
+            status[0] = "prepared";
+            status[1] = "readyForDelivery";
+            skip = 0;
+
+            PendingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
+            PendingText.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+            PreparingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));
+            PreparingText.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+            FinishedLayout.setBackground(getResources().getDrawable(R.drawable.style_button_active));
+            FinishedText.setTextColor(getResources().getColor(R.color.white));
+
+            if (!FINISHED)
+                getOrders(status, FINISHED_ID,limit,skip,0);
+        }
+    }
+
+}

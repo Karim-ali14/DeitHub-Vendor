@@ -34,6 +34,7 @@ import com.dopave.diethub_vendor.Models.Orders.Orders;
 import com.dopave.diethub_vendor.Models.Subscriptions.UpdateStatus.UpdateSubscriptionStatus;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
+import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 
 import java.util.ArrayList;
@@ -106,6 +107,7 @@ public class Details_OrderActivity extends AppCompatActivity {
         statusList.add(getResources().getString(R.string.Accepted));
         statusList.add(getResources().getString(R.string.Preparing));
         statusList.add(getResources().getString(R.string.finished));
+        statusList.add(getResources().getString(R.string.readyForDelivery));
 
         AdapterOfSpinnerStatus adapterOfSpinnerStatus =
                 new AdapterOfSpinnerStatus(this,R.layout.city_item,statusList);
@@ -142,6 +144,11 @@ public class Details_OrderActivity extends AppCompatActivity {
                     public void onResponse(Call<Orders> call, Response<Orders> response) {
                         dialog1.dismiss();
                         dialog.dismiss();
+                        startActivity(new Intent(Details_OrderActivity.this,
+                                HomeActivity.class).putExtra("type",
+                                "Details_OrderActivity")
+                                .putExtra("typeId",getIntent().getExtras()
+                                        .getInt("typeId")));
                     }
 
                     @Override
@@ -210,6 +217,8 @@ public class Details_OrderActivity extends AppCompatActivity {
             return "preparing";
         else if (selectedStatus.equals(getResources().getString(R.string.finished)))
             return "prepared";
+        else if (selectedStatus.equals(getResources().getString(R.string.readyForDelivery)))
+            return "readyForDelivery";
         return "";
     }
 }

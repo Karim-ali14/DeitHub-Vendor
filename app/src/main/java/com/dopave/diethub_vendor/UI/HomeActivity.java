@@ -46,17 +46,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
-        if (getIntent().getExtras().getString("type").equals("Login_inActivity"))
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new Home_Fragment()).commit();
-        else if (getIntent().getExtras().getString("type").equals("CreateDeliveryActivity")) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new DeliveryFragment()).commit();
-                drawer.closeDrawer(GravityCompat.START);
-                Logo.setVisibility(View.GONE);
-                Notification_Icon.setVisibility(View.GONE);
-                Title.setVisibility(View.VISIBLE);
-                Title.setText(getResources().getString(R.string.delegates));
-                Current_Page = "nav_delegates";
-            }
+
+        startingFragmentAccordingOnActivityComing(); // to open specific Fragment when come form ang activity
+
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -86,7 +78,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Title.setVisibility(View.GONE);
             Current_Page = "nav_Home";
         }else if (view.getId() == R.id.nav_myOrders){
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new OrderFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new OrderFragment(0)).commit();
             drawer.closeDrawer(GravityCompat.START);
             Logo.setVisibility(View.GONE);
             Notification_Icon.setVisibility(View.GONE);
@@ -151,4 +143,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    private void startingFragmentAccordingOnActivityComing(){
+        if (getIntent().getExtras().getString("type").equals("Login_inActivity"))
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new Home_Fragment()).commit();
+        else if (getIntent().getExtras().getString("type").equals("CreateDeliveryActivity")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new DeliveryFragment()).commit();
+            drawer.closeDrawer(GravityCompat.START);
+            Logo.setVisibility(View.GONE);
+            Notification_Icon.setVisibility(View.GONE);
+            Title.setVisibility(View.VISIBLE);
+            Title.setText(getResources().getString(R.string.delegates));
+            Current_Page = "nav_delegates";
+        }else if (getIntent().getExtras().getString("type").equals("Details_OrderActivity")){
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                    new OrderFragment(getIntent().getExtras().getInt("typeId"))).commit();
+            drawer.closeDrawer(GravityCompat.START);
+            Logo.setVisibility(View.GONE);
+            Notification_Icon.setVisibility(View.GONE);
+            Title.setVisibility(View.VISIBLE);
+            Title.setText(getResources().getString(R.string.Orders));
+            Current_Page = "nav_myOrders";
+        }
+    }
 }

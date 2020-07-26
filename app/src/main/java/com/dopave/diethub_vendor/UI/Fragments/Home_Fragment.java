@@ -41,7 +41,7 @@ public class Home_Fragment extends Fragment {
         Orders_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new OrderFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new OrderFragment(0)).commit();
                 HomeActivity.Title.setVisibility(View.VISIBLE);
                 HomeActivity.Logo.setVisibility(View.GONE);
                 HomeActivity.Notification_Icon.setVisibility(View.GONE);

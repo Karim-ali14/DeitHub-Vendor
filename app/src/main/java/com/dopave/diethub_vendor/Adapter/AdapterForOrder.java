@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,14 +35,18 @@ import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryViewModel;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.PrograssBarAnimation;
 import com.dopave.diethub_vendor.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,7 +80,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, Details_OrderActivity.class)
-                        .putExtra("orderRaw",orderRaw));
+                        .putExtra("orderRaw",orderRaw).putExtra("typeId",i));
 
             }
         });
@@ -85,7 +90,21 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                 showAssignDelivery(orderRaw);
             }
         });
+        holder.OrderId.setText(orderRaw.getId()+"");
+        holder.ClientName.setText(orderRaw.getClient().getName());
 
+        if (orderRaw.getClient().getImage() != null) {
+            String path = Common.BaseUrl + "images/" + orderRaw.getClient().getImage().getFor() + "/" +
+                    Uri.encode(orderRaw.getClient().getImage().getName());
+            Picasso.with(context).load(path).into(holder.ClientIcon);
+        }
+        try {
+            holder.createAt.setText(new SimpleDateFormat("dd/MM/yyyy").format(
+                    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                            .parse(orderRaw.getCreatedAt())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showAssignDelivery(final OrderRaw orderRaw) {
@@ -166,6 +185,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         holder.progressBar.setProgress(100);
         holder.iconP.setImageResource(R.drawable.ic_check_black_check);
         holder.iconP.setBackground(context.getResources().getDrawable(R.drawable.style_check));
+
         if (i == 0 && OrderFragment.PREPARING){
             holder.menu.setVisibility(View.GONE);
             holder.RatingButton.setVisibility(View.GONE);
@@ -263,8 +283,10 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     private String getStatus(String status) {
         if (status.equals("accepted"))
             return context.getResources().getString(R.string.Accepted);
-        else if (status.equals("prepared"))
+        else if (status.equals("preparing"))
             return context.getResources().getString(R.string.Preparing);
+        else if (status.equals("prepared"))
+            return context.getResources().getString(R.string.Prepared);
         else if (status.equals("delivering"))
             return context.getResources().getString(R.string.Delivering);
         else if (status.equals("delivered"))
@@ -281,8 +303,9 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     class ViewHolderForOrders extends RecyclerView.ViewHolder {
         ProgressBar progressBar,progressBar2;
         ImageView iconP,iconPreparing,finishIcon,menu;
-        TextView RatingButton,AllDetailsText;
+        TextView RatingButton,AllDetailsText,OrderId,ClientName,createAt;
         ConstraintLayout delegateLayout;
+        CircleImageView ClientIcon;
         public ViewHolderForOrders(@NonNull View itemView) {
             super(itemView);
             progressBar = itemView.findViewById(R.id.progressBar);
@@ -294,6 +317,10 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             AllDetailsText = itemView.findViewById(R.id.AllDetailsText);
             delegateLayout = itemView.findViewById(R.id.delegateLayout);
             menu = itemView.findViewById(R.id.menu);
+            OrderId = itemView.findViewById(R.id.OrderId);
+            ClientIcon = itemView.findViewById(R.id.ClientIcon);
+            ClientName = itemView.findViewById(R.id.ClientName);
+            createAt = itemView.findViewById(R.id.createAt);
         }
     }
 

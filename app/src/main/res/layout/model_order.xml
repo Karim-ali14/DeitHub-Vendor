@@ -52,10 +52,9 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/OrderId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="23545321354"
                     android:textColor="#000"
                     android:textSize="18dp"
                     android:textStyle="bold"
@@ -79,15 +78,15 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/style_normal"
                     android:src="@drawable/ic_check_black_normal"
-                    app:layout_constraintBottom_toTopOf="@+id/textView19"
+                    app:layout_constraintBottom_toTopOf="@+id/OrderStats1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView19"
+                    android:id="@+id/OrderStats1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="قيد التجهيز"
+                    android:text="@string/Pending"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -98,7 +97,7 @@
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/textView15"
+                    app:layout_constraintBottom_toTopOf="@+id/OrderStats2"
                     app:layout_constraintEnd_toStartOf="@+id/iconPreparing"
                     app:layout_constraintStart_toEndOf="@+id/iconP"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -110,16 +109,16 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/style_normal"
                     android:src="@drawable/ic_check_black_normal"
-                    app:layout_constraintBottom_toTopOf="@+id/textView15"
+                    app:layout_constraintBottom_toTopOf="@+id/OrderStats2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/OrderStats2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="جار التواصل"
+                    android:text="@string/Accepted"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -131,7 +130,7 @@
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/textView15"
+                    app:layout_constraintBottom_toTopOf="@+id/OrderStats2"
                     app:layout_constraintEnd_toStartOf="@+id/finishIcon"
                     app:layout_constraintStart_toEndOf="@+id/iconPreparing"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -144,16 +143,16 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/style_normal"
                     android:src="@drawable/ic_check_black_normal"
-                    app:layout_constraintBottom_toTopOf="@+id/finishText"
+                    app:layout_constraintBottom_toTopOf="@+id/OrderStats3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
                 <TextView
-                    android:id="@+id/finishText"
+                    android:id="@+id/OrderStats3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="تم الاستلام"
+                    android:text="@string/finished"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -179,16 +178,15 @@
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageView11"
+                    android:id="@+id/ClientIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/client"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/ClientName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -199,7 +197,7 @@
                     android:textSize="@dimen/_15sdp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView11"
+                    app:layout_constraintStart_toEndOf="@+id/ClientIcon"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -245,7 +243,8 @@
                     android:textColor="@color/colorLine"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView18"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/createAt"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View

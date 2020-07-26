@@ -1,6 +1,7 @@
 
 package com.dopave.diethub_vendor.Models.Orders;
 
+import com.dopave.diethub_vendor.Models.GetDeliveries.Image;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -20,7 +21,7 @@ public class Client {
     private Object imageId;
     @SerializedName("image")
     @Expose
-    private Object image;
+    private Image image;
 
     public String getName() {
         return name;
@@ -54,12 +55,11 @@ public class Client {
         this.imageId = imageId;
     }
 
-    public Object getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(Object image) {
+    public void setImage(Image image) {
         this.image = image;
     }
-
 }
