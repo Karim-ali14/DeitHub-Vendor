@@ -8,7 +8,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OrderRaw implements Parcelable {
+public class OrderRaw implements Parcelable{
 
     @SerializedName("id")
     @Expose
@@ -51,6 +51,8 @@ public class OrderRaw implements Parcelable {
             id = in.readInt();
         }
         status = in.readString();
+        paymentMethod = in.readString();
+        totalPricePiastre = in.readParcelable(TotalPricePiastre.class.getClassLoader());
         if (in.readByte() == 0) {
             addressId = null;
         } else {
@@ -63,6 +65,9 @@ public class OrderRaw implements Parcelable {
         }
         updatedAt = in.readString();
         createdAt = in.readString();
+        client = in.readParcelable(Client.class.getClassLoader());
+        address = in.readParcelable(Address.class.getClassLoader());
+        details = in.createTypedArrayList(Detail.CREATOR);
     }
 
     @Override
@@ -74,6 +79,8 @@ public class OrderRaw implements Parcelable {
             dest.writeInt(id);
         }
         dest.writeString(status);
+        dest.writeString(paymentMethod);
+        dest.writeParcelable(totalPricePiastre, flags);
         if (addressId == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -88,6 +95,9 @@ public class OrderRaw implements Parcelable {
         }
         dest.writeString(updatedAt);
         dest.writeString(createdAt);
+        dest.writeParcelable(client, flags);
+        dest.writeParcelable(address, flags);
+        dest.writeTypedList(details);
     }
 
     @Override

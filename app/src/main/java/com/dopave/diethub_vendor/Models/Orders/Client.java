@@ -1,11 +1,14 @@
 
 package com.dopave.diethub_vendor.Models.Orders;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.dopave.diethub_vendor.Models.GetDeliveries.Image;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Client {
+public class Client implements Parcelable {
 
     @SerializedName("name")
     @Expose
@@ -22,6 +25,36 @@ public class Client {
     @SerializedName("image")
     @Expose
     private Image image;
+
+    protected Client(Parcel in) {
+        name = in.readString();
+        email = in.readString();
+        mobilePhone = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(email);
+        dest.writeString(mobilePhone);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Client> CREATOR = new Creator<Client>() {
+        @Override
+        public Client createFromParcel(Parcel in) {
+            return new Client(in);
+        }
+
+        @Override
+        public Client[] newArray(int size) {
+            return new Client[size];
+        }
+    };
 
     public String getName() {
         return name;

@@ -4,42 +4,48 @@ package com.dopave.diethub_vendor.Models.Orders;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Detail implements Parcelable {
+public class Option implements Parcelable {
 
     @SerializedName("id")
     @Expose
-    private String id;
+    private Integer id;
     @SerializedName("unitPricePiastre")
     @Expose
     private Integer unitPricePiastre;
     @SerializedName("quantity")
     @Expose
     private Integer quantity;
+    @SerializedName("optionName")
+    @Expose
+    private String optionName;
+    @SerializedName("optionNameEn")
+    @Expose
+    private String optionNameEn;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
-    @SerializedName("order_id")
+    @SerializedName("deletedAt")
     @Expose
-    private Integer orderId;
-    @SerializedName("item_id")
+    private Object deletedAt;
+    @SerializedName("order_detail_id")
     @Expose
-    private Integer itemId;
-    @SerializedName("options")
+    private String orderDetailId;
+    @SerializedName("option_id")
     @Expose
-    private List<Option> options = null;
-    @SerializedName("item")
-    @Expose
-    private Item item;
+    private Integer optionId;
 
-    protected Detail(Parcel in) {
-        id = in.readString();
+    protected Option(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
         if (in.readByte() == 0) {
             unitPricePiastre = null;
         } else {
@@ -50,25 +56,26 @@ public class Detail implements Parcelable {
         } else {
             quantity = in.readInt();
         }
+        optionName = in.readString();
+        optionNameEn = in.readString();
         createdAt = in.readString();
         updatedAt = in.readString();
+        orderDetailId = in.readString();
         if (in.readByte() == 0) {
-            orderId = null;
+            optionId = null;
         } else {
-            orderId = in.readInt();
+            optionId = in.readInt();
         }
-        if (in.readByte() == 0) {
-            itemId = null;
-        } else {
-            itemId = in.readInt();
-        }
-        options = in.createTypedArrayList(Option.CREATOR);
-        item = in.readParcelable(Item.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
         if (unitPricePiastre == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -81,22 +88,17 @@ public class Detail implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(quantity);
         }
+        dest.writeString(optionName);
+        dest.writeString(optionNameEn);
         dest.writeString(createdAt);
         dest.writeString(updatedAt);
-        if (orderId == null) {
+        dest.writeString(orderDetailId);
+        if (optionId == null) {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(orderId);
+            dest.writeInt(optionId);
         }
-        if (itemId == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(itemId);
-        }
-        dest.writeTypedList(options);
-        dest.writeParcelable(item, flags);
     }
 
     @Override
@@ -104,23 +106,23 @@ public class Detail implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Detail> CREATOR = new Creator<Detail>() {
+    public static final Creator<Option> CREATOR = new Creator<Option>() {
         @Override
-        public Detail createFromParcel(Parcel in) {
-            return new Detail(in);
+        public Option createFromParcel(Parcel in) {
+            return new Option(in);
         }
 
         @Override
-        public Detail[] newArray(int size) {
-            return new Detail[size];
+        public Option[] newArray(int size) {
+            return new Option[size];
         }
     };
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -140,6 +142,22 @@ public class Detail implements Parcelable {
         this.quantity = quantity;
     }
 
+    public String getOptionName() {
+        return optionName;
+    }
+
+    public void setOptionName(String optionName) {
+        this.optionName = optionName;
+    }
+
+    public String getOptionNameEn() {
+        return optionNameEn;
+    }
+
+    public void setOptionNameEn(String optionNameEn) {
+        this.optionNameEn = optionNameEn;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }
@@ -156,36 +174,28 @@ public class Detail implements Parcelable {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public Object getDeletedAt() {
+        return deletedAt;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setDeletedAt(Object deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
-    public Integer getItemId() {
-        return itemId;
+    public String getOrderDetailId() {
+        return orderDetailId;
     }
 
-    public void setItemId(Integer itemId) {
-        this.itemId = itemId;
+    public void setOrderDetailId(String orderDetailId) {
+        this.orderDetailId = orderDetailId;
     }
 
-    public List<Option> getOptions() {
-        return options;
+    public Integer getOptionId() {
+        return optionId;
     }
 
-    public void setOptions(List<Option> options) {
-        this.options = options;
-    }
-
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
+    public void setOptionId(Integer optionId) {
+        this.optionId = optionId;
     }
 
 }

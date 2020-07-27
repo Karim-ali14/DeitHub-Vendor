@@ -174,4 +174,6 @@
     <string name="order_number">طلب رقم :</string>
     <string name="successfully_registered">تم تسجيل المندوب بنجاح</string>
 
+    <string name="cashOnDelivery">الدفع عند التوصيل</string>
+    <string name="online">بطاقة الائتمان</string>
 </resources>

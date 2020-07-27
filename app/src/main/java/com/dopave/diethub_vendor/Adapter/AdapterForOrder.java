@@ -28,11 +28,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.GetDeliveries.DeliveryRow;
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
+import com.dopave.diethub_vendor.Models.Orders.Detail;
 import com.dopave.diethub_vendor.Models.Orders.OrderRaw;
 import com.dopave.diethub_vendor.Models.Orders.Orders;
 import com.dopave.diethub_vendor.UI.Details_OrderActivity.Details_OrderActivity;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryViewModel;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
+import com.dopave.diethub_vendor.UI.Fragments.Orders.OrdersViewModel;
 import com.dopave.diethub_vendor.UI.PrograssBarAnimation;
 import com.dopave.diethub_vendor.R;
 import com.squareup.picasso.Picasso;
@@ -41,6 +43,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -58,12 +62,16 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     int i ;
     public static int countItemsVisible = 0;
     DeliveryViewModel DViewModel;
-
-    public AdapterForOrder(List<OrderRaw> list, Context context, int i, DeliveryViewModel DViewModel) {
+    OrdersViewModel OViewModel;
+    RecyclerView recyclerView;
+    public static List<Detail> listDetail;
+    public AdapterForOrder(List<OrderRaw> list, Context context, int i, DeliveryViewModel DViewModel, OrdersViewModel OViewModel, RecyclerView recyclerView) {
         this.list = list;
         this.context = context;
         this.i = i;
         this.DViewModel = DViewModel;
+        this.OViewModel = OViewModel;
+        this.recyclerView = recyclerView;
     }
 
     @NonNull
@@ -79,6 +87,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         holder.AllDetailsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AdapterForOrder.listDetail = orderRaw.getDetails();
                 context.startActivity(new Intent(context, Details_OrderActivity.class)
                         .putExtra("orderRaw",orderRaw).putExtra("typeId",i));
 
@@ -109,7 +118,6 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
 
     private void showAssignDelivery(final OrderRaw orderRaw) {
         final ProgressDialog dialog = new ProgressDialog(context);
-        dialog.show();
 
         final AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_assign_delivery, null);
@@ -127,7 +135,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         ConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                assignDeliveryForOrder(orderRaw);
+                assignDeliveryForOrder(orderRaw,dialog,dialog1);
             }
         });
         cancel_image.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +146,8 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         });
     }
 
-    private void assignDeliveryForOrder(final OrderRaw orderRaw) {
+    private void assignDeliveryForOrder(final OrderRaw orderRaw, final ProgressDialog dialog, final AlertDialog dialog1) {
+        dialog.show();
         HashMap<String,String> body = new HashMap<>();
         body.put("deliveryrep_id",AdapterForAssign.DeliverySelected.getId()+"");
         Common.getAPIRequest().assignOrder("Bearer "+
@@ -147,9 +156,26 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                 orderRaw.getId()+"",body).enqueue(new Callback<Orders>() {
             @Override
             public void onResponse(Call<Orders> call, Response<Orders> response) {
+
                 if(response.code() == 200){
+                    dialog1.dismiss();
                     Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    String status[] = new String[2];
+                    status[0] = "prepared";
+                    status[1] = "readyForDelivery";
+                    OViewModel.getAllOrders(status,OViewModel,dialog,context,OrderFragment.limit,
+                            0,0).observe((LifecycleOwner) context, new Observer<Orders>() {
+                        @Override
+                        public void onChanged(Orders orders) {
+                            dialog.dismiss();
+                            list.clear();
+                            recyclerView.setAdapter(
+                                    new AdapterForOrder(orders.getData().getOrderRaw()
+                                            ,context,i,DViewModel,OViewModel,recyclerView));
+                        }
+                    });
                 }else {
+                    dialog.dismiss();
                     try {
                         Log.i("GGGGGGGGG",new JSONObject(response.errorBody().string())
                                 .getJSONArray("errors")
@@ -164,7 +190,19 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
 
             @Override
             public void onFailure(Call<Orders> call, Throwable t) {
+                dialog.dismiss();
 
+                if(t instanceof SocketTimeoutException) {
+                    Toast.makeText(context,R.string.Unable_contact_server, Toast.LENGTH_SHORT).show();
+                }
+
+                else if (t instanceof UnknownHostException) {
+                    Toast.makeText(context,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    Toast.makeText(context,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -204,7 +242,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             holder.menu.setVisibility(View.GONE);
             holder.RatingButton.setVisibility(View.VISIBLE);
             holder.delegateLayout.setVisibility(View.GONE);
-            holder.RatingButton.setText(getStatus(status));
+            getStatus(status,holder);
             holder.progressBar.setProgress(100);
             holder.iconPreparing.setImageResource(R.drawable.ic_check_black_check);
             holder.iconPreparing.setBackground(context.getResources().getDrawable(R.drawable.style_check));
@@ -225,7 +263,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         }else if (i == 2){
             holder.menu.setVisibility(View.VISIBLE);
             holder.RatingButton.setVisibility(View.VISIBLE);
-            holder.RatingButton.setText(getStatus(status));
+            getStatus(status,holder);
             holder.delegateLayout.setVisibility(View.VISIBLE);
             holder.RatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -264,7 +302,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             holder.menu.setVisibility(View.GONE);
             holder.RatingButton.setVisibility(View.VISIBLE);
             holder.delegateLayout.setVisibility(View.GONE);
-            holder.RatingButton.setText(getStatus(status));
+            getStatus(status,holder);
             holder.progressBar2.setProgress(100);
             holder.iconPreparing.setImageResource(R.drawable.ic_check_black_check);
             holder.iconPreparing.setBackground(context.getResources().getDrawable(R.drawable.style_check));
@@ -280,19 +318,34 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         }
     }
 
-    private String getStatus(String status) {
-        if (status.equals("accepted"))
-            return context.getResources().getString(R.string.Accepted);
-        else if (status.equals("preparing"))
-            return context.getResources().getString(R.string.Preparing);
-        else if (status.equals("prepared"))
-            return context.getResources().getString(R.string.Prepared);
-        else if (status.equals("delivering"))
-            return context.getResources().getString(R.string.Delivering);
-        else if (status.equals("delivered"))
-            return context.getResources().getString(R.string.finished);
-        else
-            return status;
+    private void getStatus(String status,ViewHolderForOrders holder) {
+        if (status.equals("accepted")) {
+            holder.OrderStats2.setText(context.getResources().getString(R.string.Accepted));
+            holder.RatingButton.setText(context.getResources().getString(R.string.Accepted));
+        }
+        else if (status.equals("preparing")){
+            holder.OrderStats2.setText(context.getResources().getString(R.string.Preparing));
+            holder.RatingButton.setText(context.getResources().getString(R.string.Preparing));
+        }
+        else if (status.equals("prepared")){
+            holder.OrderStats3.setText(context.getResources().getString(R.string.Prepared));
+            holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            holder.RatingButton.setText(context.getResources().getString(R.string.Prepared));
+        }
+//        else if (status.equals("delivering")){
+//            holder.RatingButton.setText(context.getResources().getString(R.string.Delivering));
+//        }
+//        else if (status.equals("delivered")){
+//            holder.RatingButton.setText(context.getResources().getString(R.string.finished));
+//        }
+        else if (status.equals("readyForDelivery")){
+            holder.OrderStats3.setText(context.getResources().getString(R.string.readyForDelivery));
+            holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
+            holder.RatingButton.setText(context.getResources().getString(R.string.readyForDelivery));
+        }
+        else {
+            holder.RatingButton.setText(status);
+        }
     }
 
     @Override
@@ -303,7 +356,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     class ViewHolderForOrders extends RecyclerView.ViewHolder {
         ProgressBar progressBar,progressBar2;
         ImageView iconP,iconPreparing,finishIcon,menu;
-        TextView RatingButton,AllDetailsText,OrderId,ClientName,createAt;
+        TextView RatingButton,AllDetailsText,OrderId,ClientName,createAt,OrderStats1,OrderStats2,OrderStats3;
         ConstraintLayout delegateLayout;
         CircleImageView ClientIcon;
         public ViewHolderForOrders(@NonNull View itemView) {
@@ -321,6 +374,9 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             ClientIcon = itemView.findViewById(R.id.ClientIcon);
             ClientName = itemView.findViewById(R.id.ClientName);
             createAt = itemView.findViewById(R.id.createAt);
+            OrderStats1 = itemView.findViewById(R.id.OrderStats1);
+            OrderStats2 = itemView.findViewById(R.id.OrderStats2);
+            OrderStats3 = itemView.findViewById(R.id.OrderStats3);
         }
     }
 
@@ -339,7 +395,6 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
 
                         if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
                         {
-                            Toast.makeText(context, getDeliveriesData.getData().getDeliveryRows().size()+"", Toast.LENGTH_SHORT).show();
                             List<DeliveryRow> deliveryRows = getDeliveriesData.getData().getDeliveryRows();
                             recyclerForAssign.setAdapter(new AdapterForAssign(deliveryRows,context,0));
                             dialog1.show();

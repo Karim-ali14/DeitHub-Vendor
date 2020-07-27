@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +29,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dopave.diethub_vendor.Adapter.AdapterForOrder;
 import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.Orders.Detail;
 import com.dopave.diethub_vendor.Models.Orders.OrderRaw;
 import com.dopave.diethub_vendor.Models.Orders.Orders;
 import com.dopave.diethub_vendor.Models.Subscriptions.UpdateStatus.UpdateSubscriptionStatus;
@@ -36,16 +39,19 @@ import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Details_OrderActivity extends AppCompatActivity {
-    TextView CountText,detailsOfOrders,countOfOrder,paymentMethod,status,clientAddress;
+    TextView CountText,detailsOfOrders,countOfOrder,paymentMethod,status,clientAddress,
+            NumberOfOrderText,TotalNumber,NameOfClient;
     LinearLayout CountLayout,CC;
     ImageView VisaIcon;
     View line3,line8;
@@ -55,6 +61,7 @@ public class Details_OrderActivity extends AppCompatActivity {
     ImageView updateIcon;
     ConstraintLayout Update_Layout;
     ProgressDialog dialog;
+    CircleImageView ClientIconDetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +78,14 @@ public class Details_OrderActivity extends AppCompatActivity {
         getWindow().getDecorView(). setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        NumberOfOrderText = findViewById(R.id.NumberOfOrderText);
         detailsOfOrders = findViewById(R.id.detailsOfOrders);
         countOfOrder = findViewById(R.id.countOfOrder);
+        ClientIconDetails = findViewById(R.id.ClientIconDetails);
+        NameOfClient = findViewById(R.id.NameOfClient);
         paymentMethod = findViewById(R.id.paymentMethod);
         status = findViewById(R.id.status);
+        TotalNumber = findViewById(R.id.TotalNumber);
         clientAddress = findViewById(R.id.clientAddress);
         CountText = findViewById(R.id.countText);
         CountLayout = findViewById(R.id.CountLayout);
@@ -90,6 +101,32 @@ public class Details_OrderActivity extends AppCompatActivity {
             }
         });
         dialog = new ProgressDialog(this);
+        setOrderData(raw);
+    }
+
+    private void setOrderData(OrderRaw raw) {
+        NumberOfOrderText.setText(raw.getId().toString());
+
+        if (AdapterForOrder.listDetail != null){
+            String meals = "";
+            for (Detail detail : AdapterForOrder.listDetail){
+                meals += detail.getItem().getName() + " ,";
+            }
+            detailsOfOrders.setText(meals);
+            countOfOrder.setText(AdapterForOrder.listDetail.size()+"");
+        }
+
+        TotalNumber.setText(raw.getTotalPricePiastre().getTotal()+" "+getResources().getString(R.string.SAR));
+        paymentMethod.setText(getPaymentMethods(raw.getPaymentMethod()));
+        status.setText(getStatus(raw.getStatus()));
+        clientAddress.setText(raw.getAddress().getAddress());
+        NameOfClient.setText(raw.getClient().getName());
+
+        if (raw.getClient().getImage()!=null){
+            String photoPath = Common.BaseUrl + "images/" + raw.getClient().getImage().getFor() + "/" +
+                    Uri.encode(raw.getClient().getImage().getName());
+            Picasso.with(this).load(photoPath).into(ClientIconDetails);
+        }
     }
 
     private void showUpDateDialog(final OrderRaw raw) {
@@ -219,6 +256,30 @@ public class Details_OrderActivity extends AppCompatActivity {
             return "prepared";
         else if (selectedStatus.equals(getResources().getString(R.string.readyForDelivery)))
             return "readyForDelivery";
-        return "";
+        return selectedStatus;
+    }
+
+    private String getPaymentMethods(String s){
+        if (s.equals("cashOnDelivery")) {
+            VisaIcon.setVisibility(View.GONE);
+            return getResources().getString( R.string.cashOnDelivery);
+        }else if (s.equals("online")){
+            VisaIcon.setVisibility(View.VISIBLE);
+            return getResources().getString( R.string.cashOnDelivery);
+        }else return s;
+    }
+
+    private String getStatus(String s){
+        if (s.equals("pending")) {
+            return getResources().getString( R.string.Pending);
+        }else if (s.equals("accepted")){
+            return getResources().getString( R.string.Accepted);
+        }else if (s.equals("preparing")){
+            return getResources().getString( R.string.Preparing);
+        }else if (s.equals("prepared")){
+            return getResources().getString( R.string.Prepared);
+        }else if (s.equals("readyForDelivery")){
+            return getResources().getString( R.string.readyForDelivery);
+        }else return s;
     }
 }

@@ -44,7 +44,7 @@ public class OrderFragment extends Fragment {
     public static int PREPARING_ID = 1;
     public static int PREPARING_ID_2 = 3;
     public static int FINISHED_ID = 2;
-    static final int limit = 5;
+    public static final int limit = 5;
     int skip = 0;
 
     String status[];
@@ -89,9 +89,8 @@ public class OrderFragment extends Fragment {
                 new Observer<Orders>() {
                     @Override
                     public void onChanged(Orders orders) {
-                        Toast.makeText(getActivity(), orders.getData().getOrderRaw().size()+"", Toast.LENGTH_SHORT).show();
                         adapter = new AdapterForOrder
-                                (orders.getData().getOrderRaw(),getActivity(),type,DViewModel);
+                                (orders.getData().getOrderRaw(),getActivity(),type,DViewModel,viewModel,recyclerView);
                         count = orders.getData().getCount();
                         progressBar.setVisibility(View.GONE);
                         recyclerView.setAdapter(adapter);
