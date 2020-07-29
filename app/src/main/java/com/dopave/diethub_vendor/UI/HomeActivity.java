@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.AboutUs.AboutUs_Activity;
+import com.dopave.diethub_vendor.UI.Conditions.Conditions_Activity;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
 import com.dopave.diethub_vendor.UI.Fragments.Home_Fragment;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
@@ -102,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Title.setText(getResources().getString(R.string.delegates));
             Current_Page = "nav_delegates";
         }else if (view.getId() == R.id.nav_Consulting ){
-            startActivity(new Intent(this,Conditions_Activity.class));
+            startActivity(new Intent(this, Conditions_Activity.class));
             drawer.closeDrawer(GravityCompat.START);
         }else if (view.getId() == R.id.nav_mySubscriptionOrders ){
             startActivity(new Intent(this, SubscriptionsActivity.class)
@@ -113,7 +115,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     .putExtra("type","nav_Subscription"));
             drawer.closeDrawer(GravityCompat.START);
         }else if (view.getId() == R.id.nav_aboutApp ){
-            startActivity(new Intent(this,AboutUs_Activity.class));
+            startActivity(new Intent(this, AboutUs_Activity.class));
             drawer.closeDrawer(GravityCompat.START);
         }else if (view.getId() == R.id.nav_langu ){
             startActivity(new Intent(this,LanguageActivity.class));

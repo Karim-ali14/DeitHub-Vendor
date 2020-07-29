@@ -104,7 +104,6 @@ public class SubscriptionsRepository {
                     }
                 });
                 if(t instanceof SocketTimeoutException) {
-                    Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
                     Title.setText(R.string.Unable_contact_server);
                     Message.setText(R.string.Error_downloading_data);
                     dialog1.show();

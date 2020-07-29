@@ -219,15 +219,6 @@
                             android:text="540"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_17sdp" />
-
-                        <TextView
-                            android:id="@+id/textView25"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/helveticaneuelt_arabic"
-                            android:text="ر.س"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/_17sdp" />
                     </LinearLayout>
 
 
@@ -254,8 +245,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ClientIconDetails"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
                         android:src="@drawable/personalinfo"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -434,6 +425,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

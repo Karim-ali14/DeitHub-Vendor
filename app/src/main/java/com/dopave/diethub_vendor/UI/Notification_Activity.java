@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,6 +14,10 @@ import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Notifications.NotificationData;
 import com.dopave.diethub_vendor.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +54,19 @@ public class Notification_Activity extends AppCompatActivity {
                                 ,Notification_Activity.this));
                     }else {
                         Toast.makeText(Notification_Activity.this, R.string.no_notifies, Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    try {
+                        String message = new JSONObject(response.errorBody().string())
+                                .getString("message");
+                        Toast.makeText(Notification_Activity.this,message, Toast.LENGTH_SHORT).show();
+
+                        Log.i("TTTTTT",new JSONObject(response.errorBody().string())
+                                .getString("message"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
 

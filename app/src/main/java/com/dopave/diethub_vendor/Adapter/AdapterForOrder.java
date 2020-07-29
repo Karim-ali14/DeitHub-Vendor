@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -55,7 +55,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHolderForOrders> {
     List<OrderRaw> list;
     Context context;
@@ -65,7 +64,10 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     OrdersViewModel OViewModel;
     RecyclerView recyclerView;
     public static List<Detail> listDetail;
-    public AdapterForOrder(List<OrderRaw> list, Context context, int i, DeliveryViewModel DViewModel, OrdersViewModel OViewModel, RecyclerView recyclerView) {
+
+    public AdapterForOrder(List<OrderRaw> list, Context context, int i,
+                           DeliveryViewModel DViewModel, OrdersViewModel OViewModel,
+                           RecyclerView recyclerView) {
         this.list = list;
         this.context = context;
         this.i = i;
@@ -77,7 +79,8 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     @NonNull
     @Override
     public ViewHolderForOrders onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolderForOrders(LayoutInflater.from(context).inflate(R.layout.model_order,parent,false));
+        return new ViewHolderForOrders(LayoutInflater.from(context)
+                .inflate(R.layout.model_order,parent,false));
     }
 
     @Override
@@ -107,11 +110,13 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                     Uri.encode(orderRaw.getClient().getImage().getName());
             Picasso.with(context).load(path).into(holder.ClientIcon);
         }
+
         try {
             holder.createAt.setText(new SimpleDateFormat("dd/MM/yyyy").format(
                     new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                             .parse(orderRaw.getCreatedAt())));
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
             e.printStackTrace();
         }
     }
@@ -146,7 +151,8 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         });
     }
 
-    private void assignDeliveryForOrder(final OrderRaw orderRaw, final ProgressDialog dialog, final AlertDialog dialog1) {
+    private void assignDeliveryForOrder(final OrderRaw orderRaw,
+                                        final ProgressDialog dialog, final AlertDialog dialog1) {
         dialog.show();
         HashMap<String,String> body = new HashMap<>();
         body.put("deliveryrep_id",AdapterForAssign.DeliverySelected.getId()+"");
@@ -219,7 +225,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         progressBar.setAnimation(barAnimation);
     }
 
-    private void AnimationProcess(ViewHolderForOrders holder,int position,String status){
+    private void AnimationProcess(ViewHolderForOrders holder,int position,String status) {
         holder.progressBar.setProgress(100);
         holder.iconP.setImageResource(R.drawable.ic_check_black_check);
         holder.iconP.setBackground(context.getResources().getDrawable(R.drawable.style_check));
@@ -387,21 +393,19 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     }
 
     private void getDeliveries(ProgressDialog dialog,final RecyclerView recyclerForAssign
-            ,final AlertDialog dialog1){
+            ,final AlertDialog dialog1) {
         DViewModel.getAllDeliveries(dialog,context,DViewModel,recyclerForAssign,null)
                 .observe((LifecycleOwner) context, new Observer<GetDeliveriesData>() {
                     @Override
                     public void onChanged(GetDeliveriesData getDeliveriesData) {
-
-                        if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
-                        {
-                            List<DeliveryRow> deliveryRows = getDeliveriesData.getData().getDeliveryRows();
-                            recyclerForAssign.setAdapter(new AdapterForAssign(deliveryRows,context,0));
-                            dialog1.show();
-                        }
-                        else
+                        List<DeliveryRow> deliveryRows = getDeliveriesData.getData().getDeliveryRows();
+                        recyclerForAssign.setAdapter(new AdapterForAssign(deliveryRows,context,0));
+                        dialog1.show();
+                        if (getDeliveriesData.getData().getDeliveryRows().size() == 0)
                             Toast.makeText(context, "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
+
                     }
                 });
     }
+
 }

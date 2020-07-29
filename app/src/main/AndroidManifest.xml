@@ -19,8 +19,8 @@
         <activity android:name=".UI.NewPassword_Activity" />
         <activity android:name=".UI.Enter_CodeActivity" />
         <activity android:name=".UI.Password_Recovery.Password_RecoveryActivity" />
-        <activity android:name=".UI.AboutUs_Activity" />
-        <activity android:name=".UI.Conditions_Activity" />
+        <activity android:name=".UI.AboutUs.AboutUs_Activity" />
+        <activity android:name=".UI.Conditions.Conditions_Activity" />
         <activity android:name=".UI.LanguageActivity" />
         <activity android:name=".UI.Notification_Activity" />
         <activity android:name=".UI.Add_Delegate.Add_DelegateActivity" />

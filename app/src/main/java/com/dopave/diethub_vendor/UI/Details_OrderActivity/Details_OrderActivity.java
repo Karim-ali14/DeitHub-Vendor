@@ -51,7 +51,7 @@ import retrofit2.Response;
 
 public class Details_OrderActivity extends AppCompatActivity {
     TextView CountText,detailsOfOrders,countOfOrder,paymentMethod,status,clientAddress,
-            NumberOfOrderText,TotalNumber,NameOfClient;
+            NumberOfOrder,TotalNumber,NameOfClient;
     LinearLayout CountLayout,CC;
     ImageView VisaIcon;
     View line3,line8;
@@ -62,6 +62,7 @@ public class Details_OrderActivity extends AppCompatActivity {
     ConstraintLayout Update_Layout;
     ProgressDialog dialog;
     CircleImageView ClientIconDetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,12 +74,12 @@ public class Details_OrderActivity extends AppCompatActivity {
         finish();
     }
 
-    private void init(){
+    private void init() {
         final OrderRaw raw = getIntent().getExtras().getParcelable("orderRaw");
         getWindow().getDecorView(). setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        NumberOfOrderText = findViewById(R.id.NumberOfOrderText);
+        NumberOfOrder = findViewById(R.id.NumberOfOrder);
         detailsOfOrders = findViewById(R.id.detailsOfOrders);
         countOfOrder = findViewById(R.id.countOfOrder);
         ClientIconDetails = findViewById(R.id.ClientIconDetails);
@@ -105,7 +106,7 @@ public class Details_OrderActivity extends AppCompatActivity {
     }
 
     private void setOrderData(OrderRaw raw) {
-        NumberOfOrderText.setText(raw.getId().toString());
+        NumberOfOrder.setText(raw.getId().toString());
 
         if (AdapterForOrder.listDetail != null){
             String meals = "";
@@ -269,7 +270,7 @@ public class Details_OrderActivity extends AppCompatActivity {
         }else return s;
     }
 
-    private String getStatus(String s){
+    private String getStatus(String s) {
         if (s.equals("pending")) {
             return getResources().getString( R.string.Pending);
         }else if (s.equals("accepted")){

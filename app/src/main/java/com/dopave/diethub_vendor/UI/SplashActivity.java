@@ -48,7 +48,8 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), Login_inActivity.class));
                     finish(); // finish(); because This Activity close After move To Next Activity
                     // And Next Activity will Be Launcher
-                } catch (InterruptedException e) {
+                }
+                catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
