@@ -15,6 +15,7 @@ import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
 import com.dopave.diethub_vendor.UI.Fragments.Home_Fragment;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.Fragments.SettingsFragment;
+import com.dopave.diethub_vendor.UI.Notifications.Notification_Activity;
 import com.dopave.diethub_vendor.UI.Subscriptions.SubscriptionsActivity;
 import com.google.android.material.navigation.NavigationView;
 
@@ -60,7 +61,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Notification_Icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,Notification_Activity.class));
+                startActivity(new Intent(HomeActivity.this, Notification_Activity.class));
             }
         });
     }

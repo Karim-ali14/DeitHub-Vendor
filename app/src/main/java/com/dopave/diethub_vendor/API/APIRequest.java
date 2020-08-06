@@ -5,6 +5,7 @@ import com.dopave.diethub_vendor.Models.CreateDelivery.Request.CreateDeliveryReq
 import com.dopave.diethub_vendor.Models.CreateDelivery.Response.CreateDeliveryResponse;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.CreateVehicleRequest;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleRespons;
+import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
@@ -160,4 +161,10 @@ public interface APIRequest {
     @GET("setting")
     Call<Settings> getSettings();
 
+    @DELETE("notification/{notifyId}")
+    Call<Defualt> deleteSpecificNotify (@Header("Authorization") String Auth,
+                                                 @Path("notifyId") String providerId);
+
+    @DELETE("notification")
+    Call<Defualt> deleteAllNotifies (@Header("Authorization") String Auth);
 }
