@@ -1,5 +1,6 @@
 package com.dopave.diethub_vendor.UI.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Modify_ImagesActivity;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;

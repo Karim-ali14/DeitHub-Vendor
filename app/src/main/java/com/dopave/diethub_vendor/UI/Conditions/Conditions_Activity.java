@@ -52,7 +52,7 @@ public class Conditions_Activity extends AppCompatActivity {
     public void onGetDataSettings(Settings settings) {
         PrivacyText.setText(settings.getData().getPrivacy());
     }
-    
+
     public void BackButton(View view) {
         finish();
     }

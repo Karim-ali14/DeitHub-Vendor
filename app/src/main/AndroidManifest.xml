@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UI.Subscription_detials.Subscription_detialsActivity"></activity>
+        <activity android:name=".Modify_Work_TimeActivity"></activity>
+        <activity android:name=".Modify_personal_infoActivity" />
+        <activity android:name=".Modify_ImagesActivity" />
+        <activity android:name=".UI.Subscription_detials.Subscription_detialsActivity" />
         <activity android:name=".UI.Subscriptions.SubscriptionsActivity" />
         <activity android:name=".UI.CreateVehicle.CreateVehicleActivity" />
         <activity android:name=".UI.CreateDelivery.CreateDeliveryActivity" />
