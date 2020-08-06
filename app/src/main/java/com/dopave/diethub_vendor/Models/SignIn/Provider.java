@@ -9,24 +9,24 @@ public class Provider {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("loginPhone")
+    @Expose
+    private String loginPhone;
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("mobilePhone")
-    @Expose
-    private String mobilePhone;
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("status")
+    @SerializedName("main_image")
     @Expose
-    private String status;
-    @SerializedName("createdAt")
-    @Expose
-    private String createdAt;
+    private MainImage mainImage;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
 
     public Integer getId() {
         return id;
@@ -34,6 +34,14 @@ public class Provider {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getLoginPhone() {
+        return loginPhone;
+    }
+
+    public void setLoginPhone(String loginPhone) {
+        this.loginPhone = loginPhone;
     }
 
     public String getName() {
@@ -44,14 +52,6 @@ public class Provider {
         this.name = name;
     }
 
-    public String getMobilePhone() {
-        return mobilePhone;
-    }
-
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -60,20 +60,12 @@ public class Provider {
         this.email = email;
     }
 
-    public String getStatus() {
-        return status;
+    public MainImage getMainImage() {
+        return mainImage;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setMainImage(MainImage mainImage) {
+        this.mainImage = mainImage;
     }
 
     public String getUpdatedAt() {
@@ -82,6 +74,14 @@ public class Provider {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.dopave.diethub_vendor.UI.Fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.HomeActivity;
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -25,6 +28,7 @@ import com.dopave.diethub_vendor.UI.HomeActivity;
 public class Home_Fragment extends Fragment {
     LinearLayout Orders_Layout,Delegate_Layout,Setting_Layout;
     TextView NameOfRestaurants;
+    ImageView ProviderIcon;
     public Home_Fragment() {
 
     }
@@ -40,6 +44,8 @@ public class Home_Fragment extends Fragment {
         Orders_Layout = view.findViewById(R.id.Orders_Layout);
         Delegate_Layout = view.findViewById(R.id.Delegate_Layout);
         Setting_Layout = view.findViewById(R.id.Setting_Layout);
+        ProviderIcon = view.findViewById(R.id.ProviderIcon);
+        setImage();
         Orders_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,4 +81,15 @@ public class Home_Fragment extends Fragment {
         });
         return view;
     }
+
+    private void setImage() {
+        if (Common.currentPosition.getData().getProvider().getMainImage() != null) {
+            String path = Common.BaseUrl + "images/" +
+                    Common.currentPosition.getData().getProvider().getMainImage().getFor()
+                    + "/" + Uri.encode(Common.currentPosition.getData().getProvider().getMainImage().getName());
+            Picasso.with(getActivity()).load(path).into(ProviderIcon);
+        }
+    }
+
+
 }
