@@ -7,6 +7,7 @@ import com.dopave.diethub_vendor.Models.CreateVehicle.Request.CreateVehicleReque
 import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleRespons;
 import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
+import com.dopave.diethub_vendor.Models.GetTimeWork.TimeWorks;
 import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
 import com.dopave.diethub_vendor.Models.Notifications.NotificationData;
@@ -167,4 +168,7 @@ public interface APIRequest {
 
     @DELETE("notification")
     Call<Defualt> deleteAllNotifies (@Header("Authorization") String Auth);
+
+    @GET("provider/{providerId}/worktime")
+    Call<TimeWorks> getTimeWork (@Path("providerId") String providerId);
 }

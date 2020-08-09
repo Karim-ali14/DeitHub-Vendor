@@ -57,7 +57,7 @@ public class Notification_Activity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        getNotifiesData("get");
+        getNotifiesData("normal");
         deleteAllNotifies();
     }
 

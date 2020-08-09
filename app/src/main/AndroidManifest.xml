@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Modify_Work_TimeActivity"></activity>
+        <activity android:name=".UI.TimeWork.Modify_Work_TimeActivity"></activity>
         <activity android:name=".Modify_personal_infoActivity" />
         <activity android:name=".Modify_ImagesActivity" />
         <activity android:name=".UI.Subscription_detials.Subscription_detialsActivity" />

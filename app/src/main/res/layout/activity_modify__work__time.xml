@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Modify_Work_TimeActivity"
+    tools:context=".UI.TimeWork.Modify_Work_TimeActivity"
     android:background="@color/background">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -80,19 +80,77 @@
                 app:layout_constraintStart_toEndOf="@+id/SaturdayCheckbox"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/SaturdayTime"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/helveticaneuelt_arabic"
-                android:includeFontPadding="false"
-                android:paddingBottom="@dimen/_5sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_17sdp"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
+                <TextView
+                    android:id="@+id/SaturdayFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/From"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/SaturdayFromTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:includeFontPadding="false"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/SaturdayFrom"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/SaturdayTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/To"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/SaturdayFromTime"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/SaturdayToTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/SaturdayTo"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
             <View
                 android:id="@+id/line1"
                 android:layout_width="match_parent"
@@ -131,6 +189,75 @@
                 app:layout_constraintStart_toEndOf="@+id/SundayCheckbox"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/SundayFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/From"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/SundayFromTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/SundayFrom"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/SundayTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/To"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/SundayFromTime"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/SundayToTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/SundayTo"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
             <View
                 android:id="@+id/line2"
                 android:layout_width="match_parent"
@@ -169,6 +296,75 @@
                 app:layout_constraintStart_toEndOf="@+id/MondayCheckBox"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/MondayFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/From"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/MondayFromTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/MondayFrom"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/MondayTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/To"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/MondayFromTime"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/MondayToTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/MondayTo"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
             <View
                 android:id="@+id/line3"
                 android:layout_width="match_parent"
@@ -207,6 +403,76 @@
                 app:layout_constraintStart_toEndOf="@+id/TuesdayCheckbox"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/TuesdayFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/From"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/TuesdayFromTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/TuesdayFrom"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/TuesdayTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/To"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/TuesdayFromTime"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/TuesdayToTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/TuesdayTo"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
             <View
                 android:id="@+id/line4"
                 android:layout_width="match_parent"
@@ -244,6 +510,77 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/WednesdayCheckbox"
                 app:layout_constraintTop_toTopOf="parent" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/WednesdayFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/From"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/WednesdayFromTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/WednesdayFrom"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/WednesdayTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/To"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/WednesdayFromTime"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/WednesdayToTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/WednesdayTo"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/line5"
@@ -283,6 +620,76 @@
                 app:layout_constraintStart_toEndOf="@+id/ThursdayCheckbox"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/ThursdayFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/From"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/ThursdayFromTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ThursdayFrom"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/ThursdayTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/To"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ThursdayFromTime"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/ThursdayToTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ThursdayTo"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
             <View
                 android:id="@+id/line6"
                 android:layout_width="match_parent"
@@ -321,6 +728,77 @@
                 app:layout_constraintStart_toEndOf="@+id/FridayCheckbox"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/FridayFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/From"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/FridayFromTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/FridayFrom"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/FridayTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginRight="@dimen/_7sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/To"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/FridayFromTime"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/FridayToTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="--:--"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/FridayTo"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
             <View
                 android:id="@+id/line7"
                 android:layout_width="match_parent"

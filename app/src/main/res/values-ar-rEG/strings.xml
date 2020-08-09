@@ -177,4 +177,7 @@
 
     <string name="cashOnDelivery">الدفع عند التوصيل</string>
     <string name="online">بطاقة الائتمان</string>
+
+    <string name="To">الي</string>
+    <string name="From">من</string>
 </resources>

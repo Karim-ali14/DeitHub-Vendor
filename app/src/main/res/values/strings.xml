@@ -177,4 +177,7 @@
 
     <string name="cashOnDelivery">Cash on delivery</string>
     <string name="online">online</string>
+
+    <string name="To">To</string>
+    <string name="From">From</string>
 </resources>

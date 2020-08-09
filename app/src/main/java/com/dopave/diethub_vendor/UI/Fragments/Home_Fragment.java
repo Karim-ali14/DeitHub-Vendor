@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Modify_ImagesActivity;
