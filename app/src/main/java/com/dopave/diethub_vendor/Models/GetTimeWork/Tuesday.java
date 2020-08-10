@@ -13,6 +13,11 @@ public class Tuesday {
     @Expose
     private String to;
 
+    public Tuesday(String from, String to) {
+        this.from = from;
+        this.to = to;
+    }
+
     public String getFrom() {
         return from;
     }

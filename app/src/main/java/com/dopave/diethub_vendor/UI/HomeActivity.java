@@ -64,6 +64,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(HomeActivity.this, Notification_Activity.class));
             }
         });
+
     }
 
     @Override
@@ -166,6 +167,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Title.setVisibility(View.VISIBLE);
             Title.setText(getResources().getString(R.string.Orders));
             Current_Page = "nav_myOrders";
+        }else if (getIntent().getExtras().getString("type").equals("Modify")){
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SettingsFragment()).commit();
+            drawer.closeDrawer(GravityCompat.START);
+            Logo.setVisibility(View.GONE);
+            Notification_Icon.setVisibility(View.GONE);
+            Title.setVisibility(View.VISIBLE);
+            Title.setText(getResources().getString(R.string.sittings));
+            Current_Page = "nav_setting";
         }
     }
 }

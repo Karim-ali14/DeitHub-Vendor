@@ -820,7 +820,8 @@
             android:paddingBottom="@dimen/_15sdp"
             android:text="@string/Add_time"
             android:textColor="@color/white"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_15sdp"
+            android:id="@+id/setTimeButton"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

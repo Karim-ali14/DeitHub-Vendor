@@ -12,6 +12,7 @@ import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
 import com.dopave.diethub_vendor.Models.Notifications.NotificationData;
 import com.dopave.diethub_vendor.Models.Orders.Orders;
+import com.dopave.diethub_vendor.Models.ProviderIMages.ImagesProvider;
 import com.dopave.diethub_vendor.Models.ResetPassword.ResetPassword;
 import com.dopave.diethub_vendor.Models.Settings.Settings;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
@@ -171,4 +172,14 @@ public interface APIRequest {
 
     @GET("provider/{providerId}/worktime")
     Call<TimeWorks> getTimeWork (@Path("providerId") String providerId);
+
+    @PATCH("provider/{providerId}/worktime")
+    Call<Defualt> getCreateTimeWork(@Header("Authorization") String Auth,
+                                    @Path("providerId") String providerId,
+                                    @Body com.dopave.diethub_vendor.Models.GetTimeWork.Data data);
+
+    @PUT("provider/{providerId}/images")
+    Call<Defualt> updateImages(@Header("Authorization") String Auth,
+                                      @Path("providerId") String providerId,
+                                      @Body ImagesProvider imagesProvider);
 }

@@ -28,6 +28,16 @@ public class Data {
     @Expose
     private Friday friday;
 
+    public Data(Saturday saturday, Sunday sunday, Monday monday, Tuesday tuesday, Wednesday wednesday, Thursday thursday, Friday friday) {
+        this.saturday = saturday;
+        this.sunday = sunday;
+        this.monday = monday;
+        this.tuesday = tuesday;
+        this.wednesday = wednesday;
+        this.thursday = thursday;
+        this.friday = friday;
+    }
+
     public Saturday getSaturday() {
         return saturday;
     }
