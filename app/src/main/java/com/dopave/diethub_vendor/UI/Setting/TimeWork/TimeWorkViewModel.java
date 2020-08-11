@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor.UI.TimeWork;
+package com.dopave.diethub_vendor.UI.Setting.TimeWork;
 
 import android.app.ProgressDialog;
 import android.content.Context;

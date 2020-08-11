@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Modify_personal_infoActivity">
+    tools:context=".UI.Setting.Modify_Personal_info.Modify_personal_infoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/AppBer"
@@ -40,19 +40,69 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <EditText
-        android:id="@+id/RestaurantsName"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:fontFamily="@font/helveticaneuelt_arabic"
+        android:includeFontPadding="true"
+        android:text="Ar"
+        android:textSize="@dimen/_17sdp"
+        app:layout_constraintBottom_toTopOf="@+id/RestaurantsNameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias=".26"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:fontFamily="@font/helveticaneuelt_arabic"
+        android:includeFontPadding="true"
+        android:text="En"
+        android:textSize="@dimen/_17sdp"
+        app:layout_constraintBottom_toTopOf="@+id/RestaurantsNameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias=".75"/>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/style_textinput"
-        android:hint="@string/restaurants_name"
-        android:importantForAutofill="noExcludeDescendants"
-        android:inputType="text"
-        android:theme="@style/EditText_Style"
         app:layout_constraintTop_toBottomOf="@+id/AppBer"
         android:layout_marginLeft="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_30sdp" />
+        android:layout_marginTop="@dimen/_30sdp"
+        android:id="@+id/RestaurantsNameLayout">
+        <EditText
+            android:id="@+id/RestaurantsNameEn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_textinput"
+            android:hint="سم المطعم"
+            android:importantForAutofill="noExcludeDescendants"
+            android:inputType="text"
+            android:theme="@style/EditText_Style"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:textAlignment="center"
+             />
+        <EditText
+            android:id="@+id/RestaurantsNameAr"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_textinput"
+            android:hint="Restaurants Name"
+            android:importantForAutofill="noExcludeDescendants"
+            android:inputType="text"
+            android:theme="@style/EditText_Style"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:textAlignment="center"
+             />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/About_Res"
@@ -64,13 +114,14 @@
         android:inputType="textCapSentences|textMultiLine"
         android:theme="@style/EditText_Style"
         android:textSize="@dimen/_17sdp"
-        app:layout_constraintTop_toBottomOf="@+id/RestaurantsName"
+        app:layout_constraintTop_toBottomOf="@+id/RestaurantsNameLayout"
         android:layout_marginLeft="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_15sdp"/>
+        android:layout_marginTop="@dimen/_15sdp"
+        android:gravity="top"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/City_Layout_ProInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
@@ -84,8 +135,19 @@
         app:layout_constraintTop_toBottomOf="@+id/About_Res"
         app:layout_constraintWidth_percent=".9">
 
+        <Spinner
+            android:id="@+id/spinnerCityProviderInfo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
         <ImageView
-            android:id="@+id/imageView18"
+            android:id="@+id/markProInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/placeholder"
@@ -102,8 +164,9 @@
             android:textColor="@color/text_color"
             android:textSize="@dimen/_17sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView18"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/markProInfo"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/CitySelectedProInfo"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -124,7 +187,7 @@
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/City_Layout_ProInfo"
         android:id="@+id/CardMap">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

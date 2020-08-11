@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor.UI.TimeWork;
+package com.dopave.diethub_vendor.UI.Setting.TimeWork;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,14 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.GetTimeWork.Data;
-import com.dopave.diethub_vendor.Models.GetTimeWork.Friday;
-import com.dopave.diethub_vendor.Models.GetTimeWork.Monday;
-import com.dopave.diethub_vendor.Models.GetTimeWork.Saturday;
-import com.dopave.diethub_vendor.Models.GetTimeWork.Sunday;
-import com.dopave.diethub_vendor.Models.GetTimeWork.Thursday;
 import com.dopave.diethub_vendor.Models.GetTimeWork.TimeWorks;
-import com.dopave.diethub_vendor.Models.GetTimeWork.Tuesday;
-import com.dopave.diethub_vendor.Models.GetTimeWork.Wednesday;
 import com.dopave.diethub_vendor.R;
 
 import org.json.JSONException;

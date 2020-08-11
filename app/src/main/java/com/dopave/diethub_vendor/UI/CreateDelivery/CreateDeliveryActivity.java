@@ -401,7 +401,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         });
     }
 
-    public class AdapterOfSpinner extends ArrayAdapter<CityRow> {
+    public static class AdapterOfSpinner extends ArrayAdapter<CityRow> {
         List<CityRow> list;
         LayoutInflater inflater;
         public AdapterOfSpinner(Activity context, int id , List<CityRow> list)

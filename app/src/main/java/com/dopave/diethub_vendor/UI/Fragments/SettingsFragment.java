@@ -14,9 +14,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.dopave.diethub_vendor.Modify_ImagesActivity;
-import com.dopave.diethub_vendor.UI.TimeWork.Modify_Work_TimeActivity;
-import com.dopave.diethub_vendor.Modify_personal_infoActivity;
+import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_ImagesActivity;
+import com.dopave.diethub_vendor.UI.Setting.TimeWork.Modify_Work_TimeActivity;
+import com.dopave.diethub_vendor.UI.Setting.Modify_Personal_info.Modify_personal_infoActivity;
 import com.dopave.diethub_vendor.R;
 
 import java.util.ArrayList;

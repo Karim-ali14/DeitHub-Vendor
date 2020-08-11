@@ -1,4 +1,4 @@
-package com.dopave.diethub_vendor.UI.TimeWork;
+package com.dopave.diethub_vendor.UI.Setting.TimeWork;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -8,15 +8,12 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.GetTimeWork.Data;
 import com.dopave.diethub_vendor.Models.GetTimeWork.Friday;
@@ -27,19 +24,10 @@ import com.dopave.diethub_vendor.Models.GetTimeWork.Thursday;
 import com.dopave.diethub_vendor.Models.GetTimeWork.TimeWorks;
 import com.dopave.diethub_vendor.Models.GetTimeWork.Tuesday;
 import com.dopave.diethub_vendor.Models.GetTimeWork.Wednesday;
-import com.dopave.diethub_vendor.Modify_ImagesActivity;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.Calendar;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Modify_Work_TimeActivity extends AppCompatActivity {
     ImageView SaturdayCheckbox,SundayCheckbox,MondayCheckBox,TuesdayCheckbox,WednesdayCheckbox,ThursdayCheckbox,FridayCheckbox;
