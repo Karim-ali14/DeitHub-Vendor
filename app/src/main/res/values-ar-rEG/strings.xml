@@ -88,6 +88,7 @@
     <string name="res_logo">شعار المطعم</string>
     <string name="Time_work">مواعيد العمل</string>
     <string name="Notification">الاشعارات</string>
+    <string name="Edit_Location">تعديل الموقع</string>
     <string name="App_Lang">لغة البرنامج</string>
     <string name="Press_To_back">اضغط مرة أخرى للخروج</string>
     <string name="Saturday">السبت</string>
@@ -99,6 +100,7 @@
     <string name="Friday">الجمعة</string>
     <string name="add_photo">اضافة صورة</string>
     <string name="Save_edits">حفظ التعديل</string>
+    <string name="Save">حفظ</string>
     <string name="Add_time">اضف وقت</string>
 
     <string name="delegate_name">اسم المندوب</string>
@@ -106,6 +108,7 @@
     <string name="Create_Account">إنشاء حساب</string>
     <string name="Terms_Conditions">الشروط والأحكام</string>
     <string name="Confirm_account">تاكيد إنشاء الحساب</string>
+    <string name="UpDate_Data">تحديث البيانات</string>
     <string name="Vehicle_ID">رقم المركبة</string>
     <string name="Vehicle_photos">صور المركبة</string>
     <string name="Car_license">رخصة القياده</string>
@@ -117,6 +120,8 @@
 
     <string name="modify_delivery">تعديل المندوي</string>
     <string name="modify_vehicle">تعديل المركبه</string>
+    <string name="modify_Location">تعديل الموقع</string>
+    <string name="modify_Address">تعديل العنوان</string>
     <string name="delete_delivery">مسح المندوب</string>
     <string name="accept">قبول</string>
     <string name="cancel">ألغاء</string>
@@ -180,4 +185,13 @@
 
     <string name="To">الي</string>
     <string name="From">من</string>
+    <string name="no_changes">لا يوجد تغيرات</string>
+    <string name="Complete_data">استكمال البيانات</string>
+
+
+    <string name="DescriptionEn">الوصف باللغه الانجليزيه</string>
+    <string name="DescriptionAr">الوصف باللغه العربيه</string>
+
+    <string name="AddressEn">العنوان باللغه الانجليزيه</string>
+    <string name="AddressAr">العنوان باللغه العربيه</string>
 </resources>

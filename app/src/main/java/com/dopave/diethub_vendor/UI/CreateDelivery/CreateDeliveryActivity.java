@@ -141,7 +141,6 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         Email.setText(delivery.getEmail());
         if (delivery.getImage()!=null){
             String path = Common.BaseUrl + "images/" + delivery.getImage().getFor() + "/" + Uri.encode(delivery.getImage().getName());
-            Log.i("TTTTTTT",path);
             Picasso.with(this).load(path).into(profile_image);
         }
     }

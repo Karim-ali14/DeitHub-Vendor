@@ -71,6 +71,7 @@ public class Login_inActivity extends AppCompatActivity {
         });
         getChangeEditTextStatus();
     }
+
     private void getChangeEditTextStatus(){
         Phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -103,6 +104,7 @@ public class Login_inActivity extends AppCompatActivity {
             }
         });
     }
+
     private boolean validationPhone() {
         if (Phone.getText().toString().isEmpty()) {
             Toast.makeText(this, R.string.Enter_Phone, Toast.LENGTH_LONG).show();
@@ -116,6 +118,7 @@ public class Login_inActivity extends AppCompatActivity {
             return true;
         }
     }
+
     private boolean validationPass() {
         if (Password.getText().toString().isEmpty()) {
             Toast.makeText(this, R.string.Enter_Password, Toast.LENGTH_SHORT).show();

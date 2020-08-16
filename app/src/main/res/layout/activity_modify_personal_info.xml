@@ -1,235 +1,349 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Setting.Modify_Personal_info.Modify_personal_infoActivity">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/AppBer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="تعديل البيانات الشصبه"
-                android:layout_gravity="center"
-                style="@style/TitleStyle"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/back"
-                android:layout_gravity="right"
-                android:onClick="BackButton"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_20sdp"
-                />
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_30sdp"
-        android:fontFamily="@font/helveticaneuelt_arabic"
-        android:includeFontPadding="true"
-        android:text="Ar"
-        android:textSize="@dimen/_17sdp"
-        app:layout_constraintBottom_toTopOf="@+id/RestaurantsNameLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".26"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/_30sdp"
-        android:fontFamily="@font/helveticaneuelt_arabic"
-        android:includeFontPadding="true"
-        android:text="En"
-        android:textSize="@dimen/_17sdp"
-        app:layout_constraintBottom_toTopOf="@+id/RestaurantsNameLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias=".75"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/AppBer"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:id="@+id/RestaurantsNameLayout">
-        <EditText
-            android:id="@+id/RestaurantsNameEn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/style_textinput"
-            android:hint="سم المطعم"
-            android:importantForAutofill="noExcludeDescendants"
-            android:inputType="text"
-            android:theme="@style/EditText_Style"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginRight="@dimen/_5sdp"
-            android:textAlignment="center"
-             />
-        <EditText
-            android:id="@+id/RestaurantsNameAr"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/style_textinput"
-            android:hint="Restaurants Name"
-            android:importantForAutofill="noExcludeDescendants"
-            android:inputType="text"
-            android:theme="@style/EditText_Style"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginRight="@dimen/_5sdp"
-            android:textAlignment="center"
-             />
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/About_Res"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/style_textinput"
-        android:hint="@string/about_restaurants"
-        android:importantForAutofill="noExcludeDescendants"
-        android:inputType="textCapSentences|textMultiLine"
-        android:theme="@style/EditText_Style"
-        android:textSize="@dimen/_17sdp"
-        app:layout_constraintTop_toBottomOf="@+id/RestaurantsNameLayout"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:gravity="top"/>
+    tools:context=".UI.Setting.Modify_Personal_info.Modify_personal_infoActivity"
+    android:background="@color/background"
+    android:fillViewport="true"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/City_Layout_ProInfo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:background="@drawable/style_textinput"
-        android:paddingLeft="@dimen/_17sdp"
-        android:paddingTop="@dimen/_17sdp"
-        android:paddingRight="@dimen/_17sdp"
-        android:paddingBottom="@dimen/_17sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/About_Res"
-        app:layout_constraintWidth_percent=".9">
-
-        <Spinner
-            android:id="@+id/spinnerCityProviderInfo"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/Layout_ProInfo">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/AppBer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/markProInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/placeholder"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="تعديل البيانات الشصبه"
+                    android:layout_gravity="center"
+                    style="@style/TitleStyle"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back"
+                    android:layout_gravity="right"
+                    android:onClick="BackButton"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    />
+            </androidx.appcompat.widget.Toolbar>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:text="مكة المكرمة"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/_17sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/markProInfo"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/CitySelectedProInfo"/>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/open"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="15dp"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/City_Layout_ProInfo"
-        android:id="@+id/CardMap">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-            <TextView
-                android:fontFamily="@font/helveticaneuelt_arabic"
-                android:id="@+id/LocationText"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/AppBer"
+            android:id="@+id/Layout_Tabs"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp">
+            <androidx.constraintlayout.widget.Guideline
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="الموقع الجغرافي"
-                android:textColor="#000"
-                android:textSize="@dimen/_20sdp"
-                android:textStyle="bold"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".5"
+                android:id="@+id/lineTab"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_45sdp"
+                app:layout_constraintEnd_toEndOf="@+id/lineTab"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center"
+                android:background="@drawable/style_tab_active"
+                android:id="@+id/Layout_Ar">
 
-            <TextView
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_30sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="true"
+                    android:text="Ar"
+                    android:textSize="@dimen/_17sdp"
+                    android:textColor="@color/white"
+                    android:id="@+id/ArabicText"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lineTab"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/Layout_En"
+                android:gravity="center"
+                android:background="@drawable/style_tab_normal">
+                <TextView
+                    android:id="@+id/EnglishText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_30sdp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="true"
+                    android:text="En"
+                    android:textSize="@dimen/_17sdp"
+                    android:textColor="@color/colorPrimary"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Layout_NameAndDec"
+            app:layout_constraintTop_toBottomOf="@+id/Layout_Tabs"
+            android:layout_marginTop="@dimen/_15sdp"
+
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="الرياض , حي الروضة , شارع الأمير محمد بن سلمان"
-                android:textColor="@color/text_color"
-                android:textSize="17sp"
+                android:id="@+id/Layout_TabArabic"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/LocationText"
-                android:includeFontPadding="false"
-                android:fontFamily="@font/helveticaneuelt_arabic"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+                <EditText
+                    android:id="@+id/RestaurantsName"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/style_textinput"
+                    android:hint="@string/restaurants_name"
+                    android:importantForAutofill="noExcludeDescendants"
+                    android:inputType="text"
+                    android:theme="@style/EditText_Style"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <EditText
+                    android:id="@+id/About_Res"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/style_textinput"
+                    android:hint="@string/about_restaurants"
+                    android:importantForAutofill="noExcludeDescendants"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:theme="@style/EditText_Style"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/RestaurantsName"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="top"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Layout_TabEnglish"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+                <EditText
+                    android:id="@+id/RestaurantsNameEn"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/style_textinput"
+                    android:hint="@string/restaurants_name"
+                    android:importantForAutofill="noExcludeDescendants"
+                    android:inputType="text"
+                    android:theme="@style/EditText_Style"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <EditText
+                    android:id="@+id/About_ResEn"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/style_textinput"
+                    android:hint="@string/about_restaurants"
+                    android:importantForAutofill="noExcludeDescendants"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:theme="@style/EditText_Style"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/RestaurantsNameEn"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="top"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/City_Layout_ProInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/style_textinput"
+            android:paddingLeft="@dimen/_17sdp"
+            android:paddingTop="@dimen/_17sdp"
+            android:paddingRight="@dimen/_17sdp"
+            android:paddingBottom="@dimen/_17sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Layout_NameAndDec"
+            app:layout_constraintWidth_percent=".9">
+
+            <Spinner
+                android:id="@+id/spinnerCityProviderInfo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
             <ImageView
-                android:layout_marginTop="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/map_icon"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                android:id="@+id/markProInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/placeholder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:text="مكة المكرمة"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_17sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/markProInfo"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/CitySelectedProInfo"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/open"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/City_Layout_ProInfo"
+            android:id="@+id/CardMap">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@drawable/pencil"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:id="@+id/edit_Location"/>
+                <TextView
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:id="@+id/LocationText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="الموقع الجغرافي"
+                    android:textColor="#000"
+                    android:textSize="@dimen/_20sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"/>
+
+                <TextView
+                    android:id="@+id/Address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:fontFamily="@font/helveticaneuelt_arabic"
+                    android:includeFontPadding="false"
+                    android:text="الرياض , حي الروضة , شارع الأمير محمد بن سلمان"
+                    android:textColor="@color/text_color"
+                    android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/LocationText" />
+
+                <com.google.android.gms.maps.MapView
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:layout_constraintTop_toBottomOf="@+id/Address"
+                    android:id="@+id/map_view"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/UpDateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:background="@drawable/style_button"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_17sdp"
+            android:text="@string/UpDate_Data"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CardMap"
+            app:layout_constraintVertical_bias=".1"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:fontFamily="@font/helveticaneuelt_arabic"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

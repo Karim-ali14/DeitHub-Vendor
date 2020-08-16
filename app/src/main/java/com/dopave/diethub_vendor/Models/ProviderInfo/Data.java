@@ -52,6 +52,24 @@ public class Data {
     @Expose
     private MainImage mainImage;
 
+    public Data(Integer id, String loginPhone, String email, String name, String nameEn, Integer cityId, String address, String addressEn, Double latitude, Double longitude, String description, String descriptionEn, Object deliveryPrice, Integer mainImageId, MainImage mainImage) {
+        this.id = id;
+        this.loginPhone = loginPhone;
+        this.email = email;
+        this.name = name;
+        this.nameEn = nameEn;
+        this.cityId = cityId;
+        this.address = address;
+        this.addressEn = addressEn;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.description = description;
+        this.descriptionEn = descriptionEn;
+        this.deliveryPrice = deliveryPrice;
+        this.mainImageId = mainImageId;
+        this.mainImage = mainImage;
+    }
+
     public Integer getId() {
         return id;
     }

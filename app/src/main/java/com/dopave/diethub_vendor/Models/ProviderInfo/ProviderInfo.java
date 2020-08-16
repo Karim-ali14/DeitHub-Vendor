@@ -19,8 +19,18 @@ public class ProviderInfo {
     @SerializedName("code")
     @Expose
     private Integer code;
+
+    public ProviderInfo(String message, Data data, Boolean success, Integer code, List<Object> errors) {
+        this.message = message;
+        this.data = data;
+        this.success = success;
+        this.code = code;
+        this.errors = errors;
+    }
+
     @SerializedName("errors")
     @Expose
+
     private List<Object> errors = null;
 
     public String getMessage() {

@@ -93,15 +93,18 @@
     <string name="Wednesday">Wednesday</string>
     <string name="Thursday">Thursday</string>
     <string name="Friday">Friday</string>
+    <string name="Edit_Location">Edit Location</string>
     <string name="Notification">Notification</string>
     <string name="App_Lang">App Language</string>
     <string name="Press_To_back">Press back again to exit</string>
     <string name="Save_edits">Save edits</string>
+    <string name="Save">Save</string>
     <string name="Add_time">Add time</string>
 
     <string name="delegate_name">Delegate Name</string>
     <string name="I_Agree_On">I Agree On</string>
     <string name="Create_Account">Create Account</string>
+    <string name="UpDate_Data">Update Data</string>
     <string name="Terms_Conditions">Terms and Conditions</string>
     <string name="Confirm_account">Confirm creation account</string>
     <string name="Vehicle_ID">Vehicle ID</string>
@@ -116,6 +119,8 @@
 
     <string name="modify_delivery">modify delivery</string>
     <string name="modify_vehicle">modify vehicle</string>
+    <string name="modify_Location">modify location</string>
+    <string name="modify_Address">modify address</string>
     <string name="delete_delivery">delete delivery</string>
     <string name="cancel">cancel</string>
     <string name="accept">Accept</string>
@@ -180,4 +185,12 @@
 
     <string name="To">To</string>
     <string name="From">From</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="no_changes">There are no changes</string>
+    <string name="Complete_data">Complete the data</string>
+    <string name="DescriptionEn">English Description</string>
+    <string name="DescriptionAr">Arabic Description</string>
+
+    <string name="AddressEn">English Address</string>
+    <string name="AddressAr">Arabic Address</string>
 </resources>
