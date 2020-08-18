@@ -1,7 +1,9 @@
 package com.dopave.diethub_vendor.Adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,43 +19,47 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dopave.diethub_vendor.Common.Common;
-import com.dopave.diethub_vendor.Models.GetVehicles.Image;
+import com.dopave.diethub_vendor.Models.GetDeliveries.Image;
 import com.dopave.diethub_vendor.R;
-import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
+import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_ImagesActivity;
+import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_Images_ViewModel;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.ViewHolderForResImage> {
+public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditImages.ViewHolderForEditImages> {
     List<Image> list;
     Context context;
-    List<com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image> imageListRequest;
-    String type;
     int numberOfIndexes;
+    List<com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image> imageListRequest;
     RecyclerView recyclerView;
+    Modify_Images_ViewModel viewModel;
+    ProgressDialog dialog;
 
-    public AdapterForResImage(List<Image> list, Context context,
-                              List<com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image> imageListRequest,
-                              String type, int numberOfIndexes, RecyclerView recyclerView) {
+    public AdapterForEditImages(List<Image> list, Context context, int numberOfIndexes, List<com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image> imageListRequest,
+                                RecyclerView recyclerView, Modify_Images_ViewModel viewModel,
+                                ProgressDialog dialog) {
         this.list = list;
         this.context = context;
-        this.imageListRequest = imageListRequest;
-        this.type = type;
         this.numberOfIndexes = numberOfIndexes;
+        this.imageListRequest = imageListRequest;
         this.recyclerView = recyclerView;
+        this.viewModel = viewModel;
+        this.dialog = dialog;
     }
 
     @NonNull
     @Override
-    public ViewHolderForResImage onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolderForResImage(
+    public ViewHolderForEditImages onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolderForEditImages(
                 LayoutInflater.from(context)
                         .inflate(R.layout.model_image_res,parent,false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderForResImage holder, final int position) {
-        Image image = list.get(position);
+    public void onBindViewHolder(@NonNull ViewHolderForEditImages holder, final int position) {
+       Image image = list.get(position);
         if (position == 0) {
             holder.menuIconForImage.setVisibility(View.GONE);
             holder.Add_Photo_Layout.setVisibility(View.VISIBLE);
@@ -61,15 +67,15 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
             holder.Add_Photo_Layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (list.size() <= 5) {
+//                    if (list.size() <= 5) {
                         Intent intent = new Intent();
                         intent.setType("image/*");
                         intent.setAction(Intent.ACTION_GET_CONTENT);
-                        CreateVehicleActivity createVehicleActivity = (CreateVehicleActivity) context;
-                        createVehicleActivity.openGallery(CreateVehicleActivity.SELECT_IMAGE_FOR_VEHICLE);
-                    }else {
-                        Toast.makeText(context, context.getResources().getString(R.string.maximum_of_five_pictures), Toast.LENGTH_SHORT).show();
-                    }
+                        Modify_ImagesActivity modify_imagesActivity = (Modify_ImagesActivity) context;
+                        modify_imagesActivity.openGallery(modify_imagesActivity.SELECT_IMAGE_FOR_PROVIDER);
+//                    }else {
+//                        Toast.makeText(context, context.getResources().getString(R.string.maximum_of_five_pictures), Toast.LENGTH_SHORT).show();
+//                    }
                 }
             });
         }
@@ -109,23 +115,33 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
     }
 
     private void delete(int position) {
-        if (type.equals("update") && numberOfIndexes != 0){
-            if (position < numberOfIndexes){
-                numberOfIndexes--;
+        if (Modify_ImagesActivity.numberOfIndexes != 0) {
+            if (position < Modify_ImagesActivity.numberOfIndexes) {
+                Modify_ImagesActivity.numberOfIndexes--;
                 list.remove(position);
-            }else {
-                int n = numberOfIndexes - position;
+                Toast.makeText(context, "old "+Modify_ImagesActivity.numberOfIndexes
+                        , Toast.LENGTH_SHORT).show();
+                deleterequest(position);
+            } else {
+                int n = Modify_ImagesActivity.numberOfIndexes - position;
                 list.remove(position);
                 imageListRequest.remove(n);
+                Toast.makeText(context, "new", Toast.LENGTH_SHORT).show();
             }
-            recyclerView.setAdapter(new AdapterForResImage(list,context,imageListRequest,
-                    "update",numberOfIndexes,recyclerView));
         }else {
             list.remove(position);
             imageListRequest.remove(--position);
-            recyclerView.setAdapter(new AdapterForResImage(list,context,imageListRequest,
-                    "create",numberOfIndexes,recyclerView));
         }
+
+        recyclerView.setAdapter(new AdapterForEditImages(list,context,numberOfIndexes,
+                imageListRequest,recyclerView,viewModel,dialog));
+    }
+
+    private void deleterequest(int position) {
+        Image image = list.get(--position);
+        ArrayList<com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image> images = new ArrayList<>();
+        images.add(new com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image(image.getId(),"deleted"));
+        viewModel.updateImages(context,dialog,null,images);
     }
 
     @Override
@@ -133,14 +149,15 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
         return list.size();
     }
 
-    public class ViewHolderForResImage extends RecyclerView.ViewHolder {
+    public class ViewHolderForEditImages extends RecyclerView.ViewHolder {
         ImageView imageView;
         LinearLayout Add_Photo_Layout,menuIconForImage;
-        public ViewHolderForResImage(@NonNull View itemView) {
+        public ViewHolderForEditImages(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.Res_icon);
             menuIconForImage = itemView.findViewById(R.id.menuIconForImage);
             Add_Photo_Layout = itemView.findViewById(R.id.Add_Photo_Layout);
         }
     }
+
 }

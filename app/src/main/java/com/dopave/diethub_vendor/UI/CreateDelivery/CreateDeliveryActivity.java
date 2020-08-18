@@ -260,7 +260,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                         Common.currentPosition.getData().getToken().getAccessToken(),
                 new CreateDeliveryRequest(Phone.getText().toString(), Password.getText().toString(),
                         UserName.getText().toString(), Email.getText().toString(),
-                        new Image(ImageUrl), cityRow.getId()),
+                        new Image(DeliveryImage), cityRow.getId()),
                 Common.currentPosition.getData().getProvider().getId() + "",
                 this, dialog).observe(this, new Observer<CreateDeliveryResponse>() {
             @Override
@@ -443,7 +443,6 @@ public class CreateDeliveryActivity extends AppCompatActivity {
 
         return encodedImage;
     }
-
 
     private boolean validationPass() {
         if (Password.getText().toString().isEmpty()) {

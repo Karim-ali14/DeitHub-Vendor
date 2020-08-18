@@ -1,10 +1,10 @@
 
-package com.dopave.diethub_vendor.Models.ProviderIMages;
+package com.dopave.diethub_vendor.Models.ProviderIMages.Update;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Image {
+public class MainImage {
 
     @SerializedName("id")
     @Expose
@@ -22,7 +22,14 @@ public class Image {
     @Expose
     private String description;
 
-    public Image(String base64) {
+    public MainImage(String action, String base64) {
+        this.action = action;
+        this.base64 = base64;
+    }
+
+    public MainImage(Integer id, String action, String base64) {
+        this.id = id;
+        this.action = action;
         this.base64 = base64;
     }
 

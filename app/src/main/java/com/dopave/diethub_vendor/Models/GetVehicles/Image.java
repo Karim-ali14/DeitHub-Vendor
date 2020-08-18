@@ -29,7 +29,7 @@ public class Image {
 
     private Bitmap imageAdd;
 
-    public Image(Bitmap imageAdd) {
+    public  Image(Bitmap imageAdd) {
         this.imageAdd = imageAdd;
     }
 

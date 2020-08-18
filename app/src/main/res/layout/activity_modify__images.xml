@@ -65,26 +65,29 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="104dp"
         android:background="@drawable/style_edit_image"
         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:paddingTop="25dp"
-        android:paddingBottom="25dp">
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:onClick="openGalleryForMainImage">
 
         <ImageView
             android:id="@+id/MainImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/logo"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="openGalleryForMainImage"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView

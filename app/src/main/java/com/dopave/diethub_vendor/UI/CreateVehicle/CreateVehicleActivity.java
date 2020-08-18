@@ -219,7 +219,6 @@ public class CreateVehicleActivity extends AppCompatActivity {
         });
     }
 
-
     private void getVehicleData() {
         viewModel.getVehicleData(deliveryId,this,dialog,viewModel).observe(this, new Observer<GetVehicleData>() {
             @Override

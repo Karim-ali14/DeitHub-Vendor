@@ -7,7 +7,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.dopave.diethub_vendor.Models.Defualt;
-import com.dopave.diethub_vendor.Models.ProviderIMages.Image;
+import com.dopave.diethub_vendor.Models.ProviderIMages.GetImages.ProviderImagesResponse;
+import com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image;
+import com.dopave.diethub_vendor.Models.ProviderIMages.Update.ImagesProvider;
+import com.dopave.diethub_vendor.Models.ProviderIMages.Update.MainImage;
 
 import java.util.List;
 
@@ -18,8 +21,14 @@ public class Modify_Images_ViewModel extends ViewModel {
         this.repository = Modify_ImagesRepository.getInstance();
     }
 
+    public LiveData<ProviderImagesResponse> getProviderImages(final ProgressDialog dialog,
+                                                              final Context context,
+                                                              Modify_Images_ViewModel viewModel){
+        return repository.getProviderImages(dialog, context, viewModel);
+    }
+
     public LiveData<Defualt> updateImages(final Context context, final ProgressDialog dialog ,
-                                          String mainimage, List<Image> list){
-        return repository.updateImages(context, dialog, mainimage, list);
+                                          MainImage mainImage, List<Image> list){
+        return repository.updateImages(context, dialog, mainImage, list);
     }
 }

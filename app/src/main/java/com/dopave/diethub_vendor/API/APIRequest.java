@@ -12,7 +12,8 @@ import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
 import com.dopave.diethub_vendor.Models.Notifications.NotificationData;
 import com.dopave.diethub_vendor.Models.Orders.Orders;
-import com.dopave.diethub_vendor.Models.ProviderIMages.ImagesProvider;
+import com.dopave.diethub_vendor.Models.ProviderIMages.GetImages.ProviderImagesResponse;
+import com.dopave.diethub_vendor.Models.ProviderIMages.Update.ImagesProvider;
 import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInfo;
 import com.dopave.diethub_vendor.Models.ProviderInfo.Request.ProviderInfoRequest;
 import com.dopave.diethub_vendor.Models.ResetPassword.ResetPassword;
@@ -186,8 +187,8 @@ public interface APIRequest {
                                       @Body ImagesProvider imagesProvider);
 
     @GET("provider/{providerId}/images")
-    Call<ImagesProvider> getProviderImages(@Header("Authorization") String Auth,
-                                      @Path("providerId") String providerId);
+    Call<ProviderImagesResponse> getProviderImages(@Header("Authorization") String Auth,
+                                                   @Path("providerId") String providerId);
 
     @GET("operation/provider/{providerId}")
     Call<ProviderInfo> getProviderInfo(@Header("Authorization") String Auth,

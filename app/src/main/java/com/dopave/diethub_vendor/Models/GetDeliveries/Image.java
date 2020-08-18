@@ -1,6 +1,8 @@
 
 package com.dopave.diethub_vendor.Models.GetDeliveries;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -21,6 +23,15 @@ public class Image {
     @SerializedName("for")
     @Expose
     private String _for;
+
+    private Bitmap imageAdd;
+
+    public Image() {
+    }
+
+    public Image(Bitmap imageAdd) {
+        this.imageAdd = imageAdd;
+    }
 
     public Integer getId() {
         return id;
@@ -62,4 +73,11 @@ public class Image {
         this._for = _for;
     }
 
+    public Bitmap getImageAdd() {
+        return imageAdd;
+    }
+
+    public void setImageAdd(Bitmap imageAdd) {
+        this.imageAdd = imageAdd;
+    }
 }
