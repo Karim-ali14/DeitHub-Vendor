@@ -21,7 +21,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 public class Common {
-    public static final String BaseUrl = "https://d03c4f968e68.ngrok.io/";
+    public static final String BaseUrl = "https://api.diethub.martstations.com/";
 
     // TODO get APIRequest
     public static APIRequest getAPIRequest(){

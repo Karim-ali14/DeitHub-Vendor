@@ -284,9 +284,8 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
                         byte[] imageBytes = baos.toByteArray();
                         String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-                        Log.i("TTTTTT1",ConvertBitmapToString(bitmap));
-                        Log.i("TTTTTT2",imageString);
-                        DeliveryImage = imageString;
+
+                        DeliveryImage = imageString.replaceAll("\n| ","").trim();
                         byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         profile_image.setImageBitmap(decodedByte);
@@ -428,20 +427,6 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             return vv;
         }
 
-    }
-
-    public static String ConvertBitmapToString(Bitmap bitmap){
-        String encodedImage = "";
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, byteArrayOutputStream);
-        try {
-            encodedImage= URLEncoder.encode(Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        return encodedImage;
     }
 
     private boolean validationPass() {
