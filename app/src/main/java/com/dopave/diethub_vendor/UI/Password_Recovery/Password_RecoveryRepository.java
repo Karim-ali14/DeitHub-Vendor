@@ -22,6 +22,7 @@ import com.dopave.diethub_vendor.Models.ResetPassword.ResetPassword;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Enter_CodeActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,13 +54,17 @@ public class Password_RecoveryRepository {
                 if (response.code() == 200){
                     mutableLiveData.setValue(response.body());
                 }else {
-                    try {
-                        String message = new JSONObject(response.errorBody()
-                                .string()).getString("message");
-                        Log.i("TTTTTTT",message);
-                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
+                    if (response.code() == 422)
+                        Toast.makeText(context, R.string.email_not_found, Toast.LENGTH_SHORT).show();
+                    else {
+                        try {
+                            String message = new JSONObject(response.errorBody()
+                                    .string()).getString("message");
+                            Log.i("TTTTTTT", message);
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

@@ -1,16 +1,20 @@
-package com.dopave.diethub_vendor.UI;
+package com.dopave.diethub_vendor.UI.NewPassword;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -23,6 +27,12 @@ import com.dopave.diethub_vendor.Models.ResetPassword.ResetPassword;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +41,7 @@ public class NewPassword_Activity extends AppCompatActivity {
     EditText Password,RePassword;
     ConstraintLayout Layout;
     ProgressDialog dialog;
+    NewPassword_ViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +53,7 @@ public class NewPassword_Activity extends AppCompatActivity {
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         dialog = new ProgressDialog(this);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        viewModel = ViewModelProviders.of(this).get(NewPassword_ViewModel.class);
         Password = findViewById(R.id.Password);
         RePassword = findViewById(R.id.RePassword);
         Layout = findViewById(R.id.Layout);
@@ -58,28 +69,26 @@ public class NewPassword_Activity extends AppCompatActivity {
     private void closeKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getWindow().getDecorView().getRootView().getWindowToken(), 0);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        int dfValue = Layout.getDescendantFocusability();
+        Layout.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         Password.clearFocus();
         RePassword.clearFocus();
+        Layout.setDescendantFocusability(dfValue);
     }
 
     public void onClick(View view1) {
         dialog.dismiss();
-        if (!validationPass()){dialog.dismiss();}
+        if (!validationPass()){
+            dialog.dismiss();
+        }
         else {
-            Common.getAPIRequest().reset_password(getIntent().getExtras().getString("email"),
+            viewModel.reset_password(this,dialog,getIntent().getExtras().getString("email"),
                     getIntent().getExtras().getString("Code"),Password.getText().toString())
-                    .enqueue(new Callback<ResetPassword>() {
+                    .observe(this, new Observer<ResetPassword>() {
                 @Override
-                public void onResponse(Call<ResetPassword> call, Response<ResetPassword> response) {
-                    dialog.dismiss();
-                    Toast.makeText(NewPassword_Activity.this,response.message(), Toast.LENGTH_SHORT).show();
-                    if (response.code() == 200)
-                        showDialog();
-                }
-
-                @Override
-                public void onFailure(Call<ResetPassword> call, Throwable t) {
-                    dialog.dismiss();
+                public void onChanged(ResetPassword resetPassword) {
+                    showDialog();
                 }
             });
         }
@@ -98,7 +107,7 @@ public class NewPassword_Activity extends AppCompatActivity {
             Toast.makeText(this, R.string.Passwords_are_not_match, Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if (Password.getText().toString().length() >= 8) {
+        else if (Password.getText().toString().length() < 8) {
             Toast.makeText(this, R.string.Password_length, Toast.LENGTH_SHORT).show();
             return false;
         }else

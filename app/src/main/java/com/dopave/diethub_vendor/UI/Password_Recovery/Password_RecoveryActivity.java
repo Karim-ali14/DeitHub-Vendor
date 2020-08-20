@@ -16,6 +16,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -81,7 +82,7 @@ public class Password_RecoveryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.show();
-                if (!validationEmail())
+                if (validationEmail())
                     sendCode();
                 else {
                     dialog.dismiss();
@@ -97,7 +98,7 @@ public class Password_RecoveryActivity extends AppCompatActivity {
                     closeKeyBoard();
             }
         });
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
     }
 
     private void sendCode() {
@@ -114,7 +115,12 @@ public class Password_RecoveryActivity extends AppCompatActivity {
     private void closeKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getWindow().getDecorView().getRootView().getWindowToken(), 0);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        int dfValue = Layout.getDescendantFocusability();
+        Layout.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         Email.clearFocus();
+        Layout.setDescendantFocusability(dfValue);
+
     }
 
     private boolean validationEmail() {
@@ -135,5 +141,9 @@ public class Password_RecoveryActivity extends AppCompatActivity {
             closeKeyBoard();
             firstOpen = true;
         }
+    }
+
+    public void BackButton(View view) {
+        finish();
     }
 }

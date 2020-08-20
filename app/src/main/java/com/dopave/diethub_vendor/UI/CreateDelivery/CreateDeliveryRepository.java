@@ -23,7 +23,6 @@ import com.dopave.diethub_vendor.Models.CreateDelivery.Response.CreateDeliveryRe
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequest;
 import com.dopave.diethub_vendor.R;
-import com.dopave.diethub_vendor.UI.NewPassword_Activity;
 
 import org.json.JSONArray;
 import org.json.JSONException;

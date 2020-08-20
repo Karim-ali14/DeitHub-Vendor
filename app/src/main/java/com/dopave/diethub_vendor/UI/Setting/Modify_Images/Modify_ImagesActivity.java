@@ -30,8 +30,6 @@ import com.dopave.diethub_vendor.Models.ProviderIMages.Update.ImagesProvider;
 import com.dopave.diethub_vendor.Models.ProviderIMages.Update.MainImage;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
-import com.dopave.diethub_vendor.UI.Setting.Modify_Personal_info.Modify_personal_infoActivity;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;

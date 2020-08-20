@@ -18,10 +18,13 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="EnterPhoneToSendPassword">أدخل رقم الجوال لإرسال كود إسترجاع كلمة المرور</string>
+    <string name="EnterEmailToSendPassword">أدخل البريد الالكتروني لإرسال كود إسترجاع كلمة المرور</string>
     <string name="SendCode">إرسال الكود</string>
-    <string name="enter_code_to_password">أدخل كود إسترجاع كلمة المرور المرسل على رقم جوالك</string>
+    <string name="enter_code_to_password_forPhone">أدخل كود إسترجاع كلمة المرور المرسل على رقم جوالك</string>
+    <string name="enter_code_to_password_forEmail">أدخل كود إسترجاع كلمة المرور المرسل على البريد الالكتروني</string>
     <string name="PasswordRecovery">إسترجاع كلمة المرور</string>
+    <string name="email_not_found">البريد الإلكتروني غير موجود</string>
+    <string name="enter_new_password">ادخل كله المرور الجديده</string>
 
     <string name="phone_number_existing">رقم الهاتف موجود بالفعل</string>
     <string name="email_existing">البريد الالكتروني موجود بالفعل</string>

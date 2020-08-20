@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".UI.Password_Recovery.Password_RecoveryActivity"
     android:background="@color/background"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,6 +23,7 @@
             android:layout_marginRight="@dimen/_15sdp"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
+            android:onClick="BackButton"
             />
 
         <androidx.constraintlayout.widget.Guideline
@@ -52,11 +55,11 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView30"
+            android:id="@+id/MessageOfVerification"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/helveticaneuelt_arabic"
-            android:text="@string/enter_code_to_password"
+            android:text="@string/enter_code_to_password_forEmail"
             android:textColor="#000"
             android:textSize="@dimen/_18sdp"
             app:layout_constraintEnd_toEndOf="@+id/guideline8"
@@ -68,22 +71,24 @@
 
         <EditText
             android:id="@+id/Code"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
             android:background="@drawable/style_textinput"
+            android:gravity="center"
             android:hint="* * * * * *"
             android:importantForAutofill="noExcludeDescendants"
             android:inputType="text"
-            android:textSize="@dimen/_17sdp"
-            app:layout_constraintTop_toBottomOf="@+id/textView30"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:gravity="center"
-            android:paddingRight="@dimen/_20sdp"
             android:paddingLeft="@dimen/_20sdp"
             android:paddingTop="@dimen/_15sdp"
-            android:paddingBottom="@dimen/_15sdp"/>
+            android:paddingRight="@dimen/_20sdp"
+            android:paddingBottom="@dimen/_15sdp"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/MessageOfVerification"
+            app:layout_constraintWidth_percent=".9"
+            />
         <Button
             android:id="@+id/button"
             android:layout_width="0dp"
