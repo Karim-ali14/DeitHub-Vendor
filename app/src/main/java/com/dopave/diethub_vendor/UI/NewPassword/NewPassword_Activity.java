@@ -107,7 +107,8 @@ public class NewPassword_Activity extends AppCompatActivity {
             Toast.makeText(this, R.string.Passwords_are_not_match, Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if (Password.getText().toString().length() < 8) {
+        else if  (Password.getText().toString().length() < 8 ||
+                Password.getText().toString().length() > 25) {
             Toast.makeText(this, R.string.Password_length, Toast.LENGTH_SHORT).show();
             return false;
         }else

@@ -52,7 +52,9 @@ public class Login_Repository {
                         dialog.dismiss();
                         if (response.code() == 200){
                             mutableLiveData.setValue(response.body());
-                        }else {
+                        }else if (response.code() == 401)
+                            Toast.makeText(context, R.string.Incorrect_credential, Toast.LENGTH_SHORT).show();
+                        else {
                             try {
                                 String message = new JSONObject(response.errorBody()
                                         .string()).getString("message");

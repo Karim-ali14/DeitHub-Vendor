@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.AboutUs.AboutUs_Activity;
 import com.dopave.diethub_vendor.UI.Conditions.Conditions_Activity;
@@ -15,6 +16,7 @@ import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
 import com.dopave.diethub_vendor.UI.Fragments.Home_Fragment;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.Fragments.SettingsFragment;
+import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 import com.dopave.diethub_vendor.UI.Notifications.Notification_Activity;
 import com.dopave.diethub_vendor.UI.Subscriptions.SubscriptionsActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -121,6 +123,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         }else if (view.getId() == R.id.nav_langu ){
             startActivity(new Intent(this,LanguageActivity.class));
+            drawer.closeDrawer(GravityCompat.START);
+        }else if (view.getId() == R.id.LogOut ){
+            startActivity(new Intent(this, Login_inActivity.class));
+            Common.currentPosition = null;
+            finish();
             drawer.closeDrawer(GravityCompat.START);
         }else {
             drawer.closeDrawer(GravityCompat.START);

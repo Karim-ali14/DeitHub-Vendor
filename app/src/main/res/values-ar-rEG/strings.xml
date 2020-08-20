@@ -3,6 +3,7 @@
     <string name="app_name">DietHub Vendor</string>
     <string name="hallo">مرحباً بك !</string>
     <string name="login_to_use_app">سجل دخول لإستخدام التطبيق</string>
+    <string name="Incorrect_credential">رقم الهاتف أو كلمة المرور خطأ</string>
     <string name="phone_number">رقم الجوال</string>
     <string name="enter">دخول</string>
     <string name="password">كلمة المرور</string>

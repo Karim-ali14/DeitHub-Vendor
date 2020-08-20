@@ -2,6 +2,7 @@
     <string name="app_name">DietHub Vendor</string>
     <string name="hallo">Hallo</string>
     <string name="login_to_use_app">Login to tse app</string>
+    <string name="Incorrect_credential">The phone number or the password is wrong</string>
     <string name="phone_number">Phone Number</string>
     <string name="enter">Enter</string>
     <string name="password">Password</string>
