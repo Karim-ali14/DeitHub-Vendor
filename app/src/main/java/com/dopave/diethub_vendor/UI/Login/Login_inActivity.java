@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +35,7 @@ public class Login_inActivity extends AppCompatActivity {
     Login_ViewModel viewModel;
     boolean isValid,firstOpen;
     ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,6 +159,12 @@ public class Login_inActivity extends AppCompatActivity {
                 Log.i("TTTTTT",signIn.getData().getToken().getAccessToken() +"   "+ signIn.getData().getProvider().getId());
                 Toast.makeText(Login_inActivity.this, signIn.getMessage(), Toast.LENGTH_SHORT).show();
                 Common.currentPosition = signIn;
+                SharedPreferences preferences = Common.getPreferences(Login_inActivity.this);
+
+                preferences.edit() // save token to auto Login
+                        .putString(Common.Token,signIn.getData().getToken().getAccessToken())
+                        .apply();
+
                 startActivity(new Intent(Login_inActivity.this,
                         HomeActivity.class).putExtra("type",
                         "Login_inActivity"));

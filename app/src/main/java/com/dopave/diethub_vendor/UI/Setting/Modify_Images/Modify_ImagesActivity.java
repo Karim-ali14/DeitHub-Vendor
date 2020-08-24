@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -23,13 +24,18 @@ import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Adapter.AdapterForEditImages;
 import com.dopave.diethub_vendor.Adapter.AdapterForResImage;
+import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.GetDeliveries.Image;
 import com.dopave.diethub_vendor.Models.ProviderIMages.GetImages.ProviderImagesResponse;
 import com.dopave.diethub_vendor.Models.ProviderIMages.Update.ImagesProvider;
 import com.dopave.diethub_vendor.Models.ProviderIMages.Update.MainImage;
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInfo;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
+import com.dopave.diethub_vendor.UI.Setting.Modify_Personal_info.Modify_Person_info_viewModel;
+import com.squareup.picasso.Picasso;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +43,7 @@ import java.util.List;
 
 public class Modify_ImagesActivity extends AppCompatActivity {
     Modify_Images_ViewModel viewModel;
+    Modify_Person_info_viewModel modify_person_info_viewModel;
     Button EnterButton;
     ProgressDialog dialog;
     ImageView MainImage;
@@ -55,6 +62,7 @@ public class Modify_ImagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify__images);
         viewModel = ViewModelProviders.of(this).get(Modify_Images_ViewModel.class);
+        modify_person_info_viewModel = ViewModelProviders.of(this).get(Modify_Person_info_viewModel.class);
         EnterButton = findViewById(R.id.EnterButton);
         MainImage = findViewById(R.id.MainImage);
         listForRequest = new ArrayList<>();
@@ -62,7 +70,11 @@ public class Modify_ImagesActivity extends AppCompatActivity {
         list.add(new Image());
         recyclerView = findViewById(R.id.Recycler_Res_Icons);
         dialog = new ProgressDialog(this);
-        getInitchild1();
+
+        getMainImage();
+
+        getProviderImages();
+
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -94,21 +106,36 @@ public class Modify_ImagesActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
-    private void getInitchild1() {
+    private void getProviderImages() {
         viewModel.getProviderImages(dialog,this,viewModel).observe(this, new Observer<ProviderImagesResponse>() {
             @Override
             public void onChanged(ProviderImagesResponse providerImagesResponse) {
                 onGetProviderInfo(providerImagesResponse);
             }
         });
-
-
     }
 
-    private void onGetProviderInfo(ProviderImagesResponse providerImagesResponse){
+    private void getMainImage(){
+        modify_person_info_viewModel.getProviderInfo(this,dialog,modify_person_info_viewModel,"forImage").observe(this, new Observer<ProviderInfo>() {
+            @Override
+            public void onChanged(ProviderInfo providerInfo) {
+                onGetMainImage(providerInfo);
+            }
+        });
+    }
+
+    public void onGetMainImage(ProviderInfo providerInfo){
+        Common.currentPosition.getData().getProvider().getMainImage().setFor(providerInfo.getData().getMainImage().getFor());
+        Common.currentPosition.getData().getProvider().getMainImage().setName(providerInfo.getData().getMainImage().getName());
+        String PathMainImage = Common.BaseUrl + "images/" + Common.currentPosition.getData()
+                .getProvider().getMainImage().getFor() + "/" +
+                Uri.encode(Common.currentPosition.getData().getProvider().getMainImage().getName());
+        Picasso.with(Modify_ImagesActivity.this).load(PathMainImage).into(MainImage);
+    }
+
+    public void onGetProviderInfo(ProviderImagesResponse providerImagesResponse){
         if (providerImagesResponse.getData().getRows() != null) {
             if (providerImagesResponse.getData().getRows().size() != 0) {
                 list.addAll(providerImagesResponse.getData().getRows());

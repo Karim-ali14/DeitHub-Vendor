@@ -241,7 +241,7 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
 
     private void getDataOfTimeWork(){
         dialog.show();
-        viewModel.getTimeWork(this,dialog).observe(this, new Observer<TimeWorks>() {
+        viewModel.getTimeWork(this,dialog,viewModel).observe(this, new Observer<TimeWorks>() {
             @Override
             public void onChanged(TimeWorks timeWorks) {
                 onGetDataOfTimeWork(timeWorks);
@@ -249,7 +249,7 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
         });
     }
 
-    private void onGetDataOfTimeWork(TimeWorks timeWorks) {
+    public void onGetDataOfTimeWork(TimeWorks timeWorks) {
         if (timeWorks.getData() != null){
             if (timeWorks.getData().getSaturday().getFrom() != null
                     && timeWorks.getData().getSaturday().getTo() != null) {

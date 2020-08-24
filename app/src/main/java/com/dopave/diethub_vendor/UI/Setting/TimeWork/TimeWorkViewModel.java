@@ -17,11 +17,13 @@ public class TimeWorkViewModel extends ViewModel {
         this.repository = TimeWorkRepository.getInstance();
     }
 
-    public LiveData<TimeWorks> getTimeWork(final Context context, final ProgressDialog dialog){
-        return repository.getTimeWork(context, dialog);
+    public LiveData<TimeWorks> getTimeWork(final Context context, final ProgressDialog dialog,
+                                           TimeWorkViewModel viewModel){
+        return repository.getTimeWork(context, dialog, viewModel);
     }
 
-    public LiveData<Defualt> updateWorkTime(Data data, final Context context, final ProgressDialog dialog){
+    public LiveData<Defualt> updateWorkTime(Data data, final Context context,
+                                            final ProgressDialog dialog){
         return repository.updateWorkTime(data, context, dialog);
     }
 }

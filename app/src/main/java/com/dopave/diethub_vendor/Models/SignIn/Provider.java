@@ -28,6 +28,9 @@ public class Provider {
     @Expose
     private String createdAt;
 
+    public Provider() {
+    }
+
     public Integer getId() {
         return id;
     }

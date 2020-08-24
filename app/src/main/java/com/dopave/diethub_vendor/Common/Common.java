@@ -2,6 +2,7 @@ package com.dopave.diethub_vendor.Common;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -20,15 +21,27 @@ import com.dopave.diethub_vendor.R;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class Common {
     public static final String BaseUrl = "https://api.diethub.martstations.com/";
+
+    public static SignIn currentPosition = null;
+
+    public static String FileName = "TokenFile";
+    public static String Token = "Token";
+
+    public static SharedPreferences preferences;
+
+    public static SharedPreferences getPreferences(Context context) {
+        if (preferences == null)
+            return preferences = context.getSharedPreferences(Common.FileName,MODE_PRIVATE);
+        return preferences;
+    }
 
     // TODO get APIRequest
     public static APIRequest getAPIRequest(){
         return RetrofitClient.getRetrofitClient().create(APIRequest.class);
     }
-
-    public static SignIn currentPosition = null;
-
 
 }

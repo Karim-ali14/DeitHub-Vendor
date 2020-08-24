@@ -98,12 +98,14 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
 
         initMap(savedInstanceState);
 
-        viewModel.getProviderInfo(this,dialog).observe(this, new Observer<ProviderInfo>() {
+        viewModel.getProviderInfo(this,dialog,viewModel,"forPersonalInfo").observe(this,
+                new Observer<ProviderInfo>() {
             @Override
             public void onChanged(ProviderInfo providerInfo) {
                 onGetProviderInfo(providerInfo);
             }
         });
+
         chickEvents();
     }
 

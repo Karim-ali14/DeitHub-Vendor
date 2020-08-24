@@ -18,8 +18,10 @@ public class Modify_Person_info_viewModel extends ViewModel {
     }
 
     public LiveData<ProviderInfo> getProviderInfo(final Context context,
-                                                  final ProgressDialog dialog){
-        return repository.getProviderInfo(context, dialog);
+                                                  final ProgressDialog dialog,
+                                                  Modify_Person_info_viewModel viewModel,
+                                                  String type){
+        return repository.getProviderInfo(context, dialog,viewModel,type);
     }
 
     public LiveData<Defualt> updateProvideInfo(final Context context,
