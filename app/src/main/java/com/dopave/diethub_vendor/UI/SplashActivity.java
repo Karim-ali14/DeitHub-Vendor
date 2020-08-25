@@ -1,7 +1,9 @@
 package com.dopave.diethub_vendor.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -10,9 +12,12 @@ import android.util.Log;
 
 import com.auth0.android.jwt.JWT;
 import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInfo;
+import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
+import com.dopave.diethub_vendor.UI.Setting.Modify_Personal_info.Modify_Person_info_viewModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -20,6 +25,7 @@ import java.util.Locale;
 public class SplashActivity extends AppCompatActivity {
     private SharedPref pref;
     private SharedPreferences preferences;
+    Modify_Person_info_viewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,4 +88,5 @@ public class SplashActivity extends AppCompatActivity {
         finish(); // finish(); because This Activity close After move To Next Activity
         // And Next Activity will Be Launcher
     }
+
 }

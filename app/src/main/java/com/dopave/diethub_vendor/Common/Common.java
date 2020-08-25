@@ -17,9 +17,11 @@ import com.dopave.diethub_vendor.API.APIRequest;
 import com.dopave.diethub_vendor.API.RetrofitClient;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.SharedPref;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -44,4 +46,23 @@ public class Common {
         return RetrofitClient.getRetrofitClient().create(APIRequest.class);
     }
 
+    public static String knowLang(Context context) {
+        SharedPref pref = new SharedPref(context);
+        if (!pref.getLagu().equals("empty")) {
+            if (pref.getLagu().equals("ar")) {
+                return "ar";
+            }else if (pref.getLagu().equals("en")) {
+                return "en";
+            }
+        }
+        else {
+            if (Locale.getDefault().getDisplayLanguage().equals("English"))
+            {
+                return "en";
+            }else if (Locale.getDefault().getDisplayLanguage().equals("العربية")){
+                return "ar";
+            }
+        }
+        return "";
+    }
 }

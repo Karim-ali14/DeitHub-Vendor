@@ -54,7 +54,8 @@ public class LanguageActivity extends AppCompatActivity {
                 getBaseContext().getResources().updateConfiguration(config,
                         getBaseContext().getResources().getDisplayMetrics());
                 pref.setLangu("ar");
-                Intent intent = new Intent(LanguageActivity.this, HomeActivity.class);
+                Intent intent = new Intent(LanguageActivity.this, HomeActivity.class)
+                        .putExtra("type","Login_inActivity");
                 startActivity(intent);
                 finish();
             }
@@ -71,7 +72,8 @@ public class LanguageActivity extends AppCompatActivity {
                 getBaseContext().getResources().updateConfiguration(config,
                         getBaseContext().getResources().getDisplayMetrics());
                 pref.setLangu("en");
-                Intent intent = new Intent(LanguageActivity.this, HomeActivity.class);
+                Intent intent = new Intent(LanguageActivity.this, HomeActivity.class)
+                        .putExtra("type","Login_inActivity");
                 startActivity(intent);
                 finish();
             }

@@ -49,7 +49,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginRight="@dimen/_20sdp"/>
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:onClick="BackButton"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>

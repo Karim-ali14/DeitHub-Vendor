@@ -185,7 +185,10 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cityRow = ((CityRow) parent.getItemAtPosition(position));
-                CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getName());
+                if (Common.knowLang(CreateDeliveryActivity.this).equals("ar"))
+                    CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getName());
+                else if (Common.knowLang(CreateDeliveryActivity.this).equals("en"))
+                    CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getNameEn());
                 CitySelected.setTextColor(getResources().getColor(R.color.black));
             }
 
@@ -397,13 +400,19 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         });
     }
 
+    public void BackButton(View view) {
+        finish();
+    }
+
     public static class AdapterOfSpinner extends ArrayAdapter<CityRow> {
         List<CityRow> list;
         LayoutInflater inflater;
+        Activity context;
         public AdapterOfSpinner(Activity context, int id , List<CityRow> list)
         {
             super(context,id,list);
             this.list=list;
+            this.context = context;
             inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -421,7 +430,10 @@ public class CreateDeliveryActivity extends AppCompatActivity {
 
             View vv = inflater.inflate(R.layout.city_item,parent,false);
             TextView Tname =(TextView)vv.findViewById(R.id.item);
-            Tname.setText(list.get(position).getName());
+            if (Common.knowLang(context).equals("ar"))
+                Tname.setText(list.get(position).getName());
+            else if (Common.knowLang(context).equals("en"))
+                Tname.setText(list.get(position).getNameEn());
             return vv;
         }
 
