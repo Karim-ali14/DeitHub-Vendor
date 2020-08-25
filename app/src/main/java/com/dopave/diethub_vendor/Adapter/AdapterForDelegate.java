@@ -117,7 +117,12 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
         if (row.getVehicle() != null){
             for (RowVehicleTypes rowVehicleTypes : vehicleTypes.getData().getRowVehicleTypes()) {
                 if (row.getVehicle().getVehicleTypeId() == rowVehicleTypes.getId()) {
-                    holder.NameOfVehicle.setText(rowVehicleTypes.getType());
+
+                    if (Common.knowLang(context).equals("ar"))
+                        holder.NameOfVehicle.setText(rowVehicleTypes.getType());
+                    else if (Common.knowLang(context).equals("en"))
+                        holder.NameOfVehicle.setText(rowVehicleTypes.getTypeEn());
+
                 }
             }
             holder.ModelOfVehicle.setText(", "+row.getVehicle().getModel()+" ,");
@@ -133,7 +138,10 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
         }
 
         if (row.getCity() != null){
-            holder.AddressOfDelegate.setText(row.getCity().getName());
+            if (Common.knowLang(context).equals("ar"))
+                holder.AddressOfDelegate.setText(row.getCity().getName());
+            else if (Common.knowLang(context).equals("en"))
+                holder.AddressOfDelegate.setText(row.getCity().getNameEn());
         }
     }
 

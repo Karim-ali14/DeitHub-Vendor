@@ -12,6 +12,9 @@ public class RowVehicleTypes {
     @SerializedName("type")
     @Expose
     private String type;
+    @SerializedName("typeEn")
+    @Expose
+    private String typeEn;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
@@ -51,4 +54,11 @@ public class RowVehicleTypes {
         this.updatedAt = updatedAt;
     }
 
+    public String getTypeEn() {
+        return typeEn;
+    }
+
+    public void setTypeEn(String typeEn) {
+        this.typeEn = typeEn;
+    }
 }

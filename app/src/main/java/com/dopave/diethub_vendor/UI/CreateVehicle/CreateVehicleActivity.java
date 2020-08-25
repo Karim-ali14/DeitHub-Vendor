@@ -391,13 +391,19 @@ public class CreateVehicleActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 rowVehicleTypes = ((RowVehicleTypes) parent.getItemAtPosition(position));
-                VehicleTypeSelected.setText(((RowVehicleTypes) parent.getItemAtPosition(position)).getType());
+                if (Common.knowLang(CreateVehicleActivity.this).equals("ar"))
+                    VehicleTypeSelected.setText(((RowVehicleTypes) parent.getItemAtPosition(position)).getType());
+                else if (Common.knowLang(CreateVehicleActivity.this).equals("en"))
+                    VehicleTypeSelected.setText(((RowVehicleTypes) parent.getItemAtPosition(position)).getTypeEn());
                 VehicleTypeSelected.setTextColor(getResources().getColor(R.color.black));
                 if (getIntent().getExtras().getString("type").equals("update") && i == 0) {
                     i++;
                     for (RowVehicleTypes row : vehicleTypes.getData().getRowVehicleTypes()) {
                         if (row.getId() == VehicleData.getData().getVehicleTypeId()) {
-                            VehicleTypeSelected.setText(row.getType());
+                            if (Common.knowLang(CreateVehicleActivity.this).equals("ar"))
+                                VehicleTypeSelected.setText(row.getType());
+                            else if (Common.knowLang(CreateVehicleActivity.this).equals("en"))
+                                VehicleTypeSelected.setText(row.getTypeEn());
                             rowVehicleTypes = row;
                         }
                     }
@@ -467,7 +473,11 @@ public class CreateVehicleActivity extends AppCompatActivity {
 
             View vv = inflater.inflate(R.layout.city_item,parent,false);
             TextView Tname =(TextView)vv.findViewById(R.id.item);
-            Tname.setText(list.get(position).getType());
+
+            if (Common.knowLang(CreateVehicleActivity.this).equals("ar"))
+                Tname.setText(list.get(position).getType());
+            else if (Common.knowLang(CreateVehicleActivity.this).equals("en"))
+                Tname.setText(list.get(position).getTypeEn());
             return vv;
         }
 
