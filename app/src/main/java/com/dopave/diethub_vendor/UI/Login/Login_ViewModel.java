@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 
 public class Login_ViewModel extends ViewModel {
@@ -15,9 +16,9 @@ public class Login_ViewModel extends ViewModel {
         this.repository = Login_Repository.getInstance();
     }
 
-    public LiveData<SignIn> onSignIn(String Phone , String Pass ,
-                                     final Context context ,
-                                     final ProgressDialog dialog,Login_ViewModel viewModel){
+    public LiveData<ProviderInformation> onSignIn(String Phone , String Pass ,
+                                                  final Context context ,
+                                                  final ProgressDialog dialog, Login_ViewModel viewModel){
         return repository.SignIn(Phone,Pass,context,dialog,viewModel);
     }
 }

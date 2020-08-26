@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.dopave.diethub_vendor.API.APIRequest;
 import com.dopave.diethub_vendor.API.RetrofitClient;
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.SharedPref;
@@ -28,10 +29,11 @@ import static android.content.Context.MODE_PRIVATE;
 public class Common {
     public static final String BaseUrl = "https://api.diethub.martstations.com/";
 
-    public static SignIn currentPosition = null;
+    public static ProviderInformation currentPosition = null;
 
     public static String FileName = "TokenFile";
     public static String Token = "Token";
+    public static String ProviderId = "ProviderId";
 
     public static SharedPreferences preferences;
 

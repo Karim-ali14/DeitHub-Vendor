@@ -198,4 +198,8 @@
 
     <string name="AddressEn">العنوان باللغه الانجليزيه</string>
     <string name="AddressAr">العنوان باللغه العربيه</string>
+    <string name="modify_personal_info">تعديل البيانات الشصبه</string>
+    <string name="modify_restaurant_photos">تعديل صور المطعم</string>
+    <string name="restaurant_photos">صور المطعم</string>
+    <string name="modify_working_time">تعديل وقت العمل</string>
 </resources>

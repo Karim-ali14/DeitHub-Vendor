@@ -1,6 +1,7 @@
 package com.dopave.diethub_vendor.UI.Fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -12,12 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_ImagesActivity;
 import com.dopave.diethub_vendor.UI.Setting.TimeWork.Modify_Work_TimeActivity;
 import com.dopave.diethub_vendor.UI.Setting.Modify_Personal_info.Modify_personal_infoActivity;
 import com.dopave.diethub_vendor.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,7 @@ public class SettingsFragment extends Fragment {
     EditText RestaurantsName,About_Res;
     ConstraintLayout Layout_Setting;
     LinearLayout Modify_personal_info,Modify_Images,Modify_Work_Time;
+    ImageView Res_icon_Setting;
     public SettingsFragment() {
 
     }
@@ -42,6 +47,13 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        Res_icon_Setting = view.findViewById(R.id.Res_icon_Setting);
+        if (Common.currentPosition.getData().getProvider().getMainImage() != null){
+            String path = Common.BaseUrl + "images/" +
+                    Common.currentPosition.getData().getProvider().getMainImage().getFor()
+                    + "/" + Uri.encode(Common.currentPosition.getData().getProvider().getMainImage().getName());
+            Picasso.with(getActivity()).load(path).into(Res_icon_Setting);
+        }
 //        RestaurantsName = view.findViewById(R.id.RestaurantsName);
 //        About_Res = view.findViewById(R.id.About_Res);
 //        Recycler = view.findViewById(R.id.Recycler_Res_Icons);

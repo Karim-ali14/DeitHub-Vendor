@@ -3,7 +3,6 @@ package com.dopave.diethub_vendor.UI.Setting.Modify_Personal_info;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -33,9 +32,9 @@ import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Cities.Cities;
 import com.dopave.diethub_vendor.Models.Cities.CityRow;
 import com.dopave.diethub_vendor.Models.Defualt;
-import com.dopave.diethub_vendor.Models.ProviderInfo.Data;
-import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInfo;
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
 import com.dopave.diethub_vendor.Models.ProviderInfo.Request.ProviderInfoRequest;
+import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateDelivery.CreateDeliveryActivity;
 import com.dopave.diethub_vendor.UI.CreateDelivery.CreateDeliveryViewModel;
@@ -63,7 +62,7 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
     private GoogleMap gmap;
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     LinearLayout Layout_Ar,Layout_En;
-    ProviderInfo providerInfo;
+    ProviderInformation providerInfo;
     Button UpDateButton;
     Modify_Person_info_viewModel viewModel;
     @Override
@@ -99,9 +98,9 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
         initMap(savedInstanceState);
 
         viewModel.getProviderInfo(this,dialog,viewModel,"forPersonalInfo").observe(this,
-                new Observer<ProviderInfo>() {
+                new Observer<ProviderInformation>() {
             @Override
-            public void onChanged(ProviderInfo providerInfo) {
+            public void onChanged(ProviderInformation providerInfo) {
                 onGetProviderInfo(providerInfo);
             }
         });
@@ -109,12 +108,12 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
         chickEvents();
     }
 
-    public void onGetProviderInfo(ProviderInfo providerInfo) {
+    public void onGetProviderInfo(ProviderInformation providerInfo) {
         this.providerInfo = providerInfo;
         getCities();
         setData("Ar");
         setUpdatedData();
-        addMarker(new LatLng(providerInfo.getData().getLatitude(),providerInfo.getData().getLongitude()));
+        addMarker(new LatLng(providerInfo.getData().getProvider().getLatitude(),providerInfo.getData().getProvider().getLongitude()));
     }
 
     private void chickEvents() {
@@ -132,8 +131,8 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
                             case R.id.modify_Location :{
                                 startActivity(new Intent(Modify_personal_infoActivity.this,
                                         MapsActivity.class)
-                                        .putExtra("Lat",providerInfo.getData().getLatitude())
-                                        .putExtra("Long",providerInfo.getData().getLongitude()));
+                                        .putExtra("Lat",providerInfo.getData().getProvider().getLatitude())
+                                        .putExtra("Long",providerInfo.getData().getProvider().getLongitude()));
                             }
                             default:
                                 return false;
@@ -246,8 +245,8 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_modify_address, null);
         final EditText AddressAr = view.findViewById(R.id.AddressAr);
         final EditText AddressEn = view.findViewById(R.id.AddressEn);
-        AddressAr.setText(providerInfo.getData().getAddress());
-        AddressEn.setText(providerInfo.getData().getAddressEn());
+        AddressAr.setText(providerInfo.getData().getProvider().getAddress());
+        AddressEn.setText(providerInfo.getData().getProvider().getAddressEn());
         Button AddressSaveButton = view.findViewById(R.id.AddressSaveButton);
         Button CancelButton = view.findViewById(R.id.CancelButton);
         Adialog.setView(view);
@@ -264,8 +263,8 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
                 else if (AddressEn.getText().toString().isEmpty())
                     Toast.makeText(Modify_personal_infoActivity.this, R.string.AddressEn, Toast.LENGTH_SHORT).show();
                 else {
-                    providerInfo.getData().setAddress(AddressAr.getText().toString());
-                    providerInfo.getData().setAddress(AddressEn.getText().toString());
+                    providerInfo.getData().getProvider().setAddress(AddressAr.getText().toString());
+                    providerInfo.getData().getProvider().setAddress(AddressEn.getText().toString());
                     Address.setText(AddressAr.getText().toString());
                     dialog1.dismiss();
                 }
@@ -281,12 +280,12 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
 
     private void setData(String type) {
         //set data arabic
-        About_Res.setText(providerInfo.getData().getDescription());
-        RestaurantsName.setText(providerInfo.getData().getName());
+        About_Res.setText(providerInfo.getData().getProvider().getDescription());
+        RestaurantsName.setText(providerInfo.getData().getProvider().getName());
         //set data english
-        About_ResEn.setText(providerInfo.getData().getDescriptionEn());
-        RestaurantsNameEn.setText(providerInfo.getData().getNameEn());
-        Address.setText(providerInfo.getData().getAddress());
+        About_ResEn.setText(providerInfo.getData().getProvider().getDescriptionEn());
+        RestaurantsNameEn.setText(providerInfo.getData().getProvider().getNameEn());
+        Address.setText(providerInfo.getData().getProvider().getAddress());
         if (type.equals("Ar"))
             ArabicTab("show");
         else
@@ -303,9 +302,9 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.Complete_data, Toast.LENGTH_LONG).show();
         }else {
             viewModel.updateProvideInfo(Modify_personal_infoActivity.this,dialog,new ProviderInfoRequest(
-                    providerInfo.getData().getName(),providerInfo.getData().getNameEn(),providerInfo.getData().getDescription(),
-                    providerInfo.getData().getAddress(),providerInfo.getData().getDescriptionEn(),providerInfo.getData().getAddressEn(),cityRow.getId(),
-                    providerInfo.getData().getLatitude(),providerInfo.getData().getLongitude())).observe(Modify_personal_infoActivity.this, new Observer<Defualt>() {
+                    providerInfo.getData().getProvider().getName(),providerInfo.getData().getProvider().getNameEn(),providerInfo.getData().getProvider().getDescription(),
+                    providerInfo.getData().getProvider().getAddress(),providerInfo.getData().getProvider().getDescriptionEn(),providerInfo.getData().getProvider().getAddressEn(),cityRow.getId(),
+                    providerInfo.getData().getProvider().getLatitude(),providerInfo.getData().getProvider().getLongitude())).observe(Modify_personal_infoActivity.this, new Observer<Defualt>() {
                 @Override
                 public void onChanged(Defualt defualt) {
                     Toast.makeText(Modify_personal_infoActivity.this, "ok", Toast.LENGTH_SHORT).show();
@@ -393,6 +392,10 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cityRow = ((CityRow) parent.getItemAtPosition(position));
                 CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getName());
+                if (Common.knowLang(Modify_personal_infoActivity.this).equals("ar"))
+                    CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getName());
+                else if (Common.knowLang(Modify_personal_infoActivity.this).equals("en"))
+                    CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getNameEn());
                 CitySelected.setTextColor(getResources().getColor(R.color.black));
             }
 
@@ -401,7 +404,7 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
 
             }
         });
-        spinnerCity.setSelection(providerInfo.getData().getCityId());
+        spinnerCity.setSelection(providerInfo.getData().getProvider().getCityId());
     }
 
     @Override
@@ -449,8 +452,8 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
     private void setUpdatedData() {
         if (getIntent().getExtras()!=null){
 
-            providerInfo.getData().setLatitude(getIntent().getExtras().getDouble("Lat"));
-            providerInfo.getData().setLongitude(getIntent().getExtras().getDouble("Long"));
+            providerInfo.getData().getProvider().setLatitude(getIntent().getExtras().getDouble("Lat"));
+            providerInfo.getData().getProvider().setLongitude(getIntent().getExtras().getDouble("Long"));
 
 //            Data data = new Data(providerInfo.getData().getId(),
 //                    providerInfo.getData().getLoginPhone(), providerInfo.getData().getEmail(),
@@ -461,7 +464,7 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
 //                    providerInfo.getData().getDeliveryPrice(),providerInfo.getData().getMainImageId(), providerInfo.getData().getMainImage());
 //            ProviderInfo providerInfo2 = new ProviderInfo(this.providerInfo.getMessage(), data, this.providerInfo.getSuccess(), this.providerInfo.getCode(), this.providerInfo.getErrors());
 
-            Log.i("ttttttt", providerInfo.getData().getLatitude()+"");
+            Log.i("ttttttt", providerInfo.getData().getProvider().getLatitude()+"");
         }
     }
 

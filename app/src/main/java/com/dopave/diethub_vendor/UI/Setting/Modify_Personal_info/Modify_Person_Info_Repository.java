@@ -16,15 +16,13 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-import com.dopave.diethub_vendor.Adapter.AdapterForDelegate;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Defualt;
-import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
-import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInfo;
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
 import com.dopave.diethub_vendor.Models.ProviderInfo.Request.ProviderInfoRequest;
+import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_ImagesActivity;
-import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,18 +43,18 @@ public class Modify_Person_Info_Repository {
         return repository;
     }
 
-    public MutableLiveData<ProviderInfo> getProviderInfo(final Context context,
+    public MutableLiveData<ProviderInformation> getProviderInfo(final Context context,
                                                          final ProgressDialog dialog,
                                                          final Modify_Person_info_viewModel viewModel,
                                                          final String type){
         dialog.show();
-        final MutableLiveData<ProviderInfo> mutableLiveData = new MutableLiveData<>();
+        final MutableLiveData<ProviderInformation> mutableLiveData = new MutableLiveData<>();
         Common.getAPIRequest().getProviderInfo("Bearer "+
                         Common.currentPosition.getData().getToken().getAccessToken(),
                 Common.currentPosition.getData().getProvider().getId()+"")
-                .enqueue(new Callback<ProviderInfo>() {
+                .enqueue(new Callback<ProviderInformation>() {
                     @Override
-                    public void onResponse(Call<ProviderInfo> call, Response<ProviderInfo> response) {
+                    public void onResponse(Call<ProviderInformation> call, Response<ProviderInformation> response) {
                         dialog.dismiss();
                         if (response.code() == 200){
                             mutableLiveData.setValue(response.body());
@@ -74,7 +72,7 @@ public class Modify_Person_Info_Repository {
                     }
 
                     @Override
-                    public void onFailure(Call<ProviderInfo> call, final Throwable t) {
+                    public void onFailure(Call<ProviderInformation> call, final Throwable t) {
                         dialog.dismiss();
                         final AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
                         View view = LayoutInflater.from(context).inflate(R.layout.error_dialog, null);
@@ -93,17 +91,17 @@ public class Modify_Person_Info_Repository {
                                 dialog.show();
                                 if (type.equals("forImage")) {
                                     viewModel.getProviderInfo(context, dialog, viewModel,"forImage")
-                                            .observe((LifecycleOwner) context, new Observer<ProviderInfo>() {
+                                            .observe((LifecycleOwner) context, new Observer<ProviderInformation>() {
                                         @Override
-                                        public void onChanged(ProviderInfo providerInfo) {
+                                        public void onChanged(ProviderInformation providerInfo) {
                                             ((Modify_ImagesActivity)context).onGetMainImage(providerInfo);
                                         }
                                     });
                                 }else if (type.equals("forPersonalInfo")){
                                     viewModel.getProviderInfo(context, dialog, viewModel,"forPersonalInfo")
-                                            .observe((LifecycleOwner) context, new Observer<ProviderInfo>() {
+                                            .observe((LifecycleOwner) context, new Observer<ProviderInformation>() {
                                                 @Override
-                                                public void onChanged(ProviderInfo providerInfo) {
+                                                public void onChanged(ProviderInformation providerInfo) {
                                                     ((Modify_personal_infoActivity)context).onGetProviderInfo(providerInfo);
                                                 }
                                             });

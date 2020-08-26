@@ -58,7 +58,7 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UI.Login.Login_inActivity" />
-        <activity android:name=".UI.SplashActivity">
+        <activity android:name=".UI.Splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

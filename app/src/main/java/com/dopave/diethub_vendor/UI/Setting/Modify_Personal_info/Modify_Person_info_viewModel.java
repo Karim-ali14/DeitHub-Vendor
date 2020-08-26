@@ -7,8 +7,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.dopave.diethub_vendor.Models.Defualt;
-import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInfo;
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
 import com.dopave.diethub_vendor.Models.ProviderInfo.Request.ProviderInfoRequest;
+import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 
 public class Modify_Person_info_viewModel extends ViewModel {
     Modify_Person_Info_Repository repository;
@@ -17,10 +18,10 @@ public class Modify_Person_info_viewModel extends ViewModel {
         this.repository = Modify_Person_Info_Repository.getInstance();
     }
 
-    public LiveData<ProviderInfo> getProviderInfo(final Context context,
-                                                  final ProgressDialog dialog,
-                                                  Modify_Person_info_viewModel viewModel,
-                                                  String type){
+    public LiveData<ProviderInformation> getProviderInfo(final Context context,
+                                            final ProgressDialog dialog,
+                                            Modify_Person_info_viewModel viewModel,
+                                            String type){
         return repository.getProviderInfo(context, dialog,viewModel,type);
     }
 

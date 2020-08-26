@@ -30,7 +30,7 @@
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="تعديل البيانات الشصبه"
+                    android:text="@string/modify_personal_info"
                     android:layout_gravity="center"
                     style="@style/TitleStyle"
                     />
@@ -292,7 +292,7 @@
                     android:id="@+id/LocationText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="الموقع الجغرافي"
+                    android:text="@string/geographical_location"
                     android:textColor="#000"
                     android:textSize="@dimen/_20sdp"
                     android:textStyle="bold"

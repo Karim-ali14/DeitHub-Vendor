@@ -18,6 +18,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
@@ -41,14 +42,14 @@ public class Login_Repository {
         return repository;
     }
 
-    public MutableLiveData<SignIn> SignIn(final String Phone , final String Pass ,
-                                          final Context context ,
-                                          final ProgressDialog dialog,
-                                          final Login_ViewModel viewModel){
-        final MutableLiveData<SignIn> mutableLiveData = new MutableLiveData<>();
-        Common.getAPIRequest().signIn(Phone,Pass).enqueue(new Callback<SignIn>() {
+    public MutableLiveData<ProviderInformation> SignIn(final String Phone , final String Pass ,
+                                                       final Context context ,
+                                                       final ProgressDialog dialog,
+                                                       final Login_ViewModel viewModel){
+        final MutableLiveData<ProviderInformation> mutableLiveData = new MutableLiveData<>();
+        Common.getAPIRequest().signIn(Phone,Pass).enqueue(new Callback<ProviderInformation>() {
                     @Override
-                    public void onResponse(Call<SignIn> call, Response<SignIn> response) {
+                    public void onResponse(Call<ProviderInformation> call, Response<ProviderInformation> response) {
                         dialog.dismiss();
                         if (response.code() == 200){
                             mutableLiveData.setValue(response.body());
@@ -67,7 +68,7 @@ public class Login_Repository {
                     }
 
                     @Override
-                    public void onFailure(Call<SignIn> call, Throwable t) {
+                    public void onFailure(Call<ProviderInformation> call, Throwable t) {
                         dialog.dismiss();
 
                         if(t instanceof SocketTimeoutException) {

@@ -11,26 +11,22 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Adapter.AdapterForEditImages;
-import com.dopave.diethub_vendor.Adapter.AdapterForResImage;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.GetDeliveries.Image;
 import com.dopave.diethub_vendor.Models.ProviderIMages.GetImages.ProviderImagesResponse;
-import com.dopave.diethub_vendor.Models.ProviderIMages.Update.ImagesProvider;
 import com.dopave.diethub_vendor.Models.ProviderIMages.Update.MainImage;
-import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInfo;
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
+import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.dopave.diethub_vendor.UI.Setting.Modify_Personal_info.Modify_Person_info_viewModel;
@@ -118,17 +114,18 @@ public class Modify_ImagesActivity extends AppCompatActivity {
     }
 
     private void getMainImage(){
-        modify_person_info_viewModel.getProviderInfo(this,dialog,modify_person_info_viewModel,"forImage").observe(this, new Observer<ProviderInfo>() {
+        modify_person_info_viewModel.getProviderInfo(this,dialog,modify_person_info_viewModel,
+                "forImage").observe(this, new Observer<ProviderInformation>() {
             @Override
-            public void onChanged(ProviderInfo providerInfo) {
+            public void onChanged(ProviderInformation providerInfo) {
                 onGetMainImage(providerInfo);
             }
         });
     }
 
-    public void onGetMainImage(ProviderInfo providerInfo){
-        Common.currentPosition.getData().getProvider().getMainImage().setFor(providerInfo.getData().getMainImage().getFor());
-        Common.currentPosition.getData().getProvider().getMainImage().setName(providerInfo.getData().getMainImage().getName());
+    public void onGetMainImage(ProviderInformation providerInfo){
+        Common.currentPosition.getData().getProvider().getMainImage().setFor(providerInfo.getData().getProvider().getMainImage().getFor());
+        Common.currentPosition.getData().getProvider().getMainImage().setName(providerInfo.getData().getProvider().getMainImage().getName());
         String PathMainImage = Common.BaseUrl + "images/" + Common.currentPosition.getData()
                 .getProvider().getMainImage().getFor() + "/" +
                 Uri.encode(Common.currentPosition.getData().getProvider().getMainImage().getName());

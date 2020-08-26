@@ -14,10 +14,10 @@ public class MainImage {
     private String name;
     @SerializedName("description")
     @Expose
-    private Object description;
+    private String description;
     @SerializedName("alt")
     @Expose
-    private Object alt;
+    private String alt;
     @SerializedName("for")
     @Expose
     private String _for;
@@ -38,19 +38,19 @@ public class MainImage {
         this.name = name;
     }
 
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public Object getAlt() {
+    public String getAlt() {
         return alt;
     }
 
-    public void setAlt(Object alt) {
+    public void setAlt(String alt) {
         this.alt = alt;
     }
 

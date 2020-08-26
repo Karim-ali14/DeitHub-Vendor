@@ -198,4 +198,8 @@
 
     <string name="AddressEn">English Address</string>
     <string name="AddressAr">Arabic Address</string>
+    <string name="modify_personal_info">Modify Personal Info</string>
+    <string name="modify_restaurant_photos">Modify Restaurant Photos</string>
+    <string name="restaurant_photos">Restaurant Photos</string>
+    <string name="modify_working_time">Modify Working Time</string>
 </resources>

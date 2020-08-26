@@ -5,49 +5,23 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ProviderInfo {
+public class ProviderInformation {
 
-    @SerializedName("message")
-    @Expose
-    private String message;
-    @SerializedName("data")
-    @Expose
-    private Data data;
     @SerializedName("success")
     @Expose
     private Boolean success;
+    @SerializedName("message")
+    @Expose
+    private String message;
     @SerializedName("code")
     @Expose
     private Integer code;
-
-    public ProviderInfo(String message, Data data, Boolean success, Integer code, List<Object> errors) {
-        this.message = message;
-        this.data = data;
-        this.success = success;
-        this.code = code;
-        this.errors = errors;
-    }
-
     @SerializedName("errors")
     @Expose
-
     private List<Object> errors = null;
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Data getData() {
-        return data;
-    }
-
-    public void setData(Data data) {
-        this.data = data;
-    }
+    @SerializedName("data")
+    @Expose
+    private Data data;
 
     public Boolean getSuccess() {
         return success;
@@ -55,6 +29,14 @@ public class ProviderInfo {
 
     public void setSuccess(Boolean success) {
         this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Integer getCode() {
@@ -71,6 +53,14 @@ public class ProviderInfo {
 
     public void setErrors(List<Object> errors) {
         this.errors = errors;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 
 }

@@ -21,9 +21,7 @@ import com.dopave.diethub_vendor.Models.ProviderIMages.GetImages.ProviderImagesR
 import com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image;
 import com.dopave.diethub_vendor.Models.ProviderIMages.Update.ImagesProvider;
 import com.dopave.diethub_vendor.Models.ProviderIMages.Update.MainImage;
-import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInfo;
 import com.dopave.diethub_vendor.R;
-import com.dopave.diethub_vendor.UI.Setting.Modify_Personal_info.Modify_personal_infoActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
@@ -153,16 +154,17 @@ public class Login_inActivity extends AppCompatActivity {
     private void SignIn(){
         viewModel.onSignIn(Phone.getText().toString(),
                 Password.getText().toString(),
-                this,dialog,viewModel).observe(this, new Observer<SignIn>() {
+                this,dialog,viewModel).observe(this, new Observer<ProviderInformation>() {
             @Override
-            public void onChanged(SignIn signIn) {
+            public void onChanged(ProviderInformation signIn) {
                 Log.i("TTTTTT",signIn.getData().getToken().getAccessToken() +"   "+ signIn.getData().getProvider().getId());
                 Toast.makeText(Login_inActivity.this, signIn.getMessage(), Toast.LENGTH_SHORT).show();
                 Common.currentPosition = signIn;
                 SharedPreferences preferences = Common.getPreferences(Login_inActivity.this);
 
-                preferences.edit() // save token to auto Login
+                preferences.edit() // save token and id to auto Login
                         .putString(Common.Token,signIn.getData().getToken().getAccessToken())
+                        .putString(Common.ProviderId,signIn.getData().getProvider().getId()+"")
                         .apply();
 
                 startActivity(new Intent(Login_inActivity.this,

@@ -14,7 +14,7 @@ import com.dopave.diethub_vendor.Models.Notifications.NotificationData;
 import com.dopave.diethub_vendor.Models.Orders.Orders;
 import com.dopave.diethub_vendor.Models.ProviderIMages.GetImages.ProviderImagesResponse;
 import com.dopave.diethub_vendor.Models.ProviderIMages.Update.ImagesProvider;
-import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInfo;
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
 import com.dopave.diethub_vendor.Models.ProviderInfo.Request.ProviderInfoRequest;
 import com.dopave.diethub_vendor.Models.ResetPassword.ResetPassword;
 import com.dopave.diethub_vendor.Models.Settings.Settings;
@@ -45,7 +45,7 @@ public interface APIRequest {
     //Todo Sign in
     @FormUrlEncoded
     @POST("provider/signin")
-    Call<SignIn> signIn (@Field("mobilePhone") String mobilePhone
+    Call<ProviderInformation> signIn (@Field("mobilePhone") String mobilePhone
             ,@Field("password") String password);
 
     //Todo forgot password
@@ -191,8 +191,8 @@ public interface APIRequest {
                                                    @Path("providerId") String providerId);
 
     @GET("operation/provider/{providerId}")
-    Call<ProviderInfo> getProviderInfo(@Header("Authorization") String Auth,
-                                       @Path("providerId") String providerId);
+    Call<ProviderInformation> getProviderInfo(@Header("Authorization") String Auth,
+                                              @Path("providerId") String providerId);
     @PUT("provider/{providerId}")
     Call<Defualt> updateProviderInfo(@Header("Authorization") String Auth,
                                @Path("providerId") String providerId,
