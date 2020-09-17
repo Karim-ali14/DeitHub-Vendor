@@ -54,17 +54,21 @@ public class CreateDeliveryRepository {
                 if (response.code() == 200){
                     mutableLiveData.setValue(response.body());
                 }else {
-                    try {
-                        String message = new JSONObject(response.errorBody().string())
-                                .getString("message");
-                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
+                    if (response.code() == 500){
+                        Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            String message = new JSONObject(response.errorBody().string())
+                                    .getString("message");
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 
-                        Log.i("TTTTTT",new JSONObject(response.errorBody().string())
-                                .getString("message"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                            Log.i("TTTTTT", new JSONObject(response.errorBody().string())
+                                    .getString("message"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -142,6 +146,9 @@ public class CreateDeliveryRepository {
                             Log.i("TTTTTT", errors + "");
                         }else if (response.code() == 422)
                             Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
+                        else if (response.code() == 500){
+                            Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                        }
                         else {
                             Toast.makeText(context, new JSONObject(response.errorBody().string())
                                     .getString("message"), Toast.LENGTH_SHORT).show();
@@ -200,6 +207,9 @@ public class CreateDeliveryRepository {
                             Log.i("TTTTTT", errors + "");
                         }else if (response.code() == 422)
                             Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
+                        else if (response.code() == 500){
+                            Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                        }
                         else {
                             Toast.makeText(context, new JSONObject(response.errorBody().string())
                                     .getString("message"), Toast.LENGTH_SHORT).show();

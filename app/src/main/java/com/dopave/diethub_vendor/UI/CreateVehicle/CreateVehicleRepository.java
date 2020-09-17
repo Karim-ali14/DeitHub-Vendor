@@ -68,17 +68,21 @@ public class CreateVehicleRepository {
                     mutableLiveData.setValue(response.body());
                 }else {
                     dialog.dismiss();
-                    try {
-                        String message = new JSONObject(response.errorBody().string())
-                                .getString("message");
-                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
+                    if (response.code() == 500){
+                        Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            String message = new JSONObject(response.errorBody().string())
+                                    .getString("message");
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 
-                        Log.i("TTTTTT",new JSONObject(response.errorBody().string())
-                                .getString("message"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                            Log.i("TTTTTT", new JSONObject(response.errorBody().string())
+                                    .getString("message"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -164,17 +168,21 @@ public class CreateVehicleRepository {
                 if (response.code() == 200){
                     mutableLiveData.setValue(response.body());
                 }else {
-                    try {
-                        String message = new JSONObject(response.errorBody().string())
-                                .getString("message");
-                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
+                    if (response.code() == 500){
+                        Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            String message = new JSONObject(response.errorBody().string())
+                                    .getString("message");
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 
-                        Log.i("TTTTTT",new JSONObject(response.errorBody().string())
-                                .getString("message"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                            Log.i("TTTTTT", new JSONObject(response.errorBody().string())
+                                    .getString("message"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -244,6 +252,9 @@ public class CreateVehicleRepository {
                     try {
                         if (response.code() == 422)
                             Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
+                        else if (response.code() == 500){
+                            Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                        }
                         else {
                             Toast.makeText(context, new JSONObject(response.errorBody().string())
                                     .getString("message"), Toast.LENGTH_SHORT).show();
@@ -291,17 +302,21 @@ public class CreateVehicleRepository {
                         if (response.code() == 200)
                             mutableLiveData.setValue(response.body());
                         else {
-                            try {
-                                String message = new JSONObject(response.errorBody().string())
-                                        .getString("message");
-                                Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
+                            if (response.code() == 500){
+                                Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                            }else {
+                                try {
+                                    String message = new JSONObject(response.errorBody().string())
+                                            .getString("message");
+                                    Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
 
-                                Log.i("TTTTTT",new JSONObject(response.errorBody().string())
-                                        .getString("message"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                                    Log.i("TTTTTT",new JSONObject(response.errorBody().string())
+                                            .getString("message"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -373,17 +388,21 @@ public class CreateVehicleRepository {
                 if (response.code() == 200)
                     mutableLiveData.setValue(response.body());
                 else {
-                    try {
-                        if (response.code() == 422)
-                            Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
-                        else {
-                            Toast.makeText(context, new JSONObject(response.errorBody().string())
-                                    .getString("message"), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 500){
+                        Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            if (response.code() == 422)
+                                Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
+                            else {
+                                Toast.makeText(context, new JSONObject(response.errorBody().string())
+                                        .getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
                 }
 

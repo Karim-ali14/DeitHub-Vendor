@@ -59,13 +59,17 @@ public class DeliveryRepository {
                         if (response.code() == 200){
                             mutableLiveData.setValue(response.body());
                         } else {
-                            try {
-                                String message = new JSONObject(response.errorBody()
-                                        .string()).getString("message");
-                                Log.i("TTTTTTT",message+response.code());
-                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                            } catch (IOException | JSONException e) {
-                                e.printStackTrace();
+                            if (response.code() == 500){
+                                Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                            }else {
+                                try {
+                                    String message = new JSONObject(response.errorBody()
+                                            .string()).getString("message");
+                                    Log.i("TTTTTTT", message + response.code());
+                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                } catch (IOException | JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -136,13 +140,17 @@ public class DeliveryRepository {
                     mutableLiveData.setValue(response.body());
                 }else {
                     dialog.dismiss();
-                    try {
-                        Log.i("TTTTTTT",new JSONObject(response.errorBody()
-                                .string()).getString("message")+response.code()+"dfsfsdfs");
-                        Toast.makeText(context,new JSONObject(response.errorBody()
-                                .string()).getString("message"), Toast.LENGTH_SHORT).show();
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
+                    if (response.code() == 500){
+                        Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            Log.i("TTTTTTT", new JSONObject(response.errorBody()
+                                    .string()).getString("message") + response.code() + "dfsfsdfs");
+                            Toast.makeText(context, new JSONObject(response.errorBody()
+                                    .string()).getString("message"), Toast.LENGTH_SHORT).show();
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

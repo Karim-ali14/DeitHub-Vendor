@@ -55,6 +55,11 @@ public class Login_Repository {
                             mutableLiveData.setValue(response.body());
                         }else if (response.code() == 401)
                             Toast.makeText(context, R.string.Incorrect_credential, Toast.LENGTH_SHORT).show();
+                        else if (response.code() == 403) {
+                            Toast.makeText(context, R.string.Still_pending, Toast.LENGTH_SHORT).show();
+                        }else if (response.code() == 500){
+                            Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                        }
                         else {
                             try {
                                 String message = new JSONObject(response.errorBody()

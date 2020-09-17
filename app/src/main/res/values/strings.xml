@@ -3,6 +3,8 @@
     <string name="hallo">Hallo</string>
     <string name="login_to_use_app">Login to tse app</string>
     <string name="Incorrect_credential">The phone number or the password is wrong</string>
+    <string name="Still_pending">your account is pending</string>
+    <string name="Server_problem">Server problem</string>
     <string name="phone_number">Phone Number</string>
     <string name="enter">Enter</string>
     <string name="password">Password</string>

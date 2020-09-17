@@ -44,6 +44,7 @@ public class OrderFragment extends Fragment {
     public static int PREPARING_ID = 1;
     public static int PREPARING_ID_2 = 3;
     public static int FINISHED_ID = 2;
+
     public static final int limit = 5;
     int skip = 0;
 
@@ -257,6 +258,7 @@ public class OrderFragment extends Fragment {
             FinishedText.setTextColor(getResources().getColor(R.color.colorPrimary));
         }
     }
+
     private void onPreparingButtonClick() {
         if (!activeButton.equals("Preparing")) {
 
@@ -296,6 +298,7 @@ public class OrderFragment extends Fragment {
             }
         }
     }
+
     private void onFinishButtonClick() {
         if (!activeButton.equals("Finished")) {
 

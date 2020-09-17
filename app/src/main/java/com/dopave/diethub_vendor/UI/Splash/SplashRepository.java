@@ -43,6 +43,9 @@ public class SplashRepository {
                 if (response.code() == 200){
                     mutableLiveData.setValue(response.body());
                 }else {
+                    if (response.code() == 500){
+                        Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }
                     context.startActivity(new Intent(context, Login_inActivity.class));
                 }
             }

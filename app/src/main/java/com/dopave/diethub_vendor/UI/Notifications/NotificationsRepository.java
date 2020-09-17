@@ -59,17 +59,22 @@ public class NotificationsRepository {
                 if (response.code() == 200){
                    mutableLiveData.setValue(response.body());
                 }else {
-                    try {
-                        String message = new JSONObject(response.errorBody().string())
-                                .getString("message");
-                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
 
-                        Log.i("TTTTTT",new JSONObject(response.errorBody().string())
-                                .getString("message"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (response.code() == 500){
+                        Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            String message = new JSONObject(response.errorBody().string())
+                                    .getString("message");
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                            Log.i("TTTTTT", new JSONObject(response.errorBody().string())
+                                    .getString("message"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
@@ -136,14 +141,18 @@ public class NotificationsRepository {
                     mutableLiveData.setValue(response.body());
                 } else {
                     dialog.dismiss();
-                    try {
-                        String message = new JSONObject(response.errorBody().string())
-                                .getString("message");
-                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (response.code() == 500){
+                        Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            String message = new JSONObject(response.errorBody().string())
+                                    .getString("message");
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -181,14 +190,18 @@ public class NotificationsRepository {
                     mutableLiveData.setValue(response.body());
                 } else {
                     dialog.dismiss();
-                    try {
-                        String message = new JSONObject(response.errorBody().string())
-                                .getString("message");
-                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (response.code() == 500){
+                        Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            String message = new JSONObject(response.errorBody().string())
+                                    .getString("message");
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

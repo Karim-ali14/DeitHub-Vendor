@@ -182,14 +182,18 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                     });
                 }else {
                     dialog.dismiss();
-                    try {
-                        Log.i("GGGGGGGGG",new JSONObject(response.errorBody().string())
-                                .getJSONArray("errors")
-                                .getJSONObject(0).getString("message"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (response.code() == 500){
+                        Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            Log.i("GGGGGGGGG", new JSONObject(response.errorBody().string())
+                                    .getJSONArray("errors")
+                                    .getJSONObject(0).getString("message"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

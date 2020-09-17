@@ -9,16 +9,9 @@ import android.media.RingtoneManager;
 import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-
-import com.dopave.diethub_vendor.Common.Common;
-import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import java.util.HashMap;
-
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private NotificationManager manager;

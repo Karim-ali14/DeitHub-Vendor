@@ -193,7 +193,7 @@ public class Login_inActivity extends AppCompatActivity {
                 Common.currentPosition.getData().getProvider().getId()+"",deviceId).enqueue(new Callback<Defualt>() {
             @Override
             public void onResponse(Call<Defualt> call, retrofit2.Response<Defualt> response) {
-                Toast.makeText(Login_inActivity.this, response.code()+"", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

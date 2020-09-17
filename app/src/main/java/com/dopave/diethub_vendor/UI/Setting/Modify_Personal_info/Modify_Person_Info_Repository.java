@@ -59,14 +59,18 @@ public class Modify_Person_Info_Repository {
                         if (response.code() == 200){
                             mutableLiveData.setValue(response.body());
                         }else {
-                            try {
-                                String message = new JSONObject(response.errorBody().string())
-                                        .getString("message");
-                                Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            if (response.code() == 500){
+                                Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                            }else {
+                                try {
+                                    String message = new JSONObject(response.errorBody().string())
+                                            .getString("message");
+                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -143,16 +147,20 @@ public class Modify_Person_Info_Repository {
                 if (response.code() == 200)
                     mutableLiveData.setValue(response.body());
                 else {
-                    try {
-                        String message = new JSONObject(response.errorBody().string())
-                                .getString("message");
-                        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
-                        Log.i("GGGGGGG",new JSONObject(response.errorBody().string())
-                                .getJSONArray("errors").getJSONObject(0).getString("message"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (response.code() == 500){
+                        Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            String message = new JSONObject(response.errorBody().string())
+                                    .getString("message");
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                            Log.i("GGGGGGG", new JSONObject(response.errorBody().string())
+                                    .getJSONArray("errors").getJSONObject(0).getString("message"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
