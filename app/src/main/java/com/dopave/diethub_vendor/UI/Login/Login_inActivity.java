@@ -20,14 +20,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.dopave.diethub_vendor.UI.Password_Recovery.Password_RecoveryActivity;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
+
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class Login_inActivity extends AppCompatActivity {
     EditText Phone,Password;
@@ -151,7 +158,7 @@ public class Login_inActivity extends AppCompatActivity {
         startActivity(new Intent(this, Password_RecoveryActivity.class));
     }
 
-    private void SignIn(){
+    private void SignIn() {
         viewModel.onSignIn(Phone.getText().toString(),
                 Password.getText().toString(),
                 this,dialog,viewModel).observe(this, new Observer<ProviderInformation>() {
@@ -170,7 +177,28 @@ public class Login_inActivity extends AppCompatActivity {
                 startActivity(new Intent(Login_inActivity.this,
                         HomeActivity.class).putExtra("type",
                         "Login_inActivity"));
+                refreshTokenDevice();
                 finish();
+            }
+        });
+    }
+
+    private void refreshTokenDevice() {
+        Toast.makeText(this, FirebaseInstanceId.getInstance().getToken()+
+                "", Toast.LENGTH_SHORT).show();
+        HashMap<String, String> deviceId = new HashMap<>();
+        deviceId.put("firebase_device_id", FirebaseInstanceId.getInstance().getToken());
+        Common.getAPIRequest().setFirebaseDeviceId("Bearer " +
+                        Common.currentPosition.getData().getToken().getAccessToken(),
+                Common.currentPosition.getData().getProvider().getId()+"",deviceId).enqueue(new Callback<Defualt>() {
+            @Override
+            public void onResponse(Call<Defualt> call, retrofit2.Response<Defualt> response) {
+                Toast.makeText(Login_inActivity.this, response.code()+"", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Defualt> call, Throwable t) {
+
             }
         });
     }
@@ -209,4 +237,5 @@ public class Login_inActivity extends AppCompatActivity {
             firstOpen = true;
         }
     }
+
 }

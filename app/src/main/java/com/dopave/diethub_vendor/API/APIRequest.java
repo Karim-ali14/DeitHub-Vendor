@@ -197,4 +197,8 @@ public interface APIRequest {
     Call<Defualt> updateProviderInfo(@Header("Authorization") String Auth,
                                @Path("providerId") String providerId,
                                @Body ProviderInfoRequest providerInfo);
-}
+
+    @PUT("provider/{id}/device-id")
+    Call<Defualt> setFirebaseDeviceId(@Header("Authorization") String Auth,
+                                      @Path("id") String id,
+                                      @Body HashMap<String,String> deviceId);}

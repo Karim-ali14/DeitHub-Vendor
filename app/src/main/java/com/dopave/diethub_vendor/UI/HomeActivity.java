@@ -125,15 +125,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(this,LanguageActivity.class));
             drawer.closeDrawer(GravityCompat.START);
         }else if (view.getId() == R.id.LogOut ){
-            startActivity(new Intent(this, Login_inActivity.class));
-            Common.currentPosition = null;
-            finish();
-            drawer.closeDrawer(GravityCompat.START);
+            LogOut();
         }else {
             drawer.closeDrawer(GravityCompat.START);
         }
     }
 
+    private void LogOut(){
+        Common.currentPosition = null;
+        Common.getPreferences(this).edit().clear().apply();
+        startActivity(new Intent(this, Login_inActivity.class));
+        finish();
+        drawer.closeDrawer(GravityCompat.START);
+    }
     @Override
     public void onBackPressed() {
         if (!Current_Page.equals("nav_Home")) {
