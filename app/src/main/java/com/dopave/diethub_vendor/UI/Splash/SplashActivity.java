@@ -75,6 +75,8 @@ public class SplashActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Log.i("TTTTTT",preferences.getString(Common.Token,"")
+                                + preferences.getString(Common.ProviderId,""));
                         viewModel.getProviderInfo(SplashActivity.this,preferences.getString(Common.Token,"")
                                 ,preferences.getString(Common.ProviderId,""))
                                 .observe(SplashActivity.this, new Observer<ProviderInformation>() {
