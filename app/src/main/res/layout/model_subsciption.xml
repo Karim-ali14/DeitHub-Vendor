@@ -124,7 +124,6 @@
                 android:paddingRight="@dimen/_13sdp"
                 android:paddingBottom="4dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/Name"
                 android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginLeft="15dp">
 

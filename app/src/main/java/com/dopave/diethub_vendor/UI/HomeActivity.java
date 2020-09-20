@@ -1,6 +1,7 @@
 package com.dopave.diethub_vendor.UI;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 import com.dopave.diethub_vendor.UI.Notifications.Notification_Activity;
 import com.dopave.diethub_vendor.UI.Subscriptions.SubscriptionsActivity;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,12 +30,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Locale;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private long backPressedTime = 0;
     DrawerLayout drawer;
     public static ImageView Logo,Notification_Icon;
     public static TextView Title;
     public static String Current_Page = "nav_Home";
+    CircleImageView ProviderIconMain;
+    TextView ProviderNameMain;
+    SharedPref pref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +50,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
+        pref = new SharedPref(this);
         ActionBarDrawerToggle actionBarDrawerToggle = new
                 ActionBarDrawerToggle(this,drawer,toolbar,R.string.navigation_drawer_open
                 , R.string.navigation_drawer_close);
@@ -67,6 +77,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        ProviderIconMain = findViewById(R.id.ProviderIconMain);
+        ProviderNameMain = findViewById(R.id.ProviderNameMain);
+        setProviderData();
     }
 
     @Override
@@ -186,6 +199,30 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Title.setVisibility(View.VISIBLE);
             Title.setText(getResources().getString(R.string.sittings));
             Current_Page = "nav_setting";
+        }
+    }
+
+    private void setProviderData() {
+        if (Common.currentPosition.getData().getProvider().getMainImage() != null) {
+            String path = Common.BaseUrl + "images/" +
+                    Common.currentPosition.getData().getProvider().getMainImage().getFor()
+                    + "/" + Uri.encode(Common.currentPosition.getData().getProvider().getMainImage().getName());
+            Picasso.with(this).load(path).into(ProviderIconMain);
+        }
+        if (!pref.getLagu().equals("empty")) {
+            if (pref.getLagu().equals("ar")) {
+                ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getName());
+            }else if (pref.getLagu().equals("en")) {
+                ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getNameEn());
+            }
+        }
+        else {
+            if (Locale.getDefault().getDisplayLanguage().equals("English"))
+            {
+                ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getNameEn());
+            }else if (Locale.getDefault().getDisplayLanguage().equals("العربية")){
+                ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getName());
+            }
         }
     }
 }

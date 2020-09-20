@@ -220,66 +220,6 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:theme="@style/EditText_Style"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/RePassword"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            >
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/chickBoxLayout"
-                >
-                <ImageView
-                    android:id="@+id/chickBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/tockbg"
-                    android:padding="@dimen/_7sdp"
-                    />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/ForgottenPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:fontFamily="@font/helveticaneuelt_arabic"
-                android:includeFontPadding="false"
-                android:text="@string/I_Agree_On"
-                android:textColor="@color/ColorTextDescription"
-                android:textSize="@dimen/_17sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/chickBoxLayout"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_5sdp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/helvetica_bold"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/_17sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ForgottenPassword"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:text="@string/Terms_Conditions"
-                android:onClick="onClick"
-                android:id="@+id/conditions"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/EnterButton"
@@ -298,7 +238,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout14"
+            app:layout_constraintTop_toBottomOf="@+id/RePassword"
             app:layout_constraintVertical_bias=".1"
             android:layout_marginBottom="@dimen/_20sdp"
             android:fontFamily="@font/helveticaneuelt_arabic"/>

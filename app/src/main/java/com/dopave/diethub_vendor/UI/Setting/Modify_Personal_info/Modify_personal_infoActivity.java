@@ -113,7 +113,8 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
         getCities();
         setData("Ar");
         setUpdatedData();
-        addMarker(new LatLng(providerInfo.getData().getProvider().getLatitude(),providerInfo.getData().getProvider().getLongitude()));
+        if (providerInfo.getData().getProvider().getLatitude() != null && providerInfo.getData().getProvider().getLongitude() != null)
+            addMarker(new LatLng(providerInfo.getData().getProvider().getLatitude(),providerInfo.getData().getProvider().getLongitude()));
     }
 
     private void chickEvents() {
@@ -280,12 +281,17 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
 
     private void setData(String type) {
         //set data arabic
-        About_Res.setText(providerInfo.getData().getProvider().getDescription());
-        RestaurantsName.setText(providerInfo.getData().getProvider().getName());
+        if (providerInfo.getData().getProvider().getDescription() != null)
+            About_Res.setText(providerInfo.getData().getProvider().getDescription());
+        if (providerInfo.getData().getProvider().getName() != null)
+            RestaurantsName.setText(providerInfo.getData().getProvider().getName());
         //set data english
-        About_ResEn.setText(providerInfo.getData().getProvider().getDescriptionEn());
-        RestaurantsNameEn.setText(providerInfo.getData().getProvider().getNameEn());
-        Address.setText(providerInfo.getData().getProvider().getAddress());
+        if (providerInfo.getData().getProvider().getDescriptionEn() != null)
+            About_ResEn.setText(providerInfo.getData().getProvider().getDescriptionEn());
+        if (providerInfo.getData().getProvider().getNameEn() != null)
+            RestaurantsNameEn.setText(providerInfo.getData().getProvider().getNameEn());
+        if (providerInfo.getData().getProvider().getAddress() != null)
+            Address.setText(providerInfo.getData().getProvider().getAddress());
         if (type.equals("Ar"))
             ArabicTab("show");
         else
@@ -307,7 +313,7 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
                     providerInfo.getData().getProvider().getLatitude(),providerInfo.getData().getProvider().getLongitude())).observe(Modify_personal_infoActivity.this, new Observer<Defualt>() {
                 @Override
                 public void onChanged(Defualt defualt) {
-                    Toast.makeText(Modify_personal_infoActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Modify_personal_infoActivity.this, R.string.Successfully_updated, Toast.LENGTH_SHORT).show();
                 }
             });
         }

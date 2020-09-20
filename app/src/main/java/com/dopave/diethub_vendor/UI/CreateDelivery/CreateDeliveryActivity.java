@@ -64,13 +64,10 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     private static final int SELECT_IMAGE = 1;
     EditText UserName, Phone, Email, Password, RePassword;
     ConstraintLayout Layout,City_Layout;
-    ImageView chickBox;
-    boolean isChecked = false;
     ProgressDialog dialog;
     Spinner spinnerCity;
     TextView CitySelected;
     CityRow cityRow;
-    LinearLayout chickBoxLayout;
     ImageView mark,openGallery;
     CreateDeliveryViewModel viewModel;
     CircleImageView profile_image;
@@ -106,7 +103,6 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         profile_image = findViewById(R.id.profile_image);
         spinnerCity = findViewById(R.id.spinnerCity);
         CitySelected = findViewById(R.id.CitySelected);
-        chickBoxLayout = findViewById(R.id.chickBoxLayout);
         UserName = findViewById(R.id.UserName);
         Email = findViewById(R.id.Email);
         Phone = findViewById(R.id.PhoneNumber);
@@ -114,7 +110,6 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         RePassword = findViewById(R.id.RePassword);
         Layout = findViewById(R.id.Layout_Registration);
         City_Layout = findViewById(R.id.City_Layout);
-        chickBox = findViewById(R.id.chickBox);
         Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -228,10 +223,6 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                 dialog.dismiss();
                 Toast.makeText(this, R.string.Choose_city, Toast.LENGTH_SHORT).show();
             }
-            else if (!isChecked){
-                Toast.makeText(this, R.string.agree_terms_conditions, Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
             else {
                 update();
             }
@@ -246,10 +237,6 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
             else if (!validationPass()){dialog.dismiss();}
-            else if (!isChecked) {
-                Toast.makeText(this, R.string.agree_terms_conditions, Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
             else {
                 createDelivery();
             }
@@ -301,18 +288,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     }
 
     private void editTextChangeStatus(){
-        chickBoxLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isChecked) {
-                    isChecked = true;
-                    chickBox.setImageResource(R.drawable.active);
-                }else {
-                    isChecked = false;
-                    chickBox.setImageResource(R.drawable.tockbg);
-                }
-            }
-        });
+
         UserName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
