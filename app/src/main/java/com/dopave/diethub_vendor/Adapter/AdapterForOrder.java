@@ -184,6 +184,8 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                     dialog.dismiss();
                     if (response.code() == 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else if (response.code() == 401){
+                        Common.onCheckTokenAction(context);
                     }else {
                         try {
                             Log.i("GGGGGGGGG", new JSONObject(response.errorBody().string())

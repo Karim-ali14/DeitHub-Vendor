@@ -62,6 +62,8 @@ public class SubscriptionsRepository {
                 else {
                     if (response.code() == 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else if (response.code() == 401){
+                        Common.onCheckTokenAction(context);
                     }else {
                         try {
                             String message = new JSONObject(response.errorBody().string())
@@ -144,6 +146,8 @@ public class SubscriptionsRepository {
                     dialog.dismiss();
                     if (response.code() == 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else if (response.code() == 401){
+                        Common.onCheckTokenAction(context);
                     }else {
                         try {
                             Toast.makeText(context, new JSONObject(response.errorBody().string())

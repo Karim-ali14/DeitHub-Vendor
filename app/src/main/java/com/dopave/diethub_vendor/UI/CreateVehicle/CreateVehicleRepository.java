@@ -254,6 +254,8 @@ public class CreateVehicleRepository {
                             Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
                         else if (response.code() == 500){
                             Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                        }else if (response.code() == 401){
+                            Common.onCheckTokenAction(context);
                         }
                         else {
                             Toast.makeText(context, new JSONObject(response.errorBody().string())
@@ -304,6 +306,8 @@ public class CreateVehicleRepository {
                         else {
                             if (response.code() == 500){
                                 Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                            }else if (response.code() == 401){
+                                Common.onCheckTokenAction(context);
                             }else {
                                 try {
                                     String message = new JSONObject(response.errorBody().string())
@@ -390,6 +394,8 @@ public class CreateVehicleRepository {
                 else {
                     if (response.code() == 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else if (response.code() == 401){
+                        Common.onCheckTokenAction(context);
                     }else {
                         try {
                             if (response.code() == 422)

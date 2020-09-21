@@ -2,6 +2,7 @@ package com.dopave.diethub_vendor.UI.CreateDelivery;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -16,6 +17,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import com.dopave.diethub_vendor.Adapter.AdapterForDelegate;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Cities.Cities;
 import com.dopave.diethub_vendor.Models.CreateDelivery.Request.CreateDeliveryRequest;
@@ -23,6 +25,7 @@ import com.dopave.diethub_vendor.Models.CreateDelivery.Response.CreateDeliveryRe
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequest;
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +38,9 @@ import java.net.UnknownHostException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class CreateDeliveryRepository {
     public static CreateDeliveryRepository repository;
@@ -148,6 +154,8 @@ public class CreateDeliveryRepository {
                             Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
                         else if (response.code() == 500){
                             Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                        }else if (response.code() == 401){
+                            Common.onCheckTokenAction(context);
                         }
                         else {
                             Toast.makeText(context, new JSONObject(response.errorBody().string())
@@ -209,6 +217,8 @@ public class CreateDeliveryRepository {
                             Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
                         else if (response.code() == 500){
                             Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                        }else if (response.code() == 401){
+                            Common.onCheckTokenAction(context);
                         }
                         else {
                             Toast.makeText(context, new JSONObject(response.errorBody().string())

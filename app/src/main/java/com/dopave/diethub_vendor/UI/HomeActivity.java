@@ -211,17 +211,37 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         if (!pref.getLagu().equals("empty")) {
             if (pref.getLagu().equals("ar")) {
-                ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getName());
+                if (Common.currentPosition.getData().getProvider().getName() != null)
+                    ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getName());
+                else if (Common.currentPosition.getData().getProvider().getNameEn() != null)
+                    ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getNameEn());
+                else
+                    ProviderNameMain.setText("--------");
             }else if (pref.getLagu().equals("en")) {
-                ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getNameEn());
+                if (Common.currentPosition.getData().getProvider().getNameEn() != null)
+                    ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getNameEn());
+                else if (Common.currentPosition.getData().getProvider().getName() != null)
+                    ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getName());
+                else
+                    ProviderNameMain.setText("--------");
             }
         }
         else {
             if (Locale.getDefault().getDisplayLanguage().equals("English"))
             {
-                ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getNameEn());
+                if (Common.currentPosition.getData().getProvider().getNameEn() != null)
+                    ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getNameEn());
+                else if (Common.currentPosition.getData().getProvider().getName() != null)
+                    ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getName());
+                else
+                    ProviderNameMain.setText("--------");
             }else if (Locale.getDefault().getDisplayLanguage().equals("العربية")){
-                ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getName());
+                if (Common.currentPosition.getData().getProvider().getName() != null)
+                    ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getName());
+                else if (Common.currentPosition.getData().getProvider().getNameEn() != null)
+                    ProviderNameMain.setText(Common.currentPosition.getData().getProvider().getNameEn());
+                else
+                    ProviderNameMain.setText("--------");
             }
         }
     }

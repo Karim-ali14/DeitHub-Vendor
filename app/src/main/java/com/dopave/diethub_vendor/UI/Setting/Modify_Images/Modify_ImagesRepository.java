@@ -59,11 +59,10 @@ public class Modify_ImagesRepository {
                         if (response.code() == 200) {
                             mutableLiveData.setValue(response.body());
                         } else {
-                            if (response.code() == 500){
-                                Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
-                            }else {
                                 if (response.code() == 500){
                                     Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                                }else if (response.code() == 401){
+                                    Common.onCheckTokenAction(context);
                                 }else {
                                     try {
                                         String message = new JSONObject(response.errorBody().string())
@@ -75,7 +74,6 @@ public class Modify_ImagesRepository {
                                         e.printStackTrace();
                                     }
                                 }
-                            }
                         }
                     }
 
@@ -142,6 +140,8 @@ public class Modify_ImagesRepository {
                 } else {
                     if (response.code() == 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else if (response.code() == 401){
+                        Common.onCheckTokenAction(context);
                     }else {
                         try {
                             String message = new JSONObject(response.errorBody().string())

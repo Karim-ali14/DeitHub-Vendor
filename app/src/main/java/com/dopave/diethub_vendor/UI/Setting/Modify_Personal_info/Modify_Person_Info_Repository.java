@@ -24,6 +24,7 @@ import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_ImagesActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -61,6 +62,8 @@ public class Modify_Person_Info_Repository {
                         }else {
                             if (response.code() == 500){
                                 Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                            }else if (response.code() == 401){
+                                Common.onCheckTokenAction(context);
                             }else {
                                 try {
                                     String message = new JSONObject(response.errorBody().string())
@@ -147,6 +150,13 @@ public class Modify_Person_Info_Repository {
                 if (response.code() == 200)
                     mutableLiveData.setValue(response.body());
                 else {
+                    try {
+                        Log.i("Error Request Message:", new JSONObject(response.errorBody().string()).getJSONArray("errors")+"");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (response.code() == 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                     }else {

@@ -61,6 +61,8 @@ public class DeliveryRepository {
                         } else {
                             if (response.code() == 500){
                                 Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                            }else if (response.code() == 401){
+                                Common.onCheckTokenAction(context);
                             }else {
                                 try {
                                     String message = new JSONObject(response.errorBody()
@@ -142,6 +144,8 @@ public class DeliveryRepository {
                     dialog.dismiss();
                     if (response.code() == 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else if (response.code() == 401){
+                        Common.onCheckTokenAction(context);
                     }else {
                         try {
                             Log.i("TTTTTTT", new JSONObject(response.errorBody()

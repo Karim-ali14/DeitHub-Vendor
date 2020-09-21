@@ -185,7 +185,6 @@ public class Details_OrderActivity extends AppCompatActivity {
                         dialog1.dismiss();
                         dialog.dismiss();
                         if (response.code() == 200) {
-
                             startActivity(new Intent(Details_OrderActivity.this,
                                     HomeActivity.class).putExtra("type",
                                     "Details_OrderActivity")
@@ -194,6 +193,8 @@ public class Details_OrderActivity extends AppCompatActivity {
                         }
                         if (response.code() == 500){
                             Toast.makeText(Details_OrderActivity.this, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                        }else if (response.code() == 401){
+                            Common.onCheckTokenAction(Details_OrderActivity.this);
                         }
                     }
 

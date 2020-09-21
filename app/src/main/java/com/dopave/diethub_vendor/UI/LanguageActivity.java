@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.R;
 
 import java.util.Locale;
@@ -56,7 +57,7 @@ public class LanguageActivity extends AppCompatActivity {
 //                config.locale = locale;
 //                getBaseContext().getResources().updateConfiguration(config,
 //                        getBaseContext().getResources().getDisplayMetrics());
-                setAppLocale(languageToLoad);
+                Common.setAppLocale(languageToLoad,LanguageActivity.this);
                 pref.setLangu("ar");
                 Intent intent = new Intent(LanguageActivity.this, HomeActivity.class)
                         .putExtra("type","Login_inActivity");
@@ -75,7 +76,7 @@ public class LanguageActivity extends AppCompatActivity {
 //                config.locale = locale;
 //                getBaseContext().getResources().updateConfiguration(config,
 //                        getBaseContext().getResources().getDisplayMetrics());
-                setAppLocale(languageToLoad);
+                Common.setAppLocale(languageToLoad,LanguageActivity.this);
                 pref.setLangu("en");
                 Intent intent = new Intent(LanguageActivity.this, HomeActivity.class)
                         .putExtra("type","Login_inActivity");
@@ -89,15 +90,4 @@ public class LanguageActivity extends AppCompatActivity {
         finish();
     }
 
-    private void setAppLocale(String localeCode){
-        Resources resources = getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        Configuration config = resources.getConfiguration();
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
-            config.setLocale(new Locale(localeCode.toLowerCase()));
-        } else {
-            config.locale = new Locale(localeCode.toLowerCase());
-        }
-        resources.updateConfiguration(config, dm);
-    }
 }

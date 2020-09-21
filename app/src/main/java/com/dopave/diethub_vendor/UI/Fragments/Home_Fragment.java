@@ -17,7 +17,10 @@ import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.HomeActivity;
+import com.dopave.diethub_vendor.UI.SharedPref;
 import com.squareup.picasso.Picasso;
+
+import java.util.Locale;
 
 
 /**
@@ -27,23 +30,24 @@ public class Home_Fragment extends Fragment {
     LinearLayout Orders_Layout,Delegate_Layout,Setting_Layout;
     TextView NameOfRestaurants;
     ImageView ProviderIcon;
+    SharedPref pref;
+
     public Home_Fragment() {
 
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        pref = new SharedPref(getActivity());
         NameOfRestaurants = view.findViewById(R.id.NameOfRestaurants);
-        NameOfRestaurants.setText((Common.currentPosition.getData().getProvider().getName()));
         Orders_Layout = view.findViewById(R.id.Orders_Layout);
         Delegate_Layout = view.findViewById(R.id.Delegate_Layout);
         Setting_Layout = view.findViewById(R.id.Setting_Layout);
         ProviderIcon = view.findViewById(R.id.ProviderIcon);
-        setImage();
+        setProviderData();
         Orders_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,12 +84,47 @@ public class Home_Fragment extends Fragment {
         return view;
     }
 
-    private void setImage() {
+    private void setProviderData() {
         if (Common.currentPosition.getData().getProvider().getMainImage() != null) {
             String path = Common.BaseUrl + "images/" +
                     Common.currentPosition.getData().getProvider().getMainImage().getFor()
                     + "/" + Uri.encode(Common.currentPosition.getData().getProvider().getMainImage().getName());
             Picasso.with(getActivity()).load(path).into(ProviderIcon);
+        }
+        if (!pref.getLagu().equals("empty")) {
+            if (pref.getLagu().equals("ar")) {
+                if (Common.currentPosition.getData().getProvider().getName() != null)
+                    NameOfRestaurants.setText(Common.currentPosition.getData().getProvider().getName());
+                else if (Common.currentPosition.getData().getProvider().getNameEn() != null)
+                    NameOfRestaurants.setText(Common.currentPosition.getData().getProvider().getNameEn());
+                else
+                    NameOfRestaurants.setText("--------");
+            }else if (pref.getLagu().equals("en")) {
+                if (Common.currentPosition.getData().getProvider().getNameEn() != null)
+                    NameOfRestaurants.setText(Common.currentPosition.getData().getProvider().getNameEn());
+                else if (Common.currentPosition.getData().getProvider().getName() != null)
+                    NameOfRestaurants.setText(Common.currentPosition.getData().getProvider().getName());
+                else
+                    NameOfRestaurants.setText("--------");
+            }
+        }
+        else {
+            if (Locale.getDefault().getDisplayLanguage().equals("English"))
+            {
+                if (Common.currentPosition.getData().getProvider().getNameEn() != null)
+                    NameOfRestaurants.setText(Common.currentPosition.getData().getProvider().getNameEn());
+                else if (Common.currentPosition.getData().getProvider().getName() != null)
+                    NameOfRestaurants.setText(Common.currentPosition.getData().getProvider().getName());
+                else
+                    NameOfRestaurants.setText("--------");
+            }else if (Locale.getDefault().getDisplayLanguage().equals("العربية")){
+                if (Common.currentPosition.getData().getProvider().getName() != null)
+                    NameOfRestaurants.setText(Common.currentPosition.getData().getProvider().getName());
+                else if (Common.currentPosition.getData().getProvider().getNameEn() != null)
+                    NameOfRestaurants.setText(Common.currentPosition.getData().getProvider().getNameEn());
+                else
+                    NameOfRestaurants.setText("--------");
+            }
         }
     }
 
