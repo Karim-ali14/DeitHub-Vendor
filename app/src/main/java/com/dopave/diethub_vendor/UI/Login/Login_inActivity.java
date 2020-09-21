@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -70,6 +71,31 @@ public class Login_inActivity extends AppCompatActivity {
                 else if (!validationPass()){dialog.dismiss();}
                 else
                     SignIn();
+            }
+        });
+        Password.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            {
+                                dialog.show();
+                                if (!validationPhone()){dialog.dismiss();}
+                                else if (!validationPass()){dialog.dismiss();}
+                                else
+                                    SignIn();
+                            }
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
             }
         });
         Layout.setOnClickListener(new View.OnClickListener() {
@@ -185,8 +211,6 @@ public class Login_inActivity extends AppCompatActivity {
     }
 
     private void refreshTokenDevice() {
-        Toast.makeText(this, FirebaseInstanceId.getInstance().getToken()+
-                "", Toast.LENGTH_SHORT).show();
         HashMap<String, String> deviceId = new HashMap<>();
         deviceId.put("firebase_device_id", FirebaseInstanceId.getInstance().getToken());
         Common.getAPIRequest().setFirebaseDeviceId("Bearer " +

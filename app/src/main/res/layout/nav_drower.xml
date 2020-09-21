@@ -15,457 +15,457 @@
         android:fillViewport="true"
         >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-    <include
-        layout="@layout/nav_header_home"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/const_nav_header"/>
-
-        <LinearLayout
-            android:id="@+id/linner_nav"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/const_nav_header"
+            android:layout_height="match_parent"
             >
 
+            <include
+                layout="@layout/nav_header_home"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/const_nav_header"/>
+
             <LinearLayout
-                android:layout_weight="1"
+                android:id="@+id/linner_nav"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                android:padding="2dp"
-                tools:ignore="RtlHardcoded"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:id="@+id/nav_Home">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/const_nav_header"
+                >
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/home"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/house" />
-
-                <TextView
-                    android:id="@+id/nav_myOrdersPage"
+                <LinearLayout
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="start"
-                    android:text="@string/home"
-                    android:textSize="@dimen/_15sdp"
-                    android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/black"/>
+                    android:layout_height="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    tools:ignore="RtlHardcoded"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:id="@+id/nav_Home">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/home"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/house" />
+
+                    <TextView
+                        android:id="@+id/nav_myOrdersPage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="start"
+                        android:text="@string/home"
+                        android:textSize="@dimen/_15sdp"
+                        android:fontFamily="@font/helveticaneuelt_arabic"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    tools:ignore="RtlHardcoded"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:id="@+id/nav_myOrders">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/myorders"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/pencil" />
+
+                    <TextView
+                        android:id="@+id/nav_returnOrdersPage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="start"
+                        android:text="@string/myorders"
+                        android:textSize="@dimen/_15sdp"
+                        android:fontFamily="@font/helveticaneuelt_arabic"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    tools:ignore="RtlHardcoded"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:id="@+id/nav_mySubscriptionOrders">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/myorders"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/product" />
+
+                    <TextView
+                        android:id="@+id/nav_SubscriptionOrders"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="start"
+                        android:text="@string/subscriptionOrders"
+                        android:textSize="@dimen/_15sdp"
+                        android:fontFamily="@font/helveticaneuelt_arabic"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    tools:ignore="RtlHardcoded"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:id="@+id/nav_Subscription">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/myorders"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/pencil" />
+
+                    <TextView
+                        android:id="@+id/nav_SubscriptionText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="start"
+                        android:text="@string/subscription"
+                        android:textSize="@dimen/_15sdp"
+                        android:fontFamily="@font/helveticaneuelt_arabic"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/nav_myMeals"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    android:gravity="center"
+                    tools:ignore="RtlHardcoded"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/meals"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/hamburger" />
+
+                    <TextView
+                        android:id="@+id/contactus_page"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:text="@string/meals"
+                        android:textSize="@dimen/_15sdp"
+                        android:fontFamily="@font/helveticaneuelt_arabic"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/nav_favorite"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    android:gravity="center_vertical"
+                    tools:ignore="RtlHardcoded"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/action_settings"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/beer" />
+
+                    <TextView
+                        android:id="@+id/text_lang"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="start"
+                        android:text="@string/adds"
+                        android:textSize="@dimen/_15sdp"
+                        android:fontFamily="@font/helveticaneuelt_arabic"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/nav_delegates"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    android:gravity="center_vertical"
+                    tools:ignore="RtlHardcoded"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/delegates"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/driver" />
+
+                    <TextView
+                        android:id="@+id/signout_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:text="@string/delegates"
+                        android:textSize="@dimen/_15sdp"
+                        tools:ignore="RtlHardcoded"
+                        android:fontFamily="@font/helveticaneuelt_arabic"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/nav_setting"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    android:gravity="center_vertical"
+                    tools:ignore="RtlHardcoded"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/sittings"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/settings" />
+
+                    <TextView
+                        android:id="@+id/nav_packages_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:text="@string/sittings"
+                        android:textSize="@dimen/_15sdp"
+                        tools:ignore="RtlHardcoded"
+                        android:fontFamily="@font/helveticaneuelt_arabic"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/nav_aboutApp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    android:gravity="center_vertical"
+                    tools:ignore="RtlHardcoded"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/about_app"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/information" />
+
+                    <TextView
+                        android:id="@+id/nav_notifications_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:text="@string/about_app"
+                        android:textSize="@dimen/_15sdp"
+                        tools:ignore="RtlHardcoded"
+                        android:fontFamily="@font/helveticaneuelt_arabic"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/nav_Consulting"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    android:gravity="center_vertical"
+                    tools:ignore="RtlHardcoded"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/terms_and_conditions"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/notes" />
+
+                    <TextView
+                        android:id="@+id/nav_Consulting_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:text="@string/terms_and_conditions"
+                        android:textSize="@dimen/_15sdp"
+                        tools:ignore="RtlHardcoded"
+                        android:fontFamily="@font/helveticaneuelt_arabic"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/nav_langu"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    android:gravity="center_vertical"
+                    tools:ignore="RtlHardcoded"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/lang"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/lang" />
+
+                    <TextView
+                        android:id="@+id/nav_langu_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:text="@string/lang"
+                        android:textSize="@dimen/_15sdp"
+                        tools:ignore="RtlHardcoded"
+                        android:fontFamily="@font/helveticaneuelt_arabic"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:padding="2dp"
-                tools:ignore="RtlHardcoded"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:id="@+id/nav_myOrders">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/myorders"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/pencil" />
-
-                <TextView
-                    android:id="@+id/nav_returnOrdersPage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="start"
-                    android:text="@string/myorders"
-                    android:textSize="@dimen/_15sdp"
-                    android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:padding="2dp"
-                tools:ignore="RtlHardcoded"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:id="@+id/nav_mySubscriptionOrders">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/myorders"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/product" />
-
-                <TextView
-                    android:id="@+id/nav_SubscriptionOrders"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="start"
-                    android:text="@string/subscriptionOrders"
-                    android:textSize="@dimen/_15sdp"
-                    android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:padding="2dp"
-                tools:ignore="RtlHardcoded"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:id="@+id/nav_Subscription">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/myorders"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/pencil" />
-
-                <TextView
-                    android:id="@+id/nav_SubscriptionText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="start"
-                    android:text="@string/subscription"
-                    android:textSize="@dimen/_15sdp"
-                    android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:id="@+id/nav_myMeals"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:padding="2dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
                 android:gravity="center"
-                tools:ignore="RtlHardcoded"
-                android:onClick="onClick">
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linner_nav"
+                app:layout_constraintVertical_bias="1"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:onClick="onClick"
+                android:id="@+id/LogOut">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/meals"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/hamburger" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:src="@drawable/logout" />
 
                 <TextView
-                    android:id="@+id/contactus_page"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/meals"
-                    android:textSize="@dimen/_15sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
                     android:fontFamily="@font/helveticaneuelt_arabic"
                     android:includeFontPadding="false"
-                    android:textColor="@color/black"/>
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/signout"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_20sdp" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:id="@+id/nav_favorite"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:padding="2dp"
-                android:gravity="center_vertical"
-                tools:ignore="RtlHardcoded"
-                android:onClick="onClick">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/action_settings"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/beer" />
-
-                <TextView
-                    android:id="@+id/text_lang"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="start"
-                    android:text="@string/adds"
-                    android:textSize="@dimen/_15sdp"
-                    android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:id="@+id/nav_delegates"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:padding="2dp"
-                android:gravity="center_vertical"
-                tools:ignore="RtlHardcoded"
-                android:onClick="onClick">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/delegates"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/driver" />
-
-                <TextView
-                    android:id="@+id/signout_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/delegates"
-                    android:textSize="@dimen/_15sdp"
-                    tools:ignore="RtlHardcoded"
-                    android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/nav_setting"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:padding="2dp"
-                android:gravity="center_vertical"
-                tools:ignore="RtlHardcoded"
-                android:onClick="onClick">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/sittings"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/settings" />
-
-                <TextView
-                    android:id="@+id/nav_packages_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/sittings"
-                    android:textSize="@dimen/_15sdp"
-                    tools:ignore="RtlHardcoded"
-                    android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:id="@+id/nav_aboutApp"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:padding="2dp"
-                android:gravity="center_vertical"
-                tools:ignore="RtlHardcoded"
-                android:onClick="onClick">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/about_app"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/information" />
-
-                <TextView
-                    android:id="@+id/nav_notifications_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/about_app"
-                    android:textSize="@dimen/_15sdp"
-                    tools:ignore="RtlHardcoded"
-                    android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:id="@+id/nav_Consulting"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:padding="2dp"
-                android:gravity="center_vertical"
-                tools:ignore="RtlHardcoded"
-                android:onClick="onClick">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/terms_and_conditions"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/notes" />
-
-                <TextView
-                    android:id="@+id/nav_Consulting_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/terms_and_conditions"
-                    android:textSize="@dimen/_15sdp"
-                    tools:ignore="RtlHardcoded"
-                    android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:id="@+id/nav_langu"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:padding="2dp"
-                android:gravity="center_vertical"
-                tools:ignore="RtlHardcoded"
-                android:onClick="onClick">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/lang"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/lang" />
-
-                <TextView
-                    android:id="@+id/nav_langu_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/lang"
-                    android:textSize="@dimen/_15sdp"
-                    tools:ignore="RtlHardcoded"
-                    android:fontFamily="@font/helveticaneuelt_arabic"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:paddingTop="3dp"
-            android:paddingBottom="3dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linner_nav"
-            app:layout_constraintVertical_bias="1"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:onClick="onClick"
-            android:id="@+id/LogOut">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:src="@drawable/logout" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:fontFamily="@font/helveticaneuelt_arabic"
-                android:includeFontPadding="false"
-                android:paddingBottom="@dimen/_5sdp"
-                android:text="@string/signout"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_20sdp" />
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

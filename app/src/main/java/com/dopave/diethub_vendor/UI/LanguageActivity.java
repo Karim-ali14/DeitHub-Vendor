@@ -5,7 +5,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -47,12 +50,13 @@ public class LanguageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String languageToLoad = "ar";
-                Locale locale = new Locale(languageToLoad);
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config,
-                        getBaseContext().getResources().getDisplayMetrics());
+//                Locale locale = new Locale(languageToLoad);
+//                Locale.setDefault(locale);
+//                Configuration config = new Configuration();
+//                config.locale = locale;
+//                getBaseContext().getResources().updateConfiguration(config,
+//                        getBaseContext().getResources().getDisplayMetrics());
+                setAppLocale(languageToLoad);
                 pref.setLangu("ar");
                 Intent intent = new Intent(LanguageActivity.this, HomeActivity.class)
                         .putExtra("type","Login_inActivity");
@@ -65,12 +69,13 @@ public class LanguageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String languageToLoad = "en";
-                Locale locale = new Locale(languageToLoad);
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config,
-                        getBaseContext().getResources().getDisplayMetrics());
+//                Locale locale = new Locale(languageToLoad);
+//                Locale.setDefault(locale);
+//                Configuration config = new Configuration();
+//                config.locale = locale;
+//                getBaseContext().getResources().updateConfiguration(config,
+//                        getBaseContext().getResources().getDisplayMetrics());
+                setAppLocale(languageToLoad);
                 pref.setLangu("en");
                 Intent intent = new Intent(LanguageActivity.this, HomeActivity.class)
                         .putExtra("type","Login_inActivity");
@@ -82,5 +87,17 @@ public class LanguageActivity extends AppCompatActivity {
 
     public void BackButton(View view) {
         finish();
+    }
+
+    private void setAppLocale(String localeCode){
+        Resources resources = getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
+            config.setLocale(new Locale(localeCode.toLowerCase()));
+        } else {
+            config.locale = new Locale(localeCode.toLowerCase());
+        }
+        resources.updateConfiguration(config, dm);
     }
 }
