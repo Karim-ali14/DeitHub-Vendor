@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Setting.Modify_Personal_info.Modify_personal_infoActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -55,7 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     EditText searchInMap;
     Button SaveButton;
     LatLng SelectedLocation;
-
+    ProviderInformation providerInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +81,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 if (SelectedLocation != null) {
+                    providerInfo.getData().getProvider().setLatitude(SelectedLocation.latitude);
+                    providerInfo.getData().getProvider().setLongitude(SelectedLocation.longitude);
                     startActivity(new Intent(MapsActivity.this, Modify_personal_infoActivity.class)
-                            .putExtra("Lat",SelectedLocation.latitude)
-                            .putExtra("Long",SelectedLocation.longitude));
+                            .putExtra("object",providerInfo));
                     finish();
                 }
                 else
@@ -130,11 +132,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        addMarker(new LatLng(
-                getIntent().getExtras().getDouble("Lat")
-                ,
-                getIntent().getExtras().getDouble("Long")
-        ));
+        if (getIntent().getExtras() != null) {
+            providerInfo = getIntent().getExtras().getParcelable("object");
+            if (providerInfo.getData().getProvider().getLatitude() != null &&
+                providerInfo.getData().getProvider().getLongitude() != null )
+            addMarker(new LatLng(
+                    providerInfo.getData().getProvider().getLatitude()
+                    ,
+                    providerInfo.getData().getProvider().getLongitude()
+            ));
+        }
 
         Select_Location.setOnClickListener(new View.OnClickListener() {
             @Override

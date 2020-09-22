@@ -199,7 +199,9 @@
     <string name="DescriptionAr">الوصف باللغه العربيه</string>
 
     <string name="AddressEn">العنوان باللغه الانجليزيه</string>
+    <string name="enter_AddressEn">ادخل العنوان باللغه الانجليزيه</string>
     <string name="AddressAr">العنوان باللغه العربيه</string>
+    <string name="enter_AddressAr">ادخل العنوان باللغه العربيه</string>
     <string name="modify_personal_info">تعديل البيانات الشصبه</string>
     <string name="modify_restaurant_photos">تعديل صور المطعم</string>
     <string name="restaurant_photos">صور المطعم</string>
@@ -208,5 +210,8 @@
     <string name="Session_Expired">انتهت صلاحية الجلسة</string>
     <string name="Session_Expired_Message">يرجي تسجيل الدخول مره اخري.</string>
     <string name="Your_not_Auth">لم يعد لك حق الوصول لهذه البيانات</string>
+    <string name="way_enter_address">ادخل العنوان باللغه العربيه باضغط علي علامة القلم الموجوده في أعلى ثم تعديل العنوان</string>
+    <string name="way_enter_addressEn">ادخل العنوان باللغه الانجليزيه باضغط علي علامة القلم الموجوده في أعلى ثم تعديل العنوان</string>
+    <string name="way_set_location">حدد الموقع باضغط علي علامة القلم الموجوده في أعلى ثم تعديل الموقع</string>
 
 </resources>

@@ -308,7 +308,6 @@
                     android:layout_marginLeft="15dp"
                     android:fontFamily="@font/helveticaneuelt_arabic"
                     android:includeFontPadding="false"
-                    android:text="الرياض , حي الروضة , شارع الأمير محمد بن سلمان"
                     android:textColor="@color/text_color"
                     android:textSize="17sp"
                     app:layout_constraintEnd_toEndOf="parent"

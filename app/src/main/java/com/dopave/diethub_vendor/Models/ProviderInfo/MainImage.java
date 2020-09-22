@@ -1,10 +1,13 @@
 
 package com.dopave.diethub_vendor.Models.ProviderInfo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MainImage {
+public class MainImage implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -21,6 +24,49 @@ public class MainImage {
     @SerializedName("for")
     @Expose
     private String _for;
+
+    protected MainImage(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        name = in.readString();
+        description = in.readString();
+        alt = in.readString();
+        _for = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(alt);
+        dest.writeString(_for);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<MainImage> CREATOR = new Creator<MainImage>() {
+        @Override
+        public MainImage createFromParcel(Parcel in) {
+            return new MainImage(in);
+        }
+
+        @Override
+        public MainImage[] newArray(int size) {
+            return new MainImage[size];
+        }
+    };
 
     public Integer getId() {
         return id;

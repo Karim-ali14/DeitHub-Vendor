@@ -1,10 +1,13 @@
 
 package com.dopave.diethub_vendor.Models.ProviderInfo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Provider {
+public class Provider implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -51,6 +54,103 @@ public class Provider {
     @SerializedName("main_image")
     @Expose
     private MainImage mainImage;
+
+    protected Provider(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        loginPhone = in.readString();
+        email = in.readString();
+        name = in.readString();
+        nameEn = in.readString();
+        if (in.readByte() == 0) {
+            cityId = null;
+        } else {
+            cityId = in.readInt();
+        }
+        address = in.readString();
+        addressEn = in.readString();
+        if (in.readByte() == 0) {
+            latitude = null;
+        } else {
+            latitude = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            longitude = null;
+        } else {
+            longitude = in.readDouble();
+        }
+        description = in.readString();
+        descriptionEn = in.readString();
+        if (in.readByte() == 0) {
+            mainImageId = null;
+        } else {
+            mainImageId = in.readInt();
+        }
+        mainImage = in.readParcelable(MainImage.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+        dest.writeString(loginPhone);
+        dest.writeString(email);
+        dest.writeString(name);
+        dest.writeString(nameEn);
+        if (cityId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(cityId);
+        }
+        dest.writeString(address);
+        dest.writeString(addressEn);
+        if (latitude == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(latitude);
+        }
+        if (longitude == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(longitude);
+        }
+        dest.writeString(description);
+        dest.writeString(descriptionEn);
+        if (mainImageId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(mainImageId);
+        }
+        dest.writeParcelable(mainImage, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Provider> CREATOR = new Creator<Provider>() {
+        @Override
+        public Provider createFromParcel(Parcel in) {
+            return new Provider(in);
+        }
+
+        @Override
+        public Provider[] newArray(int size) {
+            return new Provider[size];
+        }
+    };
 
     public Integer getId() {
         return id;

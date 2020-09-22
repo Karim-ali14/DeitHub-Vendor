@@ -199,7 +199,9 @@
     <string name="DescriptionAr">Arabic Description</string>
 
     <string name="AddressEn">English Address</string>
+    <string name="enter_AddressEn">Enter English Address</string>
     <string name="AddressAr">Arabic Address</string>
+    <string name="enter_AddressAr">Enter Arabic Address</string>
     <string name="modify_personal_info">Modify Personal Info</string>
     <string name="modify_restaurant_photos">Modify Restaurant Photos</string>
     <string name="restaurant_photos">Restaurant Photos</string>
@@ -208,4 +210,7 @@
     <string name="Session_Expired">Session Expired</string>
     <string name="Session_Expired_Message">Please login again.</string>
     <string name="Your_not_Auth">You no longer have access to this data</string>
+    <string name="way_enter_address">Enter the address in Arabic by clicking on the pen mark at the top and then edit the address</string>
+    <string name="way_enter_addressEn">Enter the address in English by clicking on the pen mark at the top and then edit the address</string>
+    <string name="way_set_location">select the location by clicking on the pen mark at the top and then edit the location</string>
 </resources>

@@ -38,7 +38,9 @@ import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateDelivery.CreateDeliveryActivity;
 import com.dopave.diethub_vendor.UI.CreateDelivery.CreateDeliveryViewModel;
+import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.dopave.diethub_vendor.UI.Setting.MapsActivity;
+import com.dopave.diethub_vendor.UI.SharedPref;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -46,6 +48,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Locale;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class Modify_personal_infoActivity extends AppCompatActivity {
     Spinner spinnerCity;
@@ -65,10 +72,12 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
     ProviderInformation providerInfo;
     Button UpDateButton;
     Modify_Person_info_viewModel viewModel;
+    SharedPref pref;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_personal_info);
+        pref = new SharedPref(this);
         dialog = new ProgressDialog(this);
         viewModel = ViewModelProviders.of(this).get(Modify_Person_info_viewModel.class);
         viewModelForCities = ViewModelProviders.of(this).get(CreateDeliveryViewModel.class);
@@ -97,22 +106,28 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
 
         initMap(savedInstanceState);
 
-        viewModel.getProviderInfo(this,dialog,viewModel,"forPersonalInfo").observe(this,
-                new Observer<ProviderInformation>() {
-            @Override
-            public void onChanged(ProviderInformation providerInfo) {
-                onGetProviderInfo(providerInfo);
-            }
-        });
+        if (getIntent().getExtras() == null) {
+            viewModel.getProviderInfo(this, dialog, viewModel, "forPersonalInfo").observe(this,
+                    new Observer<ProviderInformation>() {
+                        @Override
+                        public void onChanged(ProviderInformation providerInfo) {
+                            onGetProviderInfo(providerInfo);
+                        }
+                    });
+        }else {
+            setLocationUpdate();
+            getCities();
+            setData("Ar");
+        }
 
         chickEvents();
+
     }
 
     public void onGetProviderInfo(ProviderInformation providerInfo) {
         this.providerInfo = providerInfo;
         getCities();
         setData("Ar");
-        setUpdatedData();
         if (providerInfo.getData().getProvider().getLatitude() != null && providerInfo.getData().getProvider().getLongitude() != null)
             addMarker(new LatLng(providerInfo.getData().getProvider().getLatitude(),providerInfo.getData().getProvider().getLongitude()));
     }
@@ -130,10 +145,13 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
                                 updateAddress();
                                 return true;
                             case R.id.modify_Location :{
+//                                startActivity(new Intent(Modify_personal_infoActivity.this,
+//                                        MapsActivity.class)
+//                                        .putExtra("Lat",providerInfo.getData().getProvider().getLatitude())
+//                                        .putExtra("Long",providerInfo.getData().getProvider().getLongitude()));
                                 startActivity(new Intent(Modify_personal_infoActivity.this,
                                         MapsActivity.class)
-                                        .putExtra("Lat",providerInfo.getData().getProvider().getLatitude())
-                                        .putExtra("Long",providerInfo.getData().getProvider().getLongitude()));
+                                        .putExtra("object",providerInfo));
                             }
                             default:
                                 return false;
@@ -154,20 +172,20 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
         Layout_Ar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Layout_Ar.setBackground(getResources().getDrawable(R.drawable.style_tab_active));
-                ArabicText.setTextColor(getResources().getColor(R.color.white));
-                Layout_En.setBackground(getResources().getDrawable(R.drawable.style_tab_normal));
-                EnglishText.setTextColor(getResources().getColor(R.color.colorPrimary));
+//                Layout_Ar.setBackground(getResources().getDrawable(R.drawable.style_tab_active));
+//                ArabicText.setTextColor(getResources().getColor(R.color.white));
+//                Layout_En.setBackground(getResources().getDrawable(R.drawable.style_tab_normal));
+//                EnglishText.setTextColor(getResources().getColor(R.color.colorPrimary));
                 ArabicTab("show");
             }
         });
         Layout_En.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Layout_En.setBackground(getResources().getDrawable(R.drawable.style_tab_active));
-                EnglishText.setTextColor(getResources().getColor(R.color.white));
-                Layout_Ar.setBackground(getResources().getDrawable(R.drawable.style_tab_normal));
-                ArabicText.setTextColor(getResources().getColor(R.color.colorPrimary));
+//                Layout_En.setBackground(getResources().getDrawable(R.drawable.style_tab_active));
+//                EnglishText.setTextColor(getResources().getColor(R.color.white));
+//                Layout_Ar.setBackground(getResources().getDrawable(R.drawable.style_tab_normal));
+//                ArabicText.setTextColor(getResources().getColor(R.color.colorPrimary));
                 EnglishTab("show");
             }
         });
@@ -260,12 +278,12 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (AddressAr.getText().toString().isEmpty())
-                    Toast.makeText(Modify_personal_infoActivity.this, R.string.AddressAr, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Modify_personal_infoActivity.this, R.string.enter_AddressAr, Toast.LENGTH_SHORT).show();
                 else if (AddressEn.getText().toString().isEmpty())
-                    Toast.makeText(Modify_personal_infoActivity.this, R.string.AddressEn, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Modify_personal_infoActivity.this, R.string.enter_AddressEn, Toast.LENGTH_SHORT).show();
                 else {
                     providerInfo.getData().getProvider().setAddress(AddressAr.getText().toString());
-                    providerInfo.getData().getProvider().setAddress(AddressEn.getText().toString());
+                    providerInfo.getData().getProvider().setAddressEn(AddressEn.getText().toString());
                     Address.setText(AddressAr.getText().toString());
                     dialog1.dismiss();
                 }
@@ -290,13 +308,31 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
             About_ResEn.setText(providerInfo.getData().getProvider().getDescriptionEn());
         if (providerInfo.getData().getProvider().getNameEn() != null)
             RestaurantsNameEn.setText(providerInfo.getData().getProvider().getNameEn());
-        if (providerInfo.getData().getProvider().getAddress() != null)
-            Address.setText(providerInfo.getData().getProvider().getAddress());
+        if (providerInfo.getData().getProvider().getAddress() != null || providerInfo.getData().getProvider().getAddressEn() != null)
+            checkLang();
         if (type.equals("Ar"))
             ArabicTab("show");
         else
             EnglishTab("show");
         closeKeyBoard();
+    }
+
+    private void checkLang() {
+        if (!pref.getLagu().equals("empty")) {
+            if (pref.getLagu().equals("ar")) {
+                Address.setText(providerInfo.getData().getProvider().getAddress());
+            }else if (pref.getLagu().equals("en")) {
+                Address.setText(providerInfo.getData().getProvider().getAddressEn());
+            }
+        }
+        else {
+            if (Locale.getDefault().getDisplayLanguage().equals("English"))
+            {
+                Address.setText(providerInfo.getData().getProvider().getAddressEn());
+            }else if (Locale.getDefault().getDisplayLanguage().equals("العربية")){
+                Address.setText(providerInfo.getData().getProvider().getAddress());
+            }
+        }
     }
 
     private void updateDateProvider(){
@@ -307,23 +343,59 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
             EnglishTab("show");
             Toast.makeText(this, R.string.Complete_data, Toast.LENGTH_LONG).show();
         }else {
-            viewModel.updateProvideInfo(Modify_personal_infoActivity.this,dialog,new ProviderInfoRequest(
-                    providerInfo.getData().getProvider().getName(),providerInfo.getData().getProvider().getNameEn(),providerInfo.getData().getProvider().getDescription(),
-                    providerInfo.getData().getProvider().getAddress(),providerInfo.getData().getProvider().getDescriptionEn(),providerInfo.getData().getProvider().getAddressEn(),cityRow.getId(),
-                    providerInfo.getData().getProvider().getLatitude(),providerInfo.getData().getProvider().getLongitude())).observe(Modify_personal_infoActivity.this, new Observer<Defualt>() {
-                @Override
-                public void onChanged(Defualt defualt) {
-                    Toast.makeText(Modify_personal_infoActivity.this, R.string.Successfully_updated, Toast.LENGTH_SHORT).show();
-                }
-            });
+            if (makeRequestObjectUpdate() != null) {
+                viewModel.updateProvideInfo(Modify_personal_infoActivity.this, dialog, new ProviderInfoRequest(
+                        providerInfo.getData().getProvider().getName(), providerInfo.getData().getProvider().getNameEn(), providerInfo.getData().getProvider().getDescription(),
+                        providerInfo.getData().getProvider().getAddress(), providerInfo.getData().getProvider().getDescriptionEn(), providerInfo.getData().getProvider().getAddressEn(), cityRow.getId(),
+                        providerInfo.getData().getProvider().getLatitude(), providerInfo.getData().getProvider().getLongitude())).observe(Modify_personal_infoActivity.this, new Observer<Defualt>() {
+                    @Override
+                    public void onChanged(Defualt defualt) {
+                        Toast.makeText(Modify_personal_infoActivity.this, R.string.Successfully_updated, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Modify_personal_infoActivity.this, HomeActivity.class)
+                        .putExtra("type","Modify")
+                                .setFlags(FLAG_ACTIVITY_NEW_TASK|FLAG_ACTIVITY_CLEAR_TASK));
+                    }
+                });
+            }
+        }
+    }
+
+    private ProviderInformation makeRequestObjectUpdate(){
+        providerInfo.getData().getProvider().setName(RestaurantsName.getText().toString());
+        providerInfo.getData().getProvider().setNameEn(RestaurantsNameEn.getText().toString());
+        providerInfo.getData().getProvider().setDescription(About_Res.getText().toString());
+        providerInfo.getData().getProvider().setDescriptionEn(About_ResEn.getText().toString());
+        if (providerInfo.getData().getProvider().getAddressEn() == null){
+            Toast.makeText(Modify_personal_infoActivity.this, R.string.way_enter_addressEn, Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        else if (providerInfo.getData().getProvider().getAddress() == null){
+            Toast.makeText(Modify_personal_infoActivity.this, R.string.way_enter_address, Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        else if (providerInfo.getData().getProvider().getLatitude() == null ||
+                providerInfo.getData().getProvider().getLongitude() == null){
+            Toast.makeText(Modify_personal_infoActivity.this, R.string.way_set_location, Toast.LENGTH_SHORT).show();
+            return null;
+        }{
+            Log.i("informationnnnnn",providerInfo.getData().getProvider().getAddress()+"" +
+                    " "+providerInfo.getData().getProvider().getAddressEn()+" "+
+                    providerInfo.getData().getProvider().getLongitude()+" "+
+                    providerInfo.getData().getProvider().getLongitude());
+            return providerInfo;
         }
     }
 
     private boolean ArabicTab(String type){
-
+        Layout_Ar.setBackground(getResources().getDrawable(R.drawable.style_tab_active));
+        ArabicText.setTextColor(getResources().getColor(R.color.white));
+        Layout_En.setBackground(getResources().getDrawable(R.drawable.style_tab_normal));
+        EnglishText.setTextColor(getResources().getColor(R.color.colorPrimary));
         if (type.equals("show")) {
             Layout_TabEnglish.setVisibility(View.GONE);
             Layout_TabArabic.setVisibility(View.VISIBLE);
+            if (providerInfo.getData().getProvider().getAddress() != null)
+                Address.setText(providerInfo.getData().getProvider().getAddress());
             closeKeyBoard();
             return true;
         }
@@ -336,9 +408,15 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
     }
 
     private boolean EnglishTab(String type){
+        Layout_En.setBackground(getResources().getDrawable(R.drawable.style_tab_active));
+        EnglishText.setTextColor(getResources().getColor(R.color.white));
+        Layout_Ar.setBackground(getResources().getDrawable(R.drawable.style_tab_normal));
+        ArabicText.setTextColor(getResources().getColor(R.color.colorPrimary));
         if (type.equals("show")) {
             Layout_TabEnglish.setVisibility(View.VISIBLE);
             Layout_TabArabic.setVisibility(View.GONE);
+            if (providerInfo.getData().getProvider().getAddressEn() != null)
+                Address.setText(providerInfo.getData().getProvider().getAddressEn());
             closeKeyBoard();
             return true;
         }
@@ -362,6 +440,10 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 gmap = googleMap;
+                if (getIntent().getExtras()!=null){
+                    if (providerInfo.getData().getProvider().getLatitude() != null && providerInfo.getData().getProvider().getLongitude() != null)
+                        addMarker(new LatLng(providerInfo.getData().getProvider().getLatitude(),providerInfo.getData().getProvider().getLongitude()));
+                }
             }
         });
 
@@ -455,22 +537,24 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
         mapView.onStart();
     }
 
-    private void setUpdatedData() {
+
+    private void setLocationUpdate() {
         if (getIntent().getExtras()!=null){
 
-            providerInfo.getData().getProvider().setLatitude(getIntent().getExtras().getDouble("Lat"));
-            providerInfo.getData().getProvider().setLongitude(getIntent().getExtras().getDouble("Long"));
-
-//            Data data = new Data(providerInfo.getData().getId(),
-//                    providerInfo.getData().getLoginPhone(), providerInfo.getData().getEmail(),
-//                    providerInfo.getData().getName(), providerInfo.getData().getNameEn(), providerInfo.getData().getCityId(),
-//                    getIntent().getExtras().getString("Address"),getIntent().getExtras().getString("Address"),
-//                    getIntent().getExtras().getDouble("Lat"),getIntent().getExtras().getDouble("Long"),
-//                    providerInfo.getData().getDescription(),providerInfo.getData().getDescriptionEn(),
-//                    providerInfo.getData().getDeliveryPrice(),providerInfo.getData().getMainImageId(), providerInfo.getData().getMainImage());
-//            ProviderInfo providerInfo2 = new ProviderInfo(this.providerInfo.getMessage(), data, this.providerInfo.getSuccess(), this.providerInfo.getCode(), this.providerInfo.getErrors());
-
-            Log.i("ttttttt", providerInfo.getData().getProvider().getLatitude()+"");
+//            providerInfo.getData().getProvider().setLatitude(getIntent().getExtras().getDouble("Lat"));
+//            providerInfo.getData().getProvider().setLongitude(getIntent().getExtras().getDouble("Long"));
+//
+////            Data data = new Data(providerInfo.getData().getId(),
+////                    providerInfo.getData().getLoginPhone(), providerInfo.getData().getEmail(),
+////                    providerInfo.getData().getName(), providerInfo.getData().getNameEn(), providerInfo.getData().getCityId(),
+////                    getIntent().getExtras().getString("Address"),getIntent().getExtras().getString("Address"),
+////                    getIntent().getExtras().getDouble("Lat"),getIntent().getExtras().getDouble("Long"),
+////                    providerInfo.getData().getDescription(),providerInfo.getData().getDescriptionEn(),
+////                    providerInfo.getData().getDeliveryPrice(),providerInfo.getData().getMainImageId(), providerInfo.getData().getMainImage());
+////            ProviderInfo providerInfo2 = new ProviderInfo(this.providerInfo.getMessage(), data, this.providerInfo.getSuccess(), this.providerInfo.getCode(), this.providerInfo.getErrors());
+//
+//            Log.i("ttttttt", providerInfo.getData().getProvider().getLatitude()+"");
+            providerInfo = getIntent().getExtras().getParcelable("object");
         }
     }
 

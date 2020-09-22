@@ -150,15 +150,24 @@ public class Modify_Person_Info_Repository {
                 if (response.code() == 200)
                     mutableLiveData.setValue(response.body());
                 else {
-                    try {
-                        Log.i("Error Request Message:", new JSONObject(response.errorBody().string()).getJSONArray("errors")+"");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                     if (response.code() == 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                    }else if (response.code() == 422) {
+                        try {
+                            JSONArray errors = new JSONObject(response.errorBody().string()).getJSONArray("errors");
+                            if (errors.getJSONObject(0).getJSONObject("context").getString("key").equals("address")){
+                                Toast.makeText(context, context.getString(R.string.way_enter_address), Toast.LENGTH_LONG).show();
+                            }else if (errors.getJSONObject(0).getJSONObject("context").getString("key").equals("addressEn")){
+                                Toast.makeText(context, context.getString(R.string.way_enter_addressEn), Toast.LENGTH_LONG).show();
+                            }else
+                                Toast.makeText(context, errors.getJSONObject(0).getJSONObject("context").getString("key"), Toast.LENGTH_SHORT).show();
+                            Log.i("TTTTTT", errors + "");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                     }else {
                         try {
                             String message = new JSONObject(response.errorBody().string())
