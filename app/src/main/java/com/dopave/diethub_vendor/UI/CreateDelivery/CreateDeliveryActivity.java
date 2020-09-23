@@ -77,6 +77,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     boolean isValid,firstOpen,isSpinnerCities;
     int SpinnerCitiesClick = 0;
     Button EnterButton;
+    int i = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +130,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
 
         editTextChangeStatus();
 
-        getCities();
+
         if (getIntent().getExtras().getString("type").equals("update")) {
             Password.setVisibility(View.GONE);
             RePassword.setVisibility(View.GONE);
@@ -137,7 +138,8 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             delivery = getIntent().getExtras().getParcelable("delivery");
             if (delivery != null)
                 setData();
-        }
+        }else
+            getCities();
     }
 
     private void setData() {
@@ -151,6 +153,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             Picasso.with(this).load(path).into(profile_image);
             Log.i("TTTTTT",path);
         }
+        getCities();
     }
 
     private void update(){
@@ -205,7 +208,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         });
     }
 
-    public void onGetCity(Cities cities){
+    public void onGetCity(final Cities cities){
         AdapterOfSpinner arrayAdapter = new AdapterOfSpinner(CreateDeliveryActivity.this,
                 R.layout.city_item,cities.getData().getCityRows());
 
@@ -219,6 +222,12 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                 else if (Common.knowLang(CreateDeliveryActivity.this).equals("en"))
                     CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getNameEn());
                 CitySelected.setTextColor(getResources().getColor(R.color.black));
+                if (getIntent().getExtras().getString("type").equals("update")) {
+                    if (getIntent().getExtras().getString("type").equals("update") && i == 0) {
+                        i++;
+                        Log.i("TTTTTTTT",delivery.getCity().getId()+"");
+                    }
+                }
             }
 
             @Override
@@ -226,8 +235,6 @@ public class CreateDeliveryActivity extends AppCompatActivity {
 
             }
         });
-        if (getIntent().getExtras().getString("type").equals("update"))
-            spinnerCity.setSelection(delivery.getCityId());
     }
 
     private void closeKeyBoard() {
