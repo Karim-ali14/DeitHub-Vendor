@@ -243,7 +243,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:text="مكة المكرمة"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/_17sdp"
                 app:layout_constraintBottom_toBottomOf="parent"

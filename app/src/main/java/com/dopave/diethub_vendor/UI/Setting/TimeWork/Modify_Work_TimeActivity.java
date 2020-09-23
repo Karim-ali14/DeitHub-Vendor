@@ -90,8 +90,15 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (SaturdayFromTime.getText().equals("--:--"))
                     showTimeWorkDialog(SaturdayFromTime,SaturdayToTime,SaturdayCheckbox,"From","Sat");
-                else
+                else if (SaturdayToTime.getText().equals("--:--"))
                     showTimeWorkDialog(SaturdayFromTime,SaturdayToTime,SaturdayCheckbox,"To","Sat");
+                else {
+                    SaturdayFromTime.setText("--:--");
+                    SaturdayToTime.setText("--:--");
+                    SaturdayFrom = null;
+                    SaturdayTo = null;
+                    SaturdayCheckbox.setImageResource(R.drawable.tockbg);
+                }
             }
         });
 
@@ -100,8 +107,15 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (SundayFromTime.getText().equals("--:--"))
                     showTimeWorkDialog(SundayFromTime,SundayToTime,SundayCheckbox,"From","Sun");
-                else
+                else if (SundayToTime.getText().equals("--:--"))
                     showTimeWorkDialog(SundayFromTime,SundayToTime,SundayCheckbox,"To","Sun");
+                else {
+                    SundayFromTime.setText("--:--");
+                    SundayToTime.setText("--:--");
+                    SundayFrom = null;
+                    SundayTo = null;
+                    SundayCheckbox.setImageResource(R.drawable.tockbg);
+                }
             }
         });
 
@@ -110,8 +124,15 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (MondayFromTime.getText().equals("--:--"))
                     showTimeWorkDialog(MondayFromTime,MondayToTime,MondayCheckBox,"From","Mon");
-                else
+                else if (MondayToTime.getText().equals("--:--"))
                     showTimeWorkDialog(MondayFromTime,MondayToTime,MondayCheckBox,"To","Mon");
+                else {
+                    MondayFromTime.setText("--:--");
+                    MondayToTime.setText("--:--");
+                    MondayFrom = null;
+                    MondayTo = null;
+                    MondayCheckBox.setImageResource(R.drawable.tockbg);
+                }
             }
         });
 
@@ -120,8 +141,15 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (TuesdayFromTime.getText().equals("--:--"))
                     showTimeWorkDialog(TuesdayFromTime,TuesdayToTime,TuesdayCheckbox,"From","Tues");
-                else
+                else if (TuesdayToTime.getText().equals("--:--"))
                     showTimeWorkDialog(TuesdayFromTime,TuesdayToTime,TuesdayCheckbox,"To","Tues");
+                else{
+                    TuesdayFromTime.setText("--:--");
+                    TuesdayToTime.setText("--:--");
+                    TuesdayFrom = null;
+                    TuesdayTo = null;
+                    TuesdayCheckbox.setImageResource(R.drawable.tockbg);
+                }
             }
         });
 
@@ -130,8 +158,15 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (WednesdayFromTime.getText().equals("--:--"))
                     showTimeWorkDialog(WednesdayFromTime,WednesdayToTime,WednesdayCheckbox,"From","Wed");
-                else
+                else if (WednesdayToTime.getText().equals("--:--"))
                     showTimeWorkDialog(WednesdayFromTime,WednesdayToTime,WednesdayCheckbox,"To","Wed");
+                else {
+                    WednesdayFromTime.setText("--:--");
+                    WednesdayToTime.setText("--:--");
+                    WednesdayFrom = null;
+                    WednesdayTo = null;
+                    WednesdayCheckbox.setImageResource(R.drawable.tockbg);
+                }
             }
         });
 
@@ -140,8 +175,15 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (ThursdayFromTime.getText().equals("--:--"))
                     showTimeWorkDialog(ThursdayFromTime,ThursdayToTime,ThursdayCheckbox,"From","Thur");
-                else
+                else if (ThursdayToTime.getText().equals("--:--"))
                     showTimeWorkDialog(ThursdayFromTime,ThursdayToTime,ThursdayCheckbox,"To","Thur");
+                else{
+                    ThursdayFromTime.setText("--:--");
+                    ThursdayToTime.setText("--:--");
+                    ThursdayFrom = null;
+                    ThursdayTo = null;
+                    ThursdayCheckbox.setImageResource(R.drawable.tockbg);
+                }
             }
         });
 
@@ -150,8 +192,15 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (FridayFromTime.getText().equals("--:--"))
                     showTimeWorkDialog(FridayFromTime,FridayToTime,FridayCheckbox,"From","Fri");
-                else
+                else if (FridayToTime.getText().equals("--:--"))
                     showTimeWorkDialog(FridayFromTime,FridayToTime,FridayCheckbox,"To","Fri");
+                else {
+                    FridayFromTime.setText("--:--");
+                    FridayToTime.setText("--:--");
+                    FridayFrom = null;
+                    FridayTo = null;
+                    FridayCheckbox.setImageResource(R.drawable.tockbg);
+                }
             }
         });
 
@@ -163,7 +212,7 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
                         new Saturday(SundayFrom,SundayTo),
                         new Sunday(SundayFrom,SundayTo),
                         new Monday(MondayFrom,MondayTo),
-                        new Tuesday(ThursdayFrom,ThursdayTo),
+                        new Tuesday(TuesdayFrom,TuesdayTo),
                         new Wednesday(WednesdayFrom,WednesdayTo),
                         new Thursday(ThursdayFrom,ThursdayTo),
                         new Friday(FridayFrom,FridayTo)),Modify_Work_TimeActivity.this,
@@ -188,7 +237,7 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
                     timeFrom.setText(hourOfDay + ":" + minute);
                     setNewTime(day,type,hourOfDay + ":" + minute);
                     showTimeWorkDialog(timeFrom,timeTo,image,"To",day);
-                }else {
+                }else if (type.equals("To")) {
                     timeTo.setText(hourOfDay + ":" + minute);
                     setNewTime(day,type,hourOfDay + ":" + minute);
                     image.setImageResource(R.drawable.active);
@@ -249,7 +298,7 @@ public class Modify_Work_TimeActivity extends AppCompatActivity {
         });
     }
 
-    public void onGetDataOfTimeWork(TimeWorks timeWorks) {
+    public void onGetDataOfTimeWork(TimeWorks timeWorks)    {
         if (timeWorks.getData() != null){
             if (timeWorks.getData().getSaturday().getFrom() != null
                     && timeWorks.getData().getSaturday().getTo() != null) {

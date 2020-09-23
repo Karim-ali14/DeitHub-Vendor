@@ -33,6 +33,9 @@ public class MainImage {
         this.base64 = base64;
     }
 
+    public MainImage() {
+    }
+
     public Integer getId() {
         return id;
     }

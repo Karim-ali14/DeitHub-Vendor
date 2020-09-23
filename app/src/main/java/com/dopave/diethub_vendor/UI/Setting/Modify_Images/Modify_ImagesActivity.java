@@ -15,9 +15,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.dopave.diethub_vendor.Adapter.AdapterForEditImages;
 import com.dopave.diethub_vendor.Common.Common;
@@ -43,7 +45,6 @@ public class Modify_ImagesActivity extends AppCompatActivity {
     Button EnterButton;
     ProgressDialog dialog;
     ImageView MainImage;
-    com.dopave.diethub_vendor.Models.ProviderIMages.Update.MainImage mainImage;
     RecyclerView recyclerView;
     public int SELECT_IMAGE_FOR_PROVIDER = 2;
     public int SELECT_MAIN_IMAGE_FOR_PROVIDER = 1;
@@ -78,32 +79,68 @@ public class Modify_ImagesActivity extends AppCompatActivity {
         EnterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mainImage != null) {
-                    viewModel.updateImages(Modify_ImagesActivity.this,dialog,
-                            new MainImage(mainImage.getId(),"edited",MainImageBase46),listForRequest)
-                            .observe(Modify_ImagesActivity.this, new Observer<Defualt>() {
-                                @Override
-                                public void onChanged(Defualt defualt) {
-                                    startActivity(new Intent(Modify_ImagesActivity.this,
-                                            HomeActivity.class).putExtra("type","Modify"));
-                                }
-                            });
+                Log.i("IIIIII","onclick");
+                if (Common.currentPosition.getData().getProvider().getMainImage() != null) {
+                    Log.i("IIIIII","getMainImage != null");
+                    if (MainImageBase46 != null && listForRequest.size() != 0) {
+                        Log.i("IIIIII","MainImageBase46 != null && listForRequest.size() != 0");
+                        upDateImage(new MainImage(Common.currentPosition.getData().getProvider().
+                                getMainImage().getId(), "edited", MainImageBase46),listForRequest);
+                    }else if (MainImageBase46 != null || listForRequest.size() != 0){
+                        Log.i("IIIIII","MainImageBase46 != null || listForRequest.size() != 0");
+                        if (MainImageBase46 != null){
+                            Log.i("IIIIII","MainImageBase46 != null");
+                            upDateImage(new MainImage(Common.currentPosition.getData().getProvider().
+                                    getMainImage().getId(), "edited", MainImageBase46),null);
+
+                        }else if (listForRequest.size() != 0){
+                            Log.i("IIIIII","listForRequest.size() != 0");
+
+                            upDateImage(null,listForRequest);
+                        }
+                    }else {
+                        Log.i("IIIIII","لا تغييرات");
+                        Toast.makeText(Modify_ImagesActivity.this, R.string.no_changes, Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else {
-                    viewModel.updateImages(Modify_ImagesActivity.this,dialog,
-                            new MainImage("new",MainImageBase46),listForRequest)
-                            .observe(Modify_ImagesActivity.this, new Observer<Defualt>() {
-                                @Override
-                                public void onChanged(Defualt defualt) {
-                                    startActivity(new Intent(Modify_ImagesActivity.this,
-                                            HomeActivity.class).putExtra("type","Modify"));
-                                }
-                            });
+                    if (MainImageBase46 != null && listForRequest.size() != 0) {
+
+                        upDateImage(new MainImage(Common.currentPosition.getData().getProvider().
+                                getMainImage().getId(), "new", MainImageBase46),listForRequest);
+                    }else if (MainImageBase46 != null || listForRequest.size() != 0){
+
+                        if (MainImageBase46 != null){
+
+                            upDateImage(new MainImage(Common.currentPosition.getData().getProvider().
+                                    getMainImage().getId(), "new", MainImageBase46),null);
+
+                        }else if (listForRequest.size() != 0){
+
+                            upDateImage(null,listForRequest);
+                        }
+                    }else {
+                        
+                        Toast.makeText(Modify_ImagesActivity.this, R.string.no_changes, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
     }
 
+    private void upDateImage(MainImage mainImage,
+                             ArrayList<com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image>
+                                     list_For_Request){
+        viewModel.updateImages(Modify_ImagesActivity.this, dialog,
+                mainImage, list_For_Request)
+                .observe(Modify_ImagesActivity.this, new Observer<Defualt>() {
+                    @Override
+                    public void onChanged(Defualt defualt) {
+                        startActivity(new Intent(Modify_ImagesActivity.this,
+                                HomeActivity.class).putExtra("type", "Modify"));
+                    }
+                });
+    }
     private void getProviderImages() {
         viewModel.getProviderImages(dialog,this,viewModel).observe(this, new Observer<ProviderImagesResponse>() {
             @Override

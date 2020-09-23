@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -125,7 +126,7 @@ public class Modify_ImagesRepository {
     }
 
     public MutableLiveData<Defualt> updateImages(final Context context, final ProgressDialog dialog ,
-                                                 MainImage mainImage, List<Image> list){
+                                                 MainImage mainImage, final List<Image> list){
         dialog.show();
         final MutableLiveData<Defualt> mutableLiveData = new MutableLiveData<>();
         Common.getAPIRequest().updateImages("Bearer "+
@@ -135,6 +136,7 @@ public class Modify_ImagesRepository {
             @Override
             public void onResponse(Call<Defualt> call, Response<Defualt> response) {
                 dialog.dismiss();
+
                 if (response.code() == 200) {
                     mutableLiveData.setValue(response.body());
                 } else {
