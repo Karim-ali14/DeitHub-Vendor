@@ -8,7 +8,7 @@ import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DeliveryRow implements Parcelable {
+public class DeliveryRow  implements Parcelable{
 
     @SerializedName("id")
     @Expose
@@ -53,6 +53,7 @@ public class DeliveryRow implements Parcelable {
         } else {
             cityId = in.readInt();
         }
+        image = in.readParcelable(Image.class.getClassLoader());
     }
 
     @Override
@@ -73,6 +74,7 @@ public class DeliveryRow implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(cityId);
         }
+        dest.writeParcelable(image, flags);
     }
 
     @Override

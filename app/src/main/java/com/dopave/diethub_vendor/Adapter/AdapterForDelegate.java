@@ -112,6 +112,8 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
         if (row.getImage() != null){
             String path = Common.BaseUrl + "images/" + row.getImage().getFor() + "/" + Uri.encode(row.getImage().getName());
             Picasso.with(context).load(path).into(holder.IconOfDelegate);
+        }else {
+            holder.IconOfDelegate.setImageResource(R.drawable.personalinfo);
         }
 
         if (row.getVehicle() != null){

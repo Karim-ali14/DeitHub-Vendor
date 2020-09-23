@@ -95,11 +95,18 @@ public class CreateVehicleActivity extends AppCompatActivity {
     List<Image> listImageRequest;
     int numberOfIndexes = 0;
     String driving_licence_ImageBase46,vehicle_licence_ImageBase46;
-
+    Button Confirm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_vehicle);
+        Confirm = findViewById(R.id.Confirm);
+        Confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickConfirmButton();
+            }
+        });
         DrivingLicenseLayout = findViewById(R.id.DrivingLicenseLayout);
         DrivingLicenseLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +161,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (getIntent().getExtras().getString("type").equals("update")) {
+            Confirm.setText(getResources().getString(R.string.update));
             deliveryId = getIntent().getExtras().getString("deliveryId");
             getVehicleData();
         }else{
@@ -243,7 +251,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
         getVehicleTypes();
     }
 
-    public void onClick(View view) {
+    public void onClickConfirmButton() {
         if (getIntent().getExtras().getString("type").equals("update")) {
             updateVehicle();
         }else {

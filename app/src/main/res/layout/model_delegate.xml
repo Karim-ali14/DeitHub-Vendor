@@ -29,7 +29,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
-                android:src="@drawable/delegate_i"
+                android:src="@drawable/personalinfo"
                 android:layout_margin="@dimen/_10sdp"
                 android:id="@+id/IconOfDelegate"/>
         </LinearLayout>
@@ -48,7 +48,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/helvetica_bold"
                 android:includeFontPadding="false"
-                android:text="أحمد ابراهيم"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_17sdp"
                 android:id="@+id/NameOfDelegate"/>
@@ -63,7 +62,6 @@
                 android:paddingLeft="@dimen/_15sdp"
                 android:paddingRight="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="الرياض"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15sdp"
                 android:id="@+id/AddressOfDelegate"/>
@@ -96,7 +94,6 @@
                 android:fontFamily="@font/helveticaneuelt_arabic"
                 android:includeFontPadding="false"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="سيارة"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
             <TextView
@@ -106,7 +103,6 @@
                 android:fontFamily="@font/helveticaneuelt_arabic"
                 android:includeFontPadding="false"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="هونداي"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
 
@@ -119,7 +115,6 @@
                 android:fontFamily="@font/helveticaneuelt_arabic"
                 android:includeFontPadding="false"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="2018"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
             <TextView
@@ -129,7 +124,6 @@
                 android:fontFamily="@font/helveticaneuelt_arabic"
                 android:includeFontPadding="false"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="123456"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
         </LinearLayout>
