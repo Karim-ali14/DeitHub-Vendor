@@ -56,10 +56,10 @@ public class Modify_Person_Info_Repository {
                 .enqueue(new Callback<ProviderInformation>() {
                     @Override
                     public void onResponse(Call<ProviderInformation> call, Response<ProviderInformation> response) {
-                        dialog.dismiss();
                         if (response.code() == 200){
                             mutableLiveData.setValue(response.body());
                         }else {
+                            dialog.dismiss();
                             if (response.code() == 500){
                                 Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                             }else if (response.code() == 401){

@@ -73,6 +73,7 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
     Button UpDateButton;
     Modify_Person_info_viewModel viewModel;
     SharedPref pref;
+    int i = 0;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,9 +116,8 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
                         }
                     });
         }else {
+            dialog.show();
             setLocationUpdate();
-            getCities();
-            setData("Ar");
         }
 
         chickEvents();
@@ -465,12 +465,13 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
         viewModelForCities.getCities(this,dialog,viewModelForCities).observe(this, new Observer<Cities>() {
             @Override
             public void onChanged(Cities cities) {
+                dialog.dismiss();
                 onGetCity(cities);
             }
         });
     }
 
-    public void onGetCity(Cities cities){
+    public void onGetCity(final Cities cities){
         CreateDeliveryActivity.AdapterOfSpinner arrayAdapter = new CreateDeliveryActivity.AdapterOfSpinner(Modify_personal_infoActivity.this,
                 R.layout.city_item,cities.getData().getCityRows());
 
@@ -485,6 +486,17 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
                 else if (Common.knowLang(Modify_personal_infoActivity.this).equals("en"))
                     CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getNameEn());
                 CitySelected.setTextColor(getResources().getColor(R.color.black));
+                if (i == 0) {
+                    i++;
+                    for (CityRow row : cities.getData().getCityRows()) {
+                        if (row.getId() == providerInfo.getData().getProvider().getCityId()){
+                            if (Common.knowLang(Modify_personal_infoActivity.this).equals("ar"))
+                                CitySelected.setText(row.getName());
+                            else if (Common.knowLang(Modify_personal_infoActivity.this).equals("en"))
+                                CitySelected.setText(row.getNameEn());
+                        }
+                    }
+                }
             }
 
             @Override
@@ -492,7 +504,6 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
 
             }
         });
-        spinnerCity.setSelection(providerInfo.getData().getProvider().getCityId());
     }
 
     @Override
@@ -555,6 +566,8 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
 //
 //            Log.i("ttttttt", providerInfo.getData().getProvider().getLatitude()+"");
             providerInfo = getIntent().getExtras().getParcelable("object");
+            getCities();
+            setData("Ar");
         }
     }
 

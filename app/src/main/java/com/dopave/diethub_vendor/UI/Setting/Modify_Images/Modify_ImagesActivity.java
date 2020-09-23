@@ -120,7 +120,7 @@ public class Modify_ImagesActivity extends AppCompatActivity {
                             upDateImage(null,listForRequest);
                         }
                     }else {
-                        
+
                         Toast.makeText(Modify_ImagesActivity.this, R.string.no_changes, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -155,6 +155,7 @@ public class Modify_ImagesActivity extends AppCompatActivity {
                 "forImage").observe(this, new Observer<ProviderInformation>() {
             @Override
             public void onChanged(ProviderInformation providerInfo) {
+                dialog.dismiss();
                 onGetMainImage(providerInfo);
             }
         });

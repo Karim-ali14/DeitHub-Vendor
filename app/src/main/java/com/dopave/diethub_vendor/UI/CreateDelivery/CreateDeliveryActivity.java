@@ -225,7 +225,14 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                 if (getIntent().getExtras().getString("type").equals("update")) {
                     if (getIntent().getExtras().getString("type").equals("update") && i == 0) {
                         i++;
-                        Log.i("TTTTTTTT",delivery.getCity().getId()+"");
+                        for (CityRow row : cities.getData().getCityRows()) {
+                            if (row.getId() == delivery.getCityId()){
+                                if (Common.knowLang(CreateDeliveryActivity.this).equals("ar"))
+                                    CitySelected.setText(row.getName());
+                                else if (Common.knowLang(CreateDeliveryActivity.this).equals("en"))
+                                    CitySelected.setText(row.getNameEn());
+                            }
+                        }
                     }
                 }
             }
