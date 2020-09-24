@@ -1,6 +1,5 @@
 
 package com.dopave.diethub_vendor.Models.Orders;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -15,30 +14,21 @@ public class Option implements Parcelable {
     @SerializedName("unitPricePiastre")
     @Expose
     private Integer unitPricePiastre;
-    @SerializedName("quantity")
+    @SerializedName("option_id")
     @Expose
-    private Integer quantity;
-    @SerializedName("optionName")
+    private Integer optionId;
+    @SerializedName("order_detail_id")
     @Expose
-    private String optionName;
-    @SerializedName("optionNameEn")
-    @Expose
-    private String optionNameEn;
+    private String orderDetailId;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
-    @SerializedName("deletedAt")
+    @SerializedName("options")
     @Expose
-    private Object deletedAt;
-    @SerializedName("order_detail_id")
-    @Expose
-    private String orderDetailId;
-    @SerializedName("option_id")
-    @Expose
-    private Integer optionId;
+    private Options options;
 
     protected Option(Parcel in) {
         if (in.readByte() == 0) {
@@ -52,20 +42,14 @@ public class Option implements Parcelable {
             unitPricePiastre = in.readInt();
         }
         if (in.readByte() == 0) {
-            quantity = null;
-        } else {
-            quantity = in.readInt();
-        }
-        optionName = in.readString();
-        optionNameEn = in.readString();
-        createdAt = in.readString();
-        updatedAt = in.readString();
-        orderDetailId = in.readString();
-        if (in.readByte() == 0) {
             optionId = null;
         } else {
             optionId = in.readInt();
         }
+        orderDetailId = in.readString();
+        createdAt = in.readString();
+        updatedAt = in.readString();
+        options = in.readParcelable(Options.class.getClassLoader());
     }
 
     @Override
@@ -82,23 +66,16 @@ public class Option implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(unitPricePiastre);
         }
-        if (quantity == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(quantity);
-        }
-        dest.writeString(optionName);
-        dest.writeString(optionNameEn);
-        dest.writeString(createdAt);
-        dest.writeString(updatedAt);
-        dest.writeString(orderDetailId);
         if (optionId == null) {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
             dest.writeInt(optionId);
         }
+        dest.writeString(orderDetailId);
+        dest.writeString(createdAt);
+        dest.writeString(updatedAt);
+        dest.writeParcelable(options, flags);
     }
 
     @Override
@@ -134,28 +111,20 @@ public class Option implements Parcelable {
         this.unitPricePiastre = unitPricePiastre;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getOptionId() {
+        return optionId;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setOptionId(Integer optionId) {
+        this.optionId = optionId;
     }
 
-    public String getOptionName() {
-        return optionName;
+    public String getOrderDetailId() {
+        return orderDetailId;
     }
 
-    public void setOptionName(String optionName) {
-        this.optionName = optionName;
-    }
-
-    public String getOptionNameEn() {
-        return optionNameEn;
-    }
-
-    public void setOptionNameEn(String optionNameEn) {
-        this.optionNameEn = optionNameEn;
+    public void setOrderDetailId(String orderDetailId) {
+        this.orderDetailId = orderDetailId;
     }
 
     public String getCreatedAt() {
@@ -174,28 +143,12 @@ public class Option implements Parcelable {
         this.updatedAt = updatedAt;
     }
 
-    public Object getDeletedAt() {
-        return deletedAt;
+    public Options getOptions() {
+        return options;
     }
 
-    public void setDeletedAt(Object deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public String getOrderDetailId() {
-        return orderDetailId;
-    }
-
-    public void setOrderDetailId(String orderDetailId) {
-        this.orderDetailId = orderDetailId;
-    }
-
-    public Integer getOptionId() {
-        return optionId;
-    }
-
-    public void setOptionId(Integer optionId) {
-        this.optionId = optionId;
+    public void setOptions(Options options) {
+        this.options = options;
     }
 
 }

@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -29,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dopave.diethub_vendor.Adapter.AdapterForMeals;
 import com.dopave.diethub_vendor.Adapter.AdapterForOrder;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Orders.Detail;
@@ -39,6 +42,7 @@ import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
+import com.dopave.diethub_vendor.UI.SharedPref;
 import com.squareup.picasso.Picasso;
 
 import java.net.SocketTimeoutException;
@@ -52,9 +56,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Details_OrderActivity extends AppCompatActivity {
-    TextView CountText,detailsOfOrders,countOfOrder,paymentMethod,status,clientAddress,
+    TextView paymentMethod,status,clientAddress,
             NumberOfOrder,TotalNumber,NameOfClient;
-    LinearLayout CountLayout,CC;
+    LinearLayout CountLayout;
     ImageView VisaIcon;
     View line3,line8;
     Button ButtonUpDate;
@@ -64,6 +68,8 @@ public class Details_OrderActivity extends AppCompatActivity {
     ConstraintLayout Update_Layout;
     ProgressDialog dialog;
     CircleImageView ClientIconDetails;
+    RecyclerView recyclerForMeals;
+    SharedPref pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,22 +83,22 @@ public class Details_OrderActivity extends AppCompatActivity {
     }
 
     private void init() {
+        pref = new SharedPref(this);
         final OrderRaw raw = getIntent().getExtras().getParcelable("orderRaw");
         getWindow().getDecorView(). setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         NumberOfOrder = findViewById(R.id.NumberOfOrder);
-        detailsOfOrders = findViewById(R.id.detailsOfOrders);
-        countOfOrder = findViewById(R.id.countOfOrder);
+        recyclerForMeals = findViewById(R.id.recyclerForMeals);
+        recyclerForMeals.setHasFixedSize(true);
+        recyclerForMeals.setLayoutManager(new LinearLayoutManager(this));
         ClientIconDetails = findViewById(R.id.ClientIconDetails);
         NameOfClient = findViewById(R.id.NameOfClient);
         paymentMethod = findViewById(R.id.paymentMethod);
         status = findViewById(R.id.status);
         TotalNumber = findViewById(R.id.TotalNumber);
         clientAddress = findViewById(R.id.clientAddress);
-        CountText = findViewById(R.id.countText);
         CountLayout = findViewById(R.id.CountLayout);
-        CC = findViewById(R.id.CC);
         VisaIcon = findViewById(R.id.VisaIcon);
         line3 = findViewById(R.id.line3);
         line8 = findViewById(R.id.line8);
@@ -111,12 +117,7 @@ public class Details_OrderActivity extends AppCompatActivity {
         NumberOfOrder.setText(raw.getId().toString());
 
         if (AdapterForOrder.listDetail != null){
-            String meals = "";
-            for (Detail detail : AdapterForOrder.listDetail){
-                meals += detail.getItem().getName() + " ,";
-            }
-            detailsOfOrders.setText(meals);
-            countOfOrder.setText(AdapterForOrder.listDetail.size()+"");
+            recyclerForMeals.setAdapter(new AdapterForMeals(raw.getDetails(),this,pref));
         }
 
         TotalNumber.setText(raw.getTotalPricePiastre().getTotal()+" "+getResources().getString(R.string.SAR));
