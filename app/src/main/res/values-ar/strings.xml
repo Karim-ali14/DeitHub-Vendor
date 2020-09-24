@@ -137,6 +137,10 @@
     <string name="PackagePrice">سعر الباقة</string>
     <string name="Discount">الخصم</string>
     <string name="Calories">السعرات الحراية</string>
+    <string name="Carb">كارب</string>
+    <string name="Protein">بروتين</string>
+    <string name="Fats">دهون</string>
+    <string name="Total_Calories">اجمالي السعرات الحرارية</string>
     <string name="Ratings">التقييمات</string>
     <string name="ClientInfo">معلومات العميل</string>
 

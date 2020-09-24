@@ -1,14 +1,19 @@
 package com.dopave.diethub_vendor.UI.Subscription_detials;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Rating;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,7 +33,7 @@ import java.util.Objects;
 
 public class Subscription_detialsActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
     ViewPager viewPager;
-    LinearLayout points;
+    LinearLayout points,CalorieLayout;
     List<Image> list;
     Button ClientInfo,Package_Content;
     ConstraintLayout LayoutOfSubInfo, LayoutOfClientDetails;
@@ -49,6 +54,7 @@ public class Subscription_detialsActivity extends AppCompatActivity implements V
         ClientInfo = findViewById(R.id.ClientInfo);
         viewPager = findViewById(R.id.ViewPager);
         points = findViewById(R.id.Points);
+        CalorieLayout = findViewById(R.id.CalorieLayout);
         title = findViewById(R.id.title);
         Package_Price = findViewById(R.id.Package_Price);
         NameOfPackage = findViewById(R.id.NameOfPackage);
@@ -72,6 +78,8 @@ public class Subscription_detialsActivity extends AppCompatActivity implements V
         Client client = (Client) Objects.requireNonNull(getIntent().getExtras().getParcelable("Client"));
         setData(aPackage,client);
         TotalCalorie.setPaintFlags(TotalCalorie.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+
+
     }
 
     private void setPoints(int position){
@@ -143,10 +151,53 @@ public class Subscription_detialsActivity extends AppCompatActivity implements V
             RattingBar.setRating(aPackage.getTotalRate());
             DetailsPackage.setText(aPackage.getDescription());
             Duration.setText(aPackage.getDeliveryTime());
+            showDetailsOfCalories(aPackage);
         }
         if (client != null){
             PhoneOfClient.setText(client.getMobilePhone()+"");
             NameOfClientDetails.setText(client.getName());
         }
+    }
+
+    private void showDetailsOfCalories(final Package aPackage){
+        CalorieLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogForCalories(aPackage);
+            }
+        });
+    }
+    private void dialogForCalories(Package aPackage){
+        final AlertDialog.Builder Adialog = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_calories, null);
+        ImageView closeIcon = view.findViewById(R.id.closeIcon);
+        TextView countFats = view.findViewById(R.id.countFats);
+        TextView countProtein = view.findViewById(R.id.countProtein);
+        TextView countCarb = view.findViewById(R.id.countCarb);
+        TextView countCalories = view.findViewById(R.id.countCalories);
+        if (aPackage.getCarbCal() != null)
+            countCarb.setText(aPackage.getCarbCal() + " "+getResources().getString(R.string.Calorie));
+        if (aPackage.getFatCal() != null)
+            countFats.setText(aPackage.getFatCal() + " "+getResources().getString(R.string.Calorie));
+        if (aPackage.getProteinCal() != null)
+            countProtein.setText(aPackage.getProteinCal() + " "+getResources().getString(R.string.Calorie));
+        if (aPackage.getProteinCal() != null)
+            countProtein.setText(aPackage.getProteinCal() + " "+getResources().getString(R.string.Calorie));
+        int totalCal =  aPackage.getFatCal() + aPackage.getProteinCal()
+                + aPackage.getCarbCal();
+        countCalories.setText(totalCal + "" +getResources().getString(R.string.Calorie));
+        Log.i("CCCCCCC",aPackage.getCarbCal() +" "+aPackage.getFatCal()+" "+aPackage.getProteinCal());
+
+        Adialog.setView(view);
+        final AlertDialog dialog1 = Adialog.create();
+        dialog1.setCanceledOnTouchOutside(false);
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog1.show();
+        closeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog1.dismiss();
+            }
+        });
     }
 }

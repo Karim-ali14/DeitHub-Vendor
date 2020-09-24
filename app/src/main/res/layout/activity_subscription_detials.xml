@@ -166,7 +166,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guideline"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="206dp">
+                android:id="@+id/CalorieLayout"
+                >
 
                 <ImageView
                     android:layout_width="50dp"
@@ -183,7 +184,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
-                        android:text="4.2"
+                        android:text="0.0"
                         android:textColor="#000"
                         android:textSize="@dimen/_17sdp"
                         android:fontFamily="@font/helveticaneuelt_arabic"

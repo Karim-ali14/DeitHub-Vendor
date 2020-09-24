@@ -137,6 +137,10 @@
     <string name="PackagePrice">Package Price</string>
     <string name="Discount">Discount</string>
     <string name="Calories">Calories</string>
+    <string name="Carb">Carb</string>
+    <string name="Protein">Protein</string>
+    <string name="Fats">Fats</string>
+    <string name="Total_Calories">Total Calories</string>
     <string name="Ratings">Ratings</string>
     <string name="ClientInfo">Client info</string>
 
