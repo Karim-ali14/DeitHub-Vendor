@@ -198,8 +198,6 @@ public class OrderFragment extends Fragment {
                 });
     }
 
-
-
     private void getOrdersByButtonId(int type) {
         if (type == 0) {
             activeButton = "Pending";
@@ -311,9 +309,14 @@ public class OrderFragment extends Fragment {
             }
 
             activeButton = "Finished";
-            status = new String[2];
+            status = new String[7];
             status[0] = "prepared";
             status[1] = "readyForDelivery";
+            status[2] = "acceptForDelivery";
+            status[3] = "delivering";
+            status[4] = "delivered";
+            status[5] = "canceled";
+            status[6] = "return";
             skip = 0;
 
             PendingLayout.setBackground(getResources().getDrawable(R.drawable.style_button_normal));

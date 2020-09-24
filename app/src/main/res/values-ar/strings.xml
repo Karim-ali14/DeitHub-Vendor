@@ -64,7 +64,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Orders">الطلبات</string>
     <string name="finished">تم الانتهاء</string>
+    <string name="delivered">تم توصيله</string>
     <string name="readyForDelivery">جاهز للتوصيل</string>
+    <string name="acceptForDelivery">مع مندوب</string>
     <string name="Preparing">جاري التجهيز</string>
     <string name="Prepared">تم التجهيز</string>
     <string name="Pending">قيد الانتظار</string>
@@ -131,6 +133,7 @@
     <string name="delete_delivery">مسح المندوب</string>
     <string name="accept">قبول</string>
     <string name="cancel">ألغاء</string>
+    <string name="Return">مرتجع</string>
 
     <string name="Package_Content">محتوي الباقة</string>
     <string name="Timing_Delivery">توقيت التوصيل</string>

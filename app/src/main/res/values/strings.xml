@@ -63,7 +63,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Orders">Orders</string>
     <string name="finished">Finished</string>
-    <string name="readyForDelivery">Ready For Delivery</string>
+    <string name="delivered">delivered</string>
+    <string name="readyForDelivery">Ready</string>
+    <string name="acceptForDelivery">with rep</string>
     <string name="Preparing">Preparing</string>
     <string name="Prepared">Prepared</string>
     <string name="Pending">Pending</string>
@@ -130,6 +132,7 @@
     <string name="modify_Address">modify address</string>
     <string name="delete_delivery">delete delivery</string>
     <string name="cancel">cancel</string>
+    <string name="Return">Return</string>
     <string name="accept">Accept</string>
 
     <string name="Package_Content">Package Content</string>

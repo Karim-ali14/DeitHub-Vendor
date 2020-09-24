@@ -346,16 +346,31 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             holder.RatingButton.setText(context.getResources().getString(R.string.Prepared));
         }
-//        else if (status.equals("delivering")){
-//            holder.RatingButton.setText(context.getResources().getString(R.string.Delivering));
-//        }
-//        else if (status.equals("delivered")){
-//            holder.RatingButton.setText(context.getResources().getString(R.string.finished));
-//        }
+        else if (status.equals("delivering")){
+            holder.OrderStats3.setText(context.getResources().getString(R.string.Delivering));
+        }
+        else if (status.equals("delivered")){
+            holder.RatingButton.setText(context.getResources().getString(R.string.delivered));
+            holder.OrderStats3.setText(context.getResources().getString(R.string.delivered));
+        }
         else if (status.equals("readyForDelivery")){
             holder.OrderStats3.setText(context.getResources().getString(R.string.readyForDelivery));
             holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
             holder.RatingButton.setText(context.getResources().getString(R.string.readyForDelivery));
+        }
+        else if (status.equals("acceptForDelivery")){
+            holder.OrderStats3.setText(context.getResources().getString(R.string.acceptForDelivery));
+            holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
+            holder.RatingButton.setText(context.getResources().getString(R.string.acceptForDelivery));
+        }
+        else if (status.equals("canceled")){
+            holder.OrderStats3.setText(context.getResources().getString(R.string.cancel));
+            holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
+            holder.RatingButton.setText(context.getResources().getString(R.string.cancel));
+        }else if (status.equals("return")){
+            holder.OrderStats3.setText(context.getResources().getString(R.string.Return));
+            holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
+            holder.RatingButton.setText(context.getResources().getString(R.string.Return));
         }
         else {
             holder.RatingButton.setText(status);
@@ -372,7 +387,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         ImageView iconP,iconPreparing,finishIcon,menu;
         TextView RatingButton,AllDetailsText,OrderId,ClientName,createAt,OrderStats1,OrderStats2,OrderStats3;
         ConstraintLayout delegateLayout;
-        CircleImageView ClientIcon;
+        CircleImageView ClientIcon,delegateIcon;
         public ViewHolderForOrders(@NonNull View itemView) {
             super(itemView);
             progressBar = itemView.findViewById(R.id.progressBar);
@@ -386,6 +401,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             menu = itemView.findViewById(R.id.menu);
             OrderId = itemView.findViewById(R.id.OrderId);
             ClientIcon = itemView.findViewById(R.id.ClientIcon);
+            delegateIcon = itemView.findViewById(R.id.delegateIcon);
             ClientName = itemView.findViewById(R.id.ClientName);
             createAt = itemView.findViewById(R.id.createAt);
             OrderStats1 = itemView.findViewById(R.id.OrderStats1);
