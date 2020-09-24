@@ -109,6 +109,8 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             String path = Common.BaseUrl + "images/" + orderRaw.getClient().getImage().getFor() + "/" +
                     Uri.encode(orderRaw.getClient().getImage().getName());
             Picasso.with(context).load(path).into(holder.ClientIcon);
+        }else {
+            holder.ClientIcon.setImageResource(R.drawable.personalinfo);
         }
 
         try {
