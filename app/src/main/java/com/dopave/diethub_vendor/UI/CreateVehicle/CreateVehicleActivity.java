@@ -87,7 +87,8 @@ public class CreateVehicleActivity extends AppCompatActivity {
     GetVehicleData VehicleData;
     VehicleTypes vehicleTypes;
     ImageView Type_VehicleImage,YearImage,driving_licence_Image,vehicle_licence_Image;
-    int i = 0;
+    int updateYear = 0;
+    int updateVehicle = 0;
     int SpinnerYearClick = 0;
     int SpinnerVehicleClick = 0;
     boolean firstOpen,isSpinnerYear,isSpinnerVehicle;
@@ -161,7 +162,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (getIntent().getExtras().getString("type").equals("update")) {
-            Confirm.setText(getResources().getString(R.string.update));
+            Confirm.setText(getResources().getString(R.string.update_vehicle));
             deliveryId = getIntent().getExtras().getString("deliveryId");
             getVehicleData();
         }else{
@@ -256,9 +257,13 @@ public class CreateVehicleActivity extends AppCompatActivity {
             updateVehicle();
         }else {
             if (VehicleID.getText().toString().isEmpty())
-                Toast.makeText(this, "Enter Your Name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.Enter_vehicle_id, Toast.LENGTH_LONG).show();
             else if (VehicleModel.getText().toString().isEmpty())
-                Toast.makeText(this, "Enter Your Phone", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.Enter_Vehicle_model, Toast.LENGTH_LONG).show();
+            else if (selectedYear == 0)
+                Toast.makeText(this, R.string.Choose_year_vehicle, Toast.LENGTH_LONG).show();
+            else if (rowVehicleTypes == null)
+                Toast.makeText(this, R.string.Select_vehicle_model, Toast.LENGTH_SHORT).show();
             else
                 createVehicle();
         }
@@ -363,8 +368,8 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 selectedYear = (Integer) parent.getItemAtPosition(position);
                 YearSelected.setText(selectedYear+"");
                 YearSelected.setTextColor(getResources().getColor(R.color.black));
-                if (getIntent().getExtras().getString("type").equals("update") && i ==1) {
-                    i++;
+                if (getIntent().getExtras().getString("type").equals("update") && updateYear == 0) {
+                    updateYear++;
                     selectedYear = VehicleData.getData().getYear();
                     YearSelected.setText(selectedYear+"");
                 }
@@ -404,8 +409,8 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 else if (Common.knowLang(CreateVehicleActivity.this).equals("en"))
                     VehicleTypeSelected.setText(((RowVehicleTypes) parent.getItemAtPosition(position)).getTypeEn());
                 VehicleTypeSelected.setTextColor(getResources().getColor(R.color.black));
-                if (getIntent().getExtras().getString("type").equals("update") && i == 0) {
-                    i++;
+                if (getIntent().getExtras().getString("type").equals("update") && updateVehicle == 0) {
+                    updateVehicle++;
                     for (RowVehicleTypes row : vehicleTypes.getData().getRowVehicleTypes()) {
                         if (row.getId() == VehicleData.getData().getVehicleTypeId()) {
                             if (Common.knowLang(CreateVehicleActivity.this).equals("ar"))

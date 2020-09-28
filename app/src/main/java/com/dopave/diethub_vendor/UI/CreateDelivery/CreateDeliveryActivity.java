@@ -78,7 +78,6 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     int SpinnerCitiesClick = 0;
     Button EnterButton;
     int update = 0;
-    int create = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,20 +227,13 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                     if (getIntent().getExtras().getString("type").equals("update") && update == 0) {
                         update++;
                         for (CityRow row : cities.getData().getCityRows()) {
-                            if (row.getId() == delivery.getCityId()){
+                            if (row.getId() == delivery.getCityId()) {
                                 if (Common.knowLang(CreateDeliveryActivity.this).equals("ar"))
                                     CitySelected.setText(row.getName());
                                 else if (Common.knowLang(CreateDeliveryActivity.this).equals("en"))
                                     CitySelected.setText(row.getNameEn());
                             }
                         }
-                    }
-                }else {
-                    if (create == 0){
-                        cityRow = null;
-                        CitySelected.setText(getResources().getString(R.string.city));
-                        CitySelected.setTextColor(getResources().getColor(R.color.text_color));
-                        create++;
                     }
                 }
             }

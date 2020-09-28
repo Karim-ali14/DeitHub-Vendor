@@ -358,7 +358,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/Confirm_account"
+            android:text="@string/createVehicle"
             android:textSize="@dimen/_17sdp"
             android:textColor="@color/white"
             android:fontFamily="@font/helveticaneuelt_arabic"

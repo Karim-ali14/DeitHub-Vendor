@@ -116,6 +116,8 @@
     <string name="UpDate_Data">Update Data</string>
     <string name="Terms_Conditions">Terms and Conditions</string>
     <string name="Confirm_account">Confirm creation account</string>
+
+    <string name="update_vehicle">update vehicle</string>
     <string name="Vehicle_ID">Vehicle ID</string>
     <string name="Vehicle_photos">Vehicle photos</string>
     <string name="Car_license">Car license</string>
@@ -225,4 +227,8 @@
     <string name="date_of_order">Date of order :</string>
     <string name="Delivery">Delivery :</string>
     <string name="city">City</string>
+    <string name="Enter_vehicle_id">Enter vehicle id</string>
+    <string name="Enter_Vehicle_model">Enter Vehicle model</string>
+    <string name="Choose_year_vehicle">Choose year of vehicle</string>
+    <string name="Select_vehicle_model">Select the vehicle model</string>
 </resources>

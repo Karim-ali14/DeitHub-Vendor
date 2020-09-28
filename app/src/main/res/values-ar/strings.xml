@@ -116,6 +116,7 @@
     <string name="Create_Account">إنشاء حساب</string>
     <string name="Terms_Conditions">الشروط والأحكام</string>
     <string name="Confirm_account">تاكيد إنشاء الحساب</string>
+    <string name="update_vehicle">تحديث المركبة</string>
     <string name="UpDate_Data">تحديث البيانات</string>
     <string name="Vehicle_ID">رقم المركبة</string>
     <string name="Vehicle_photos">صور المركبة</string>
@@ -225,5 +226,9 @@
     <string name="date_of_order">تاريخ الطلب :</string>
     <string name="Delivery">المندوب :</string>
     <string name="city">المدينه</string>
+    <string name="Enter_vehicle_id">ادخل الرقم التعريفي للمركبه</string>
+    <string name="Enter_Vehicle_model">ادخل موديل المركية</string>
+    <string name="Choose_year_vehicle">اختر سنه الصنع</string>
+    <string name="Select_vehicle_model">اختر موديل المركبة</string>
 
 </resources>
