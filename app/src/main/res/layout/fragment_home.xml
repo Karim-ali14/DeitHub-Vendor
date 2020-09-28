@@ -265,7 +265,7 @@
                     android:layout_marginTop="@dimen/_25sdp"
                     android:layout_marginRight="@dimen/_25sdp"
                     android:layout_marginBottom="@dimen/_25sdp"
-                    android:src="@drawable/driver" />
+                    android:src="@drawable/sub" />
             </androidx.cardview.widget.CardView>
 
             <TextView

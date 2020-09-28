@@ -149,6 +149,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 getLastLocation();
             }
         });
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                mMap.clear();
+                addMarker(latLng);
+                SelectedLocation = latLng;
+            }
+        });
     }
 
     private void getLastLocation() {
