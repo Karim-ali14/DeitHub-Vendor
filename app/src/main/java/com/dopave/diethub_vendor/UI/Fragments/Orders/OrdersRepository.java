@@ -44,7 +44,7 @@ public class OrdersRepository {
                 getAllOrders(
                 "Bearer "+Common.currentPosition.getData().getToken().getAccessToken(),
                 Common.currentPosition.getData().getProvider().getId()+"",
-                true,true,true,Status,limit,skip).enqueue(new Callback<Orders>() {
+                true,true,true,true,Status,limit,skip).enqueue(new Callback<Orders>() {
             @Override
             public void onResponse(Call<Orders> call, Response<Orders> response) {
                 dialog.dismiss();

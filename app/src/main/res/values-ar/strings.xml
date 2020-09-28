@@ -223,5 +223,7 @@
     <string name="no_adds">لا يوجد أي إضافات</string>
     <string name="all_details">كل التفصيل</string>
     <string name="date_of_order">تاريخ الطلب :</string>
+    <string name="Delivery">المندوب :</string>
+    <string name="city">المدينه</string>
 
 </resources>

@@ -77,7 +77,9 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     boolean isValid,firstOpen,isSpinnerCities;
     int SpinnerCitiesClick = 0;
     Button EnterButton;
-    int i = 0;
+    int update = 0;
+    int create = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,8 +225,8 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                     CitySelected.setText(((CityRow) parent.getItemAtPosition(position)).getNameEn());
                 CitySelected.setTextColor(getResources().getColor(R.color.black));
                 if (getIntent().getExtras().getString("type").equals("update")) {
-                    if (getIntent().getExtras().getString("type").equals("update") && i == 0) {
-                        i++;
+                    if (getIntent().getExtras().getString("type").equals("update") && update == 0) {
+                        update++;
                         for (CityRow row : cities.getData().getCityRows()) {
                             if (row.getId() == delivery.getCityId()){
                                 if (Common.knowLang(CreateDeliveryActivity.this).equals("ar"))
@@ -233,6 +235,13 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                                     CitySelected.setText(row.getNameEn());
                             }
                         }
+                    }
+                }else {
+                    if (create == 0){
+                        cityRow = null;
+                        CitySelected.setText(getResources().getString(R.string.city));
+                        CitySelected.setTextColor(getResources().getColor(R.color.text_color));
+                        create++;
                     }
                 }
             }

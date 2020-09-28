@@ -43,6 +43,9 @@ public class OrderRaw implements Parcelable{
     @SerializedName("details")
     @Expose
     private List<Detail> details = null;
+    @SerializedName("deliveryrep")
+    @Expose
+    private Deliveryrep deliveryrep;
 
     protected OrderRaw(Parcel in) {
         if (in.readByte() == 0) {
@@ -68,6 +71,7 @@ public class OrderRaw implements Parcelable{
         client = in.readParcelable(Client.class.getClassLoader());
         address = in.readParcelable(Address.class.getClassLoader());
         details = in.createTypedArrayList(Detail.CREATOR);
+        deliveryrep = in.readParcelable(Deliveryrep.class.getClassLoader());
     }
 
     @Override
@@ -98,6 +102,7 @@ public class OrderRaw implements Parcelable{
         dest.writeParcelable(client, flags);
         dest.writeParcelable(address, flags);
         dest.writeTypedList(details);
+        dest.writeParcelable(deliveryrep, flags);
     }
 
     @Override
@@ -205,4 +210,11 @@ public class OrderRaw implements Parcelable{
         this.details = details;
     }
 
+    public Deliveryrep getDeliveryrep() {
+        return deliveryrep;
+    }
+
+    public void setDeliveryrep(Deliveryrep deliveryrep) {
+        this.deliveryrep = deliveryrep;
+    }
 }

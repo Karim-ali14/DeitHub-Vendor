@@ -11,32 +11,34 @@ public class TotalPricePiastre implements Parcelable {
 
     @SerializedName("total")
     @Expose
-    private Integer total;
+    private Double total;
     @SerializedName("discount")
     @Expose
     private Discount discount;
     @SerializedName("itemsTotalPrice")
     @Expose
-    private Integer itemsTotalPrice;
+    private Double itemsTotalPrice;
     @SerializedName("deliveryPricePiastre")
     @Expose
-    private Integer deliveryPricePiastre;
+    private Double deliveryPricePiastre;
+
 
     protected TotalPricePiastre(Parcel in) {
         if (in.readByte() == 0) {
             total = null;
         } else {
-            total = in.readInt();
+            total = in.readDouble();
         }
+        discount = in.readParcelable(Discount.class.getClassLoader());
         if (in.readByte() == 0) {
             itemsTotalPrice = null;
         } else {
-            itemsTotalPrice = in.readInt();
+            itemsTotalPrice = in.readDouble();
         }
         if (in.readByte() == 0) {
             deliveryPricePiastre = null;
         } else {
-            deliveryPricePiastre = in.readInt();
+            deliveryPricePiastre = in.readDouble();
         }
     }
 
@@ -46,19 +48,20 @@ public class TotalPricePiastre implements Parcelable {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(total);
+            dest.writeDouble(total);
         }
+        dest.writeParcelable(discount, flags);
         if (itemsTotalPrice == null) {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(itemsTotalPrice);
+            dest.writeDouble(itemsTotalPrice);
         }
         if (deliveryPricePiastre == null) {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(deliveryPricePiastre);
+            dest.writeDouble(deliveryPricePiastre);
         }
     }
 
@@ -79,14 +82,6 @@ public class TotalPricePiastre implements Parcelable {
         }
     };
 
-    public Integer getTotal() {
-        return total;
-    }
-
-    public void setTotal(Integer total) {
-        this.total = total;
-    }
-
     public Discount getDiscount() {
         return discount;
     }
@@ -95,20 +90,27 @@ public class TotalPricePiastre implements Parcelable {
         this.discount = discount;
     }
 
-    public Integer getItemsTotalPrice() {
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public Double getItemsTotalPrice() {
         return itemsTotalPrice;
     }
 
-    public void setItemsTotalPrice(Integer itemsTotalPrice) {
+    public void setItemsTotalPrice(Double itemsTotalPrice) {
         this.itemsTotalPrice = itemsTotalPrice;
     }
 
-    public Integer getDeliveryPricePiastre() {
+    public Double getDeliveryPricePiastre() {
         return deliveryPricePiastre;
     }
 
-    public void setDeliveryPricePiastre(Integer deliveryPricePiastre) {
+    public void setDeliveryPricePiastre(Double deliveryPricePiastre) {
         this.deliveryPricePiastre = deliveryPricePiastre;
     }
-
 }

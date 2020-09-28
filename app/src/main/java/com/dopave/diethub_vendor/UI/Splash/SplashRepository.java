@@ -48,7 +48,8 @@ public class SplashRepository {
                     }else if (response.code() == 401){
                         Common.onCheckTokenAction(context);
                     }
-                    context.startActivity(new Intent(context, Login_inActivity.class));
+                    context.startActivity(new Intent(context, Login_inActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 }
             }
 

@@ -223,4 +223,6 @@
     <string name="no_adds">There are no additions</string>
     <string name="all_details">All details</string>
     <string name="date_of_order">Date of order :</string>
+    <string name="Delivery">Delivery :</string>
+    <string name="city">City</string>
 </resources>

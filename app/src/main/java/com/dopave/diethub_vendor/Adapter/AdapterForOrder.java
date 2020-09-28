@@ -86,7 +86,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolderForOrders holder, int position) {
         final OrderRaw orderRaw = list.get(position);
-        AnimationProcess(holder,position,orderRaw.getStatus());
+        AnimationProcess(holder,position,orderRaw.getStatus(),orderRaw);
         holder.AllDetailsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,7 +233,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         progressBar.setAnimation(barAnimation);
     }
 
-    private void AnimationProcess(ViewHolderForOrders holder,int position,String status) {
+    private void AnimationProcess(ViewHolderForOrders holder,int position,String status,OrderRaw orderRaw) {
         holder.progressBar.setProgress(100);
         holder.iconP.setImageResource(R.drawable.ic_check_black_check);
         holder.iconP.setBackground(context.getResources().getDrawable(R.drawable.style_check));
@@ -256,7 +256,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             holder.menu.setVisibility(View.GONE);
             holder.RatingButton.setVisibility(View.VISIBLE);
             holder.delegateLayout.setVisibility(View.GONE);
-            getStatus(status,holder);
+            getStatus(status,holder,orderRaw);
             holder.progressBar.setProgress(100);
             holder.iconPreparing.setImageResource(R.drawable.ic_check_black_check);
             holder.iconPreparing.setBackground(context.getResources().getDrawable(R.drawable.style_check));
@@ -277,7 +277,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         }else if (i == 2){
             holder.menu.setVisibility(View.VISIBLE);
             holder.RatingButton.setVisibility(View.VISIBLE);
-            getStatus(status,holder);
+            getStatus(status,holder,orderRaw);
             holder.delegateLayout.setVisibility(View.VISIBLE);
             holder.RatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -316,7 +316,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             holder.menu.setVisibility(View.GONE);
             holder.RatingButton.setVisibility(View.VISIBLE);
             holder.delegateLayout.setVisibility(View.GONE);
-            getStatus(status,holder);
+            getStatus(status,holder,orderRaw);
             holder.progressBar2.setProgress(100);
             holder.iconPreparing.setImageResource(R.drawable.ic_check_black_check);
             holder.iconPreparing.setBackground(context.getResources().getDrawable(R.drawable.style_check));
@@ -332,7 +332,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         }
     }
 
-    private void getStatus(String status,ViewHolderForOrders holder) {
+    private void getStatus(String status,ViewHolderForOrders holder,OrderRaw orderRaw) {
         if (status.equals("accepted")) {
             holder.OrderStats2.setText(context.getResources().getString(R.string.Accepted));
             holder.RatingButton.setText(context.getResources().getString(R.string.Accepted));
@@ -348,10 +348,12 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         }
         else if (status.equals("delivering")){
             holder.OrderStats3.setText(context.getResources().getString(R.string.Delivering));
+            setDeliveryDate(holder,orderRaw);
         }
         else if (status.equals("delivered")){
             holder.RatingButton.setText(context.getResources().getString(R.string.delivered));
             holder.OrderStats3.setText(context.getResources().getString(R.string.delivered));
+            setDeliveryDate(holder,orderRaw);
         }
         else if (status.equals("readyForDelivery")){
             holder.OrderStats3.setText(context.getResources().getString(R.string.readyForDelivery));
@@ -362,18 +364,39 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             holder.OrderStats3.setText(context.getResources().getString(R.string.acceptForDelivery));
             holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
             holder.RatingButton.setText(context.getResources().getString(R.string.acceptForDelivery));
+            setDeliveryDate(holder,orderRaw);
         }
         else if (status.equals("canceled")){
             holder.OrderStats3.setText(context.getResources().getString(R.string.cancel));
             holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
             holder.RatingButton.setText(context.getResources().getString(R.string.cancel));
+            setDeliveryDate(holder,orderRaw);
         }else if (status.equals("return")){
             holder.OrderStats3.setText(context.getResources().getString(R.string.Return));
             holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
             holder.RatingButton.setText(context.getResources().getString(R.string.Return));
+            setDeliveryDate(holder,orderRaw);
         }
         else {
             holder.RatingButton.setText(status);
+        }
+    }
+
+    private void setDeliveryDate(ViewHolderForOrders holder, OrderRaw orderRaw) {
+        if (orderRaw.getDeliveryrep() != null){
+            holder.delegateLayout.setVisibility(View.VISIBLE);
+            holder.delegate.setText(context.getResources().getString(R.string.Delivery)+" : "+orderRaw.getDeliveryrep().getName());
+            if (orderRaw.getDeliveryrep().getImage() != null){
+                if (orderRaw.getDeliveryrep().getImage() != null) {
+                    String path = Common.BaseUrl + "images/" + orderRaw.getDeliveryrep().getImage().getFor() + "/" +
+                            Uri.encode(orderRaw.getDeliveryrep().getImage().getName());
+                    Picasso.with(context).load(path).into(holder.delegateIcon);
+                }else {
+                    holder.delegateIcon.setImageResource(R.drawable.personalinfo);
+                }
+            }else {
+                holder.delegateLayout.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -385,7 +408,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     class ViewHolderForOrders extends RecyclerView.ViewHolder {
         ProgressBar progressBar,progressBar2;
         ImageView iconP,iconPreparing,finishIcon,menu;
-        TextView RatingButton,AllDetailsText,OrderId,ClientName,createAt,OrderStats1,OrderStats2,OrderStats3;
+        TextView RatingButton,AllDetailsText,OrderId,ClientName,createAt,OrderStats1,OrderStats2,OrderStats3,delegate;
         ConstraintLayout delegateLayout;
         CircleImageView ClientIcon,delegateIcon;
         public ViewHolderForOrders(@NonNull View itemView) {
@@ -398,6 +421,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             RatingButton = itemView.findViewById(R.id.RatingButton);
             AllDetailsText = itemView.findViewById(R.id.AllDetailsText);
             delegateLayout = itemView.findViewById(R.id.delegateLayout);
+            delegate = itemView.findViewById(R.id.delegate);
             menu = itemView.findViewById(R.id.menu);
             OrderId = itemView.findViewById(R.id.OrderId);
             ClientIcon = itemView.findViewById(R.id.ClientIcon);
