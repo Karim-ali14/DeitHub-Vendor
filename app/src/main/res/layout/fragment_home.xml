@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent=".65" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="0dp"
@@ -93,7 +94,7 @@
 
         <LinearLayout
             android:id="@+id/Orders_Layout"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_45sdp"
             android:orientation="vertical"
@@ -108,8 +109,8 @@
                 app:cardElevation="0dp">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_marginTop="@dimen/_25sdp"
                     android:layout_marginBottom="@dimen/_25sdp"
                     android:layout_marginLeft="@dimen/_25sdp"
@@ -129,7 +130,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_45sdp"
             android:orientation="vertical"
@@ -145,12 +146,13 @@
                 app:cardElevation="0dp">
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:layout_width="@dimen/_50sdp"
                     android:layout_height="50dp"
                     android:layout_marginTop="@dimen/_25sdp"
                     android:layout_marginBottom="@dimen/_25sdp"
                     android:layout_marginLeft="@dimen/_25sdp"
-                    android:layout_marginRight="@dimen/_25sdp"                    android:src="@drawable/driver" />
+                    android:layout_marginRight="@dimen/_25sdp"
+                    android:src="@drawable/driver" />
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -165,7 +167,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_45sdp"
             android:orientation="vertical"
@@ -181,13 +183,15 @@
                 app:cardElevation="0dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_marginTop="@dimen/_25sdp"
                     android:layout_marginBottom="@dimen/_25sdp"
                     android:layout_marginLeft="@dimen/_25sdp"
-                    android:layout_marginRight="@dimen/_25sdp"                    android:src="@drawable/pop_settings" />
+                    android:layout_marginRight="@dimen/_25sdp"
+                    android:src="@drawable/pop_settings" />
             </androidx.cardview.widget.CardView>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -196,6 +200,81 @@
                 android:fontFamily="@font/helveticaneuelt_arabic"
                 android:includeFontPadding="false"
                 android:text="@string/sittings"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_17sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/SubscriptionOrders_Layout"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/Setting_Layout"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginLeft="@dimen/_25sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:layout_marginRight="@dimen/_25sdp"
+                    android:layout_marginBottom="@dimen/_25sdp"
+                    android:src="@drawable/product" />
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:fontFamily="@font/helveticaneuelt_arabic"
+                android:includeFontPadding="false"
+                android:text="@string/subscriptionOrders"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_17sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Subscription_Layout"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
+            app:layout_constraintTop_toBottomOf="@+id/Delegate_Layout">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginLeft="@dimen/_25sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:layout_marginRight="@dimen/_25sdp"
+                    android:layout_marginBottom="@dimen/_25sdp"
+                    android:src="@drawable/driver" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/helveticaneuelt_arabic"
+                android:includeFontPadding="false"
+                android:text="@string/subscription"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_17sdp" />
         </LinearLayout>

@@ -1,5 +1,6 @@
 package com.dopave.diethub_vendor.UI.Fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryFragment;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.dopave.diethub_vendor.UI.SharedPref;
+import com.dopave.diethub_vendor.UI.Subscriptions.SubscriptionsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
@@ -27,7 +29,7 @@ import java.util.Locale;
  * A simple {@link Fragment} subclass.
  */
 public class Home_Fragment extends Fragment {
-    LinearLayout Orders_Layout,Delegate_Layout,Setting_Layout;
+    LinearLayout Orders_Layout,Delegate_Layout,Setting_Layout,SubscriptionOrders_Layout,Subscription_Layout;
     TextView NameOfRestaurants;
     ImageView ProviderIcon;
     SharedPref pref;
@@ -46,6 +48,8 @@ public class Home_Fragment extends Fragment {
         Orders_Layout = view.findViewById(R.id.Orders_Layout);
         Delegate_Layout = view.findViewById(R.id.Delegate_Layout);
         Setting_Layout = view.findViewById(R.id.Setting_Layout);
+        SubscriptionOrders_Layout = view.findViewById(R.id.SubscriptionOrders_Layout);
+        Subscription_Layout = view.findViewById(R.id.Subscription_Layout);
         ProviderIcon = view.findViewById(R.id.ProviderIcon);
         setProviderData();
         Orders_Layout.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +83,20 @@ public class Home_Fragment extends Fragment {
                 HomeActivity.Notification_Icon.setVisibility(View.GONE);
                 HomeActivity.Title.setText(getResources().getString(R.string.sittings));
                 HomeActivity.Current_Page = "nav_setting";
+            }
+        });
+        Subscription_Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),SubscriptionsActivity.class)
+                        .putExtra("type","nav_Subscription"));
+            }
+        });
+        SubscriptionOrders_Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SubscriptionsActivity.class)
+                        .putExtra("type","nav_mySubscriptionOrders"));
             }
         });
         return view;
