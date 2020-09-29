@@ -427,11 +427,11 @@ public class CreateVehicleActivity extends AppCompatActivity {
                     updateVehicle++;
                     for (RowVehicleTypes row : vehicleTypes.getData().getRowVehicleTypes()) {
                         if (row.getId() == VehicleData.getData().getVehicleTypeId()) {
+                            rowVehicleTypes = row;
                             if (Common.knowLang(CreateVehicleActivity.this).equals("ar"))
                                 VehicleTypeSelected.setText(row.getType());
                             else if (Common.knowLang(CreateVehicleActivity.this).equals("en"))
                                 VehicleTypeSelected.setText(row.getTypeEn());
-                            rowVehicleTypes = row;
                         }
                     }
                 }

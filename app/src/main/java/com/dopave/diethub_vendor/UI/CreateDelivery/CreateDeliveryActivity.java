@@ -228,6 +228,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                         update++;
                         for (CityRow row : cities.getData().getCityRows()) {
                             if (row.getId() == delivery.getCityId()) {
+                                cityRow = row;
                                 if (Common.knowLang(CreateDeliveryActivity.this).equals("ar"))
                                     CitySelected.setText(row.getName());
                                 else if (Common.knowLang(CreateDeliveryActivity.this).equals("en"))

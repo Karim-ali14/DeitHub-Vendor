@@ -490,6 +490,7 @@ public class Modify_personal_infoActivity extends AppCompatActivity {
                     i++;
                     for (CityRow row : cities.getData().getCityRows()) {
                         if (row.getId() == providerInfo.getData().getProvider().getCityId()){
+                            cityRow = row;
                             if (Common.knowLang(Modify_personal_infoActivity.this).equals("ar"))
                                 CitySelected.setText(row.getName());
                             else if (Common.knowLang(Modify_personal_infoActivity.this).equals("en"))
