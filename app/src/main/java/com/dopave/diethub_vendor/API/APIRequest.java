@@ -22,6 +22,7 @@ import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.Models.Subscriptions.Subscriptions;
 import com.dopave.diethub_vendor.Models.Subscriptions.UpdateStatus.UpdateSubscriptionStatus;
 import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequest;
+import com.dopave.diethub_vendor.Models.UpdateVehicle.DeleteImageFromList;
 import com.dopave.diethub_vendor.Models.UpdateVehicle.UpdateVehicle;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
@@ -122,6 +123,12 @@ public interface APIRequest {
                              @Path("providerId") String providerId,
                              @Path("vehicleId") String vehicleId,
                              @Body UpdateVehicle updateVehicle);
+    //Todo Delete Image From List
+    @PUT("provider/{providerId}/vehicle/{vehicleId}")
+    Call<Data> deleteImageForList (@Header("Authorization") String Auth,
+                             @Path("providerId") String providerId,
+                             @Path("vehicleId") String vehicleId,
+                             @Body DeleteImageFromList deleteImage);
 
     @GET("provider/{providerId}/subscription")
     Call<Subscriptions> getAllSubscriptionbyProviderId(@Header("Authorization") String Auth,

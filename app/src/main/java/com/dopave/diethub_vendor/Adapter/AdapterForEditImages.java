@@ -121,7 +121,7 @@ public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditIma
     private void delete(int position) {
         if (Modify_ImagesActivity.numberOfIndexes != 0) {
             if (position < Modify_ImagesActivity.numberOfIndexes) {
-                Modify_ImagesActivity.numberOfIndexes--;
+
                 deleterequest(position);
             } else {
                 int n = Modify_ImagesActivity.numberOfIndexes - position;
@@ -145,6 +145,7 @@ public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditIma
                 new Observer<Defualt>() {
                     @Override
                     public void onChanged(Defualt defualt) {
+                        Modify_ImagesActivity.numberOfIndexes--;
                         list.remove(position);
                         recyclerView.setAdapter(new AdapterForEditImages(list,context,numberOfIndexes,
                                 imageListRequest,recyclerView,viewModel,dialog));

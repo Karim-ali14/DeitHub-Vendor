@@ -8,10 +8,14 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.CreateVehicleRequest;
+import com.dopave.diethub_vendor.Models.CreateVehicle.Request.DrivingLicence;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleRespons;
+import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
+import com.dopave.diethub_vendor.Models.UpdateVehicle.DrivingLicenceImage;
+import com.dopave.diethub_vendor.Models.UpdateVehicle.VehicleLicenceImage;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
 
@@ -50,10 +54,14 @@ public class CreateVehicleViewModel extends ViewModel {
 
     LiveData<Data> updateVehicle(String vehicleId, String Number, String vehicleModel,
                                  int selectedYear, int vehicleTypes,
-                                 String drivingLicenceImage,
-                                 String vehicleLicenceImage, List<Image> list,
-                                 final Context context,ProgressDialog dialog){
+                                 DrivingLicenceImage drivingLicenceImage,
+                                 VehicleLicenceImage vehicleLicenceImage, List<Image> list,
+                                 final Context context, ProgressDialog dialog){
         return repository.updateVehicle(vehicleId, Number, vehicleModel, selectedYear,
                 vehicleTypes, drivingLicenceImage, vehicleLicenceImage, list, context,dialog);
+    }
+
+    public LiveData<Data> deleteImage(String vehicleId, List<Image> list, final Context context,ProgressDialog dialog){
+        return repository.deleteImage(vehicleId, list, context,dialog);
     }
 }

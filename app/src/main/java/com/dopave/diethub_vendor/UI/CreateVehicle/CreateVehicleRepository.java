@@ -22,11 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dopave.diethub_vendor.Adapter.AdapterForDelegate;
 import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.CreateVehicleRequest;
+import com.dopave.diethub_vendor.Models.CreateVehicle.Request.DrivingLicence;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleRespons;
+import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
+import com.dopave.diethub_vendor.Models.UpdateVehicle.DeleteImageFromList;
 import com.dopave.diethub_vendor.Models.UpdateVehicle.DrivingLicenceImage;
 import com.dopave.diethub_vendor.Models.UpdateVehicle.UpdateVehicle;
 import com.dopave.diethub_vendor.Models.UpdateVehicle.VehicleLicenceImage;
@@ -377,16 +380,16 @@ public class CreateVehicleRepository {
 
     public MutableLiveData<Data> updateVehicle(String vehicleId, String Number, String vehicleModel,
                                                int selectedYear, int vehicleTypes,
-                                               String drivingLicenceImage,
-                                               String vehicleLicenceImage, List<Image> list,
+                                               DrivingLicenceImage drivingLicenceImage,
+                                               VehicleLicenceImage vehicleLicenceImage, List<Image> list,
                                                final Context context, final ProgressDialog dialog){
         final MutableLiveData<Data> mutableLiveData = new MutableLiveData<>();
         Common.getAPIRequest().updateVehicle("Bearer "+
                         Common.currentPosition.getData().getToken().getAccessToken(),
                 Common.currentPosition.getData().getProvider().getId()+"",
                 vehicleId,new UpdateVehicle(Number,vehicleModel,
-                        selectedYear,vehicleTypes,new DrivingLicenceImage(drivingLicenceImage),
-                        new VehicleLicenceImage(vehicleLicenceImage),list)).enqueue(new Callback<Data>() {
+                        selectedYear,vehicleTypes,drivingLicenceImage,
+                        vehicleLicenceImage,list)).enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
                 dialog.dismiss();
@@ -402,8 +405,10 @@ public class CreateVehicleRepository {
                             if (response.code() == 422)
                                 Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
                             else {
+                                JSONArray errors = new JSONObject(response.errorBody().string()).getJSONArray("errors");
                                 Toast.makeText(context, new JSONObject(response.errorBody().string())
                                         .getString("message"), Toast.LENGTH_SHORT).show();
+                                Log.i("ImageProPP",response.code()+"   "+errors);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -413,6 +418,60 @@ public class CreateVehicleRepository {
                     }
                 }
 
+            }
+
+            @Override
+            public void onFailure(Call<Data> call, Throwable t) {
+                dialog.dismiss();
+
+                if(t instanceof SocketTimeoutException) {
+                    Toast.makeText(context,R.string.Unable_contact_server, Toast.LENGTH_SHORT).show();
+                }
+
+                else if (t instanceof UnknownHostException) {
+                    Toast.makeText(context,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    Toast.makeText(context,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        return mutableLiveData;
+    }
+
+    public MutableLiveData<Data> deleteImage(String vehicleId, List<Image> list, final Context context,
+                                                final ProgressDialog dialog){
+        dialog.show();
+        final MutableLiveData<Data> mutableLiveData = new MutableLiveData<>();
+        Common.getAPIRequest().deleteImageForList("Bearer "+
+                        Common.currentPosition.getData().getToken().getAccessToken(),
+                Common.currentPosition.getData().getProvider().getId()+"",vehicleId,
+                new DeleteImageFromList(list)).enqueue(new Callback<Data>() {
+            @Override
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                dialog.dismiss();
+                if (response.code() == 200){
+                    mutableLiveData.setValue(response.body());
+                }
+                else if (response.code() == 500){
+                    Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                }
+                else if (response.code() == 401){
+                    Common.onCheckTokenAction(context);
+                }
+                else {
+                    try {
+                        JSONArray errors = new JSONObject(response.errorBody().string()).getJSONArray("errors");
+                        Toast.makeText(context, new JSONObject(response.errorBody().string())
+                                .getString("message"), Toast.LENGTH_SHORT).show();
+                        Log.i("TTTTTTTT",errors +"  "+ response.code()+"");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override

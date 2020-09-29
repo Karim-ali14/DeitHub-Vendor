@@ -230,6 +230,9 @@
     <string name="Enter_Vehicle_model">ادخل موديل المركية</string>
     <string name="Choose_year_vehicle">اختر سنه الصنع</string>
     <string name="Select_vehicle_model">اختر موديل المركبة</string>
+    <string name="chooce_vehicle_images">اختر صور المركبة</string>
+    <string name="Choose_driving_licence_images">اختر صوره رخصة القياده</string>
+    <string name="Choose_vehicle_licence_Image">اختر صورة رخصة المركبة</string>
     <string name="enter_code">ادخل الكود</string>
     <string name="enter_address">ادخل العنوان</string>
     <string name="address_not_found">لا يمكن العثور علي هذا العنوان</string>

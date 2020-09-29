@@ -1,5 +1,6 @@
 package com.dopave.diethub_vendor.Adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,14 +15,22 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.Defualt;
+import com.dopave.diethub_vendor.Models.GetVehicles.Data;
+import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
 import com.dopave.diethub_vendor.Models.GetVehicles.Image;
+import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
+import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleViewModel;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.ViewHolderForResImage> {
@@ -31,10 +40,26 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
     String type;
     int numberOfIndexes;
     RecyclerView recyclerView;
-
+    CreateVehicleViewModel viewModel;
+    GetVehicleData VehicleData;
+    ProgressDialog dialog;
     public AdapterForResImage(List<Image> list, Context context,
                               List<com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image> imageListRequest,
-                              String type, int numberOfIndexes, RecyclerView recyclerView) {
+                              String type, int numberOfIndexes, RecyclerView recyclerView,
+                              CreateVehicleViewModel viewModel, GetVehicleData vehicleData,
+                              ProgressDialog dialog) {
+        this.list = list;
+        this.context = context;
+        this.imageListRequest = imageListRequest;
+        this.type = type;
+        this.numberOfIndexes = numberOfIndexes;
+        this.recyclerView = recyclerView;
+        this.viewModel = viewModel;
+        VehicleData = vehicleData;
+        this.dialog = dialog;
+    }
+
+    public AdapterForResImage(List<Image> list, Context context, List<com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image> imageListRequest, String type, int numberOfIndexes, RecyclerView recyclerView) {
         this.list = list;
         this.context = context;
         this.imageListRequest = imageListRequest;
@@ -111,22 +136,38 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
     private void delete(int position) {
         if (type.equals("update") && numberOfIndexes != 0){
             if (position < numberOfIndexes){
-                numberOfIndexes--;
-                list.remove(position);
+                deleteImage(position);
             }else {
                 int n = numberOfIndexes - position;
                 list.remove(position);
                 imageListRequest.remove(n);
             }
             recyclerView.setAdapter(new AdapterForResImage(list,context,imageListRequest,
-                    "update",numberOfIndexes,recyclerView));
+                    "update",numberOfIndexes,recyclerView,viewModel,VehicleData,dialog));
         }else {
             list.remove(position);
             imageListRequest.remove(--position);
             recyclerView.setAdapter(new AdapterForResImage(list,context,imageListRequest,
-                    "create",numberOfIndexes,recyclerView));
+                    "create",numberOfIndexes,recyclerView,viewModel,VehicleData,dialog));
         }
     }
+
+    private void deleteImage(final int position) {
+        Image image = list.get(position);
+        List<com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image> listdalete = new ArrayList<>();
+        listdalete.add(new com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image(image.getId(),"deleted"));
+        viewModel.deleteImage(VehicleData.getData().getId()+"",listdalete,context,dialog)
+                .observe((LifecycleOwner) context, new Observer<Data>() {
+            @Override
+            public void onChanged(Data data) {
+                numberOfIndexes--;
+                list.remove(position);
+                recyclerView.setAdapter(new AdapterForResImage(list,context,imageListRequest,
+                        "update",numberOfIndexes,recyclerView,viewModel,VehicleData,dialog));
+            }
+        });
+    }
+
 
     @Override
     public int getItemCount() {

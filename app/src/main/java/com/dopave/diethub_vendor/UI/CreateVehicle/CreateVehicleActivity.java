@@ -50,6 +50,8 @@ import com.dopave.diethub_vendor.Models.CreateVehicle.Request.VehicleLicence;
 import com.dopave.diethub_vendor.Models.CreateVehicle.Response.CreateVehicleRespons;
 import com.dopave.diethub_vendor.Models.GetVehicles.Data;
 import com.dopave.diethub_vendor.Models.GetVehicles.GetVehicleData;
+import com.dopave.diethub_vendor.Models.UpdateVehicle.DrivingLicenceImage;
+import com.dopave.diethub_vendor.Models.UpdateVehicle.VehicleLicenceImage;
 import com.dopave.diethub_vendor.Models.VehicleTypes.RowVehicleTypes;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
@@ -114,6 +116,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
         DrivingLicenseLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(CreateVehicleActivity.this, "CCC", Toast.LENGTH_SHORT).show();
                 openGallery(SELECT_IMAGE_FOR_DRIVING_LICENSE);
             }
         });
@@ -255,20 +258,46 @@ public class CreateVehicleActivity extends AppCompatActivity {
                     VehicleData.getData().getDrivingLicence().getFor() + "/" +
                     Uri.encode(VehicleData.getData().getDrivingLicence().getName());
             Picasso.with(this).load(path).into(driving_licence_Image);
+            driving_licence_Add.setVisibility(View.GONE);
+            Log.i("TTTTT","getDrivingLicence");
+        }else {
+            driving_licence_Add.setVisibility(View.VISIBLE);
         }
         if (VehicleData.getData().getVehicleLicence() != null){
             String path = Common.BaseUrl + "images/" +
                     VehicleData.getData().getVehicleLicence().getFor() + "/" +
                     Uri.encode(VehicleData.getData().getVehicleLicence().getName());
             Picasso.with(this).load(path).into(vehicle_licence_Image);
+            vehicle_licence_Add.setVisibility(View.GONE);
+            Log.i("TTTTT","getVehicleLicence");
+        }else {
+            vehicle_licence_Add.setVisibility(View.VISIBLE);
         }
-        Recycler.setAdapter(new AdapterForResImage(list,this,listImageRequest,"update",numberOfIndexes,Recycler));
+        Recycler.setAdapter(new AdapterForResImage(list,this,listImageRequest,"update"
+                ,numberOfIndexes,Recycler,viewModel,VehicleData,dialog));
         getVehicleTypes();
     }
 
     public void onClickConfirmButton() {
         if (getIntent().getExtras().getString("type").equals("update")) {
-            updateVehicle();
+            if (VehicleData != null) {
+                if (VehicleID.getText().toString().isEmpty())
+                    Toast.makeText(this, R.string.Enter_vehicle_id, Toast.LENGTH_LONG).show();
+                else if (VehicleModel.getText().toString().isEmpty())
+                    Toast.makeText(this, R.string.Enter_Vehicle_model, Toast.LENGTH_LONG).show();
+                else if (selectedYear == 0)
+                    Toast.makeText(this, R.string.Choose_year_vehicle, Toast.LENGTH_LONG).show();
+                else if (rowVehicleTypes == null)
+                    Toast.makeText(this, R.string.Select_vehicle_model, Toast.LENGTH_SHORT).show();
+//                else if (listImageRequest.size() == 0 && list.size() == 0)
+//                    Toast.makeText(this, R.string.chooce_vehicle_images, Toast.LENGTH_SHORT).show();
+//                else if (driving_licence_ImageBase46 == null && VehicleData.getData().getDrivingLicence() == null)
+//                    Toast.makeText(this, R.string.Choose_driving_licence_images, Toast.LENGTH_SHORT).show();
+//                else if (vehicle_licence_ImageBase46 == null && VehicleData.getData().getVehicleLicence() == null)
+//                    Toast.makeText(this, R.string.Choose_vehicle_licence_Image, Toast.LENGTH_SHORT).show();
+                else
+                    checkForUpdate();
+            }
         }else {
             if (VehicleID.getText().toString().isEmpty())
                 Toast.makeText(this, R.string.Enter_vehicle_id, Toast.LENGTH_LONG).show();
@@ -278,27 +307,46 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.Choose_year_vehicle, Toast.LENGTH_LONG).show();
             else if (rowVehicleTypes == null)
                 Toast.makeText(this, R.string.Select_vehicle_model, Toast.LENGTH_SHORT).show();
+//            else if (listImageRequest.size() == 0)
+//                Toast.makeText(this, R.string.chooce_vehicle_images, Toast.LENGTH_SHORT).show();
+//            else if (driving_licence_ImageBase46.isEmpty())
+//                Toast.makeText(this, R.string.Choose_driving_licence_images, Toast.LENGTH_SHORT).show();
+//            else if (vehicle_licence_ImageBase46.isEmpty())
+//                Toast.makeText(this, R.string.Choose_vehicle_licence_Image, Toast.LENGTH_SHORT).show();
             else
                 createVehicle();
         }
     }
 
-    private void updateVehicle() {
+    private void updateVehicle(DrivingLicenceImage drivingLicenceImage , VehicleLicenceImage vehicleLicenceImage) {
         dialog.show();
         Log.i("Informations","VId = "+VehicleData.getData().getId()+" ");
-        viewModel.updateVehicle(VehicleData.getData().getId()+""
-                ,VehicleID.getText().toString(),VehicleModel.getText().toString(),selectedYear
-                ,rowVehicleTypes.getId(),driving_licence_ImageBase46,vehicle_licence_ImageBase46,listImageRequest,this,dialog)
+        viewModel.updateVehicle(VehicleData.getData().getId() + ""
+                , VehicleID.getText().toString(), VehicleModel.getText().toString(), selectedYear
+                , rowVehicleTypes.getId(),drivingLicenceImage,vehicleLicenceImage, listImageRequest, this, dialog)
                 .observe(this, new Observer<Data>() {
-            @Override
-            public void onChanged(Data data) {
-                Toast.makeText(CreateVehicleActivity.this,
-                        getResources().getString(R.string.Updated), Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(CreateVehicleActivity.this, HomeActivity.class)
-                .putExtra("type","CreateDeliveryActivity")
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                    @Override
+                    public void onChanged(Data data) {
+                        Toast.makeText(CreateVehicleActivity.this,
+                                getResources().getString(R.string.Updated), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(CreateVehicleActivity.this, HomeActivity.class)
+                                .putExtra("type", "CreateDeliveryActivity")
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                    }
+                });
+    }
+   private void checkForUpdate(){
+        if (driving_licence_ImageBase46 != null || vehicle_licence_ImageBase46 != null) {
+            if (driving_licence_ImageBase46 != null && vehicle_licence_ImageBase46 != null){
+                updateVehicle(new DrivingLicenceImage("new", driving_licence_ImageBase46),new VehicleLicenceImage("new",vehicle_licence_ImageBase46));
+            }else if (driving_licence_ImageBase46 != null){
+                updateVehicle(new DrivingLicenceImage("new", driving_licence_ImageBase46),null);
+            }else if (vehicle_licence_ImageBase46 != null){
+                updateVehicle(null,new VehicleLicenceImage("new",vehicle_licence_ImageBase46));
             }
-        });
+        }else {
+            updateVehicle(null,null);
+        }
     }
 
     private void showSuccessDialog() {
@@ -562,7 +610,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
                         listImageRequest.add(new Image(compressToBase46(bitmap)));
                         if (getIntent().getExtras().getString("type").equals("update")) {
                             Recycler.setAdapter(new AdapterForResImage(list,this,
-                                    listImageRequest,"update",numberOfIndexes,Recycler));
+                                    listImageRequest,"update",numberOfIndexes,Recycler,viewModel,VehicleData,dialog));
                         }else {
                             Recycler.setAdapter(new AdapterForResImage(list,this,
                                     listImageRequest,"create",numberOfIndexes,Recycler));
@@ -572,7 +620,8 @@ public class CreateVehicleActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            } else if (resultCode == Activity.RESULT_CANCELED)  {
+            }
+            else if (resultCode == Activity.RESULT_CANCELED)  {
                 Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
             }
         }
@@ -616,5 +665,4 @@ public class CreateVehicleActivity extends AppCompatActivity {
 
         return encodeImage;
     }
-
 }

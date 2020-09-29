@@ -231,6 +231,9 @@
     <string name="Enter_Vehicle_model">Enter Vehicle model</string>
     <string name="Choose_year_vehicle">Choose year of vehicle</string>
     <string name="Select_vehicle_model">Select the vehicle model</string>
+    <string name="chooce_vehicle_images">Choose vehicle images</string>
+    <string name="Choose_driving_licence_images">Choose driving licence Image</string>
+    <string name="Choose_vehicle_licence_Image">Choose vehicle licence Image</string>
     <string name="enter_code">enter Code</string>
     <string name="enter_address">enter address</string>
     <string name="address_not_found">This address cannot be found</string>
