@@ -607,11 +607,12 @@ public class CreateVehicleActivity extends AppCompatActivity {
 
                         list.add(new com.dopave.diethub_vendor.Models.GetVehicles.Image(bitmap));
                         //
-                        listImageRequest.add(new Image(compressToBase46(bitmap)));
                         if (getIntent().getExtras().getString("type").equals("update")) {
+                            listImageRequest.add(new Image("new",compressToBase46(bitmap)));
                             Recycler.setAdapter(new AdapterForResImage(list,this,
                                     listImageRequest,"update",numberOfIndexes,Recycler,viewModel,VehicleData,dialog));
                         }else {
+                            listImageRequest.add(new Image(compressToBase46(bitmap)));
                             Recycler.setAdapter(new AdapterForResImage(list,this,
                                     listImageRequest,"create",numberOfIndexes,Recycler));
                         }
