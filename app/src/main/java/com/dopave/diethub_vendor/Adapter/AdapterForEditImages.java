@@ -16,9 +16,12 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dopave.diethub_vendor.Common.Common;
+import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.GetDeliveries.Image;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_ImagesActivity;
@@ -60,6 +63,7 @@ public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditIma
     @Override
     public void onBindViewHolder(@NonNull ViewHolderForEditImages holder, final int position) {
        Image image = list.get(position);
+        Log.i("ImageProPP",image.getId()+"");
         if (position == 0) {
             holder.menuIconForImage.setVisibility(View.GONE);
             holder.Add_Photo_Layout.setVisibility(View.VISIBLE);
@@ -67,15 +71,15 @@ public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditIma
             holder.Add_Photo_Layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    if (list.size() <= 5) {
+                    if (list.size() <= 5) {
                         Intent intent = new Intent();
                         intent.setType("image/*");
                         intent.setAction(Intent.ACTION_GET_CONTENT);
                         Modify_ImagesActivity modify_imagesActivity = (Modify_ImagesActivity) context;
                         modify_imagesActivity.openGallery(modify_imagesActivity.SELECT_IMAGE_FOR_PROVIDER);
-//                    }else {
-//                        Toast.makeText(context, context.getResources().getString(R.string.maximum_of_five_pictures), Toast.LENGTH_SHORT).show();
-//                    }
+                    }else {
+                        Toast.makeText(context, context.getResources().getString(R.string.maximum_of_five_pictures), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
@@ -118,15 +122,11 @@ public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditIma
         if (Modify_ImagesActivity.numberOfIndexes != 0) {
             if (position < Modify_ImagesActivity.numberOfIndexes) {
                 Modify_ImagesActivity.numberOfIndexes--;
-                list.remove(position);
-                Toast.makeText(context, "old "+Modify_ImagesActivity.numberOfIndexes
-                        , Toast.LENGTH_SHORT).show();
                 deleterequest(position);
             } else {
                 int n = Modify_ImagesActivity.numberOfIndexes - position;
                 list.remove(position);
                 imageListRequest.remove(n);
-                Toast.makeText(context, "new", Toast.LENGTH_SHORT).show();
             }
         }else {
             list.remove(position);
@@ -137,11 +137,19 @@ public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditIma
                 imageListRequest,recyclerView,viewModel,dialog));
     }
 
-    private void deleterequest(int position) {
-        Image image = list.get(--position);
+    private void deleterequest(final int position) {
+        Image image = list.get(position);
         ArrayList<com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image> images = new ArrayList<>();
         images.add(new com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image(image.getId(),"deleted"));
-        viewModel.updateImages(context,dialog,null,images);
+        viewModel.updateImages(context,dialog,null,images).observe((LifecycleOwner) context,
+                new Observer<Defualt>() {
+                    @Override
+                    public void onChanged(Defualt defualt) {
+                        list.remove(position);
+                        recyclerView.setAdapter(new AdapterForEditImages(list,context,numberOfIndexes,
+                                imageListRequest,recyclerView,viewModel,dialog));
+                    }
+                });
     }
 
     @Override

@@ -56,6 +56,7 @@ import com.dopave.diethub_vendor.Models.Years.Years;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -248,6 +249,18 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 list.addAll(VehicleData.getData().getImages());
                 numberOfIndexes = list.size();
             }
+        }
+        if (VehicleData.getData().getDrivingLicence() != null){
+            String path = Common.BaseUrl + "images/" +
+                    VehicleData.getData().getDrivingLicence().getFor() + "/" +
+                    Uri.encode(VehicleData.getData().getDrivingLicence().getName());
+            Picasso.with(this).load(path).into(driving_licence_Image);
+        }
+        if (VehicleData.getData().getVehicleLicence() != null){
+            String path = Common.BaseUrl + "images/" +
+                    VehicleData.getData().getVehicleLicence().getFor() + "/" +
+                    Uri.encode(VehicleData.getData().getVehicleLicence().getName());
+            Picasso.with(this).load(path).into(vehicle_licence_Image);
         }
         Recycler.setAdapter(new AdapterForResImage(list,this,listImageRequest,"update",numberOfIndexes,Recycler));
         getVehicleTypes();

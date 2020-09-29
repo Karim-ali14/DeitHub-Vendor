@@ -24,6 +24,7 @@ import com.dopave.diethub_vendor.Models.ProviderIMages.Update.ImagesProvider;
 import com.dopave.diethub_vendor.Models.ProviderIMages.Update.MainImage;
 import com.dopave.diethub_vendor.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -146,8 +147,12 @@ public class Modify_ImagesRepository {
                         Common.onCheckTokenAction(context);
                     }else {
                         try {
+                            Log.i("ImageProPP",response.code()+"");
+                            JSONArray errors = new JSONObject(response.errorBody().string()).getJSONArray("errors");
+                            Log.i("ImageProPP",errors+"");
                             String message = new JSONObject(response.errorBody().string())
                                     .getString("message");
+                            Log.i("ImageProPP",errors+""+message+"   "+response.message());
                             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -161,7 +166,7 @@ public class Modify_ImagesRepository {
             @Override
             public void onFailure(Call<Defualt> call, Throwable t) {
                 dialog.dismiss();
-
+                Log.i("ImageProPP",t.getMessage());
                 if(t instanceof SocketTimeoutException) {
                     Toast.makeText(context, R.string.Unable_contact_server, Toast.LENGTH_SHORT).show();
                 }

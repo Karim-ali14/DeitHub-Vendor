@@ -111,10 +111,8 @@ public class Modify_ImagesActivity extends AppCompatActivity {
                     }else if (MainImageBase46 != null || listForRequest.size() != 0){
 
                         if (MainImageBase46 != null){
-
                             upDateImage(new MainImage(Common.currentPosition.getData().getProvider().
                                     getMainImage().getId(), "new", MainImageBase46),null);
-
                         }else if (listForRequest.size() != 0){
 
                             upDateImage(null,listForRequest);
