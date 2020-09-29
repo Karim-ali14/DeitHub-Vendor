@@ -35,6 +35,7 @@ import com.dopave.diethub_vendor.Models.Years.Years;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryViewModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -313,9 +314,9 @@ public class CreateVehicleRepository {
                                     String message = new JSONObject(response.errorBody().string())
                                             .getString("message");
                                     Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
-
-                                    Log.i("TTTTTT",new JSONObject(response.errorBody().string())
-                                            .getString("message"));
+                                    JSONArray errors = new JSONObject(response.errorBody().string()).getJSONArray("errors");
+                                    Log.i("TTTTTT",errors+"");
+                                    
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 } catch (IOException e) {

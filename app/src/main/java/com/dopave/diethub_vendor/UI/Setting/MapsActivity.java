@@ -18,7 +18,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,6 +40,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
@@ -57,6 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Button SaveButton;
     LatLng SelectedLocation;
     ProviderInformation providerInfo;
+    String lastAddressSearchOnIt = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,10 +74,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+//        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
 
         requestPermissions();
 
@@ -140,7 +144,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     providerInfo.getData().getProvider().getLatitude()
                     ,
                     providerInfo.getData().getProvider().getLongitude()
-            ));
+            ),true);
         }
 
         Select_Location.setOnClickListener(new View.OnClickListener() {
@@ -153,36 +157,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                mMap.clear();
-                addMarker(latLng);
+                addMarker(latLng,false);
                 SelectedLocation = latLng;
             }
         });
+
+        search_In_Map();
     }
 
     private void getLastLocation() {
         try {
+            Log.i("TTTTTTTTT","1");
             providerClient.getLastLocation()
-                    .addOnCompleteListener(new OnCompleteListener<Location>() {
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                         @Override
-                        public void onComplete(@NonNull Task<Location> task) {
-                            if (task.isSuccessful()) {
-                                if (task.getResult() != null) {
-
-                                    Location result = task.getResult();
-                                    LatLng latLng = new LatLng(result.getLatitude(), result.getLongitude());
-                                    addMarker(latLng);
-                                    SelectedLocation = latLng;
-                                }
+                        public void onSuccess(Location location) {
+                            Log.i("TTTTTTTTT","2");
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                Log.i("TTTTTTTTT","3");
+                                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                addMarker(latLng,true);
+                                SelectedLocation = latLng;
                             }
                         }
                     });
-
         } catch (SecurityException e) {
+            Log.i("TTTTTTTTT","4");
             Log.d("MainD", "Massage is " + e.getMessage());
         }
-
-
     }
 
     public void moveCameraT(LatLng latLng, float Zoom) {
@@ -190,26 +193,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, Zoom));
     }
 
-    private void addMarker(LatLng latLng){
+    private void addMarker(LatLng latLng,boolean zoomIN){
+        mMap.clear();
         BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.mark_white);
         Bitmap b = bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 150, 150, false);
         mMap.addMarker(new MarkerOptions().position(latLng)
                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
-        moveCameraT(latLng,10);
-
-        search_In_Map();
+        if (zoomIN)
+            moveCameraT(latLng,10);
     }
 
     public void search_In_Map() {
-        searchInMap.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE
-                        || actionId == EditorInfo.IME_ACTION_SEARCH
-                        || event.getAction() == KeyEvent.ACTION_DOWN
-                        || event.getAction() == KeyEvent.KEYCODE_ENTER) {
-                    getLocationByName();
+//        searchInMap.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_DONE
+//                        || actionId == EditorInfo.IME_ACTION_SEARCH
+//                        || event.getAction() == KeyEvent.ACTION_DOWN
+//                        || event.getAction() == KeyEvent.KEYCODE_ENTER) {
+//                    getLocationByName();
+//                }
+//                return false;
+//            }
+//        });
+        searchInMap.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                        {
+                            if (!searchInMap.getText().toString().isEmpty())
+                                getLocationByName();
+                            else
+                                Toast.makeText(MapsActivity.this, R.string.enter_address, Toast.LENGTH_LONG).show();
+                        }
+                        return true;
+                        default:
+                            break;
+                    }
                 }
                 return false;
             }
@@ -217,7 +244,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         search_Icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLocationByName();
+                if (!searchInMap.getText().toString().isEmpty())
+                    getLocationByName();
+                else
+                    Toast.makeText(MapsActivity.this, R.string.enter_address, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -227,15 +257,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Geocoder geocoder = new Geocoder(this);
         try {
             List<Address> addresses = geocoder.getFromLocationName(searchInMap.getText().toString(), 1);
-            if (addresses.size() > 0) {
-                address = addresses.get(0);
-                LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                addMarker(latLng);
-                SelectedLocation = latLng;
-                Log.i("inforA", address.toString());
+            if (lastAddressSearchOnIt == null) {
+                lastAddressSearchOnIt = searchInMap.getText().toString();
+                if (addresses.size() > 0) {
+                    address = addresses.get(0);
+                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                    addMarker(latLng,true);
+                    SelectedLocation = latLng;
+                    Log.i("inforA", address.toString());
+                }else {
+                    Toast.makeText(this, R.string.address_not_found, Toast.LENGTH_SHORT).show();
+                }
             }
+            else if (lastAddressSearchOnIt != null && !lastAddressSearchOnIt.equals(searchInMap.getText().toString())){
+                if (addresses.size() > 0) {
+                    address = addresses.get(0);
+                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                    addMarker(latLng,true);
+                    SelectedLocation = latLng;
+                    Log.i("inforA", address.toString());
+                }else {
+                    Toast.makeText(this, R.string.address_cannot_be_found, Toast.LENGTH_SHORT).show();
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
         }
         Log.i("infor", "Get This Location By Name : " + address);
     }
@@ -267,4 +315,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         finish();
     }
 
+    private void closeKeyBoard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.getWindow().getDecorView().getRootView().getWindowToken(), 0);
+        searchInMap.clearFocus();
+    }
 }

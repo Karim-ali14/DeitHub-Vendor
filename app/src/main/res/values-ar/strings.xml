@@ -230,5 +230,9 @@
     <string name="Enter_Vehicle_model">ادخل موديل المركية</string>
     <string name="Choose_year_vehicle">اختر سنه الصنع</string>
     <string name="Select_vehicle_model">اختر موديل المركبة</string>
+    <string name="enter_code">ادخل الكود</string>
+    <string name="enter_address">ادخل العنوان</string>
+    <string name="address_not_found">لا يمكن العثور علي هذا العنوان</string>
+    <string name="address_cannot_be_found">لا يمكن العثور علي هذا العنوان</string>
 
 </resources>

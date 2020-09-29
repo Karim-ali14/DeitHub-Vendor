@@ -151,6 +151,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         finish();
         drawer.closeDrawer(GravityCompat.START);
     }
+
     @Override
     public void onBackPressed() {
         if (!Current_Page.equals("nav_Home")) {

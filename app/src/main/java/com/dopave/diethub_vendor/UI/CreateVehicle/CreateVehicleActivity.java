@@ -97,6 +97,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
     int numberOfIndexes = 0;
     String driving_licence_ImageBase46,vehicle_licence_ImageBase46;
     Button Confirm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

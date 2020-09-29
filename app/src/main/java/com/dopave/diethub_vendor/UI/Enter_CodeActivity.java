@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -33,6 +34,33 @@ public class Enter_CodeActivity extends AppCompatActivity {
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         Code = findViewById(R.id.Code);
+        Code.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                        {
+                            if (!Code.getText().toString().isEmpty()){
+                                startActivity(new Intent(Enter_CodeActivity.this, NewPassword_Activity.class)
+                                        .putExtra("email",getIntent().getExtras().getString("email"))
+                                        .putExtra("Code",Code.getText().toString()));
+                            }else {
+                                Toast.makeText(Enter_CodeActivity.this, R.string.enter_code, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
         MessageOfVerification = findViewById(R.id.MessageOfVerification);
         MessageOfVerification.setText(getResources().getString(R.string.enter_code_to_password_forEmail));
         button = findViewById(R.id.button);
