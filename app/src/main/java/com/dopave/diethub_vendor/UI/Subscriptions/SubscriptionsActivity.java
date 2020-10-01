@@ -38,7 +38,9 @@ public class SubscriptionsActivity extends AppCompatActivity {
     TextView title;
     public static final int limit = 5 ;
     int skip = 0;
-    int count;
+    int count = 5;
+    List<Row> list;
+    boolean hasMoreData;
     boolean isScrolling = false;
     ProgressBar progressBar;
     @Override
@@ -46,6 +48,7 @@ public class SubscriptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscriptions);
         viewModel = ViewModelProviders.of(this).get(SubscriptionsViewModel.class);
+        list = new ArrayList<>();
         dialog = new ProgressDialog(this);
         dialog.show();
         recyclerView = findViewById(R.id.recyclerViewSub);
@@ -79,8 +82,11 @@ public class SubscriptionsActivity extends AppCompatActivity {
                 int childCount = manager.getChildCount();
                 int itemCount = manager.getItemCount();
                 int firstVisibleItemPosition = manager.findFirstVisibleItemPosition();
-
-                if (isScrolling && (childCount+firstVisibleItemPosition == itemCount) && itemCount < count){
+                Log.i("TTTTTT",childCount+" "+firstVisibleItemPosition+" "+itemCount);
+                if (isScrolling && (childCount+firstVisibleItemPosition == itemCount)
+                        && list.size() == count && hasMoreData){
+                    Log.i("TTTTTTT","Total = "+count + " "+ list.size());
+                    count += 5;
                     progressBar.setVisibility(View.VISIBLE);
                     isScrolling = false;
                     progressBar.setVisibility(View.VISIBLE);
@@ -104,7 +110,12 @@ public class SubscriptionsActivity extends AppCompatActivity {
                 new Observer<Subscriptions>() {
             @Override
             public void onChanged(Subscriptions subscriptions) {
-                count = subscriptions.getData().getCount();
+//                count = subscriptions.getData().getCount();
+                if (subscriptions.getData().getRows().size() == 5){
+                    hasMoreData = true;
+                }else {
+                    hasMoreData = false;
+                }
                 setListOfSubscription(type,subscriptions.getData().getRows(),viewModel,status);
             }
         });
@@ -113,7 +124,8 @@ public class SubscriptionsActivity extends AppCompatActivity {
     public void setListOfSubscription(int type, List<Row> list,
                                       SubscriptionsViewModel viewModel,String status){
         if (list.size() != 0) {
-            adapter = new AdapterForSubscription(list,
+            this.list.addAll(list);
+            adapter = new AdapterForSubscription(this.list,
                     SubscriptionsActivity.this, type, viewModel,dialog,status,recyclerView);
             recyclerView.setAdapter(adapter);
         }else {
@@ -127,7 +139,13 @@ public class SubscriptionsActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(Subscriptions subscriptions) {
                         progressBar.setVisibility(View.GONE);
-                        adapter.allList(subscriptions.getData().getRows());
+//                        adapter.allList(subscriptions.getData().getRows());
+                        if (subscriptions.getData().getRows().size() == 5){
+                            hasMoreData = true;
+                        }else {
+                            hasMoreData = false;
+                        }
+                        list.addAll(subscriptions.getData().getRows());
                         adapter.notifyDataSetChanged();
                     }
                 });
