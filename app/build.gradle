@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('E:\\App\\DoPave KeyStores\\diethub_provider_keystore.jks')
+            keyAlias = 'key0'
+            storePassword '#Ktmk7DrHcN3Y7q8Qp=@'
+            keyPassword 'Qj8G3eCkUP7fHg!o'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
