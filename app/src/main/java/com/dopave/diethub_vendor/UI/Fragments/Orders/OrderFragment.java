@@ -61,7 +61,10 @@ public class OrderFragment extends Fragment {
     OrdersViewModel viewModel;
     ProgressDialog dialog;
     String activeButton = "Pending";
-    int count;
+
+    int count = 5;
+    List<OrderRaw> list;
+    boolean hasMoreData;
 
     DeliveryViewModel DViewModel;
     CreateVehicleViewModel vehicleViewModel;
@@ -78,6 +81,7 @@ public class OrderFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View inflate = inflater.inflate(R.layout.fragment_my_order, container, false);
+        list = new ArrayList<>();
         init(inflate);
         return inflate;
     }
@@ -90,9 +94,14 @@ public class OrderFragment extends Fragment {
                 new Observer<Orders>() {
                     @Override
                     public void onChanged(Orders orders) {
+                        list.addAll(orders.getData().getOrderRaw());
                         adapter = new AdapterForOrder
-                                (orders.getData().getOrderRaw(),getActivity(),type,DViewModel,viewModel,recyclerView);
-                        count = orders.getData().getCount();
+                                (list,getActivity(),type,DViewModel,viewModel,recyclerView);
+                        if (orders.getData().getOrderRaw().size() == 5)
+                            hasMoreData = true;
+                        else
+                            hasMoreData = false;
+//                        count = orders.getData().getCount();
                         progressBar.setVisibility(View.GONE);
                         recyclerView.setAdapter(adapter);
                         if (orders.getData().getOrderRaw() == null || orders.getData().getOrderRaw().size() == 0)
@@ -107,9 +116,19 @@ public class OrderFragment extends Fragment {
                 new Observer<Orders>() {
                     @Override
                     public void onChanged(Orders orders) {
-                        adapter.allList(orders.getData().getOrderRaw(),type);
+//                        adapter.allList(orders.getData().getOrderRaw(),type);
+                        if (orders.getData().getOrderRaw().size() == 5) {
+                            hasMoreData = true;
+                            Log.i("hasMoreOrders : ",hasMoreData+"");
+                        }
+                        else {
+                            Log.i("hasMoreOrders : ",hasMoreData+"");
+                            hasMoreData = false;
+                        }
+                        list.addAll(orders.getData().getOrderRaw());
                         adapter.notifyDataSetChanged();
                         progressBar.setVisibility(View.GONE);
+                        Log.i("TTTTTTT","Total = "+count + " "+ list.size());
                     }
                 });
     }
@@ -138,6 +157,7 @@ public class OrderFragment extends Fragment {
         PendingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                list.clear();
                 onPendingButtonClick();
                 typeID = PENDING_ID;
             }
@@ -146,6 +166,7 @@ public class OrderFragment extends Fragment {
         PreparingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                list.clear();
                 onPreparingButtonClick();
                 typeID = PREPARING_ID;
             }
@@ -154,6 +175,7 @@ public class OrderFragment extends Fragment {
         FinishedLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                list.clear();
                 onFinishButtonClick();
                 typeID = FINISHED_ID;
             }
@@ -172,9 +194,10 @@ public class OrderFragment extends Fragment {
                 int childCount = manager.getChildCount();
                 int itemCount = manager.getItemCount();
                 int firstVisibleItemPosition = manager.findFirstVisibleItemPosition();
-
+                Log.i("TTTTTT",childCount+" "+firstVisibleItemPosition+" "+itemCount);
                 if (isScrolling && (childCount+firstVisibleItemPosition == itemCount)
-                        && itemCount < count){
+                        && list.size() == count && hasMoreData){
+                    count += 5;
                     isScrolling = false;
                     progressBar.setVisibility(View.VISIBLE);
                     if (activeButton.equals("Pending"))
@@ -238,7 +261,7 @@ public class OrderFragment extends Fragment {
             }else if (activeButton.equals("Preparing")){
                 OrderFragment.PREPARING = true;
             }
-
+            count = 5;
             activeButton = "Pending";
 
             status = new String[1];
@@ -267,7 +290,7 @@ public class OrderFragment extends Fragment {
                 OrderFragment.FINISHED = false;
                 OrderFragment.PREPARING = false;
             }
-
+            count = 5;
             activeButton = "Preparing";
 
             status = new String[2];
@@ -307,7 +330,7 @@ public class OrderFragment extends Fragment {
                 OrderFragment.FINISHED = false;
                 OrderFragment.PREPARING = false;
             }
-
+            count = 5;
             activeButton = "Finished";
             status = new String[7];
             status[0] = "prepared";

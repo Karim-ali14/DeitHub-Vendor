@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "228034548331",
+    "firebase_url": "https://diethub-sa.firebaseio.com",
+    "project_id": "diethub-sa",
+    "storage_bucket": "diethub-sa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228034548331:android:4d34d459e6751e4066172e",
+        "android_client_info": {
+          "package_name": "com.dopave.diethub_vendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228034548331-gijo0du0dlh6g7s2an5f6aol9av7lbuk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dopave.diethub_vendor",
+            "certificate_hash": "fef498de8597e5cbd7142d90ddf13c9b9795d7bb"
+          }
+        },
+        {
+          "client_id": "228034548331-lnji75ddg29jjrj7cqsb1pasp0b2hn9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeRCJDQDu7PsnBSe57iWrLdJuI2fhEFks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228034548331-lnji75ddg29jjrj7cqsb1pasp0b2hn9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "228034548331-akgtuonh2ug0thnbg1htklul5uriiaqs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.networksexperts.diet.Hub"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

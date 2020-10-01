@@ -38,7 +38,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class Common {
     public static final String BaseUrl = "https://api.diethub.martstations.com/";
-
+//    public static final String BaseUrl = "https://api.diethubsa.com/";
     public static ProviderInformation currentPosition = null;
 
     public static String FileName = "TokenFile";
