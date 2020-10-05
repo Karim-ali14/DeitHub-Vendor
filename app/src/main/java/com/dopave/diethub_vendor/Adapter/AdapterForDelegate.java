@@ -160,8 +160,6 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
                 .getString(R.string.createVehicle));
         Adialog.setView(view);
         final AlertDialog dialog1 = Adialog.create();
-        dialog1.setCanceledOnTouchOutside(false);
-        dialog1.setCancelable(false);
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog1.show();
         createVehicleButton.setOnClickListener(new View.OnClickListener() {

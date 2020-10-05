@@ -149,7 +149,7 @@
     <string name="Ratings">Ratings</string>
     <string name="ClientInfo">Client info</string>
 
-    <string name="donthaveVehicle">this delivery don"'"t have vehicle </string>
+    <string name="donthaveVehicle">This delegate has no vehicle</string>
     <string name="deleteDelivery">Delivery successfully deleted</string>
     <string name="noDeliveries">there aren"'"t any deliveries yet</string>
     <string name="Updated">Updated</string>
@@ -239,4 +239,5 @@
     <string name="address_not_found">This address cannot be found</string>
     <string name="address_cannot_be_found">This address cannot be found</string>
     <string name="there_arent_any_deliveries_yet">there aren"'"t any deliveries yet</string>
+    <string name="Call_Client">Call Client</string>
 </resources>

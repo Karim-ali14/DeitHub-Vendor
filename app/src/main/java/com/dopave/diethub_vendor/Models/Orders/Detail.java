@@ -8,14 +8,14 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Detail implements Parcelable {
+public class Detail implements Parcelable{
 
     @SerializedName("id")
     @Expose
     private String id;
     @SerializedName("unitPricePiastre")
     @Expose
-    private Integer unitPricePiastre;
+    private Double unitPricePiastre;
     @SerializedName("quantity")
     @Expose
     private Integer quantity;
@@ -38,12 +38,13 @@ public class Detail implements Parcelable {
     @Expose
     private Item item;
 
+
     protected Detail(Parcel in) {
         id = in.readString();
         if (in.readByte() == 0) {
             unitPricePiastre = null;
         } else {
-            unitPricePiastre = in.readInt();
+            unitPricePiastre = in.readDouble();
         }
         if (in.readByte() == 0) {
             quantity = null;
@@ -73,7 +74,7 @@ public class Detail implements Parcelable {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(unitPricePiastre);
+            dest.writeDouble(unitPricePiastre);
         }
         if (quantity == null) {
             dest.writeByte((byte) 0);
@@ -124,11 +125,11 @@ public class Detail implements Parcelable {
         this.id = id;
     }
 
-    public Integer getUnitPricePiastre() {
+    public Double getUnitPricePiastre() {
         return unitPricePiastre;
     }
 
-    public void setUnitPricePiastre(Integer unitPricePiastre) {
+    public void setUnitPricePiastre(Double unitPricePiastre) {
         this.unitPricePiastre = unitPricePiastre;
     }
 

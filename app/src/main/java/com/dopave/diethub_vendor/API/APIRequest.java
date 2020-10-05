@@ -87,6 +87,14 @@ public interface APIRequest {
                                               @Path("id") String id,
                                               @Query("include_image") boolean include_image,
                                               @Query("include_city") boolean include_city,
+                                              @Query("include_vehicle") boolean include_vehicle,
+                                              @Query("hasTrip") boolean hasTrip);
+    //Todo get all Delivery by provider id
+    @GET("provider/{id}/deliveryrep")
+    Call<GetDeliveriesData> getAllDeliveries (@Header("Authorization") String Auth,
+                                              @Path("id") String id,
+                                              @Query("include_image") boolean include_image,
+                                              @Query("include_city") boolean include_city,
                                               @Query("include_vehicle") boolean include_vehicle);
 
 //  Todo get all Delivery by provider id

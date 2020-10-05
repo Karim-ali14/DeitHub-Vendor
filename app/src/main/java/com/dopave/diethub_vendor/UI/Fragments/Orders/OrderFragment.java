@@ -45,16 +45,12 @@ public class OrderFragment extends Fragment {
     public static int PREPARING_ID_2 = 3;
     public static int FINISHED_ID = 2;
 
-    public static final int limit = 5;
-    int skip = 0;
-
     String status[];
-
     public static boolean PENDING = false;
     public static boolean PREPARING = false;
     public static boolean FINISHED = false;
 
-    boolean isScrolling = false;
+
 
     LinearLayout PendingLayout , PreparingLayout , FinishedLayout;
     TextView PendingText , PreparingText , FinishedText;
@@ -62,9 +58,12 @@ public class OrderFragment extends Fragment {
     ProgressDialog dialog;
     String activeButton = "Pending";
 
-    int count = 5;
     List<OrderRaw> list;
+    int count = 5;
     boolean hasMoreData;
+    public static final int limit = 5;
+    int skip = 0;
+    boolean isScrolling = false;
 
     DeliveryViewModel DViewModel;
     CreateVehicleViewModel vehicleViewModel;
@@ -236,20 +235,20 @@ public class OrderFragment extends Fragment {
         }
     }
 
-    public void getAllDelivery(ProgressDialog dialog, final VehicleTypes vehicleTypes){
-//        DViewModel.getAllDeliveries(dialog,getActivity(),DViewModel,recyclerView,vehicleTypes).observe(getActivity(),
-//                new Observer<GetDeliveriesData>() {
-//                    @Override
-//                    public void onChanged(GetDeliveriesData getDeliveriesData) {
-//                        if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
-//                        {
-//                            List<DeliveryRow> deliveryRows = getDeliveriesData.getData().getDeliveryRows();
-//                            recyclerView.setAdapter(adapter);
-//                        }
-//                        else
-//                            Toast.makeText(getActivity(), "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+    public void getAllDelivery(ProgressDialog dialog, final VehicleTypes vehicleTypes) {
+        DViewModel.getAllDeliveries(dialog,getActivity(),DViewModel,recyclerView,vehicleTypes).observe(getActivity(),
+                new Observer<GetDeliveriesData>() {
+                    @Override
+                    public void onChanged(GetDeliveriesData getDeliveriesData) {
+                        if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
+                        {
+                            List<DeliveryRow> deliveryRows = getDeliveriesData.getData().getDeliveryRows();
+                            recyclerView.setAdapter(adapter);
+                        }
+                        else
+                            Toast.makeText(getActivity(), R.string.there_arent_any_deliveries_yet, Toast.LENGTH_SHORT).show();
+                    }
+                });
     } // fix this dialog will need fetch date to paginations
 
     private void onPendingButtonClick() {

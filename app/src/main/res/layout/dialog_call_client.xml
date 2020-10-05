@@ -59,18 +59,21 @@
             android:src="@drawable/call_active"
             android:layout_alignParentRight="true"
             android:id="@+id/contacted"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="15dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
-            android:text="الاتصال بالعميل"
+            android:text="@string/Call_Client"
             android:layout_toLeftOf="@id/contacted"
             android:layout_marginRight="20dp"
             android:textSize="20dp"
             android:id="@+id/Text"
             android:fontFamily="@font/helveticaneuelt_arabic"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:paddingBottom="@dimen/_5sdp"
+
             />
 
 

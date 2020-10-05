@@ -148,7 +148,7 @@
     <string name="Ratings">التقييمات</string>
     <string name="ClientInfo">معلومات العميل</string>
 
-    <string name="donthaveVehicle">هذا المندوب لس له مركبه</string>
+    <string name="donthaveVehicle">هذا المندوب ليس له مركبه</string>
     <string name="deleteDelivery">تم المسح المندوب بنجاح</string>
     <string name="noDeliveries">لا يوجد اي مناديب بعد</string>
     <string name="Updated">تم التحديث</string>
@@ -238,5 +238,6 @@
     <string name="address_not_found">لا يمكن العثور علي هذا العنوان</string>
     <string name="address_cannot_be_found">لا يمكن العثور علي هذا العنوان</string>
     <string name="there_arent_any_deliveries_yet">لا يوجد اي مناديب بعد</string>
+    <string name="Call_Client">الاتصال بالعميل</string>
 
 </resources>

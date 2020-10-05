@@ -121,11 +121,15 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         catch (ParseException e) {
             e.printStackTrace();
         }
+        if (i == 2){
+            holder.delegateLayout.setVisibility(View.VISIBLE);
+        }else {
+            holder.delegateLayout.setVisibility(View.GONE);
+        }
     }
 
     private void showAssignDelivery(final OrderRaw orderRaw) {
         final ProgressDialog dialog = new ProgressDialog(context);
-
         final AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_assign_delivery, null);
         final RecyclerView recyclerForAssign = view.findViewById(R.id.RecyclerForAssign);
@@ -336,49 +340,59 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         if (status.equals("accepted")) {
             holder.OrderStats2.setText(context.getResources().getString(R.string.Accepted));
             holder.RatingButton.setText(context.getResources().getString(R.string.Accepted));
+            holder.menu.setVisibility(View.GONE);
         }
         else if (status.equals("preparing")){
             holder.OrderStats2.setText(context.getResources().getString(R.string.Preparing));
             holder.RatingButton.setText(context.getResources().getString(R.string.Preparing));
+            holder.menu.setVisibility(View.GONE);
         }
         else if (status.equals("prepared")){
             holder.OrderStats3.setText(context.getResources().getString(R.string.Prepared));
             holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             holder.RatingButton.setText(context.getResources().getString(R.string.Prepared));
+            holder.menu.setVisibility(View.VISIBLE);
         }
         else if (status.equals("delivering")){
             holder.OrderStats3.setText(context.getResources().getString(R.string.Delivering));
             setDeliveryDate(holder,orderRaw);
+            holder.menu.setVisibility(View.GONE);
         }
         else if (status.equals("delivered")){
             holder.RatingButton.setText(context.getResources().getString(R.string.delivered));
             holder.OrderStats3.setText(context.getResources().getString(R.string.delivered));
             setDeliveryDate(holder,orderRaw);
+            holder.menu.setVisibility(View.GONE);
         }
         else if (status.equals("readyForDelivery")){
             holder.OrderStats3.setText(context.getResources().getString(R.string.readyForDelivery));
             holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
             holder.RatingButton.setText(context.getResources().getString(R.string.readyForDelivery));
+            holder.menu.setVisibility(View.GONE);
         }
         else if (status.equals("acceptForDelivery")){
             holder.OrderStats3.setText(context.getResources().getString(R.string.acceptForDelivery));
             holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
             holder.RatingButton.setText(context.getResources().getString(R.string.acceptForDelivery));
             setDeliveryDate(holder,orderRaw);
+            holder.menu.setVisibility(View.GONE);
         }
         else if (status.equals("canceled")){
             holder.OrderStats3.setText(context.getResources().getString(R.string.cancel));
             holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
             holder.RatingButton.setText(context.getResources().getString(R.string.cancel));
             setDeliveryDate(holder,orderRaw);
+            holder.menu.setVisibility(View.GONE);
         }else if (status.equals("return")){
             holder.OrderStats3.setText(context.getResources().getString(R.string.Return));
             holder.OrderStats3.setTextColor(context.getResources().getColor(R.color.orange));
             holder.RatingButton.setText(context.getResources().getString(R.string.Return));
             setDeliveryDate(holder,orderRaw);
+            holder.menu.setVisibility(View.GONE);
         }
         else {
             holder.RatingButton.setText(status);
+            holder.menu.setVisibility(View.GONE);
         }
     }
 
@@ -440,9 +454,10 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         this.i = type;
     }
 
-    private void getDeliveries(ProgressDialog dialog,final RecyclerView recyclerForAssign
-            ,final AlertDialog dialog1) {
-        DViewModel.getAllDeliveries(dialog,context,DViewModel,recyclerForAssign,null)
+    private void getDeliveries(final ProgressDialog dialog, final RecyclerView recyclerForAssign
+            , final AlertDialog dialog1) {
+        dialog.show();
+        DViewModel.getAllDeliveries(dialog,context,DViewModel,recyclerForAssign,null,false)
                 .observe((LifecycleOwner) context, new Observer<GetDeliveriesData>() {
                     @Override
                     public void onChanged(GetDeliveriesData getDeliveriesData) {
@@ -450,7 +465,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                         recyclerForAssign.setAdapter(new AdapterForAssign(deliveryRows,context,0));
                         dialog1.show();
                         if (getDeliveriesData.getData().getDeliveryRows().size() == 0)
-                            Toast.makeText(context, "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.there_arent_any_deliveries_yet, Toast.LENGTH_SHORT).show();
 
                     }
                 });

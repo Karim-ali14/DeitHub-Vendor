@@ -46,7 +46,95 @@ public class DeliveryRepository {
                                                                final Context context,
                                                                final DeliveryViewModel viewModel,
                                                                final RecyclerView recyclerView,
-                                                               final VehicleTypes vehicleTypes){
+                                                               final VehicleTypes vehicleTypes,
+                                                               boolean hasTrip){  // to filter by has Trip
+        final MutableLiveData<GetDeliveriesData> mutableLiveData = new MutableLiveData<>();
+        Common.getAPIRequest().getAllDeliveries("Bearer "+
+                        Common.currentPosition.getData().getToken().getAccessToken(),
+                Common.currentPosition.getData().getProvider().getId()+"",
+                true,true,true,hasTrip)
+                .enqueue(new Callback<GetDeliveriesData>() {
+                    @Override
+                    public void onResponse(Call<GetDeliveriesData> call, Response<GetDeliveriesData> response) {
+                        dialog.dismiss();
+                        if (response.code() == 200){
+                            mutableLiveData.setValue(response.body());
+                        } else {
+                            if (response.code() == 500){
+                                Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                            }else if (response.code() == 401){
+                                Common.onCheckTokenAction(context);
+                            }else {
+                                try {
+                                    String message = new JSONObject(response.errorBody()
+                                            .string()).getString("message");
+                                    Log.i("TTTTTTT", message + response.code());
+                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                } catch (IOException | JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetDeliveriesData> call, Throwable t) {
+                        dialog.dismiss();
+                        final AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
+                        View view = LayoutInflater.from(context).inflate(R.layout.error_dialog, null);
+                        TextView Title = view.findViewById(R.id.Title);
+                        TextView Message = view.findViewById(R.id.Message);
+                        Button button = view.findViewById(R.id.Again);
+                        Adialog.setView(view);
+                        final AlertDialog dialog1 = Adialog.create();
+                        dialog1.setCanceledOnTouchOutside(false);
+                        dialog1.setCancelable(false);
+                        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog1.dismiss();
+                                dialog.show();
+                                viewModel.getAllDeliveries(dialog, context,viewModel,recyclerView,vehicleTypes).observe((LifecycleOwner) context, new Observer<GetDeliveriesData>() {
+                                    @Override
+                                    public void onChanged(GetDeliveriesData getDeliveriesData) {
+                                        if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
+                                        {
+                                            recyclerView.setAdapter(new AdapterForDelegate(
+                                                    getDeliveriesData.getData().getDeliveryRows(),context,recyclerView,
+                                                    viewModel,vehicleTypes));
+                                        }
+                                        else
+                                            Toast.makeText(context, "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        });
+                        if(t instanceof SocketTimeoutException) {
+                            Title.setText(R.string.Unable_contact_server);
+                            Message.setText(R.string.Error_downloading_data);
+                            dialog1.show();
+                        }
+
+                        else if (t instanceof UnknownHostException) {
+                            Title.setText(context.getResources().getString(R.string.no_internet_connection));
+                            Message.setText(R.string.Make_sure_you_online);
+                            dialog1.show();
+                        }else {
+                            Title.setText(context.getResources().getString(R.string.no_internet_connection));
+                            Message.setText(R.string.Error_downloading_data);
+                            dialog1.show();
+                        }
+                    }
+                });
+        return mutableLiveData;
+    }
+
+    public MutableLiveData<GetDeliveriesData> getAllDeliveries(final ProgressDialog dialog,
+                                                               final Context context,
+                                                               final DeliveryViewModel viewModel,
+                                                               final RecyclerView recyclerView,
+                                                               final VehicleTypes vehicleTypes){ // to get All deliveries
         final MutableLiveData<GetDeliveriesData> mutableLiveData = new MutableLiveData<>();
         Common.getAPIRequest().getAllDeliveries("Bearer "+
                         Common.currentPosition.getData().getToken().getAccessToken(),

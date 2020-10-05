@@ -20,6 +20,14 @@ public class DeliveryViewModel extends ViewModel {
                                                         final Context context,
                                                         DeliveryViewModel viewModel,
                                                         RecyclerView recyclerView,
+                                                        VehicleTypes vehicleTypes,
+                                                        boolean hasTrip){
+        return repository.getAllDeliveries(dialog,context,viewModel,recyclerView,vehicleTypes,hasTrip);
+    }
+    public LiveData<GetDeliveriesData> getAllDeliveries(final ProgressDialog dialog,
+                                                        final Context context,
+                                                        DeliveryViewModel viewModel,
+                                                        RecyclerView recyclerView,
                                                         VehicleTypes vehicleTypes){
         return repository.getAllDeliveries(dialog,context,viewModel,recyclerView,vehicleTypes);
     }
