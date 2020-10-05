@@ -91,10 +91,10 @@ public class SubscriptionsActivity extends AppCompatActivity {
                     isScrolling = false;
                     progressBar.setVisibility(View.VISIBLE);
                     if (getIntent().getExtras().getString("type").equals("nav_mySubscriptionOrders")) {
-                        fetchData(0, "pending");
+                        fetchData(0, "pending",++skip);
                     }
                     else {
-                        fetchData(1, "approved");
+                        fetchData(1, "approved",++skip);
                     }
                 }
             }
@@ -133,7 +133,7 @@ public class SubscriptionsActivity extends AppCompatActivity {
         }
     }
 
-    public void fetchData(final int type, final String status){
+    public void fetchData(final int type, final String status,int skip){
         viewModel.getAllSubscriptions(this,dialog,viewModel,type,status,limit,skip).observe(this,
                 new Observer<Subscriptions>() {
                     @Override

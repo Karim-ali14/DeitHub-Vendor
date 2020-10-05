@@ -237,5 +237,6 @@
     <string name="enter_address">ادخل العنوان</string>
     <string name="address_not_found">لا يمكن العثور علي هذا العنوان</string>
     <string name="address_cannot_be_found">لا يمكن العثور علي هذا العنوان</string>
+    <string name="there_arent_any_deliveries_yet">لا يوجد اي مناديب بعد</string>
 
 </resources>

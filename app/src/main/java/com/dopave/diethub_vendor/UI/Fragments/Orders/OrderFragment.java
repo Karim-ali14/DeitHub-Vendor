@@ -237,20 +237,20 @@ public class OrderFragment extends Fragment {
     }
 
     public void getAllDelivery(ProgressDialog dialog, final VehicleTypes vehicleTypes){
-        DViewModel.getAllDeliveries(dialog,getActivity(),DViewModel,recyclerView,vehicleTypes).observe(getActivity(),
-                new Observer<GetDeliveriesData>() {
-                    @Override
-                    public void onChanged(GetDeliveriesData getDeliveriesData) {
-                        if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
-                        {
-                            List<DeliveryRow> deliveryRows = getDeliveriesData.getData().getDeliveryRows();
-                            recyclerView.setAdapter(adapter);
-                        }
-                        else
-                            Toast.makeText(getActivity(), "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
+//        DViewModel.getAllDeliveries(dialog,getActivity(),DViewModel,recyclerView,vehicleTypes).observe(getActivity(),
+//                new Observer<GetDeliveriesData>() {
+//                    @Override
+//                    public void onChanged(GetDeliveriesData getDeliveriesData) {
+//                        if (getDeliveriesData.getData().getDeliveryRows().size() != 0)
+//                        {
+//                            List<DeliveryRow> deliveryRows = getDeliveriesData.getData().getDeliveryRows();
+//                            recyclerView.setAdapter(adapter);
+//                        }
+//                        else
+//                            Toast.makeText(getActivity(), "there are't any deliveries yet", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+    } // fix this dialog will need fetch date to paginations
 
     private void onPendingButtonClick() {
         if (!activeButton.equals("Pending")) {

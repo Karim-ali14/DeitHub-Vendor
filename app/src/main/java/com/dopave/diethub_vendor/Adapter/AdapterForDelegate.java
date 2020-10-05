@@ -208,31 +208,31 @@ public class AdapterForDelegate extends RecyclerView.Adapter<AdapterForDelegate.
         }
     }
 
-    private void delete(DeliveryRow row){
+    private void delete(DeliveryRow row) {
         final ProgressDialog dialog = new ProgressDialog(context);
         dialog.show();
         viewModel.deleteDelivery(row.getId()+"",dialog,context).
                 observe((LifecycleOwner) context, new Observer<GetDeliveriesData>() {
             @Override
             public void onChanged(GetDeliveriesData getDeliveriesData) {
-                viewModel.getAllDeliveries(dialog,context,viewModel,recyclerView,vehicleTypes).observe((LifecycleOwner) context,
-                        new Observer<GetDeliveriesData>() {
-                            @Override
-                            public void onChanged(GetDeliveriesData getDeliveriesData) {
-                                dialog.dismiss();
-                                if (getDeliveriesData.getData().getDeliveryRows().size() != 0) {
-                                    recyclerView.setAdapter(new AdapterForDelegate(getDeliveriesData.getData().getDeliveryRows(),
-                                            context, recyclerView,viewModel,vehicleTypes));
-                                }
-                                else {
-                                    recyclerView.setAdapter(new AdapterForDelegate(getDeliveriesData.getData().getDeliveryRows(),
-                                            context, recyclerView,viewModel,vehicleTypes));
-                                    Toast.makeText(context,
-                                            context.getResources().getString(R.string.noDeliveries)
-                                            , Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+//                viewModel.getAllDeliveries(dialog,context,viewModel,recyclerView,vehicleTypes).observe((LifecycleOwner) context,
+//                        new Observer<GetDeliveriesData>() {
+//                            @Override
+//                            public void onChanged(GetDeliveriesData getDeliveriesData) {
+//                                dialog.dismiss();
+//                                if (getDeliveriesData.getData().getDeliveryRows().size() != 0) {
+//                                    recyclerView.setAdapter(new AdapterForDelegate(getDeliveriesData.getData().getDeliveryRows(),
+//                                            context, recyclerView,viewModel,vehicleTypes));
+//                                }
+//                                else {
+//                                    recyclerView.setAdapter(new AdapterForDelegate(getDeliveriesData.getData().getDeliveryRows(),
+//                                            context, recyclerView,viewModel,vehicleTypes));
+//                                    Toast.makeText(context,
+//                                            context.getResources().getString(R.string.noDeliveries)
+//                                            , Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
             }
         });
     }
