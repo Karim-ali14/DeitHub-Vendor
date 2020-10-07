@@ -50,8 +50,6 @@ public class OrderFragment extends Fragment {
     public static boolean PREPARING = false;
     public static boolean FINISHED = false;
 
-
-
     LinearLayout PendingLayout , PreparingLayout , FinishedLayout;
     TextView PendingText , PreparingText , FinishedText;
     OrdersViewModel viewModel;
@@ -354,5 +352,4 @@ public class OrderFragment extends Fragment {
                 getOrders(status, FINISHED_ID,limit,skip,0);
         }
     }
-
 }
