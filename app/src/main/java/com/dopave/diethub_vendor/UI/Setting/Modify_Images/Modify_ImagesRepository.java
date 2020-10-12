@@ -126,7 +126,7 @@ public class Modify_ImagesRepository {
         return mutableLiveData;
     }
 
-    public MutableLiveData<Defualt> updateImages(final Context context, final ProgressDialog dialog ,
+    public MutableLiveData<Defualt> updateImages(final Context context, final ProgressDialog dialog,
                                                  MainImage mainImage, final List<Image> list){
         dialog.show();
         final MutableLiveData<Defualt> mutableLiveData = new MutableLiveData<>();

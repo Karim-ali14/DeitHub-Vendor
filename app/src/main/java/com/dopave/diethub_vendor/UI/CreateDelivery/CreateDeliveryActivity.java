@@ -2,18 +2,25 @@ package com.dopave.diethub_vendor.UI.CreateDelivery;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -54,6 +61,7 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -63,6 +71,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CreateDeliveryActivity extends AppCompatActivity {
     private static final int SELECT_IMAGE = 1;
+    private static final int STORAGE_PERMISSION_CODE = 123;
     EditText UserName, Phone, Email, Password, RePassword;
     ConstraintLayout Layout,City_Layout;
     ProgressDialog dialog;
@@ -72,13 +81,13 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     ImageView mark,openGallery;
     CreateDeliveryViewModel viewModel;
     CircleImageView profile_image;
-    String DeliveryImage = null;
     DeliveryRow delivery;
     boolean isValid,firstOpen,isSpinnerCities;
     int SpinnerCitiesClick = 0;
     Button EnterButton;
     int update = 0;
-
+    String DeliveryImagePath;
+    File DeliveryImageFile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,10 +113,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         openGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
+                requestStoragePermission();
             }
         });
         mark = findViewById(R.id.mark);
@@ -158,46 +164,46 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     }
 
     private void update(){
-        if (DeliveryImage != null) {
-            viewModel.updateDelivery(new UpdateDeliveryRequest(
-                    Email.getText().toString() + ""
-                    , Phone.getText().toString() + ""
-                    , UserName.getText().toString() + ""
-                    , false, true, "active",
-                    new com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.Image(DeliveryImage),
-                    cityRow.getId()
-            ), delivery
-                    .getId().toString(), dialog, this).observe(this, new Observer<GetDeliveriesData>() {
-                @Override
-                public void onChanged(GetDeliveriesData getDeliveriesData) {
-                    Toast.makeText(CreateDeliveryActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(CreateDeliveryActivity.this,
-                            HomeActivity.class).putExtra("type",
-                            "CreateDeliveryActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                }
-            });
-        }
-        else {
-            viewModel.updateDelivery(new UpdateDeliveryRequest(
-                    Email.getText().toString() + ""
-                    , Phone.getText().toString() + ""
-                    , UserName.getText().toString() + ""
-                    , false, true, "active",
-                    null,
-                    cityRow.getId()
-            ), delivery
-                    .getId().toString(), dialog, this).observe(this, new Observer<GetDeliveriesData>() {
-                @Override
-                public void onChanged(GetDeliveriesData getDeliveriesData) {
-                    Toast.makeText(CreateDeliveryActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(CreateDeliveryActivity.this,
-                            HomeActivity.class).putExtra("type",
-                            "CreateDeliveryActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                }
-            });
-        }
+//        if (DeliveryImageFile != null) {
+//            viewModel.updateDelivery(new UpdateDeliveryRequest(
+//                    Email.getText().toString() + ""
+//                    , Phone.getText().toString() + ""
+//                    , UserName.getText().toString() + ""
+//                    , false, true, "active",
+//                    new com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.Image(DeliveryImage),
+//                    cityRow.getId()
+//            ), delivery
+//                    .getId().toString(), dialog, this).observe(this, new Observer<GetDeliveriesData>() {
+//                @Override
+//                public void onChanged(GetDeliveriesData getDeliveriesData) {
+//                    Toast.makeText(CreateDeliveryActivity.this, "success", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(CreateDeliveryActivity.this,
+//                            HomeActivity.class).putExtra("type",
+//                            "CreateDeliveryActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+//                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                }
+//            });
+//        }
+//        else {
+//            viewModel.updateDelivery(new UpdateDeliveryRequest(
+//                    Email.getText().toString() + ""
+//                    , Phone.getText().toString() + ""
+//                    , UserName.getText().toString() + ""
+//                    , false, true, "active",
+//                    null,
+//                    cityRow.getId()
+//            ), delivery
+//                    .getId().toString(), dialog, this).observe(this, new Observer<GetDeliveriesData>() {
+//                @Override
+//                public void onChanged(GetDeliveriesData getDeliveriesData) {
+//                    Toast.makeText(CreateDeliveryActivity.this, "success", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(CreateDeliveryActivity.this,
+//                            HomeActivity.class).putExtra("type",
+//                            "CreateDeliveryActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+//                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                }
+//            });
+//        }
     }
 
     private void getCities(){
@@ -262,7 +268,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     public void onClickButton() {
         dialog.show();
         if (getIntent().getExtras().getString("type").equals("update")){
-            if (delivery.getImage() == null) {
+            if (delivery.getImage() == null && DeliveryImageFile == null) {
                 Toast.makeText(this, R.string.Choose_personal_picture, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -276,7 +282,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                 update();
             }
         }else {
-            if (DeliveryImage == null) {
+            if (DeliveryImageFile == null) {
                 Toast.makeText(this, R.string.Choose_personal_picture, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -296,10 +302,8 @@ public class CreateDeliveryActivity extends AppCompatActivity {
 
     private void createDelivery(){
         viewModel.createDelivery("Bearer " +
-                        Common.currentPosition.getData().getToken().getAccessToken(),
-                new CreateDeliveryRequest(Phone.getText().toString(), Password.getText().toString(),
-                        UserName.getText().toString(), Email.getText().toString(),
-                        new Image(DeliveryImage), cityRow.getId()),
+                        Common.currentPosition.getData().getToken().getAccessToken(),Phone.getText().toString(), Password.getText().toString(),
+                        UserName.getText().toString(), Email.getText().toString(),cityRow.getId()+"",DeliveryImageFile,
                 Common.currentPosition.getData().getProvider().getId() + "",
                 this, dialog).observe(this, new Observer<CreateDeliveryResponse>() {
             @Override
@@ -319,23 +323,136 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                 if (data != null) {
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
-                        byte[] imageBytes = baos.toByteArray();
-                        String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+//                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
+//                        byte[] imageBytes = baos.toByteArray();
+//                        String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+//
+//                        DeliveryImage = imageString.replaceAll("\n| ","").trim();
+//                        byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
+//                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-                        DeliveryImage = imageString.replaceAll("\n| ","").trim();
-                        byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
-                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                        profile_image.setImageBitmap(decodedByte);
+                        Uri data1 = data.getData();
+                        getPhotoPathFromInternalStorage(data1);
+                        if (DeliveryImagePath == null){
+                            getPhotoPathFromExternalStorage(data1);
+                        }
+                        if (DeliveryImagePath != null) {
+                            DeliveryImageFile = new File(DeliveryImagePath);
+                            if (!checkImageSize(DeliveryImageFile)){
+                                DeliveryImageFile = null;
+                                DeliveryImagePath = null;
+                                Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
+                            }else {
+                                profile_image.setImageBitmap(bitmap);
+                            }
+                        }
+                        else {
+                            Toast.makeText(this, R.string.This_type_is_not_supported, Toast.LENGTH_SHORT).show();
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
             } else if (resultCode == Activity.RESULT_CANCELED)  {
-                Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.Canceled, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void getPhotoPathFromInternalStorage(Uri data1) {
+        String[] filePath = { MediaStore.Images.Media.DATA };
+        Cursor c = getContentResolver().query(data1,filePath, null, null, null);
+        c.moveToFirst();
+        int columnIndex = c.getColumnIndex(filePath[0]);
+        DeliveryImagePath = c.getString(columnIndex);
+    }
+
+    public void getPhotoPathFromExternalStorage(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        DeliveryImagePath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        cursor.close();
+    }
+
+    private void requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            openGalleryAction();
+            return;
+        }
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+    }
+
+    private void openGalleryAction() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
+    }
+
+    private boolean checkImageSize(File file){
+        int file_size = Integer.parseInt(String.valueOf(file.length() / 1024));
+        if (file_size <= 2048){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    //This method will be called when the user will tap on allow or deny
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Displaying a toast
+//                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+                openGalleryAction();
+            } else {
+                //Displaying another toast if permission is not granted
+//                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+                showDialogToRequestPermissions();
+            }
+        }
+    }
+
+    private void showDialogToRequestPermissions(){
+        final AlertDialog.Builder Adialog = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.error_dialog, null);
+        TextView Title = view.findViewById(R.id.Title);
+        Title.setText(R.string.Permission_request_error);
+        TextView Message = view.findViewById(R.id.Message);
+        Message.setText(R.string.Permission_to_access_images);
+        Button button = view.findViewById(R.id.Again);
+        Adialog.setView(view);
+        final AlertDialog dialog1 = Adialog.create();
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog1.dismiss();
+                requestStoragePermission();
+            }
+        });
+        dialog1.show();
     }
 
     private void editTextChangeStatus(){

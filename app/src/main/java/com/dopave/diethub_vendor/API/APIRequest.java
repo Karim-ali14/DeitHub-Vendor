@@ -28,7 +28,10 @@ import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
 
 import java.util.HashMap;
+import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -36,9 +39,12 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -63,9 +69,11 @@ public interface APIRequest {
 
 
     //Todo create Delivery by provider id
+    @Multipart
     @POST("provider/{id}/deliveryrep")
     Call<CreateDeliveryResponse> createDeliveryByProvider (@Header("Authorization") String Auth,
-                                                           @Body CreateDeliveryRequest requestBody,
+                                                           @PartMap Map<String , RequestBody> bodyMap,
+                                                           @Part MultipartBody.Part file,
                                                            @Path("id") String id);
 
     //Todo update Delivery by provider id
@@ -197,7 +205,7 @@ public interface APIRequest {
                                     @Path("providerId") String providerId,
                                     @Body com.dopave.diethub_vendor.Models.GetTimeWork.Data data);
 
-    @PUT("provider/{providerId}/images")
+        @PUT("provider/{providerId}/images")
     Call<Defualt> updateImages(@Header("Authorization") String Auth,
                                       @Path("providerId") String providerId,
                                       @Body ImagesProvider imagesProvider);

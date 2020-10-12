@@ -31,10 +31,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -126,12 +134,35 @@ public class CreateDeliveryRepository {
     }
 
     public MutableLiveData<CreateDeliveryResponse> createDelivery (final String Auth,
-                                                                   final CreateDeliveryRequest requestBody,
+                                                                   String mobilePhone,
+                                                                   String password,
+                                                                   String name,String email,
+                                                                   String city_id,
+                                                                   File imageFile,
                                                                    final String id,
                                                                    final Context context,
                                                                    final ProgressDialog dialog){
         final MutableLiveData<CreateDeliveryResponse> mutableLiveData = new MutableLiveData<>();
-        Common.getAPIRequest().createDeliveryByProvider(Auth, requestBody, id)
+
+
+        Map<String , RequestBody> map = new HashMap<>(); // body
+        map.put("mobilePhone",RequestBody.create(MediaType.parse("multipart/form-data"), mobilePhone));
+        map.put("password",RequestBody.create(MediaType.parse("multipart/form-data"), password));
+        map.put("name",RequestBody.create(MediaType.parse("multipart/form-data"), name));
+        map.put("email",RequestBody.create(MediaType.parse("multipart/form-data"), email));
+        map.put("city_id",RequestBody.create(MediaType.parse("multipart/form-data"), city_id));
+
+
+        RequestBody imageRequest = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);
+        MultipartBody.Part image = null;
+        try {
+            image = MultipartBody.Part.createFormData("image", URLEncoder.encode(imageFile.getName(), "utf-8"),imageRequest); // image
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
+        Common.getAPIRequest().createDeliveryByProvider(Auth,map,image,id)
                 .enqueue(new Callback<CreateDeliveryResponse>() {
             @Override
             public void onResponse(Call<CreateDeliveryResponse> call,

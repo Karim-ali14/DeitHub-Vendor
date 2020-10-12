@@ -12,6 +12,8 @@ import com.dopave.diethub_vendor.Models.CreateDelivery.Response.CreateDeliveryRe
 import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.UpdateDeliveryRequest;
 
+import java.io.File;
+
 public class CreateDeliveryViewModel extends ViewModel {
 
     public CreateDeliveryRepository repository;
@@ -25,11 +27,16 @@ public class CreateDeliveryViewModel extends ViewModel {
     }
 
     public LiveData<CreateDeliveryResponse> createDelivery (String Auth,
-                                                            final CreateDeliveryRequest requestBody,
+                                                            String mobilePhone,
+                                                            String password,
+                                                            String name,String email,
+                                                            String city_id,
+                                                            File imageFile,
                                                             String id,
                                                             final Context context,
                                                             final ProgressDialog dialog){
-        return repository.createDelivery(Auth, requestBody, id, context, dialog);
+        return repository.createDelivery(Auth, mobilePhone, password, name, email,
+                city_id, imageFile, id, context, dialog);
     }
 
     public LiveData<GetDeliveriesData> updateDelivery(UpdateDeliveryRequest updateDeliveryRequest
