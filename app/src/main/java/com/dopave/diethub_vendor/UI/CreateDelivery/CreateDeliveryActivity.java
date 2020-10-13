@@ -158,7 +158,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             String path = Common.BaseUrl + "images/" +
                     delivery.getImage().getFor() + "/" +
                     Uri.encode(delivery.getImage().getName());
-            Picasso.with(this).load(path).skipMemoryCache().into(profile_image);
+            Picasso.with(this).load(path).into(profile_image);
             Log.i("TTTTTT",path);
         }
         getCities();

@@ -245,4 +245,5 @@
     <string name="The_size_of_the_image">The size of the image must not exceed 2 MB</string>
     <string name="Canceled">Canceled</string>
     <string name="Permission_to_access_images">Permission must be approved in order to be able to choose the personal photo</string>
+    <string name="click_to_open_gallery">Click again to open the photo gallery</string>
 </resources>

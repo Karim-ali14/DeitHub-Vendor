@@ -28,6 +28,7 @@ import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -119,11 +120,17 @@ public interface APIRequest {
                                                 @Query("include_vehicle_licence") boolean include_vehicle_licence);
 
     //Todo Create Vehicle
+    @Multipart
     @POST("provider/{id}/deliveryrep/{deliveryId}/vehicle")
     Call<CreateVehicleRespons> createVehicle (@Header("Authorization") String Auth,
                                               @Path("id") String id,
                                               @Path("deliveryId") String deliveryId,
-                                              @Body CreateVehicleRequest createVehicleRequest);
+                                              @PartMap Map<String , RequestBody> bodyMap,
+                                              @Part("year") Integer year,
+                                              @Part("vehicle_type_id") Integer vehicle_type_id,
+                                              @Part MultipartBody.Part drivingLicenceFile,
+                                              @Part MultipartBody.Part vehicleLicenceFile,
+                                              @Part List<MultipartBody.Part> images);
 
     //Todo get All Cities
     @GET("city")

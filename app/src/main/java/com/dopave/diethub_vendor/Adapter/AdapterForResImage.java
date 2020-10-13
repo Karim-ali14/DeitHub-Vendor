@@ -30,13 +30,14 @@ import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleViewModel;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.ViewHolderForResImage> {
     List<Image> list;
     Context context;
-    List<com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image> imageListRequest;
+    List<File> imageListRequest;
     String type;
     int numberOfIndexes;
     RecyclerView recyclerView;
@@ -44,7 +45,7 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
     GetVehicleData VehicleData;
     ProgressDialog dialog;
     public AdapterForResImage(List<Image> list, Context context,
-                              List<com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image> imageListRequest,
+                              List<File> imageListRequest,
                               String type, int numberOfIndexes, RecyclerView recyclerView,
                               CreateVehicleViewModel viewModel, GetVehicleData vehicleData,
                               ProgressDialog dialog) {
@@ -59,7 +60,7 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
         this.dialog = dialog;
     }
 
-    public AdapterForResImage(List<Image> list, Context context, List<com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image> imageListRequest, String type, int numberOfIndexes, RecyclerView recyclerView) {
+    public AdapterForResImage(List<Image> list, Context context, List<File> imageListRequest, String type, int numberOfIndexes, RecyclerView recyclerView) {
         this.list = list;
         this.context = context;
         this.imageListRequest = imageListRequest;
@@ -91,7 +92,7 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
                         intent.setType("image/*");
                         intent.setAction(Intent.ACTION_GET_CONTENT);
                         CreateVehicleActivity createVehicleActivity = (CreateVehicleActivity) context;
-                        createVehicleActivity.openGallery(CreateVehicleActivity.SELECT_IMAGE_FOR_VEHICLE);
+                        createVehicleActivity.requestStoragePermission(CreateVehicleActivity.SELECT_IMAGE_FOR_VEHICLE);
                     }else {
                         Toast.makeText(context, context.getResources().getString(R.string.maximum_of_five_pictures), Toast.LENGTH_SHORT).show();
                     }

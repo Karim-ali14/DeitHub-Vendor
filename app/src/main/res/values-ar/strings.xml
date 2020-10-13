@@ -244,4 +244,5 @@
     <string name="The_size_of_the_image">يجب ان لا يزيد حجم الصوره عن 2 ميجا</string>
     <string name="Canceled">الإلغاء</string>
     <string name="Permission_to_access_images">يجب الموافقة علي الإذن لكي تستطيع اختيار الصوره الشخصيه</string>
+    <string name="click_to_open_gallery">اضغط مره اخري لفتح معرض الصور</string>
 </resources>

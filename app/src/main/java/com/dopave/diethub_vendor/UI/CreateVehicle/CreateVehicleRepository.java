@@ -42,11 +42,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -241,11 +250,37 @@ public class CreateVehicleRepository {
 
     public MutableLiveData<CreateVehicleRespons> createVehicle(String Auth, String id,
                                                                final String deliveryId,
-                                                               CreateVehicleRequest createVehicleRequest,
-                                                               final Context context,
+                                                               String number,String model,
+                                                               Integer year,Integer vehicleTypeId,
+                                                               File drivingLicenceFile,File vehicleLicenceFile,
+                                                               List<File> includeImages, final Context context,
                                                                final ProgressDialog dialog){
         final MutableLiveData<CreateVehicleRespons> mutableLiveData = new MutableLiveData<>();
-        Common.getAPIRequest().createVehicle(Auth, id, deliveryId, createVehicleRequest)
+
+
+        Map<String , RequestBody> map = new HashMap<>(); // body
+        map.put("number",RequestBody.create(MediaType.parse("multipart/form-data"), number));
+        map.put("model",RequestBody.create(MediaType.parse("multipart/form-data"), model));
+
+
+        RequestBody drivingLicenceImageRequest = RequestBody.create(MediaType.parse("multipart/form-data"), drivingLicenceFile);
+        RequestBody vehicleLicenceImageRequest = RequestBody.create(MediaType.parse("multipart/form-data"), vehicleLicenceFile);
+        MultipartBody.Part drivingLicenceImage = null;
+        MultipartBody.Part vehicleLicenceImage = null;
+        List<MultipartBody.Part> Images = new ArrayList<>();
+        try {
+            drivingLicenceImage = MultipartBody.Part.createFormData("driving_licence", URLEncoder.encode(drivingLicenceFile.getName(), "utf-8"),drivingLicenceImageRequest); // image
+            vehicleLicenceImage = MultipartBody.Part.createFormData("vehicle_licence", URLEncoder.encode(vehicleLicenceFile.getName(), "utf-8"),vehicleLicenceImageRequest); // image
+            for (int i = 0 ; i < includeImages.size() ; i++){
+                Images.add(MultipartBody.Part.createFormData("images", URLEncoder.encode(includeImages.get(i).getName(), "utf-8"),
+                        RequestBody.create(MediaType.parse("multipart/form-data"), includeImages.get(i))));
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        Common.getAPIRequest().createVehicle(Auth, id, deliveryId, map,year,vehicleTypeId,
+                drivingLicenceImage,vehicleLicenceImage,Images)
                 .enqueue(new Callback<CreateVehicleRespons>() {
             @Override
             public void onResponse(Call<CreateVehicleRespons> call, Response<CreateVehicleRespons> response) {
@@ -262,8 +297,10 @@ public class CreateVehicleRepository {
                             Common.onCheckTokenAction(context);
                         }
                         else {
+                            JSONArray errors = new JSONObject(response.errorBody().string()).getJSONArray("errors");
                             Toast.makeText(context, new JSONObject(response.errorBody().string())
                                     .getString("message"), Toast.LENGTH_SHORT).show();
+                            Log.i("TTTTTTTT",errors+"");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -19,6 +19,7 @@ import com.dopave.diethub_vendor.Models.UpdateVehicle.VehicleLicenceImage;
 import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.Models.Years.Years;
 
+import java.io.File;
 import java.util.List;
 
 public class CreateVehicleViewModel extends ViewModel {
@@ -41,9 +42,13 @@ public class CreateVehicleViewModel extends ViewModel {
 
     public LiveData<CreateVehicleRespons> createVehicle(String Auth, String id,
                                                         String deliveryId,
-                                                        CreateVehicleRequest createVehicleRequest,
-                                                        final Context context,ProgressDialog dialog){
-        return repository.createVehicle(Auth, id, deliveryId, createVehicleRequest, context,dialog);
+                                                        String number, String model,
+                                                        Integer year, Integer vehicleTypeId,
+                                                        File drivingLicenceFile, File vehicleLicenceFile,
+                                                        List<File> includeImages,
+                                                        final Context context, ProgressDialog dialog){
+        return repository.createVehicle(Auth, id, deliveryId, number, model, year,
+                vehicleTypeId, drivingLicenceFile, vehicleLicenceFile, includeImages, context, dialog);
     }
 
     public LiveData<GetVehicleData> getVehicleData(String deliveryId, final Context context,

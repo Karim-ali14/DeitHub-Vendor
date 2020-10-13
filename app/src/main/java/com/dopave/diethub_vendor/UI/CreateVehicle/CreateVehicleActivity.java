@@ -6,16 +6,20 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -61,6 +65,7 @@ import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -74,6 +79,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
     public static final int SELECT_IMAGE_FOR_VEHICLE = 1;
     public static final int SELECT_IMAGE_FOR_DRIVING_LICENSE = 2;
     public static final int SELECT_IMAGE_FOR_VEHICLE_LICENSE = 3;
+    private static final int STORAGE_PERMISSION_CODE = 123;
     RecyclerView Recycler;
     ConstraintLayout LayoutCreateVehicles,YearManufactureLayout,VehicleTypeLayout;
     CardView VehicleLicenceLayout,DrivingLicenseLayout;
@@ -96,9 +102,10 @@ public class CreateVehicleActivity extends AppCompatActivity {
     int SpinnerVehicleClick = 0;
     boolean firstOpen,isSpinnerYear,isSpinnerVehicle;
     List<com.dopave.diethub_vendor.Models.GetVehicles.Image> list;
-    List<Image> listImageRequest;
+    List<File> listImageRequest;
     int numberOfIndexes = 0;
-    String driving_licence_ImageBase46,vehicle_licence_ImageBase46;
+    String driving_licence_ImagePath,vehicle_licence_ImagePath;
+    File driving_licence_ImageFile,vehicle_licence_ImageFile;
     Button Confirm;
 
     @Override
@@ -116,15 +123,14 @@ public class CreateVehicleActivity extends AppCompatActivity {
         DrivingLicenseLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CreateVehicleActivity.this, "CCC", Toast.LENGTH_SHORT).show();
-                openGallery(SELECT_IMAGE_FOR_DRIVING_LICENSE);
+                requestStoragePermission(SELECT_IMAGE_FOR_DRIVING_LICENSE);
             }
         });
         VehicleLicenceLayout = findViewById(R.id.vehicleLicenceLayout);
         VehicleLicenceLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery(SELECT_IMAGE_FOR_VEHICLE_LICENSE);
+                requestStoragePermission(SELECT_IMAGE_FOR_VEHICLE_LICENSE);
             }
         });
         driving_licence_Add = findViewById(R.id.driving_licence_Add);
@@ -309,44 +315,44 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.Select_vehicle_model, Toast.LENGTH_SHORT).show();
 //            else if (listImageRequest.size() == 0)
 //                Toast.makeText(this, R.string.chooce_vehicle_images, Toast.LENGTH_SHORT).show();
-//            else if (driving_licence_ImageBase46.isEmpty())
-//                Toast.makeText(this, R.string.Choose_driving_licence_images, Toast.LENGTH_SHORT).show();
-//            else if (vehicle_licence_ImageBase46.isEmpty())
-//                Toast.makeText(this, R.string.Choose_vehicle_licence_Image, Toast.LENGTH_SHORT).show();
+            else if (driving_licence_ImageFile == null)
+                Toast.makeText(this, R.string.Choose_driving_licence_images, Toast.LENGTH_SHORT).show();
+            else if (vehicle_licence_ImageFile == null)
+                Toast.makeText(this, R.string.Choose_vehicle_licence_Image, Toast.LENGTH_SHORT).show();
             else
                 createVehicle();
         }
     }
 
     private void updateVehicle(DrivingLicenceImage drivingLicenceImage , VehicleLicenceImage vehicleLicenceImage) {
-        dialog.show();
-        Log.i("Informations","VId = "+VehicleData.getData().getId()+" ");
-        viewModel.updateVehicle(VehicleData.getData().getId() + ""
-                , VehicleID.getText().toString(), VehicleModel.getText().toString(), selectedYear
-                , rowVehicleTypes.getId(),drivingLicenceImage,vehicleLicenceImage, listImageRequest, this, dialog)
-                .observe(this, new Observer<Data>() {
-                    @Override
-                    public void onChanged(Data data) {
-                        Toast.makeText(CreateVehicleActivity.this,
-                                getResources().getString(R.string.Updated), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CreateVehicleActivity.this, HomeActivity.class)
-                                .putExtra("type", "CreateDeliveryActivity")
-                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-                    }
-                });
+//        dialog.show();
+//        Log.i("Informations","VId = "+VehicleData.getData().getId()+" ");
+//        viewModel.updateVehicle(VehicleData.getData().getId() + ""
+//                , VehicleID.getText().toString(), VehicleModel.getText().toString(), selectedYear
+//                , rowVehicleTypes.getId(),drivingLicenceImage,vehicleLicenceImage, listImageRequest, this, dialog)
+//                .observe(this, new Observer<Data>() {
+//                    @Override
+//                    public void onChanged(Data data) {
+//                        Toast.makeText(CreateVehicleActivity.this,
+//                                getResources().getString(R.string.Updated), Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(CreateVehicleActivity.this, HomeActivity.class)
+//                                .putExtra("type", "CreateDeliveryActivity")
+//                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+//                    }
+//                });
     }
    private void checkForUpdate(){
-        if (driving_licence_ImageBase46 != null || vehicle_licence_ImageBase46 != null) {
-            if (driving_licence_ImageBase46 != null && vehicle_licence_ImageBase46 != null){
-                updateVehicle(new DrivingLicenceImage("new", driving_licence_ImageBase46),new VehicleLicenceImage("new",vehicle_licence_ImageBase46));
-            }else if (driving_licence_ImageBase46 != null){
-                updateVehicle(new DrivingLicenceImage("new", driving_licence_ImageBase46),null);
-            }else if (vehicle_licence_ImageBase46 != null){
-                updateVehicle(null,new VehicleLicenceImage("new",vehicle_licence_ImageBase46));
-            }
-        }else {
-            updateVehicle(null,null);
-        }
+//        if (driving_licence_ImageBase46 != null || vehicle_licence_ImageBase46 != null) {
+//            if (driving_licence_ImageBase46 != null && vehicle_licence_ImageBase46 != null){
+//                updateVehicle(new DrivingLicenceImage("new", driving_licence_ImageBase46),new VehicleLicenceImage("new",vehicle_licence_ImageBase46));
+//            }else if (driving_licence_ImageBase46 != null){
+//                updateVehicle(new DrivingLicenceImage("new", driving_licence_ImageBase46),null);
+//            }else if (vehicle_licence_ImageBase46 != null){
+//                updateVehicle(null,new VehicleLicenceImage("new",vehicle_licence_ImageBase46));
+//            }
+//        }else {
+//            updateVehicle(null,null);
+//        }
     }
 
     private void showSuccessDialog() {
@@ -388,12 +394,11 @@ public class CreateVehicleActivity extends AppCompatActivity {
         viewModel.createVehicle("Bearer "+
                 Common.currentPosition.getData().getToken().getAccessToken(),
                 Common.currentPosition.getData().getProvider().getId()+"",
-                    getIntent().getExtras().getString("deliveryId"),
-                new CreateVehicleRequest(VehicleID.getText().toString(),
+                    getIntent().getExtras().getString("deliveryId"),VehicleID.getText().toString(),
                         VehicleModel.getText().toString(),
                         selectedYear,rowVehicleTypes.getId(),
-                        new DrivingLicence(driving_licence_ImageBase46),
-                        new VehicleLicence(vehicle_licence_ImageBase46),listImageRequest),this,dialog)
+                        driving_licence_ImageFile,
+                        driving_licence_ImageFile,listImageRequest,this,dialog)
                 .observe(this, new Observer<CreateVehicleRespons>() {
             @Override
             public void onChanged(CreateVehicleRespons createVehicleRespons) {
@@ -605,17 +610,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
                         Uri targetUri = data.getData();
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
 
-                        list.add(new com.dopave.diethub_vendor.Models.GetVehicles.Image(bitmap));
-                        //
-                        if (getIntent().getExtras().getString("type").equals("update")) {
-                            listImageRequest.add(new Image("new",compressToBase46(bitmap)));
-                            Recycler.setAdapter(new AdapterForResImage(list,this,
-                                    listImageRequest,"update",numberOfIndexes,Recycler,viewModel,VehicleData,dialog));
-                        }else {
-                            listImageRequest.add(new Image(compressToBase46(bitmap)));
-                            Recycler.setAdapter(new AdapterForResImage(list,this,
-                                    listImageRequest,"create",numberOfIndexes,Recycler));
-                        }
+                        convertIncludeImageToFile(targetUri,bitmap);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -632,8 +627,44 @@ public class CreateVehicleActivity extends AppCompatActivity {
                     Uri targetUri = data.getData();
                     try {
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                        driving_licence_Image.setImageBitmap(bitmap);
-                        driving_licence_ImageBase46 = compressToBase46(bitmap);
+//                        driving_licence_ImageBase46 = compressToBase46(bitmap);
+
+                        getPhotoPathFromInternalStorage(targetUri,"driving");
+                        if (driving_licence_ImagePath == null){
+                            getPhotoPathFromExternalStorage(targetUri,"driving");
+                        }
+                        if (driving_licence_ImagePath != null) {
+                            driving_licence_ImageFile = new File(driving_licence_ImagePath);
+                            Log.i("TTTTTT",driving_licence_ImagePath+" "+driving_licence_ImageFile.getName());
+                            if (!checkImageSize(driving_licence_ImageFile)){
+                                driving_licence_ImageFile = null;
+                                driving_licence_ImagePath = null;
+                                Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
+                                if (getIntent().getExtras().getString("type").equals("update")) {
+                                    if (VehicleData.getData().getDrivingLicence() != null) {
+                                        String path = Common.BaseUrl + "images/" +
+                                                VehicleData.getData().getDrivingLicence().getFor() + "/" +
+                                                Uri.encode(VehicleData.getData().getDrivingLicence().getName());
+                                        Picasso.with(this).load(path).into(driving_licence_Image);
+                                        driving_licence_Add.setVisibility(View.GONE);
+                                        Log.i("TTTTT", "getDrivingLicence");
+                                    }else {
+                                        driving_licence_Image.setImageResource(0);
+                                        driving_licence_Add.setVisibility(View.VISIBLE);
+                                    }
+                                }else {
+                                    driving_licence_Image.setImageResource(0);
+                                    driving_licence_Add.setVisibility(View.VISIBLE);
+                                }
+                            }else {
+                                driving_licence_Image.setImageBitmap(bitmap);
+                            }
+                        }
+                        else {
+                            Toast.makeText(this, R.string.This_type_is_not_supported, Toast.LENGTH_SHORT).show();
+                        }
+
+
                         driving_licence_Add.setVisibility(View.GONE);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -647,8 +678,43 @@ public class CreateVehicleActivity extends AppCompatActivity {
                     Uri targetUri = data.getData();
                     try {
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                        vehicle_licence_Image.setImageBitmap(bitmap);
-                        vehicle_licence_ImageBase46 = compressToBase46(bitmap);
+//                        vehicle_licence_ImageBase46 = compressToBase46(bitmap);
+
+                        getPhotoPathFromInternalStorage(targetUri,"vehicle");
+                        if (vehicle_licence_ImagePath == null){
+                            getPhotoPathFromExternalStorage(targetUri,"vehicle");
+                        }
+                        if (vehicle_licence_ImagePath != null) {
+                            vehicle_licence_ImageFile = new File(vehicle_licence_ImagePath);
+                            Log.i("TTTTTT",vehicle_licence_ImagePath+" "+vehicle_licence_ImageFile.getName());
+                            if (!checkImageSize(vehicle_licence_ImageFile)){
+                                vehicle_licence_ImageFile = null;
+                                vehicle_licence_ImagePath = null;
+                                Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
+                                if (getIntent().getExtras().getString("type").equals("update")) {
+                                    if (VehicleData.getData().getVehicleLicence() != null){
+                                        String path = Common.BaseUrl + "images/" +
+                                                VehicleData.getData().getVehicleLicence().getFor() + "/" +
+                                                Uri.encode(VehicleData.getData().getVehicleLicence().getName());
+                                        Picasso.with(this).load(path).into(vehicle_licence_Image);
+                                        vehicle_licence_Add.setVisibility(View.GONE);
+                                        Log.i("TTTTT","getVehicleLicence");
+                                    }else {
+                                        vehicle_licence_Image.setImageResource(0);
+                                        vehicle_licence_Add.setVisibility(View.VISIBLE);
+                                    }
+                                }else {
+                                    vehicle_licence_Image.setImageResource(0);
+                                    vehicle_licence_Add.setVisibility(View.VISIBLE);
+                                }
+                            }else {
+                                vehicle_licence_Image.setImageBitmap(bitmap);
+                            }
+                        }
+                        else {
+                            Toast.makeText(this, R.string.This_type_is_not_supported, Toast.LENGTH_SHORT).show();
+                        }
+
                         vehicle_licence_Add.setVisibility(View.GONE);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -658,6 +724,38 @@ public class CreateVehicleActivity extends AppCompatActivity {
         }
     }
 
+    private void convertIncludeImageToFile(Uri data1,Bitmap bitmap){
+        String imagePath;
+        File imageFile;
+        imagePath = getPhotoPathFromInternalStorage(data1,"");
+        if (imagePath == null){
+            imagePath = getPhotoPathFromExternalStorage(data1,"");
+        }
+        if (imagePath != null) {
+            imageFile = new File(imagePath);
+            if (!checkImageSize(imageFile)){
+                imageFile = null;
+                imagePath = null;
+                Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
+            }else {
+                Log.i("TTTTTTTT",imagePath+" "+imageFile.getName());
+                list.add(new com.dopave.diethub_vendor.Models.GetVehicles.Image(bitmap));
+                //
+                if (getIntent().getExtras().getString("type").equals("update")) {
+//                            listImageRequest.add(new Image("new",compressToBase46(bitmap)));
+//                            Recycler.setAdapter(new AdapterForResImage(list,this,
+//                                    listImageRequest,"update",numberOfIndexes,Recycler,viewModel,VehicleData,dialog));
+                }else {
+                    listImageRequest.add(imageFile);
+                    Recycler.setAdapter(new AdapterForResImage(list,this,
+                            listImageRequest,"create",numberOfIndexes,Recycler));
+                }
+            }
+        }
+        else {
+            Toast.makeText(this, R.string.This_type_is_not_supported, Toast.LENGTH_SHORT).show();
+        }
+    }
     private String compressToBase46(Bitmap btmap){
         ByteArrayOutputStream boas = new ByteArrayOutputStream();
         btmap.compress(Bitmap.CompressFormat.JPEG, 30, boas);
@@ -666,4 +764,83 @@ public class CreateVehicleActivity extends AppCompatActivity {
 
         return encodeImage;
     }
+
+    private String getPhotoPathFromInternalStorage(Uri data1,String pathType) {
+        String[] filePath = { MediaStore.Images.Media.DATA };
+        Cursor c = getContentResolver().query(data1,filePath, null, null, null);
+        c.moveToFirst();
+        int columnIndex = c.getColumnIndex(filePath[0]);
+        if (pathType.equals("driving"))
+            driving_licence_ImagePath = c.getString(columnIndex);
+        else if (pathType.equals("vehicle"))
+            vehicle_licence_ImagePath = c.getString(columnIndex);
+        return c.getString(columnIndex);
+    }
+
+    public String getPhotoPathFromExternalStorage(Uri uri,String pathType) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+
+        if (pathType.equals("driving"))
+            driving_licence_ImagePath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        else if (pathType.equals("vehicle"))
+            vehicle_licence_ImagePath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        cursor.close();
+        return path;
+    }
+
+    private boolean checkImageSize(File file){
+        int file_size = Integer.parseInt(String.valueOf(file.length() / 1024));
+        if (file_size <= 2048){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
+    public void requestStoragePermission(int type) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            openGallery(type);
+            return;
+        }
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+    }
+
+
+    //This method will be called when the user will tap on allow or deny
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Displaying a toast
+//                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.click_to_open_gallery, Toast.LENGTH_SHORT).show();
+            } else {
+                //Displaying another toast if permission is not granted
+//                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
 }
