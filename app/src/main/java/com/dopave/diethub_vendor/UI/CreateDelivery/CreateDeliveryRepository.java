@@ -220,13 +220,32 @@ public class CreateDeliveryRepository {
         return mutableLiveData;
     }
 
-    public MutableLiveData<GetDeliveriesData> updateDelivery(final UpdateDeliveryRequest updateDeliveryRequest
+    public MutableLiveData<GetDeliveriesData> updateDelivery(String email,String phone, String name
+            ,boolean online,boolean hasTrip,String status,File imageFile,String city_id
             , final String deliveryId, final ProgressDialog dialog, final Context context){
         final MutableLiveData<GetDeliveriesData> mutableLiveData = new MutableLiveData<>();
+
+        Map<String , RequestBody> map = new HashMap<>(); // body
+        map.put("mobilePhone",RequestBody.create(MediaType.parse("multipart/form-data"), phone));
+        map.put("name",RequestBody.create(MediaType.parse("multipart/form-data"), name));
+        map.put("email",RequestBody.create(MediaType.parse("multipart/form-data"), email));
+        map.put("city_id",RequestBody.create(MediaType.parse("multipart/form-data"), city_id));
+        map.put("status",RequestBody.create(MediaType.parse("multipart/form-data"), status));
+
+        MultipartBody.Part image = null;
+
+        if (imageFile != null) {
+            RequestBody imageRequest = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);
+            try {
+                image = MultipartBody.Part.createFormData("image", URLEncoder.encode(imageFile.getName(), "utf-8"), imageRequest); // image
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
         Common.getAPIRequest().updateDeliveryByProvider("Bearer "+
                         Common.currentPosition.getData().getToken().getAccessToken()
-                ,updateDeliveryRequest,
-                Common.currentPosition.getData().getProvider().getId()+""
+                ,map,online,hasTrip,image,Common.currentPosition.getData().getProvider().getId()+""
                 ,deliveryId).enqueue(new Callback<GetDeliveriesData>() {
             @Override
             public void onResponse(Call<GetDeliveriesData> call, Response<GetDeliveriesData> response) {

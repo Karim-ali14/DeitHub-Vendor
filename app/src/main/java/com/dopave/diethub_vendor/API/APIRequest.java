@@ -77,11 +77,15 @@ public interface APIRequest {
                                                            @Path("id") String id);
 
     //Todo update Delivery by provider id
+    @Multipart
     @PUT("provider/{id}/deliveryrep/{deliveryId}")
     Call<GetDeliveriesData> updateDeliveryByProvider (@Header("Authorization") String Auth,
-                                                       @Body UpdateDeliveryRequest requestBody,
-                                                       @Path("id") String id,
-                                                       @Path("deliveryId") String deliveryId);
+                                                      @PartMap Map<String , RequestBody> bodyMap,
+                                                      @Part("online") boolean online ,
+                                                      @Part("hasTrip") boolean hisTrip,
+                                                      @Part MultipartBody.Part file,
+                                                      @Path("id") String id,
+                                                      @Path("deliveryId") String deliveryId);
 
     //Todo delete Delivery by provider id
     @DELETE("provider/{id}/deliveryrep/{deliveryId}")

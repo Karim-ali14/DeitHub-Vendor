@@ -39,8 +39,10 @@ public class CreateDeliveryViewModel extends ViewModel {
                 city_id, imageFile, id, context, dialog);
     }
 
-    public LiveData<GetDeliveriesData> updateDelivery(UpdateDeliveryRequest updateDeliveryRequest
+    public LiveData<GetDeliveriesData> updateDelivery(String email,String phone, String name
+            ,boolean online,boolean hasTrip,String status,File imageFile,String city_id
             , String deliveryId, final ProgressDialog dialog, final Context context){
-        return repository.updateDelivery(updateDeliveryRequest, deliveryId, dialog, context);
+        return repository.updateDelivery(email, phone, name, online, hasTrip,
+                status, imageFile, city_id, deliveryId, dialog, context);
     }
 }

@@ -150,6 +150,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
     }
 
     private void setData() {
+        Log.i("TTTTTT",delivery.getId()+"");
         UserName.setText(delivery.getName());
         Phone.setText(delivery.getMobilePhone());
         Email.setText(delivery.getEmail());
@@ -157,53 +158,50 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             String path = Common.BaseUrl + "images/" +
                     delivery.getImage().getFor() + "/" +
                     Uri.encode(delivery.getImage().getName());
-            Picasso.with(this).load(path).into(profile_image);
+            Picasso.with(this).load(path).skipMemoryCache().into(profile_image);
             Log.i("TTTTTT",path);
         }
         getCities();
     }
 
     private void update(){
-//        if (DeliveryImageFile != null) {
-//            viewModel.updateDelivery(new UpdateDeliveryRequest(
-//                    Email.getText().toString() + ""
-//                    , Phone.getText().toString() + ""
-//                    , UserName.getText().toString() + ""
-//                    , false, true, "active",
-//                    new com.dopave.diethub_vendor.Models.UpdateDeliveryRequest.Image(DeliveryImage),
-//                    cityRow.getId()
-//            ), delivery
-//                    .getId().toString(), dialog, this).observe(this, new Observer<GetDeliveriesData>() {
-//                @Override
-//                public void onChanged(GetDeliveriesData getDeliveriesData) {
-//                    Toast.makeText(CreateDeliveryActivity.this, "success", Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(CreateDeliveryActivity.this,
-//                            HomeActivity.class).putExtra("type",
-//                            "CreateDeliveryActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-//                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
-//                }
-//            });
-//        }
-//        else {
-//            viewModel.updateDelivery(new UpdateDeliveryRequest(
-//                    Email.getText().toString() + ""
-//                    , Phone.getText().toString() + ""
-//                    , UserName.getText().toString() + ""
-//                    , false, true, "active",
-//                    null,
-//                    cityRow.getId()
-//            ), delivery
-//                    .getId().toString(), dialog, this).observe(this, new Observer<GetDeliveriesData>() {
-//                @Override
-//                public void onChanged(GetDeliveriesData getDeliveriesData) {
-//                    Toast.makeText(CreateDeliveryActivity.this, "success", Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(CreateDeliveryActivity.this,
-//                            HomeActivity.class).putExtra("type",
-//                            "CreateDeliveryActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-//                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
-//                }
-//            });
-//        }
+        if (DeliveryImageFile != null) {
+            viewModel.updateDelivery(
+                    Email.getText().toString() + ""
+                    , Phone.getText().toString() + ""
+                    , UserName.getText().toString() + ""
+                    , false, true, "active",DeliveryImageFile
+                    , cityRow.getId()+"", delivery.getId().toString(), dialog, this)
+                    .observe(this, new Observer<GetDeliveriesData>() {
+                @Override
+                public void onChanged(GetDeliveriesData getDeliveriesData) {
+                    Toast.makeText(CreateDeliveryActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CreateDeliveryActivity.this,
+                            HomeActivity.class).putExtra("type",
+                            "CreateDeliveryActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                }
+            });
+        }
+        else {
+            viewModel.updateDelivery(
+                    Email.getText().toString() + ""
+                    , Phone.getText().toString() + ""
+                    , UserName.getText().toString() + ""
+                    , false, true, "active",
+                    null,cityRow.getId()+""
+                    , delivery.getId().toString(), dialog, this)
+                    .observe(this, new Observer<GetDeliveriesData>() {
+                @Override
+                public void onChanged(GetDeliveriesData getDeliveriesData) {
+                    Toast.makeText(CreateDeliveryActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CreateDeliveryActivity.this,
+                            HomeActivity.class).putExtra("type",
+                            "CreateDeliveryActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                }
+            });
+        }
     }
 
     private void getCities(){
@@ -343,6 +341,16 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                                 DeliveryImageFile = null;
                                 DeliveryImagePath = null;
                                 Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
+                                if (getIntent().getExtras().getString("type").equals("update")) {
+                                    if (delivery.getImage() != null) {
+                                        String path = Common.BaseUrl + "images/" +
+                                                delivery.getImage().getFor() + "/" +
+                                                Uri.encode(delivery.getImage().getName());
+                                        Picasso.with(this).load(path).into(profile_image);
+                                    } else
+                                        profile_image.setImageResource(R.drawable.personalinfo);
+                                }else
+                                    profile_image.setImageResource(R.drawable.personalinfo);
                             }else {
                                 profile_image.setImageBitmap(bitmap);
                             }
