@@ -415,18 +415,45 @@ public class CreateVehicleRepository {
         return mutableLiveData;
     }
 
-    public MutableLiveData<Data> updateVehicle(String vehicleId, String Number, String vehicleModel,
-                                               int selectedYear, int vehicleTypes,
-                                               DrivingLicenceImage drivingLicenceImage,
-                                               VehicleLicenceImage vehicleLicenceImage, List<Image> list,
-                                               final Context context, final ProgressDialog dialog){
+    public MutableLiveData<Data> updateVehicle(String vehicleId, String number, String model,
+                                               Integer selectedYear, Integer vehicleTypes,
+                                               File drivingLicenceFile,File vehicleLicenceFile,
+                                               List<File> includeImages, final Context context,
+                                               final ProgressDialog dialog){
         final MutableLiveData<Data> mutableLiveData = new MutableLiveData<>();
+
+        Map<String , RequestBody> map = new HashMap<>(); // body
+        map.put("number",RequestBody.create(MediaType.parse("multipart/form-data"), number));
+        map.put("model",RequestBody.create(MediaType.parse("multipart/form-data"), model));
+
+        MultipartBody.Part drivingLicenceImage = null;
+        MultipartBody.Part vehicleLicenceImage = null;
+        List<MultipartBody.Part> Images = new ArrayList<>();
+        try {
+            if (drivingLicenceFile != null) {
+                RequestBody drivingLicenceImageRequest = RequestBody.create(MediaType.parse("multipart/form-data"), drivingLicenceFile);
+                drivingLicenceImage = MultipartBody.Part.createFormData("driving_licence", URLEncoder.encode(drivingLicenceFile.getName(), "utf-8"), drivingLicenceImageRequest); // image
+            }
+            if (vehicleLicenceFile != null) {
+                RequestBody vehicleLicenceImageRequest = RequestBody.create(MediaType.parse("multipart/form-data"), vehicleLicenceFile);
+                vehicleLicenceImage = MultipartBody.Part.createFormData("vehicle_licence", URLEncoder.encode(vehicleLicenceFile.getName(), "utf-8"), vehicleLicenceImageRequest); // image
+            }
+            if (Images.size() != 0) {
+                for (int i = 0; i < includeImages.size(); i++) {
+                    Images.add(MultipartBody.Part.createFormData("images", URLEncoder.encode(includeImages.get(i).getName(), "utf-8"),
+                            RequestBody.create(MediaType.parse("multipart/form-data"), includeImages.get(i))));
+                }
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
         Common.getAPIRequest().updateVehicle("Bearer "+
                         Common.currentPosition.getData().getToken().getAccessToken(),
                 Common.currentPosition.getData().getProvider().getId()+"",
-                vehicleId,new UpdateVehicle(Number,vehicleModel,
-                        selectedYear,vehicleTypes,drivingLicenceImage,
-                        vehicleLicenceImage,list)).enqueue(new Callback<Data>() {
+                vehicleId,map,selectedYear,vehicleTypes,drivingLicenceImage,vehicleLicenceImage,
+                Images).enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
                 dialog.dismiss();
@@ -474,6 +501,7 @@ public class CreateVehicleRepository {
                 }
             }
         });
+
         return mutableLiveData;
     }
 
@@ -530,4 +558,5 @@ public class CreateVehicleRepository {
         });
         return mutableLiveData;
     }
+
 }

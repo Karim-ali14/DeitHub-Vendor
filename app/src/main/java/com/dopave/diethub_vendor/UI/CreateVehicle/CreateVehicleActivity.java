@@ -297,9 +297,9 @@ public class CreateVehicleActivity extends AppCompatActivity {
                     Toast.makeText(this, R.string.Select_vehicle_model, Toast.LENGTH_SHORT).show();
 //                else if (listImageRequest.size() == 0 && list.size() == 0)
 //                    Toast.makeText(this, R.string.chooce_vehicle_images, Toast.LENGTH_SHORT).show();
-//                else if (driving_licence_ImageBase46 == null && VehicleData.getData().getDrivingLicence() == null)
+//                else if (driving_licence_ImageFile == null && VehicleData.getData().getDrivingLicence() == null)
 //                    Toast.makeText(this, R.string.Choose_driving_licence_images, Toast.LENGTH_SHORT).show();
-//                else if (vehicle_licence_ImageBase46 == null && VehicleData.getData().getVehicleLicence() == null)
+//                else if (vehicle_licence_ImageFile == null && VehicleData.getData().getVehicleLicence() == null)
 //                    Toast.makeText(this, R.string.Choose_vehicle_licence_Image, Toast.LENGTH_SHORT).show();
                 else
                     checkForUpdate();
@@ -313,8 +313,8 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.Choose_year_vehicle, Toast.LENGTH_LONG).show();
             else if (rowVehicleTypes == null)
                 Toast.makeText(this, R.string.Select_vehicle_model, Toast.LENGTH_SHORT).show();
-//            else if (listImageRequest.size() == 0)
-//                Toast.makeText(this, R.string.chooce_vehicle_images, Toast.LENGTH_SHORT).show();
+            else if (listImageRequest.size() == 0)
+                Toast.makeText(this, R.string.chooce_vehicle_images, Toast.LENGTH_SHORT).show();
             else if (driving_licence_ImageFile == null)
                 Toast.makeText(this, R.string.Choose_driving_licence_images, Toast.LENGTH_SHORT).show();
             else if (vehicle_licence_ImageFile == null)
@@ -324,35 +324,37 @@ public class CreateVehicleActivity extends AppCompatActivity {
         }
     }
 
-    private void updateVehicle(DrivingLicenceImage drivingLicenceImage , VehicleLicenceImage vehicleLicenceImage) {
-//        dialog.show();
-//        Log.i("Informations","VId = "+VehicleData.getData().getId()+" ");
-//        viewModel.updateVehicle(VehicleData.getData().getId() + ""
-//                , VehicleID.getText().toString(), VehicleModel.getText().toString(), selectedYear
-//                , rowVehicleTypes.getId(),drivingLicenceImage,vehicleLicenceImage, listImageRequest, this, dialog)
-//                .observe(this, new Observer<Data>() {
-//                    @Override
-//                    public void onChanged(Data data) {
-//                        Toast.makeText(CreateVehicleActivity.this,
-//                                getResources().getString(R.string.Updated), Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(CreateVehicleActivity.this, HomeActivity.class)
-//                                .putExtra("type", "CreateDeliveryActivity")
-//                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-//                    }
-//                });
+    private void updateVehicle(File drivingLicenceImage , File vehicleLicenceImage) {
+        dialog.show();
+        Log.i("Informations","VId = "+VehicleData.getData().getId()+" ");
+        viewModel.updateVehicle(VehicleData.getData().getId() + ""
+                , VehicleID.getText().toString(), VehicleModel.getText().toString(), selectedYear
+                , rowVehicleTypes.getId(),drivingLicenceImage,vehicleLicenceImage, listImageRequest,
+                this, dialog)
+                .observe(this, new Observer<Data>() {
+                    @Override
+                    public void onChanged(Data data) {
+                        Toast.makeText(CreateVehicleActivity.this,
+                                getResources().getString(R.string.Updated), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(CreateVehicleActivity.this, HomeActivity.class)
+                                .putExtra("type", "CreateDeliveryActivity")
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                    }
+                });
     }
+
    private void checkForUpdate(){
-//        if (driving_licence_ImageBase46 != null || vehicle_licence_ImageBase46 != null) {
-//            if (driving_licence_ImageBase46 != null && vehicle_licence_ImageBase46 != null){
-//                updateVehicle(new DrivingLicenceImage("new", driving_licence_ImageBase46),new VehicleLicenceImage("new",vehicle_licence_ImageBase46));
-//            }else if (driving_licence_ImageBase46 != null){
-//                updateVehicle(new DrivingLicenceImage("new", driving_licence_ImageBase46),null);
-//            }else if (vehicle_licence_ImageBase46 != null){
-//                updateVehicle(null,new VehicleLicenceImage("new",vehicle_licence_ImageBase46));
-//            }
-//        }else {
-//            updateVehicle(null,null);
-//        }
+        if (driving_licence_ImageFile != null || vehicle_licence_ImageFile != null) {
+            if (driving_licence_ImageFile != null && vehicle_licence_ImageFile != null){
+                updateVehicle(driving_licence_ImageFile,vehicle_licence_ImageFile);
+            }else if (driving_licence_ImageFile != null){
+                updateVehicle(driving_licence_ImageFile,null);
+            }else if (vehicle_licence_ImageFile != null){
+                updateVehicle(null,vehicle_licence_ImageFile);
+            }
+        }else {
+            updateVehicle(driving_licence_ImageFile,vehicle_licence_ImageFile);
+        }
     }
 
     private void showSuccessDialog() {
@@ -746,9 +748,9 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 list.add(new com.dopave.diethub_vendor.Models.GetVehicles.Image(bitmap));
                 //
                 if (getIntent().getExtras().getString("type").equals("update")) {
-//                            listImageRequest.add(new Image("new",compressToBase46(bitmap)));
-//                            Recycler.setAdapter(new AdapterForResImage(list,this,
-//                                    listImageRequest,"update",numberOfIndexes,Recycler,viewModel,VehicleData,dialog));
+                            listImageRequest.add(imageFile);
+                            Recycler.setAdapter(new AdapterForResImage(list,this,
+                                    listImageRequest,"update",numberOfIndexes,Recycler,viewModel,VehicleData,dialog));
                 }else {
                     listImageRequest.add(imageFile);
                     Recycler.setAdapter(new AdapterForResImage(list,this,

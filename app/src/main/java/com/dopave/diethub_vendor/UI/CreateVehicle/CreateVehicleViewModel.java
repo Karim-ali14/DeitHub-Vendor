@@ -57,13 +57,13 @@ public class CreateVehicleViewModel extends ViewModel {
         return repository.getVehicleData(deliveryId, context, dialog,viewModel);
     }
 
-    LiveData<Data> updateVehicle(String vehicleId, String Number, String vehicleModel,
-                                 int selectedYear, int vehicleTypes,
-                                 DrivingLicenceImage drivingLicenceImage,
-                                 VehicleLicenceImage vehicleLicenceImage, List<Image> list,
-                                 final Context context, ProgressDialog dialog){
-        return repository.updateVehicle(vehicleId, Number, vehicleModel, selectedYear,
-                vehicleTypes, drivingLicenceImage, vehicleLicenceImage, list, context,dialog);
+    LiveData<Data> updateVehicle(String vehicleId, String number, String model,
+                                 Integer selectedYear, Integer vehicleTypes,
+                                 File drivingLicenceFile,File vehicleLicenceFile,
+                                 List<File> includeImages, final Context context,
+                                 final ProgressDialog dialog){
+        return repository.updateVehicle(vehicleId, number, model, selectedYear, vehicleTypes,
+                drivingLicenceFile, vehicleLicenceFile, includeImages, context, dialog);
     }
 
     public LiveData<Data> deleteImage(String vehicleId, List<Integer> list, final Context context,ProgressDialog dialog){

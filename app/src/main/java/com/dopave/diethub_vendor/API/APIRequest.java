@@ -145,11 +145,17 @@ public interface APIRequest {
     Call<Years> getAllYears();
 
     //Todo Update Vehicle
+    @Multipart
     @PUT("provider/{providerId}/vehicle/{vehicleId}")
     Call<Data> updateVehicle (@Header("Authorization") String Auth,
-                             @Path("providerId") String providerId,
-                             @Path("vehicleId") String vehicleId,
-                             @Body UpdateVehicle updateVehicle);
+                              @Path("providerId") String providerId,
+                              @Path("vehicleId") String vehicleId,
+                              @PartMap Map<String , RequestBody> bodyMap,
+                              @Part("year") Integer year,
+                              @Part("vehicle_type_id") Integer vehicle_type_id,
+                              @Part MultipartBody.Part drivingLicenceFile,
+                              @Part MultipartBody.Part vehicleLicenceFile,
+                              @Part List<MultipartBody.Part> images);
     //Todo Delete Image From List
     @PUT("provider/{providerId}/vehicle/{vehicleId}")
     Call<Data> deleteImageForList (@Header("Authorization") String Auth,
