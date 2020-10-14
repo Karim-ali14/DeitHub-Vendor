@@ -7,19 +7,19 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class DeleteImageFromList {
-    @SerializedName("images")
+    @SerializedName("deletedImages")
     @Expose
-    private List<Image> images = null;
+    private List<Integer> images = null;
 
-    public DeleteImageFromList(List<Image> images) {
+    public DeleteImageFromList(List<Integer> images) {
         this.images = images;
     }
 
-    public List<Image> getImages() {
+    public List<Integer> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(List<Integer> images) {
         this.images = images;
     }
 }

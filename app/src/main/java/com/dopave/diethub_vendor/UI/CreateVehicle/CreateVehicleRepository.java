@@ -477,7 +477,7 @@ public class CreateVehicleRepository {
         return mutableLiveData;
     }
 
-    public MutableLiveData<Data> deleteImage(String vehicleId, List<Image> list, final Context context,
+    public MutableLiveData<Data> deleteImage(String vehicleId, List<Integer> list, final Context context,
                                                 final ProgressDialog dialog){
         dialog.show();
         final MutableLiveData<Data> mutableLiveData = new MutableLiveData<>();

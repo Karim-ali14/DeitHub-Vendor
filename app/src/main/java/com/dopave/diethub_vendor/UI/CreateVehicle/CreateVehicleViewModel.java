@@ -66,7 +66,7 @@ public class CreateVehicleViewModel extends ViewModel {
                 vehicleTypes, drivingLicenceImage, vehicleLicenceImage, list, context,dialog);
     }
 
-    public LiveData<Data> deleteImage(String vehicleId, List<Image> list, final Context context,ProgressDialog dialog){
+    public LiveData<Data> deleteImage(String vehicleId, List<Integer> list, final Context context,ProgressDialog dialog){
         return repository.deleteImage(vehicleId, list, context,dialog);
     }
 }

@@ -628,44 +628,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
                     try {
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
 //                        driving_licence_ImageBase46 = compressToBase46(bitmap);
-
-                        getPhotoPathFromInternalStorage(targetUri,"driving");
-                        if (driving_licence_ImagePath == null){
-                            getPhotoPathFromExternalStorage(targetUri,"driving");
-                        }
-                        if (driving_licence_ImagePath != null) {
-                            driving_licence_ImageFile = new File(driving_licence_ImagePath);
-                            Log.i("TTTTTT",driving_licence_ImagePath+" "+driving_licence_ImageFile.getName());
-                            if (!checkImageSize(driving_licence_ImageFile)){
-                                driving_licence_ImageFile = null;
-                                driving_licence_ImagePath = null;
-                                Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
-                                if (getIntent().getExtras().getString("type").equals("update")) {
-                                    if (VehicleData.getData().getDrivingLicence() != null) {
-                                        String path = Common.BaseUrl + "images/" +
-                                                VehicleData.getData().getDrivingLicence().getFor() + "/" +
-                                                Uri.encode(VehicleData.getData().getDrivingLicence().getName());
-                                        Picasso.with(this).load(path).into(driving_licence_Image);
-                                        driving_licence_Add.setVisibility(View.GONE);
-                                        Log.i("TTTTT", "getDrivingLicence");
-                                    }else {
-                                        driving_licence_Image.setImageResource(0);
-                                        driving_licence_Add.setVisibility(View.VISIBLE);
-                                    }
-                                }else {
-                                    driving_licence_Image.setImageResource(0);
-                                    driving_licence_Add.setVisibility(View.VISIBLE);
-                                }
-                            }else {
-                                driving_licence_Image.setImageBitmap(bitmap);
-                            }
-                        }
-                        else {
-                            Toast.makeText(this, R.string.This_type_is_not_supported, Toast.LENGTH_SHORT).show();
-                        }
-
-
-                        driving_licence_Add.setVisibility(View.GONE);
+                        convertDrivingImageToFile(targetUri,bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -679,49 +642,90 @@ public class CreateVehicleActivity extends AppCompatActivity {
                     try {
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
 //                        vehicle_licence_ImageBase46 = compressToBase46(bitmap);
-
-                        getPhotoPathFromInternalStorage(targetUri,"vehicle");
-                        if (vehicle_licence_ImagePath == null){
-                            getPhotoPathFromExternalStorage(targetUri,"vehicle");
-                        }
-                        if (vehicle_licence_ImagePath != null) {
-                            vehicle_licence_ImageFile = new File(vehicle_licence_ImagePath);
-                            Log.i("TTTTTT",vehicle_licence_ImagePath+" "+vehicle_licence_ImageFile.getName());
-                            if (!checkImageSize(vehicle_licence_ImageFile)){
-                                vehicle_licence_ImageFile = null;
-                                vehicle_licence_ImagePath = null;
-                                Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
-                                if (getIntent().getExtras().getString("type").equals("update")) {
-                                    if (VehicleData.getData().getVehicleLicence() != null){
-                                        String path = Common.BaseUrl + "images/" +
-                                                VehicleData.getData().getVehicleLicence().getFor() + "/" +
-                                                Uri.encode(VehicleData.getData().getVehicleLicence().getName());
-                                        Picasso.with(this).load(path).into(vehicle_licence_Image);
-                                        vehicle_licence_Add.setVisibility(View.GONE);
-                                        Log.i("TTTTT","getVehicleLicence");
-                                    }else {
-                                        vehicle_licence_Image.setImageResource(0);
-                                        vehicle_licence_Add.setVisibility(View.VISIBLE);
-                                    }
-                                }else {
-                                    vehicle_licence_Image.setImageResource(0);
-                                    vehicle_licence_Add.setVisibility(View.VISIBLE);
-                                }
-                            }else {
-                                vehicle_licence_Image.setImageBitmap(bitmap);
-                            }
-                        }
-                        else {
-                            Toast.makeText(this, R.string.This_type_is_not_supported, Toast.LENGTH_SHORT).show();
-                        }
-
-                        vehicle_licence_Add.setVisibility(View.GONE);
+                        convertVehicleImageToFile(targetUri,bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }
+    }
+
+    private void convertVehicleImageToFile(Uri targetUri, Bitmap bitmap) {
+        getPhotoPathFromInternalStorage(targetUri,"vehicle");
+        if (vehicle_licence_ImagePath == null){
+            getPhotoPathFromExternalStorage(targetUri,"vehicle");
+        }
+        if (vehicle_licence_ImagePath != null) {
+            vehicle_licence_ImageFile = new File(vehicle_licence_ImagePath);
+            Log.i("TTTTTT",vehicle_licence_ImagePath+" "+vehicle_licence_ImageFile.getName());
+            if (!checkImageSize(vehicle_licence_ImageFile)){
+                vehicle_licence_ImageFile = null;
+                vehicle_licence_ImagePath = null;
+                Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
+                if (getIntent().getExtras().getString("type").equals("update")) {
+                    if (VehicleData.getData().getVehicleLicence() != null){
+                        String path = Common.BaseUrl + "images/" +
+                                VehicleData.getData().getVehicleLicence().getFor() + "/" +
+                                Uri.encode(VehicleData.getData().getVehicleLicence().getName());
+                        Picasso.with(this).load(path).into(vehicle_licence_Image);
+                        vehicle_licence_Add.setVisibility(View.GONE);
+                        Log.i("TTTTT","getVehicleLicence");
+                    }else {
+                        vehicle_licence_Image.setImageResource(0);
+                        vehicle_licence_Add.setVisibility(View.VISIBLE);
+                    }
+                }else {
+                    vehicle_licence_Image.setImageResource(0);
+                    vehicle_licence_Add.setVisibility(View.VISIBLE);
+                }
+            }else {
+                vehicle_licence_Image.setImageBitmap(bitmap);
+            }
+        }
+        else {
+            Toast.makeText(this, R.string.This_type_is_not_supported, Toast.LENGTH_SHORT).show();
+        }
+
+        vehicle_licence_Add.setVisibility(View.GONE);
+    }
+
+    private void convertDrivingImageToFile(Uri targetUri, Bitmap bitmap) {
+        getPhotoPathFromInternalStorage(targetUri,"driving");
+        if (driving_licence_ImagePath == null){
+            getPhotoPathFromExternalStorage(targetUri,"driving");
+        }
+        if (driving_licence_ImagePath != null) {
+            driving_licence_ImageFile = new File(driving_licence_ImagePath);
+            Log.i("TTTTTT",driving_licence_ImagePath+" "+driving_licence_ImageFile.getName());
+            if (!checkImageSize(driving_licence_ImageFile)){
+                driving_licence_ImageFile = null;
+                driving_licence_ImagePath = null;
+                Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
+                if (getIntent().getExtras().getString("type").equals("update")) {
+                    if (VehicleData.getData().getDrivingLicence() != null) {
+                        String path = Common.BaseUrl + "images/" +
+                                VehicleData.getData().getDrivingLicence().getFor() + "/" +
+                                Uri.encode(VehicleData.getData().getDrivingLicence().getName());
+                        Picasso.with(this).load(path).into(driving_licence_Image);
+                        driving_licence_Add.setVisibility(View.GONE);
+                        Log.i("TTTTT", "getDrivingLicence");
+                    }else {
+                        driving_licence_Image.setImageResource(0);
+                        driving_licence_Add.setVisibility(View.VISIBLE);
+                    }
+                }else {
+                    driving_licence_Image.setImageResource(0);
+                    driving_licence_Add.setVisibility(View.VISIBLE);
+                }
+            }else {
+                driving_licence_Image.setImageBitmap(bitmap);
+            }
+        }
+        else {
+            Toast.makeText(this, R.string.This_type_is_not_supported, Toast.LENGTH_SHORT).show();
+        }
+        driving_licence_Add.setVisibility(View.GONE);
     }
 
     private void convertIncludeImageToFile(Uri data1,Bitmap bitmap){
@@ -756,6 +760,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.This_type_is_not_supported, Toast.LENGTH_SHORT).show();
         }
     }
+
     private String compressToBase46(Bitmap btmap){
         ByteArrayOutputStream boas = new ByteArrayOutputStream();
         btmap.compress(Bitmap.CompressFormat.JPEG, 30, boas);
@@ -838,7 +843,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.click_to_open_gallery, Toast.LENGTH_SHORT).show();
             } else {
                 //Displaying another toast if permission is not granted
-//                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,R.string.Permission_to_access_images, Toast.LENGTH_LONG).show();
             }
         }
     }

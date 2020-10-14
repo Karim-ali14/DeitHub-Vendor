@@ -155,8 +155,8 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
 
     private void deleteImage(final int position) {
         Image image = list.get(position);
-        List<com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image> listdalete = new ArrayList<>();
-        listdalete.add(new com.dopave.diethub_vendor.Models.CreateVehicle.Request.Image(image.getId(),"deleted"));
+        List<Integer> listdalete = new ArrayList<>();
+        listdalete.add(image.getId());
         viewModel.deleteImage(VehicleData.getData().getId()+"",listdalete,context,dialog)
                 .observe((LifecycleOwner) context, new Observer<Data>() {
             @Override
