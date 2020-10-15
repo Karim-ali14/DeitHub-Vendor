@@ -28,6 +28,7 @@ import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_ImagesActivity;
 import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_Images_ViewModel;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,14 +36,14 @@ public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditIma
     List<Image> list;
     Context context;
     int numberOfIndexes;
-    List<com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image> imageListRequest;
+    List<File> imageListRequest;
     RecyclerView recyclerView;
     Modify_Images_ViewModel viewModel;
     ProgressDialog dialog;
 
-    public AdapterForEditImages(List<Image> list, Context context, int numberOfIndexes, List<com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image> imageListRequest,
-                                RecyclerView recyclerView, Modify_Images_ViewModel viewModel,
-                                ProgressDialog dialog) {
+    public AdapterForEditImages(List<Image> list, Context context, int numberOfIndexes,
+                                List<File> imageListRequest, RecyclerView recyclerView,
+                                Modify_Images_ViewModel viewModel,ProgressDialog dialog) {
         this.list = list;
         this.context = context;
         this.numberOfIndexes = numberOfIndexes;
@@ -76,7 +77,7 @@ public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditIma
                         intent.setType("image/*");
                         intent.setAction(Intent.ACTION_GET_CONTENT);
                         Modify_ImagesActivity modify_imagesActivity = (Modify_ImagesActivity) context;
-                        modify_imagesActivity.openGallery(modify_imagesActivity.SELECT_IMAGE_FOR_PROVIDER);
+                        modify_imagesActivity.requestStoragePermission(modify_imagesActivity.SELECT_IMAGE_FOR_PROVIDER);
                     }else {
                         Toast.makeText(context, context.getResources().getString(R.string.maximum_of_five_pictures), Toast.LENGTH_SHORT).show();
                     }
@@ -139,9 +140,9 @@ public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditIma
 
     private void deleterequest(final int position) {
         Image image = list.get(position);
-        ArrayList<com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image> images = new ArrayList<>();
-        images.add(new com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image(image.getId(),"deleted"));
-        viewModel.updateImages(context,dialog,null,images).observe((LifecycleOwner) context,
+        ArrayList<Integer> images = new ArrayList<>();
+        images.add(image.getId());
+        viewModel.deleteImage(context,dialog,images).observe((LifecycleOwner) context,
                 new Observer<Defualt>() {
                     @Override
                     public void onChanged(Defualt defualt) {

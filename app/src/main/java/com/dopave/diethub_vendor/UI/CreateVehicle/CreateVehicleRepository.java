@@ -438,7 +438,7 @@ public class CreateVehicleRepository {
                 RequestBody vehicleLicenceImageRequest = RequestBody.create(MediaType.parse("multipart/form-data"), vehicleLicenceFile);
                 vehicleLicenceImage = MultipartBody.Part.createFormData("vehicle_licence", URLEncoder.encode(vehicleLicenceFile.getName(), "utf-8"), vehicleLicenceImageRequest); // image
             }
-            if (Images.size() != 0) {
+            if (includeImages.size() != 0) {
                 for (int i = 0; i < includeImages.size(); i++) {
                     Images.add(MultipartBody.Part.createFormData("images", URLEncoder.encode(includeImages.get(i).getName(), "utf-8"),
                             RequestBody.create(MediaType.parse("multipart/form-data"), includeImages.get(i))));

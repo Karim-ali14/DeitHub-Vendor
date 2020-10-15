@@ -57,7 +57,7 @@ public class CreateVehicleViewModel extends ViewModel {
         return repository.getVehicleData(deliveryId, context, dialog,viewModel);
     }
 
-    LiveData<Data> updateVehicle(String vehicleId, String number, String model,
+    public LiveData<Data> updateVehicle(String vehicleId, String number, String model,
                                  Integer selectedYear, Integer vehicleTypes,
                                  File drivingLicenceFile,File vehicleLicenceFile,
                                  List<File> includeImages, final Context context,

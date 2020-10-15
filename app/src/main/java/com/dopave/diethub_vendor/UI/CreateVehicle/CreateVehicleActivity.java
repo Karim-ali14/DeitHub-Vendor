@@ -500,7 +500,6 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 VehicleTypeLayout.setBackground(getResources().getDrawable(R.drawable.style_textinput));
                 Toast.makeText(CreateVehicleActivity.this, "",
                         Toast.LENGTH_SHORT).show();
-
             }
         });
     }

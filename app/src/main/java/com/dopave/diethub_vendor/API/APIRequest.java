@@ -209,7 +209,7 @@ public interface APIRequest {
 
     @DELETE("notification/{notifyId}")
     Call<Defualt> deleteSpecificNotify (@Header("Authorization") String Auth,
-                                                 @Path("notifyId") String providerId);
+                                        @Path("notifyId") String providerId);
 
     @DELETE("notification")
     Call<Defualt> deleteAllNotifies (@Header("Authorization") String Auth);
@@ -222,10 +222,16 @@ public interface APIRequest {
                                     @Path("providerId") String providerId,
                                     @Body com.dopave.diethub_vendor.Models.GetTimeWork.Data data);
 
-        @PUT("provider/{providerId}/images")
+    @Multipart
+    @PUT("provider/{providerId}/images")
     Call<Defualt> updateImages(@Header("Authorization") String Auth,
+                               @Path("providerId") String providerId,
+                               @Part MultipartBody.Part main_image,
+                               @Part List<MultipartBody.Part> images);
+    @PUT("provider/{providerId}/images")
+    Call<Defualt> deleteSettingImages(@Header("Authorization") String Auth,
                                       @Path("providerId") String providerId,
-                                      @Body ImagesProvider imagesProvider);
+                                      @Body DeleteImageFromList deleteImage);
 
     @GET("provider/{providerId}/images")
     Call<ProviderImagesResponse> getProviderImages(@Header("Authorization") String Auth,

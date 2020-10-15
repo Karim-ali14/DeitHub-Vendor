@@ -12,6 +12,7 @@ import com.dopave.diethub_vendor.Models.ProviderIMages.Update.Image;
 import com.dopave.diethub_vendor.Models.ProviderIMages.Update.ImagesProvider;
 import com.dopave.diethub_vendor.Models.ProviderIMages.Update.MainImage;
 
+import java.io.File;
 import java.util.List;
 
 public class Modify_Images_ViewModel extends ViewModel {
@@ -27,8 +28,13 @@ public class Modify_Images_ViewModel extends ViewModel {
         return repository.getProviderImages(dialog, context, viewModel);
     }
 
-    public LiveData<Defualt> updateImages(final Context context, final ProgressDialog dialog ,
-                                          MainImage mainImage, List<Image> list){
-        return repository.updateImages(context, dialog, mainImage, list);
+    public LiveData<Defualt> updateImages(final Context context, final ProgressDialog dialog,
+                                          File mainImageFile, final List<File> list){
+        return repository.updateImages(context, dialog, mainImageFile, list);
+    }
+
+    public LiveData<Defualt> deleteImage(final Context context, final ProgressDialog dialog,
+                                         List<Integer> list){
+        return repository.deleteImage(context, dialog, list);
     }
 }
