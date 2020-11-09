@@ -6,8 +6,8 @@ android {
         release {
             storeFile file('E:\\App\\DoPave KeyStores\\diethub_provider_keystore.jks')
             keyAlias = 'key0'
-            storePassword '#Ktmk7DrHcN3Y7q8Qp=@'
-            keyPassword 'Qj8G3eCkUP7fHg!o'
+            storePassword 'Ma77!<c9U6wLMW5Qry<'
+            keyPassword 'q9P7J6LzUy<LRydd7E+'
         }
     }
     compileSdkVersion 29
@@ -17,16 +17,17 @@ android {
         applicationId "com.dopave.diethub_vendor"
         minSdkVersion 20
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable = true
+            minifyEnabled = false
         }
     }
 

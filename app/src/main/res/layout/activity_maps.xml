@@ -120,5 +120,6 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_17sdp"
         map:layout_constraintBottom_toBottomOf="@+id/map"
-        android:fontFamily="@font/helveticaneuelt_arabic"/>
+        android:fontFamily="@font/helveticaneuelt_arabic"
+        android:textAllCaps="false"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

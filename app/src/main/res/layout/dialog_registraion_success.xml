@@ -55,6 +55,7 @@
             android:text="@string/login"
             android:textColor="@color/white"
             android:textSize="@dimen/_17sdp"
+            android:textAllCaps="false"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -821,7 +821,8 @@
             android:text="@string/Add_time"
             android:textColor="@color/white"
             android:textSize="@dimen/_15sdp"
-            android:id="@+id/setTimeButton"/>
+            android:id="@+id/setTimeButton"
+            android:textAllCaps="false"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

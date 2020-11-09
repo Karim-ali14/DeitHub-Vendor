@@ -99,12 +99,12 @@ public class Modify_ImagesActivity extends AppCompatActivity {
                         Log.i("IIIIII","MainImageBase46 != null || listForRequest.size() != 0");
                         if (MainImageFile != null){
                             Log.i("IIIIII","MainImageBase46 != null");
-                            upDateImage(MainImageFile,listForRequest);
+                            upDateImage(MainImageFile,null);
 
                         }else if (listForRequest.size() != 0){
                             Log.i("IIIIII","listForRequest.size() != 0");
 
-                            upDateImage(MainImageFile,listForRequest);
+                            upDateImage(null,listForRequest);
                         }
                     }else {
                         Log.i("IIIIII","لا تغييرات");
@@ -118,10 +118,9 @@ public class Modify_ImagesActivity extends AppCompatActivity {
                     }else if (MainImageFile != null || listForRequest.size() != 0){
 
                         if (MainImageFile != null){
-                            upDateImage(MainImageFile,listForRequest);
+                            upDateImage(MainImageFile,null);
                         }else if (listForRequest.size() != 0){
-
-                            upDateImage(MainImageFile,listForRequest);
+                            upDateImage(null,listForRequest);
                         }
                     }else {
 

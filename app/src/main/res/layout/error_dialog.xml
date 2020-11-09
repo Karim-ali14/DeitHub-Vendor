@@ -57,6 +57,7 @@
             android:text="@string/try_again"
             android:background="@drawable/style_button_active"
             android:textColor="@color/white"
-            android:id="@+id/Again"/>
+            android:id="@+id/Again"
+            android:textAllCaps="false"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -341,6 +341,7 @@
             app:layout_constraintTop_toBottomOf="@+id/CardMap"
             app:layout_constraintVertical_bias=".1"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:fontFamily="@font/helveticaneuelt_arabic"/>
+            android:fontFamily="@font/helveticaneuelt_arabic"
+            android:textAllCaps="false"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

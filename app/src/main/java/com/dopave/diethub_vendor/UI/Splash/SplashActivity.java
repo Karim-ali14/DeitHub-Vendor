@@ -89,13 +89,11 @@ public class SplashActivity extends AppCompatActivity {
         }else
             normalLogin();
     }
-
 //    private boolean checkToken(String Token){
 //        JWT jwt = new JWT(Token);
 //        Date expiresAt = jwt.getExpiresAt();
 //        return new Date().before(expiresAt) || new Date().equals(expiresAt);
 //    }
-
     private void normalLogin(){
         startActivity(new Intent(getApplicationContext(), Login_inActivity.class));
         finish(); // finish(); because This Activity close After move To Next Activity

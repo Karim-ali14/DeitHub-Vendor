@@ -43,7 +43,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/helveticaneuelt_arabic"
-            android:text="المندوب أحمد إبراهيم فى الطريق إليك الأن"
             android:textColor="#000"
             android:textSize="14dp"
             app:layout_constraintStart_toEndOf="@+id/imageView13"
@@ -68,7 +67,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@id/time"
-                android:text="منذ 5 دقائق"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/_10sdp"
                 />

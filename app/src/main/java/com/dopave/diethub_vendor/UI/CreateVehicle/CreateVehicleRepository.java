@@ -499,6 +499,7 @@ public class CreateVehicleRepository {
                 else {
                     Toast.makeText(context,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
                 }
+                Log.i("TTTTTTT",t.getMessage());
             }
         });
 

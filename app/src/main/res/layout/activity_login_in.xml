@@ -140,7 +140,8 @@
             android:text="@string/enter"
             android:textColor="@color/white"
             android:textSize="@dimen/_17sdp"
-            app:layout_constraintTop_toBottomOf="@+id/ForgottenPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/ForgottenPassword"
+            android:textAllCaps="false"/>
 
         <TextView
             android:id="@+id/WithOutEmail"

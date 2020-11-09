@@ -291,6 +291,7 @@
                 android:id="@+id/Package_Content"
                 android:fontFamily="@font/helveticaneuelt_arabic"
                 android:includeFontPadding="false"
+                android:textAllCaps="false"
                />
 
 
@@ -313,6 +314,7 @@
                 android:id="@+id/ClientInfo"
                 android:fontFamily="@font/helveticaneuelt_arabic"
                 android:includeFontPadding="false"
+                android:textAllCaps="false"
                 />
 
         </LinearLayout>
