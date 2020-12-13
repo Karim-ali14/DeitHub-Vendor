@@ -177,7 +177,8 @@ public class Modify_ImagesActivity extends AppCompatActivity {
         if (providerImagesResponse.getData().getRows() != null) {
             if (providerImagesResponse.getData().getRows().size() != 0) {
                 list.addAll(providerImagesResponse.getData().getRows());
-                Modify_ImagesActivity.numberOfIndexes = list.size();
+
+                Modify_ImagesActivity.numberOfIndexes = list.size() - 1;
             }
         }
         recyclerView.setHasFixedSize(true);

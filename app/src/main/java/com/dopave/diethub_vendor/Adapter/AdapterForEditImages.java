@@ -24,6 +24,7 @@ import com.dopave.diethub_vendor.Common.Common;
 import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.GetDeliveries.Image;
 import com.dopave.diethub_vendor.R;
+import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_ImagesActivity;
 import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_Images_ViewModel;
 import com.squareup.picasso.Picasso;
@@ -121,21 +122,32 @@ public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditIma
 
     private void delete(int position) {
         if (Modify_ImagesActivity.numberOfIndexes != 0) {
-            if (position < Modify_ImagesActivity.numberOfIndexes) {
-
+            if (position <= Modify_ImagesActivity.numberOfIndexes) {
                 deleterequest(position);
             } else {
-                int n = Modify_ImagesActivity.numberOfIndexes - position;
+                Log.i("ListsSizes : ",list.size() + " "
+                        + imageListRequest.size()+" "+Modify_ImagesActivity.numberOfIndexes+" "+position);
+
+                int n = position - Modify_ImagesActivity.numberOfIndexes;
+
                 list.remove(position);
-                imageListRequest.remove(n);
+                imageListRequest.remove(--n);
+
             }
         }else {
+
+            Log.i("ListsSizes : ",list.size() + " "
+                    + imageListRequest.size()+" "+Modify_ImagesActivity.numberOfIndexes+" "+position);
+
             list.remove(position);
             imageListRequest.remove(--position);
+
         }
 
         recyclerView.setAdapter(new AdapterForEditImages(list,context,numberOfIndexes,
                 imageListRequest,recyclerView,viewModel,dialog));
+
+
     }
 
     private void deleterequest(final int position) {
@@ -150,6 +162,9 @@ public class AdapterForEditImages extends RecyclerView.Adapter<AdapterForEditIma
                         list.remove(position);
                         recyclerView.setAdapter(new AdapterForEditImages(list,context,numberOfIndexes,
                                 imageListRequest,recyclerView,viewModel,dialog));
+
+                        Log.i("ListsSizes : ",list.size() + " "
+                                + imageListRequest.size()+" "+Modify_ImagesActivity.numberOfIndexes);
                     }
                 });
     }

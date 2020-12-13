@@ -103,7 +103,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
     boolean firstOpen,isSpinnerYear,isSpinnerVehicle;
     List<com.dopave.diethub_vendor.Models.GetVehicles.Image> list;
     List<File> listImageRequest;
-    int numberOfIndexes = 0;
+    public static int numberOfIndexes = 0;
     String driving_licence_ImagePath,vehicle_licence_ImagePath;
     File driving_licence_ImageFile,vehicle_licence_ImageFile;
     Button Confirm;
@@ -171,7 +171,9 @@ public class CreateVehicleActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         if (getIntent().getExtras().getString("type").equals("update")) {
             Confirm.setText(getResources().getString(R.string.update_vehicle));
             deliveryId = getIntent().getExtras().getString("deliveryId");
@@ -256,7 +258,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
         if (VehicleData.getData().getImages() != null) {
             if (VehicleData.getData().getImages().size() != 0) {
                 list.addAll(VehicleData.getData().getImages());
-                numberOfIndexes = list.size();
+                CreateVehicleActivity.numberOfIndexes = list.size() - 1;
             }
         }
         if (VehicleData.getData().getDrivingLicence() != null){

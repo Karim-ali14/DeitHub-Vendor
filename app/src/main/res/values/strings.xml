@@ -45,7 +45,7 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="home_second">Home Second</string>
-    <string name="home">home</string>
+    <string name="home">Home</string>
     <string name="myorders">MyOrders</string>
     <string name="subscriptionOrders">Subscriptions Requests</string>
     <string name="subscription">Subscription</string>
@@ -117,7 +117,7 @@
     <string name="Terms_Conditions">Terms and Conditions</string>
     <string name="Confirm_account">Confirm creation account</string>
 
-    <string name="update_vehicle">update vehicle</string>
+    <string name="update_vehicle">Update Vehicle</string>
     <string name="Vehicle_ID">Vehicle ID</string>
     <string name="Vehicle_photos">Vehicle photos</string>
     <string name="Car_license">Car license</string>

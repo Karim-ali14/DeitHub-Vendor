@@ -28,6 +28,7 @@ import com.dopave.diethub_vendor.Models.VehicleTypes.VehicleTypes;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleActivity;
 import com.dopave.diethub_vendor.UI.CreateVehicle.CreateVehicleViewModel;
+import com.dopave.diethub_vendor.UI.Setting.Modify_Images.Modify_ImagesActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -135,22 +136,30 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
     }
 
     private void delete(int position) {
-        if (type.equals("update") && numberOfIndexes != 0){
-            if (position < numberOfIndexes){
+        if (type.equals("update") && CreateVehicleActivity.numberOfIndexes != 0){
+            if (position <= CreateVehicleActivity.numberOfIndexes){
                 deleteImage(position);
             }else {
-                int n = numberOfIndexes - position;
+                Log.i("ListsSizes : ",list.size() + " "
+                        + imageListRequest.size()+" "+CreateVehicleActivity.numberOfIndexes+" "+position);
+
+                int n = position - CreateVehicleActivity.numberOfIndexes;
+
+                Log.i("ListsSizes : ",n+"");
+
                 list.remove(position);
-                imageListRequest.remove(n);
+                imageListRequest.remove(--n);
+
+                recyclerView.setAdapter(new AdapterForResImage(list,context,imageListRequest,
+                        "update",CreateVehicleActivity.numberOfIndexes,recyclerView,viewModel,VehicleData,dialog));
             }
-            recyclerView.setAdapter(new AdapterForResImage(list,context,imageListRequest,
-                    "update",numberOfIndexes,recyclerView,viewModel,VehicleData,dialog));
         }else {
             list.remove(position);
             imageListRequest.remove(--position);
             recyclerView.setAdapter(new AdapterForResImage(list,context,imageListRequest,
-                    "create",numberOfIndexes,recyclerView,viewModel,VehicleData,dialog));
+                    "create",CreateVehicleActivity.numberOfIndexes,recyclerView,viewModel,VehicleData,dialog));
         }
+
     }
 
     private void deleteImage(final int position) {
@@ -161,10 +170,13 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
                 .observe((LifecycleOwner) context, new Observer<Data>() {
             @Override
             public void onChanged(Data data) {
-                numberOfIndexes--;
+                CreateVehicleActivity.numberOfIndexes--;
                 list.remove(position);
                 recyclerView.setAdapter(new AdapterForResImage(list,context,imageListRequest,
-                        "update",numberOfIndexes,recyclerView,viewModel,VehicleData,dialog));
+                        "update",CreateVehicleActivity.numberOfIndexes,recyclerView,viewModel,VehicleData,dialog));
+
+                Log.i("ListsSizes : ",list.size() + " "
+                        + imageListRequest.size()+" "+ CreateVehicleActivity.numberOfIndexes);
             }
         });
     }
