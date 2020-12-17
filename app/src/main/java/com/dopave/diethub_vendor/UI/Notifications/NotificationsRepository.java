@@ -92,8 +92,6 @@ public class NotificationsRepository {
                 Button button = view.findViewById(R.id.Again);
                 Adialog.setView(view);
                 final AlertDialog dialog1 = Adialog.create();
-                dialog1.setCanceledOnTouchOutside(false);
-                dialog1.setCancelable(false);
                 dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
