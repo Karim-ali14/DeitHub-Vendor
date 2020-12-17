@@ -60,7 +60,7 @@ public class Modify_Person_Info_Repository {
                             mutableLiveData.setValue(response.body());
                         }else {
                             dialog.dismiss();
-                            if (response.code() == 500){
+                            if (response.code() >= 500){
                                 Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                             }else if (response.code() == 401){
                                 Common.onCheckTokenAction(context);
@@ -150,7 +150,7 @@ public class Modify_Person_Info_Repository {
                 if (response.code() == 200)
                     mutableLiveData.setValue(response.body());
                 else {
-                    if (response.code() == 500){
+                    if (response.code() >= 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                     }else if (response.code() == 422) {
                         try {

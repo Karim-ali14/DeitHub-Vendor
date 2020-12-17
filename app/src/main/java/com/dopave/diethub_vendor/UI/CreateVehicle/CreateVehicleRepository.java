@@ -81,7 +81,7 @@ public class CreateVehicleRepository {
                     mutableLiveData.setValue(response.body());
                 }else {
                     dialog.dismiss();
-                    if (response.code() == 500){
+                    if (response.code() >= 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                     }else {
                         try {
@@ -181,7 +181,7 @@ public class CreateVehicleRepository {
                 if (response.code() == 200){
                     mutableLiveData.setValue(response.body());
                 }else {
-                    if (response.code() == 500){
+                    if (response.code() >= 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                     }else {
                         try {
@@ -291,7 +291,7 @@ public class CreateVehicleRepository {
                     try {
                         if (response.code() == 422)
                             Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
-                        else if (response.code() == 500){
+                        else if (response.code() >= 500){
                             Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                         }else if (response.code() == 401){
                             Common.onCheckTokenAction(context);
@@ -345,7 +345,7 @@ public class CreateVehicleRepository {
                         if (response.code() == 200)
                             mutableLiveData.setValue(response.body());
                         else {
-                            if (response.code() == 500){
+                            if (response.code() >= 500){
                                 Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                             }else if (response.code() == 401){
                                 Common.onCheckTokenAction(context);
@@ -460,7 +460,7 @@ public class CreateVehicleRepository {
                 if (response.code() == 200)
                     mutableLiveData.setValue(response.body());
                 else {
-                    if (response.code() == 500){
+                    if (response.code() >= 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                     }else if (response.code() == 401){
                         Common.onCheckTokenAction(context);
@@ -520,7 +520,7 @@ public class CreateVehicleRepository {
                 if (response.code() == 200){
                     mutableLiveData.setValue(response.body());
                 }
-                else if (response.code() == 500){
+                else if (response.code() >= 500){
                     Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                 }
                 else if (response.code() == 401){

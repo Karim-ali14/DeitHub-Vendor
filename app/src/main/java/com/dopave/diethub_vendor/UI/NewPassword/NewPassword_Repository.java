@@ -47,7 +47,7 @@ public class NewPassword_Repository {
                             mutableLiveData.setValue(response.body());
                         else {
                             try {
-                                if (response.code() == 500){
+                                if (response.code() >= 500){
                                     Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                                 }
                                 Toast.makeText(context,new JSONObject(response.errorBody().string())

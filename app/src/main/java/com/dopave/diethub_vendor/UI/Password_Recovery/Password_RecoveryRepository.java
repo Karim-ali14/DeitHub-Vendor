@@ -56,7 +56,7 @@ public class Password_RecoveryRepository {
                 }else {
                     if (response.code() == 422)
                         Toast.makeText(context, R.string.email_not_found, Toast.LENGTH_SHORT).show();
-                    else if (response.code() == 500){
+                    else if (response.code() >= 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                     }
                     else {

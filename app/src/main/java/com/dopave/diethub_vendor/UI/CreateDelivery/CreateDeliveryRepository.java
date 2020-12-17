@@ -68,7 +68,7 @@ public class CreateDeliveryRepository {
                 if (response.code() == 200){
                     mutableLiveData.setValue(response.body());
                 }else {
-                    if (response.code() == 500){
+                    if (response.code() >= 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                     }else {
                         try {
@@ -183,7 +183,7 @@ public class CreateDeliveryRepository {
                             Log.i("TTTTTT", errors + "");
                         }else if (response.code() == 422)
                             Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
-                        else if (response.code() == 500){
+                        else if (response.code() >= 500){
                             Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                         }else if (response.code() == 401){
                             Common.onCheckTokenAction(context);
@@ -265,7 +265,7 @@ public class CreateDeliveryRepository {
                             Log.i("TTTTTT", errors + "");
                         }else if (response.code() == 422)
                             Toast.makeText(context, R.string.data_input_incorrect, Toast.LENGTH_SHORT).show();
-                        else if (response.code() == 500){
+                        else if (response.code() >= 500){
                             Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                         }else if (response.code() == 401){
                             Common.onCheckTokenAction(context);

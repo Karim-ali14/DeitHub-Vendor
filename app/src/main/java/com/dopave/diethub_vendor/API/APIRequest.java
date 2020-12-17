@@ -147,7 +147,7 @@ public interface APIRequest {
     //Todo Update Vehicle
     @Multipart
     @PUT("provider/{providerId}/vehicle/{vehicleId}")
-    Call<Data> updateVehicle (@Header("Authorization") String Auth,
+    Call<Data> updateVehicle(@Header("Authorization") String Auth,
                               @Path("providerId") String providerId,
                               @Path("vehicleId") String vehicleId,
                               @PartMap Map<String , RequestBody> bodyMap,

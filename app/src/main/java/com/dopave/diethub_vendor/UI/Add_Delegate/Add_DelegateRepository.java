@@ -39,7 +39,7 @@ public class Add_DelegateRepository {
                 if (response.code() == 200){
                     mutableLiveData.setValue(response.body());
                 }else {
-                    if (response.code() == 500){
+                    if (response.code() >= 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                     }else {
                         try {

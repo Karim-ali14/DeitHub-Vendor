@@ -192,7 +192,7 @@ public class Details_OrderActivity extends AppCompatActivity {
                                     .putExtra("typeId", getIntent().getExtras()
                                             .getInt("typeId")));
                         }
-                        if (response.code() == 500){
+                        if (response.code() >= 500){
                             Toast.makeText(Details_OrderActivity.this, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                         }else if (response.code() == 401){
                             Common.onCheckTokenAction(Details_OrderActivity.this);
