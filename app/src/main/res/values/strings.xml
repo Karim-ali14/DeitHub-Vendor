@@ -9,7 +9,7 @@
     <string name="enter">Enter</string>
     <string name="password">Password</string>
     <string name="restaurant_version">Restaurant Version</string>
-    <string name="login">Login</string>
+    <string name="login">Login to use the app</string>
     <string name="ForgotPassword">Forgot Password ?</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
