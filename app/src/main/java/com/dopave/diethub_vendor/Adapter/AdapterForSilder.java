@@ -33,7 +33,7 @@ public class AdapterForSilder extends PagerAdapter {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_image_slilder, container, false);
         ImageView image = view.findViewById(R.id.imageSlider);
         if (list.get(position).getName() != null && list.get(position).getFor() != null) {
-            String photoPath = Common.BaseUrl + "images/" + list.get(position).getFor() + "/" +
+            String photoPath = Common.BaseUrlForImages + list.get(position).getFor() + "/" +
                     Uri.encode(list.get(position).getName());
             Picasso.with(context).load(photoPath).into(image);
         }else if (list.get(position).getDefaultImage() != 0){

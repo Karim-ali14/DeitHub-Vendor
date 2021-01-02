@@ -228,6 +228,7 @@ public interface APIRequest {
                                @Path("providerId") String providerId,
                                @Part MultipartBody.Part main_image,
                                @Part List<MultipartBody.Part> images);
+
     @PUT("provider/{providerId}/images")
     Call<Defualt> deleteSettingImages(@Header("Authorization") String Auth,
                                       @Path("providerId") String providerId,

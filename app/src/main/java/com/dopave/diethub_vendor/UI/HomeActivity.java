@@ -205,7 +205,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void setProviderData() {
         if (Common.currentPosition.getData().getProvider().getMainImage() != null) {
-            String path = Common.BaseUrl + "images/" +
+            String path = Common.BaseUrlForImages +
                     Common.currentPosition.getData().getProvider().getMainImage().getFor()
                     + "/" + Uri.encode(Common.currentPosition.getData().getProvider().getMainImage().getName());
             Picasso.with(this).load(path).into(ProviderIconMain);

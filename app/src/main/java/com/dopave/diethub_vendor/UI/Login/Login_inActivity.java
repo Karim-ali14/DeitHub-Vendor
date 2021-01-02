@@ -44,7 +44,6 @@ public class Login_inActivity extends AppCompatActivity {
     Login_ViewModel viewModel;
     boolean isValid,firstOpen;
     ProgressDialog dialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -234,7 +233,7 @@ public class Login_inActivity extends AppCompatActivity {
         String finalNumber = null;
         PhoneNumberUtil.PhoneNumberType isMobile = null;
         try {
-            phoneNumber = phoneNumberUtil.parse(phone, "EG");
+            phoneNumber = phoneNumberUtil.parse(phone, "SA");
             isValid = phoneNumberUtil.isValidNumber(phoneNumber);
             isMobile = phoneNumberUtil.getNumberType(phoneNumber);
         } catch (NumberParseException e) {
@@ -249,7 +248,7 @@ public class Login_inActivity extends AppCompatActivity {
             finalNumber = phoneNumberUtil.format(phoneNumber,
                     PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
         }else {
-            Toast.makeText(this, R.string.phone_number_incorrect, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, R.string.phone_number_incorrect, Toast.LENGTH_SHORT).show();
             finalNumber = phone;
         }
         return finalNumber;

@@ -167,7 +167,7 @@ public class Modify_ImagesActivity extends AppCompatActivity {
     public void onGetMainImage(ProviderInformation providerInfo){
         Common.currentPosition.getData().getProvider().getMainImage().setFor(providerInfo.getData().getProvider().getMainImage().getFor());
         Common.currentPosition.getData().getProvider().getMainImage().setName(providerInfo.getData().getProvider().getMainImage().getName());
-        String PathMainImage = Common.BaseUrl + "images/" + Common.currentPosition.getData()
+        String PathMainImage = Common.BaseUrlForImages + Common.currentPosition.getData()
                 .getProvider().getMainImage().getFor() + "/" +
                 Uri.encode(Common.currentPosition.getData().getProvider().getMainImage().getName());
         Picasso.with(Modify_ImagesActivity.this).load(PathMainImage).into(MainImage);
@@ -292,7 +292,7 @@ public class Modify_ImagesActivity extends AppCompatActivity {
                 MainImagePath = null;
                 Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
                 if (Common.currentPosition.getData().getProvider().getMainImage() != null) {
-                    String path = Common.BaseUrl + "images/" +
+                    String path = Common.BaseUrlForImages +
                             Common.currentPosition.getData().getProvider().getMainImage().getFor() + "/" +
                             Uri.encode(Common.currentPosition.getData().getProvider().getMainImage().getName());
                     Picasso.with(this).load(path).into(MainImage);

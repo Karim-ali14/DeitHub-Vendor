@@ -155,7 +155,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
         Phone.setText(delivery.getMobilePhone());
         Email.setText(delivery.getEmail());
         if (delivery.getImage() != null){
-            String path = Common.BaseUrl + "images/" +
+            String path = Common.BaseUrlForImages +
                     delivery.getImage().getFor() + "/" +
                     Uri.encode(delivery.getImage().getName());
             Picasso.with(this).load(path).into(profile_image);
@@ -343,7 +343,7 @@ public class CreateDeliveryActivity extends AppCompatActivity {
                                 Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
                                 if (getIntent().getExtras().getString("type").equals("update")) {
                                     if (delivery.getImage() != null) {
-                                        String path = Common.BaseUrl + "images/" +
+                                        String path = Common.BaseUrlForImages +
                                                 delivery.getImage().getFor() + "/" +
                                                 Uri.encode(delivery.getImage().getName());
                                         Picasso.with(this).load(path).into(profile_image);
@@ -662,11 +662,16 @@ public class CreateDeliveryActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         if (isValid && (PhoneNumberUtil.PhoneNumberType.MOBILE == isMobile
                 || PhoneNumberUtil.PhoneNumberType.FIXED_LINE_OR_MOBILE == isMobile)) {
             finalNumber = phoneNumberUtil.format(phoneNumber,
                     PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
+
+            if (!finalNumber.startsWith("+966") && !finalNumber.startsWith("00966")){
+                Toast.makeText(this, R.string.phone_number_incorrect, Toast.LENGTH_SHORT).show();
+                finalNumber = phone;
+            }
+
         }else {
             Toast.makeText(this, R.string.phone_number_incorrect, Toast.LENGTH_SHORT).show();
             finalNumber = phone;

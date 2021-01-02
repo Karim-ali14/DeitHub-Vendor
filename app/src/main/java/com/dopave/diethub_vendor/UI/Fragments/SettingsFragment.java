@@ -49,7 +49,7 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         Res_icon_Setting = view.findViewById(R.id.Res_icon_Setting);
         if (Common.currentPosition.getData().getProvider().getMainImage() != null){
-            String path = Common.BaseUrl + "images/" +
+            String path = Common.BaseUrlForImages +
                     Common.currentPosition.getData().getProvider().getMainImage().getFor()
                     + "/" + Uri.encode(Common.currentPosition.getData().getProvider().getMainImage().getName());
             Picasso.with(getActivity()).load(path).into(Res_icon_Setting);

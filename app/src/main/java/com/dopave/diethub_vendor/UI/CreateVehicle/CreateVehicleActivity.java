@@ -262,7 +262,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
             }
         }
         if (VehicleData.getData().getDrivingLicence() != null){
-            String path = Common.BaseUrl + "images/" +
+            String path = Common.BaseUrlForImages +
                     VehicleData.getData().getDrivingLicence().getFor() + "/" +
                     Uri.encode(VehicleData.getData().getDrivingLicence().getName());
             Picasso.with(this).load(path).into(driving_licence_Image);
@@ -272,7 +272,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
             driving_licence_Add.setVisibility(View.VISIBLE);
         }
         if (VehicleData.getData().getVehicleLicence() != null){
-            String path = Common.BaseUrl + "images/" +
+            String path = Common.BaseUrlForImages +
                     VehicleData.getData().getVehicleLicence().getFor() + "/" +
                     Uri.encode(VehicleData.getData().getVehicleLicence().getName());
             Picasso.with(this).load(path).into(vehicle_licence_Image);
@@ -668,7 +668,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
                 if (getIntent().getExtras().getString("type").equals("update")) {
                     if (VehicleData.getData().getVehicleLicence() != null){
-                        String path = Common.BaseUrl + "images/" +
+                        String path = Common.BaseUrlForImages +
                                 VehicleData.getData().getVehicleLicence().getFor() + "/" +
                                 Uri.encode(VehicleData.getData().getVehicleLicence().getName());
                         Picasso.with(this).load(path).into(vehicle_licence_Image);
@@ -707,7 +707,7 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.The_size_of_the_image, Toast.LENGTH_SHORT).show();
                 if (getIntent().getExtras().getString("type").equals("update")) {
                     if (VehicleData.getData().getDrivingLicence() != null) {
-                        String path = Common.BaseUrl + "images/" +
+                        String path = Common.BaseUrlForImages +
                                 VehicleData.getData().getDrivingLicence().getFor() + "/" +
                                 Uri.encode(VehicleData.getData().getDrivingLicence().getName());
                         Picasso.with(this).load(path).into(driving_licence_Image);

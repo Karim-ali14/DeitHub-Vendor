@@ -108,7 +108,7 @@ public class AdapterForResImage extends RecyclerView.Adapter<AdapterForResImage.
             if (image.getImageAdd() != null)
                 holder.imageView.setImageBitmap(image.getImageAdd());
             else if (image.getFor() != null && image.getName() != null){
-                String path = Common.BaseUrl + "images/" + image.getFor() + "/" +
+                String path = Common.BaseUrlForImages + image.getFor() + "/" +
                         Uri.encode(image.getName());
                 Picasso.with(context).load(path).into(holder.imageView);
             }

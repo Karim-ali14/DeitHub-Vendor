@@ -127,7 +127,7 @@ public class Details_OrderActivity extends AppCompatActivity {
         NameOfClient.setText(raw.getClient().getName());
 
         if (raw.getClient().getImage()!=null){
-            String photoPath = Common.BaseUrl + "images/" + raw.getClient().getImage().getFor() + "/" +
+            String photoPath = Common.BaseUrlForImages + raw.getClient().getImage().getFor() + "/" +
                     Uri.encode(raw.getClient().getImage().getName());
             Picasso.with(this).load(photoPath).into(ClientIconDetails);
         }

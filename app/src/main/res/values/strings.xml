@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DietHub Vendor</string>
     <string name="hallo">Hello</string>
-    <string name="login_to_use_app">Login to tse app</string>
+    <string name="login_to_use_app">Login to use the app</string>
     <string name="Incorrect_credential">The phone number or the password is wrong</string>
     <string name="Still_pending">your account is pending</string>
     <string name="Server_problem">Server problem</string>
@@ -9,7 +9,7 @@
     <string name="enter">Enter</string>
     <string name="password">Password</string>
     <string name="restaurant_version">Restaurant Version</string>
-    <string name="login">Login to use the app</string>
+    <string name="login">Login</string>
     <string name="ForgotPassword">Forgot Password ?</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -95,13 +95,13 @@
     <string name="res_logo">Restaurants Logo</string>
     <string name="add_photo">Add Photo</string>
     <string name="Time_work">Time work</string>
-    <string name="Saturday">Saturday</string>
-    <string name="Sunday">Sunday</string>
-    <string name="Monday">Monday</string>
-    <string name="Tuesday">Tuesday</string>
-    <string name="Wednesday">Wednesday</string>
-    <string name="Thursday">Thursday</string>
-    <string name="Friday">Friday</string>
+    <string name="Saturday">Sat</string>
+    <string name="Sunday">Sun</string>
+    <string name="Monday">Mon</string>
+    <string name="Tuesday">Tue</string>
+    <string name="Wednesday">Wed</string>
+    <string name="Thursday">Thu</string>
+    <string name="Friday">Fri</string>
     <string name="Edit_Location">Edit Location</string>
     <string name="Notification">Notification</string>
     <string name="App_Lang">App Language</string>

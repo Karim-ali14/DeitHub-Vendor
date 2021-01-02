@@ -106,7 +106,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         holder.ClientName.setText(orderRaw.getClient().getName());
 
         if (orderRaw.getClient().getImage() != null) {
-            String path = Common.BaseUrl + "images/" + orderRaw.getClient().getImage().getFor() + "/" +
+            String path = Common.BaseUrlForImages + orderRaw.getClient().getImage().getFor() + "/" +
                     Uri.encode(orderRaw.getClient().getImage().getName());
             Picasso.with(context).load(path).into(holder.ClientIcon);
         }else {
@@ -402,7 +402,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             holder.delegate.setText(context.getResources().getString(R.string.Delivery)+" : "+orderRaw.getDeliveryrep().getName());
             if (orderRaw.getDeliveryrep().getImage() != null){
                 if (orderRaw.getDeliveryrep().getImage() != null) {
-                    String path = Common.BaseUrl + "images/" + orderRaw.getDeliveryrep().getImage().getFor() + "/" +
+                    String path = Common.BaseUrlForImages + orderRaw.getDeliveryrep().getImage().getFor() + "/" +
                             Uri.encode(orderRaw.getDeliveryrep().getImage().getName());
                     Picasso.with(context).load(path).into(holder.delegateIcon);
                 }else {

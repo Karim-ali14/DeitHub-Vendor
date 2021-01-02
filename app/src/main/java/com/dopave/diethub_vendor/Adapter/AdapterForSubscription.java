@@ -129,7 +129,7 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
         holder.NameOfClient.setText(SubRow.getClient().getName());
         holder.Calories.setPaintFlags(holder.Calories.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
 
-        String photoPath = Common.BaseUrl + "images/" + SubRow.get_package().getMainImage().getFor() + "/" +
+        String photoPath = Common.BaseUrlForImages + SubRow.get_package().getMainImage().getFor() + "/" +
                 Uri.encode(SubRow.get_package().getMainImage().getName());
         Picasso.with(context).load(photoPath).into(holder.imageSubscription);
     }

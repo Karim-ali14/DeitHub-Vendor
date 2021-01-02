@@ -215,7 +215,8 @@ public class DeliveryRepository {
     }
 
     public MutableLiveData<GetDeliveriesData> deleteDelivery(final String deliveryId,
-                                                             final ProgressDialog dialog, final Context context){
+                                                             final ProgressDialog dialog,
+                                                             final Context context){
         final MutableLiveData<GetDeliveriesData> mutableLiveData = new MutableLiveData<>();
         Common.getAPIRequest().deleteDeliveryByProvider("Bearer "+
                         Common.currentPosition.getData().getToken().getAccessToken(),
@@ -263,4 +264,5 @@ public class DeliveryRepository {
         });
         return mutableLiveData;
     }
+
 }
