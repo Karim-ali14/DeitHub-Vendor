@@ -8,7 +8,7 @@ import com.dopave.diethub_vendor.Models.GetDeliveries.Image;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Client implements Parcelable {
+public class Client implements Parcelable{
 
     @SerializedName("name")
     @Expose
@@ -30,6 +30,7 @@ public class Client implements Parcelable {
         name = in.readString();
         email = in.readString();
         mobilePhone = in.readString();
+        image = in.readParcelable(Image.class.getClassLoader());
     }
 
     @Override
@@ -37,6 +38,7 @@ public class Client implements Parcelable {
         dest.writeString(name);
         dest.writeString(email);
         dest.writeString(mobilePhone);
+        dest.writeParcelable(image, flags);
     }
 
     @Override
