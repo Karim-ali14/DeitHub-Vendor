@@ -8,11 +8,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ import com.dopave.diethub_vendor.Models.GetDeliveries.GetDeliveriesData;
 import com.dopave.diethub_vendor.Models.Orders.Detail;
 import com.dopave.diethub_vendor.Models.Orders.OrderRaw;
 import com.dopave.diethub_vendor.Models.Orders.Orders;
+import com.dopave.diethub_vendor.Models.Subscriptions.UpdateStatus.UpdateSubscriptionStatus;
 import com.dopave.diethub_vendor.UI.Details_OrderActivity.Details_OrderActivity;
 import com.dopave.diethub_vendor.UI.Fragments.Deliveries.DeliveryViewModel;
 import com.dopave.diethub_vendor.UI.Fragments.Orders.OrderFragment;
@@ -64,7 +67,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     OrdersViewModel OViewModel;
     RecyclerView recyclerView;
     public static List<Detail> listDetail;
-
+    final ProgressDialog dialog ;
     public AdapterForOrder(List<OrderRaw> list, Context context, int i,
                            DeliveryViewModel DViewModel, OrdersViewModel OViewModel,
                            RecyclerView recyclerView) {
@@ -74,6 +77,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         this.DViewModel = DViewModel;
         this.OViewModel = OViewModel;
         this.recyclerView = recyclerView;
+        dialog = new ProgressDialog(context);
     }
 
     @NonNull
@@ -99,7 +103,8 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAssignDelivery(orderRaw);
+                initPopupMenuForSelectDelivery(orderRaw,v);
+
             }
         });
         holder.OrderId.setText(orderRaw.getId()+"");
@@ -129,7 +134,6 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
     }
 
     private void showAssignDelivery(final OrderRaw orderRaw) {
-        final ProgressDialog dialog = new ProgressDialog(context);
         final AlertDialog.Builder Adialog = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_assign_delivery, null);
         final RecyclerView recyclerForAssign = view.findViewById(R.id.RecyclerForAssign);
@@ -172,20 +176,26 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                 if(response.code() == 200){
                     dialog1.dismiss();
                     Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    String status[] = new String[2];
+                    String status[] = new String[7];
                     status[0] = "prepared";
                     status[1] = "readyForDelivery";
-                    OViewModel.getAllOrders(status,OViewModel,dialog,context,OrderFragment.limit,
-                            0,0).observe((LifecycleOwner) context, new Observer<Orders>() {
-                        @Override
-                        public void onChanged(Orders orders) {
-                            dialog.dismiss();
-                            list.clear();
-                            recyclerView.setAdapter(
-                                    new AdapterForOrder(orders.getData().getOrderRaw()
-                                            ,context,i,DViewModel,OViewModel,recyclerView));
-                        }
-                    });
+                    status[2] = "acceptForDelivery";
+                    status[3] = "delivering";
+                    status[4] = "delivered";
+                    status[5] = "canceled";
+                    status[6] = "return";
+                    reloadOrders(status,dialog);
+//                    OViewModel.getAllOrders(status,OViewModel,dialog,context,OrderFragment.limit,
+//                            0,0).observe((LifecycleOwner) context, new Observer<Orders>() {
+//                        @Override
+//                        public void onChanged(Orders orders) {
+//                            dialog.dismiss();
+//                            list.clear();
+//                            recyclerView.setAdapter(
+//                                    new AdapterForOrder(orders.getData().getOrderRaw()
+//                                            ,context,i,DViewModel,OViewModel,recyclerView));
+//                        }
+//                    });
                 }else {
                     dialog.dismiss();
                     if (response.code() >= 500){
@@ -221,6 +231,20 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                 else {
                     Toast.makeText(context,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+    private void reloadOrders(String[] status, final ProgressDialog dialog) {
+        OViewModel.getAllOrders(status,OViewModel,dialog,context,OrderFragment.limit,
+                0,0).observe((LifecycleOwner) context, new Observer<Orders>() {
+            @Override
+            public void onChanged(Orders orders) {
+                dialog.dismiss();
+                list.clear();
+                recyclerView.setAdapter(
+                        new AdapterForOrder(orders.getData().getOrderRaw()
+                                ,context,i,DViewModel,OViewModel,recyclerView));
             }
         });
     }
@@ -471,4 +495,78 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
                 });
     }
 
+    private void initPopupMenuForSelectDelivery(final OrderRaw orderRaw, View view){
+        PopupMenu popupMenu = new PopupMenu(context,view);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_select_restaurant_rep :
+                        showAssignDelivery(orderRaw);
+                        return true;
+                    case R.id.action_select_restaurant_app :{
+                        selectDeliveryApp(orderRaw);
+                    }
+                    default:
+                        return false;
+                }
+            }
+        });
+        popupMenu.inflate(R.menu.menu_choose_delivery);
+        popupMenu.show();
+    }
+
+    private void selectDeliveryApp(OrderRaw orderRaw) {
+        dialog.show();
+        Common.getAPIRequest().updateOrder("Bearer "+Common.currentPosition.getData().getToken().getAccessToken(),
+                Common.currentPosition.getData().getProvider().getId()+"",
+                orderRaw.getId()+"",new UpdateSubscriptionStatus("readyForDelivery")).enqueue(new Callback<Orders>() {
+            @Override
+            public void onResponse(Call<Orders> call, Response<Orders> response) {
+                dialog.dismiss();
+                if (response.code() == 200){
+                    String status[] = new String[7];
+                    status[0] = "prepared";
+                    status[1] = "readyForDelivery";
+                    status[2] = "acceptForDelivery";
+                    status[3] = "delivering";
+                    status[4] = "delivered";
+                    status[5] = "canceled";
+                    status[6] = "return";
+                    reloadOrders(status,dialog);
+                }else if (response.code() >= 500){
+                    Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                }else if (response.code() == 401){
+                    Common.onCheckTokenAction(context);
+                }else {
+                    try {
+                        Toast.makeText(context, new JSONObject(response.errorBody().string())
+                                .getString("message"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Orders> call, Throwable t) {
+                dialog.dismiss();
+
+                if(t instanceof SocketTimeoutException) {
+                    Toast.makeText(context,R.string.Unable_contact_server, Toast.LENGTH_SHORT).show();
+                }
+
+                else if (t instanceof UnknownHostException) {
+                    Toast.makeText(context,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    Toast.makeText(context,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 }

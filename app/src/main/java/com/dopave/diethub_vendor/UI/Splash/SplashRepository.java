@@ -46,7 +46,7 @@ public class SplashRepository {
                     if (response.code() >= 500){
                         Toast.makeText(context, R.string.Server_problem, Toast.LENGTH_SHORT).show();
                     }else if (response.code() == 401){
-                        Common.onCheckTokenAction(context);
+                            Common.onCheckTokenAction(context);
                     }
                     context.startActivity(new Intent(context, Login_inActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                             Intent.FLAG_ACTIVITY_CLEAR_TASK));

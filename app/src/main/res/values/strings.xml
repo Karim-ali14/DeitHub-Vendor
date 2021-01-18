@@ -137,6 +137,10 @@
     <string name="Return">Return</string>
     <string name="accept">Accept</string>
 
+
+    <string name="To_restaurant_rep">Assign to own rep.</string>
+    <string name="To_restaurant_app">Assign to app rep.</string>
+
     <string name="Package_Content">Package Content</string>
     <string name="Timing_Delivery">Timing Delivery</string>
     <string name="PackagePrice">Package Price</string>
@@ -246,4 +250,5 @@
     <string name="Canceled">Canceled</string>
     <string name="Permission_to_access_images">Permission must be approved in order to be able to choose the personal photo</string>
     <string name="click_to_open_gallery">Click again to open the photo gallery</string>
+    <string name="Signed_in_successfully">Signed in successfully</string>
 </resources>

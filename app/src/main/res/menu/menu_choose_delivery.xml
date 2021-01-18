@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_select_restaurant_rep"
+        android:title="@string/To_restaurant_rep"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_select_restaurant_app"
+        android:title="@string/To_restaurant_app"
+        app:showAsAction="never" />
+</menu>

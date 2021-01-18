@@ -136,6 +136,9 @@
     <string name="cancel">ألغاء</string>
     <string name="Return">مرتجع</string>
 
+    <string name="To_restaurant_rep">تسليم لمندوب المطعم</string>
+    <string name="To_restaurant_app">تسليم لمندوب التطبيق</string>
+
     <string name="Package_Content">محتوي الباقة</string>
     <string name="Timing_Delivery">توقيت التوصيل</string>
     <string name="PackagePrice">سعر الباقة</string>
@@ -210,7 +213,7 @@
     <string name="enter_AddressEn">ادخل العنوان باللغه الانجليزيه</string>
     <string name="AddressAr">العنوان باللغه العربيه</string>
     <string name="enter_AddressAr">ادخل العنوان باللغه العربيه</string>
-    <string name="modify_personal_info">تعديل البيانات الشصبه</string>
+    <string name="modify_personal_info">تعديل البيانات الشخصية</string>
     <string name="modify_restaurant_photos">تعديل صور المطعم</string>
     <string name="restaurant_photos">صور المطعم</string>
     <string name="modify_working_time">تعديل وقت العمل</string>
@@ -245,4 +248,5 @@
     <string name="Canceled">الإلغاء</string>
     <string name="Permission_to_access_images">يجب الموافقة علي الإذن لكي تستطيع اختيار الصوره الشخصيه</string>
     <string name="click_to_open_gallery">اضغط مره اخري لفتح معرض الصور</string>
+    <string name="Signed_in_successfully">تم تسجيل الدخول بنجاح</string>
 </resources>

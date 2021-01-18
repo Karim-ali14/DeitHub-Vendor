@@ -191,7 +191,7 @@ public class Login_inActivity extends AppCompatActivity {
             public void onChanged(ProviderInformation signIn) {
                 Log.i("TTTTTT",signIn.getData().getToken().getAccessToken() +"   "+
                         signIn.getData().getProvider().getId());
-                Toast.makeText(Login_inActivity.this, signIn.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login_inActivity.this, R.string.Signed_in_successfully, Toast.LENGTH_SHORT).show();
                 Common.currentPosition = signIn;
                 SharedPreferences preferences = Common.getPreferences(Login_inActivity.this);
 

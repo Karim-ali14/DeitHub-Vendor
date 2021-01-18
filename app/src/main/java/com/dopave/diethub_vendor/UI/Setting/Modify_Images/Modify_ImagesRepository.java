@@ -148,7 +148,7 @@ public class Modify_ImagesRepository {
                 RequestBody mainImageFileRequest = RequestBody.create(MediaType.parse("multipart/form-data"), mainImageFile);
                 mainImage = MultipartBody.Part.createFormData("main_image", URLEncoder.encode(mainImageFile.getName(), "utf-8"), mainImageFileRequest); // image
             }
-            if (list.size() != 0) {
+            if (list != null && list.size() != 0) {
                 for (int i = 0; i < list.size(); i++) {
                     Images.add(MultipartBody.Part.createFormData("images", URLEncoder.encode(list.get(i).getName(), "utf-8"),
                             RequestBody.create(MediaType.parse("multipart/form-data"), list.get(i))));

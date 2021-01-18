@@ -148,7 +148,7 @@ public class Details_OrderActivity extends AppCompatActivity {
         statusList.add(getResources().getString(R.string.Accepted));
         statusList.add(getResources().getString(R.string.Preparing));
         statusList.add(getResources().getString(R.string.finished));
-        statusList.add(getResources().getString(R.string.readyForDelivery));
+//        statusList.add(getResources().getString(R.string.readyForDelivery));
 
         AdapterOfSpinnerStatus adapterOfSpinnerStatus =
                 new AdapterOfSpinnerStatus(this,R.layout.city_item,statusList);
@@ -277,8 +277,8 @@ public class Details_OrderActivity extends AppCompatActivity {
             return "preparing";
         else if (selectedStatus.equals(getResources().getString(R.string.finished)))
             return "prepared";
-        else if (selectedStatus.equals(getResources().getString(R.string.readyForDelivery)))
-            return "readyForDelivery";
+//        else if (selectedStatus.equals(getResources().getString(R.string.readyForDelivery)))
+//            return "readyForDelivery";
         return selectedStatus;
     }
 
