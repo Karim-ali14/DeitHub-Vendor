@@ -189,9 +189,6 @@ public class Details_OrderActivity extends AppCompatActivity {
                     dialog.dismiss();
                     Toast.makeText(Details_OrderActivity.this, R.string.no_changes, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Details_OrderActivity.this,getIntent().getExtras()
-                            .getInt("typeId")+
-                            "", Toast.LENGTH_SHORT).show();
                     Common.getAPIRequest().updateOrder("Bearer " + Common.currentPosition.getData().getToken().getAccessToken(),
                             Common.currentPosition.getData().getProvider().getId() + "", raw.getId() + "",
                             new UpdateSubscriptionStatus(SelectedStatus)).enqueue(new Callback<Orders>() {

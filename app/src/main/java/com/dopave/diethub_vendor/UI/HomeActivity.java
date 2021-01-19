@@ -184,8 +184,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Title.setText(getResources().getString(R.string.delegates));
             Current_Page = "nav_delegates";
         }else if (getIntent().getExtras().getString("type").equals("Details_OrderActivity")){
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
-                    new OrderFragment(getIntent().getExtras().getInt("typeId"))).commit();
+            Bundle bundle = new Bundle();
+            bundle.putInt("typeId",getIntent().getExtras().getInt("typeId"));
+            OrderFragment orderFragment = new OrderFragment(getIntent().getExtras().getInt("typeId"));
+            orderFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,orderFragment).commit();
             drawer.closeDrawer(GravityCompat.START);
             Logo.setVisibility(View.GONE);
             Notification_Icon.setVisibility(View.GONE);

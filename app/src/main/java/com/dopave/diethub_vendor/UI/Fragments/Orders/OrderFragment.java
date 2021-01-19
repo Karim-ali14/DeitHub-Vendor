@@ -140,8 +140,9 @@ public class OrderFragment extends Fragment {
         manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
-
-        getOrdersByButtonId(typeID);
+        if (getArguments() != null){
+            typeID = getArguments().getInt("typeId");
+        }
 
         PendingLayout = view.findViewById(R.id.PendingLayout);
         PreparingLayout = view.findViewById(R.id.PreparingLayout);
@@ -150,6 +151,8 @@ public class OrderFragment extends Fragment {
         PendingText = view.findViewById(R.id.PendingText);
         PreparingText = view.findViewById(R.id.PreparingText);
         FinishedText = view.findViewById(R.id.FinishedText);
+
+        getOrdersByButtonId(typeID);
 
         PendingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
