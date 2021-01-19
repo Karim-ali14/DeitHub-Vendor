@@ -70,7 +70,7 @@ public class Details_OrderActivity extends AppCompatActivity {
     CircleImageView ClientIconDetails;
     RecyclerView recyclerForMeals;
     SharedPref pref;
-
+    int firstOpenDialog = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,22 +134,22 @@ public class Details_OrderActivity extends AppCompatActivity {
     }
 
     private void showUpDateDialog(final OrderRaw raw) {
+        firstOpenDialog = 0;
         final AlertDialog.Builder Adialog = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dilaog_update_order, null);
-        Spinner spinnerUpdateOrder = view.findViewById(R.id.spinnerUpdateOrder);
+        final Spinner spinnerUpdateOrder = view.findViewById(R.id.spinnerUpdateOrder);
         ConstraintLayout parentLayout = view.findViewById(R.id.parentLayout);
         Update_Layout = view.findViewById(R.id.Update_Layout);
         updateIcon = view.findViewById(R.id.updateIcon);
         Button UpDateButton = view.findViewById(R.id.UpDateButton);
         final TextView statusSelected = view.findViewById(R.id.statusSelected);
         statusSelected.setText(raw.getStatus());
-        List<String> statusList = new ArrayList<>();
-        statusList.add(getResources().getString(R.string.Pending));
+        final List<String> statusList = new ArrayList<>();
+//        statusList.add(getResources().getString(R.string.Pending));
         statusList.add(getResources().getString(R.string.Accepted));
         statusList.add(getResources().getString(R.string.Preparing));
         statusList.add(getResources().getString(R.string.finished));
 //        statusList.add(getResources().getString(R.string.readyForDelivery));
-
         AdapterOfSpinnerStatus adapterOfSpinnerStatus =
                 new AdapterOfSpinnerStatus(this,R.layout.city_item,statusList);
 
@@ -162,6 +162,13 @@ public class Details_OrderActivity extends AppCompatActivity {
                 SelectedStatus = getSelectedStatus(SelectedStatus);
                 updateIcon.setImageResource(R.drawable.pencil_);
                 Update_Layout.setBackground(getResources().getDrawable(R.drawable.style_textinput_spinner));
+                if (firstOpenDialog == 0 && !getSelectedStatus(getStatus(raw.getStatus())).isEmpty()){
+                    spinnerUpdateOrder.setSelection(statusList.indexOf(getStatus(raw.getStatus())));
+                    String oldStatus = getStatus(raw.getStatus());
+                    statusSelected.setText(oldStatus);
+                    SelectedStatus = getSelectedStatus(oldStatus);
+                    firstOpenDialog++;
+                }
             }
 
             @Override
@@ -178,44 +185,48 @@ public class Details_OrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.show();
-                Common.getAPIRequest().updateOrder("Bearer "+Common.currentPosition.getData().getToken().getAccessToken(),
-                        Common.currentPosition.getData().getProvider().getId()+"",raw.getId()+"",
-                        new UpdateSubscriptionStatus(SelectedStatus)).enqueue(new Callback<Orders>() {
-                    @Override
-                    public void onResponse(Call<Orders> call, Response<Orders> response) {
-                        dialog1.dismiss();
-                        dialog.dismiss();
-                        if (response.code() == 200) {
-                            startActivity(new Intent(Details_OrderActivity.this,
-                                    HomeActivity.class).putExtra("type",
-                                    "Details_OrderActivity")
-                                    .putExtra("typeId", getIntent().getExtras()
-                                            .getInt("typeId")));
-                        }
-                        if (response.code() >= 500){
-                            Toast.makeText(Details_OrderActivity.this, R.string.Server_problem, Toast.LENGTH_SHORT).show();
-                        }else if (response.code() == 401){
-                            Common.onCheckTokenAction(Details_OrderActivity.this);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Orders> call, Throwable t) {
-                        dialog.dismiss();
-                        dialog1.dismiss();
-                        if(t instanceof SocketTimeoutException) {
-                            Toast.makeText(Details_OrderActivity.this,R.string.Unable_contact_server, Toast.LENGTH_SHORT).show();
-                        }
-
-                        else if (t instanceof UnknownHostException) {
-                            Toast.makeText(Details_OrderActivity.this,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                if (SelectedStatus.equals(raw.getStatus())) {
+                    dialog.dismiss();
+                    Toast.makeText(Details_OrderActivity.this, R.string.no_changes, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Details_OrderActivity.this,getIntent().getExtras()
+                            .getInt("typeId")+
+                            "", Toast.LENGTH_SHORT).show();
+                    Common.getAPIRequest().updateOrder("Bearer " + Common.currentPosition.getData().getToken().getAccessToken(),
+                            Common.currentPosition.getData().getProvider().getId() + "", raw.getId() + "",
+                            new UpdateSubscriptionStatus(SelectedStatus)).enqueue(new Callback<Orders>() {
+                        @Override
+                        public void onResponse(Call<Orders> call, Response<Orders> response) {
+                            dialog1.dismiss();
+                            dialog.dismiss();
+                            if (response.code() == 200) {
+                                startActivity(new Intent(Details_OrderActivity.this,
+                                        HomeActivity.class).putExtra("type",
+                                        "Details_OrderActivity")
+                                        .putExtra("typeId", getIntent().getExtras()
+                                                .getInt("typeId")));
+                            }
+                            if (response.code() >= 500) {
+                                Toast.makeText(Details_OrderActivity.this, R.string.Server_problem, Toast.LENGTH_SHORT).show();
+                            } else if (response.code() == 401) {
+                                Common.onCheckTokenAction(Details_OrderActivity.this);
+                            }
                         }
 
-                        else {
-                            Toast.makeText(Details_OrderActivity.this,R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<Orders> call, Throwable t) {
+                            dialog.dismiss();
+                            dialog1.dismiss();
+                            if (t instanceof SocketTimeoutException) {
+                                Toast.makeText(Details_OrderActivity.this, R.string.Unable_contact_server, Toast.LENGTH_SHORT).show();
+                            } else if (t instanceof UnknownHostException) {
+                                Toast.makeText(Details_OrderActivity.this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Details_OrderActivity.this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
         spinnerUpdateOrder.setOnTouchListener(new View.OnTouchListener() {
@@ -269,9 +280,9 @@ public class Details_OrderActivity extends AppCompatActivity {
     }
 
     private String getSelectedStatus(String selectedStatus){
-        if (selectedStatus.equals(getResources().getString(R.string.Pending)))
-            return "pending";
-        else if (selectedStatus.equals(getResources().getString(R.string.Accepted)))
+//        if (selectedStatus.equals(getResources().getString(R.string.Pending)))
+//            return "pending";
+        if (selectedStatus.equals(getResources().getString(R.string.Accepted)))
             return "accepted";
         else if (selectedStatus.equals(getResources().getString(R.string.Preparing)))
             return "preparing";
@@ -279,7 +290,7 @@ public class Details_OrderActivity extends AppCompatActivity {
             return "prepared";
 //        else if (selectedStatus.equals(getResources().getString(R.string.readyForDelivery)))
 //            return "readyForDelivery";
-        return selectedStatus;
+        return "";
     }
 
     private String getPaymentMethods(String s){
@@ -303,6 +314,8 @@ public class Details_OrderActivity extends AppCompatActivity {
             return getResources().getString( R.string.Prepared);
         }else if (s.equals("readyForDelivery")){
             return getResources().getString( R.string.readyForDelivery);
-        }else return s;
+        }
+        else return s;
     }
+
 }

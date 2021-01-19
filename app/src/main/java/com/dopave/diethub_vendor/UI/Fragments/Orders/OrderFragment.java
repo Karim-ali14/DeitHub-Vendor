@@ -221,7 +221,6 @@ public class OrderFragment extends Fragment {
     private void getOrdersByButtonId(int type) {
         if (type == 0) {
             activeButton = "Pending";
-
             status = new String[1];
             status[0] = "pending";
             skip = 0;
