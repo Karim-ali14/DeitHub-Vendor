@@ -59,6 +59,7 @@ public class LanguageActivity extends AppCompatActivity {
 //                        getBaseContext().getResources().getDisplayMetrics());
                 Common.setAppLocale(languageToLoad,LanguageActivity.this);
                 pref.setLangu("ar");
+                Common.refreshTokenDevice(LanguageActivity.this);
                 Intent intent = new Intent(LanguageActivity.this, HomeActivity.class)
                         .putExtra("type","Login_inActivity");
                 startActivity(intent);
@@ -78,6 +79,7 @@ public class LanguageActivity extends AppCompatActivity {
 //                        getBaseContext().getResources().getDisplayMetrics());
                 Common.setAppLocale(languageToLoad,LanguageActivity.this);
                 pref.setLangu("en");
+                Common.refreshTokenDevice(LanguageActivity.this);
                 Intent intent = new Intent(LanguageActivity.this, HomeActivity.class)
                         .putExtra("type","Login_inActivity");
                 startActivity(intent);
@@ -89,5 +91,4 @@ public class LanguageActivity extends AppCompatActivity {
     public void BackButton(View view) {
         finish();
     }
-
 }

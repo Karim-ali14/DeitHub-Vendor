@@ -121,10 +121,13 @@ public class Details_OrderActivity extends AppCompatActivity {
         }
 
         TotalNumber.setText(raw.getTotalPricePiastre().getTotal()+" "+getResources().getString(R.string.SAR));
-        paymentMethod.setText(getPaymentMethods(raw.getPaymentMethod()));
+        if (raw.getPaymentMethod() != null)
+            paymentMethod.setText(getPaymentMethods(raw.getPaymentMethod()));
         status.setText(getStatus(raw.getStatus()));
-        clientAddress.setText(raw.getAddress().getAddress());
-        NameOfClient.setText(raw.getClient().getName());
+        if (raw.getAddress()!=null)
+            clientAddress.setText(raw.getAddress().getAddress());
+        if (raw.getClient().getName() != null)
+            NameOfClient.setText(raw.getClient().getName());
 
         if (raw.getClient().getImage()!=null){
             String photoPath = Common.BaseUrlForImages + raw.getClient().getImage().getFor() + "/" +

@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -21,16 +22,22 @@ import androidx.appcompat.app.AlertDialog;
 import com.auth0.android.jwt.JWT;
 import com.dopave.diethub_vendor.API.APIRequest;
 import com.dopave.diethub_vendor.API.RetrofitClient;
+import com.dopave.diethub_vendor.Models.Defualt;
 import com.dopave.diethub_vendor.Models.ProviderInfo.ProviderInformation;
 import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.Login.Login_inActivity;
 import com.dopave.diethub_vendor.UI.SharedPref;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
@@ -41,7 +48,7 @@ public class Common {
     public static final String BaseUrl = "https://api.diethubsa.com/";
     public static final String BaseUrlForImages = "https://static.diethubsa.com/";
 //    public static final String BaseUrl = "https://api.diethub.martstations.com/";
-//    public static final String BaseUrlForImages = "https://api.diethub.martstations.com/images";
+//    public static final String BaseUrlForImages = "https://api.diethub.martstations.com/images/";
 
     public static ProviderInformation currentPosition = null;
 
@@ -128,4 +135,42 @@ public class Common {
         }
         resources.updateConfiguration(config, dm);
     }
+
+    public static void refreshTokenDevice(Context context) {
+        SharedPref pref = new SharedPref(context);
+
+        HashMap<String, String> deviceId = new HashMap<>();
+        deviceId.put("firebase_device_id", FirebaseInstanceId.getInstance().getToken());
+
+        if (!pref.getLagu().equals("empty")) {
+            if (pref.getLagu().equals("ar")) {
+                deviceId.put("notificationLang", "ar");
+            }else if (pref.getLagu().equals("en")) {
+                deviceId.put("notificationLang", "en");
+            }
+        }
+        else {
+            if (Locale.getDefault().getDisplayLanguage().equals("English"))
+            {
+                deviceId.put("notificationLang", "en");
+            }else if (Locale.getDefault().getDisplayLanguage().equals("العربية")){
+                deviceId.put("notificationLang", "ar");
+            }
+        }
+
+        Common.getAPIRequest().setFirebaseDeviceId("Bearer " +
+                        Common.currentPosition.getData().getToken().getAccessToken(),
+                Common.currentPosition.getData().getProvider().getId()+"",deviceId).enqueue(new Callback<Defualt>() {
+            @Override
+            public void onResponse(Call<Defualt> call, retrofit2.Response<Defualt> response) {
+                Log.i("TTTTTTNotify",response.code()+"");
+            }
+
+            @Override
+            public void onFailure(Call<Defualt> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

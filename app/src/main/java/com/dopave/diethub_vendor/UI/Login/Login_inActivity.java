@@ -27,12 +27,14 @@ import com.dopave.diethub_vendor.Models.SignIn.SignIn;
 import com.dopave.diethub_vendor.R;
 import com.dopave.diethub_vendor.UI.HomeActivity;
 import com.dopave.diethub_vendor.UI.Password_Recovery.Password_RecoveryActivity;
+import com.dopave.diethub_vendor.UI.SharedPref;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -203,26 +205,8 @@ public class Login_inActivity extends AppCompatActivity {
                 startActivity(new Intent(Login_inActivity.this,
                         HomeActivity.class).putExtra("type",
                         "Login_inActivity"));
-                refreshTokenDevice();
+                Common.refreshTokenDevice(Login_inActivity.this);
                 finish();
-            }
-        });
-    }
-
-    private void refreshTokenDevice() {
-        HashMap<String, String> deviceId = new HashMap<>();
-        deviceId.put("firebase_device_id", FirebaseInstanceId.getInstance().getToken());
-        Common.getAPIRequest().setFirebaseDeviceId("Bearer " +
-                        Common.currentPosition.getData().getToken().getAccessToken(),
-                Common.currentPosition.getData().getProvider().getId()+"",deviceId).enqueue(new Callback<Defualt>() {
-            @Override
-            public void onResponse(Call<Defualt> call, retrofit2.Response<Defualt> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<Defualt> call, Throwable t) {
-
             }
         });
     }

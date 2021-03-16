@@ -129,9 +129,13 @@ public class AdapterForSubscription extends RecyclerView.Adapter<AdapterForSubsc
         holder.NameOfClient.setText(SubRow.getClient().getName());
         holder.Calories.setPaintFlags(holder.Calories.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
 
-        String photoPath = Common.BaseUrlForImages + SubRow.get_package().getMainImage().getFor() + "/" +
-                Uri.encode(SubRow.get_package().getMainImage().getName());
-        Picasso.with(context).load(photoPath).into(holder.imageSubscription);
+        if (SubRow.get_package().getMainImage() != null) {
+            String photoPath = Common.BaseUrlForImages + SubRow.get_package().getMainImage().getFor() + "/" +
+                    Uri.encode(SubRow.get_package().getMainImage().getName());
+            Picasso.with(context).load(photoPath).into(holder.imageSubscription);
+        }else {
+            holder.imageSubscription.setImageResource(R.drawable.picture);
+        }
     }
 
     private void showDialog(ViewHolderForSubscription holder, final Row subRow) {

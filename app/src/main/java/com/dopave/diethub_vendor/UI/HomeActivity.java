@@ -3,6 +3,7 @@ package com.dopave.diethub_vendor.UI;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -104,6 +105,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Title.setVisibility(View.VISIBLE);
             Title.setText(getResources().getString(R.string.Orders));
             Current_Page = "nav_myOrders";
+            Log.i("ClickedOn",Current_Page);
         }else if (view.getId() == R.id.nav_setting){
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new SettingsFragment()).commit();
             drawer.closeDrawer(GravityCompat.START);
@@ -120,6 +122,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Title.setVisibility(View.VISIBLE);
             Title.setText(getResources().getString(R.string.delegates));
             Current_Page = "nav_delegates";
+            Log.i("ClickedOn",Current_Page);
         }else if (view.getId() == R.id.nav_Consulting ){
             startActivity(new Intent(this, Conditions_Activity.class));
             drawer.closeDrawer(GravityCompat.START);

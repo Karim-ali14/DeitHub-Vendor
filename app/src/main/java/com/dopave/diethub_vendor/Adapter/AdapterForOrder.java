@@ -126,11 +126,11 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         catch (ParseException e) {
             e.printStackTrace();
         }
-        if (i == 2){
-            holder.delegateLayout.setVisibility(View.VISIBLE);
-        }else {
-            holder.delegateLayout.setVisibility(View.GONE);
-        }
+//        if (i == 2){
+//            holder.delegateLayout.setVisibility(View.VISIBLE);
+//        }else {
+//            holder.delegateLayout.setVisibility(View.GONE);
+//        }
     }
 
     private void showAssignDelivery(final OrderRaw orderRaw) {
@@ -306,7 +306,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
             holder.menu.setVisibility(View.VISIBLE);
             holder.RatingButton.setVisibility(View.VISIBLE);
             getStatus(status,holder,orderRaw);
-            holder.delegateLayout.setVisibility(View.VISIBLE);
+//            holder.delegateLayout.setVisibility(View.VISIBLE);
             holder.RatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

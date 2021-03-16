@@ -210,15 +210,15 @@ public class OrderFragment extends Fragment {
             }
         });
 
-        vehicleViewModel.getAllVehicleTypes(getActivity(),
-                dialog,vehicleViewModel,"DeliveryFragment",recyclerView)
-                .observe(getActivity(), new Observer<VehicleTypes>() {
-                    @Override
-                    public void onChanged(VehicleTypes vehicleTypes) {
-                        vTypes = vehicleTypes;
-                        getAllDelivery(dialog,vehicleTypes);
-                    }
-                });
+//        vehicleViewModel.getAllVehicleTypes(getActivity(),
+//                dialog,vehicleViewModel,"DeliveryFragment",recyclerView)
+//                .observe(getActivity(), new Observer<VehicleTypes>() {
+//                    @Override
+//                    public void onChanged(VehicleTypes vehicleTypes) {
+//                        vTypes = vehicleTypes;
+//                        getAllDelivery(dialog,vehicleTypes);
+//                    }
+//                });
     }
 
     private void getOrdersByButtonId(int type) {

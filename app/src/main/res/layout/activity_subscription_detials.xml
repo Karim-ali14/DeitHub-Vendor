@@ -25,7 +25,6 @@
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="باقة ايزي دايت"
                     android:layout_gravity="center"
                     style="@style/TitleStyle"
                     />
@@ -64,7 +63,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="باقة إيزي دايت"
             android:textSize="@dimen/_22sdp"
             android:textStyle="bold"
             android:textColor="#000"
@@ -92,7 +90,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="140"
                 android:textColor="@color/background"
                 android:textSize="19dp"
                 android:textStyle="bold"
@@ -102,7 +99,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="رزس"
+                android:text="@string/SAR"
                 android:textColor="@color/background"
                 />
         </LinearLayout>
