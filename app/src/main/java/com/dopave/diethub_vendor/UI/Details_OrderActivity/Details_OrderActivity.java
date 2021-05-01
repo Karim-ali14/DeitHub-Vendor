@@ -71,6 +71,7 @@ public class Details_OrderActivity extends AppCompatActivity {
     RecyclerView recyclerForMeals;
     SharedPref pref;
     int firstOpenDialog = 0;
+    OrderRaw raw;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +85,7 @@ public class Details_OrderActivity extends AppCompatActivity {
 
     private void init() {
         pref = new SharedPref(this);
-        final OrderRaw raw = getIntent().getExtras().getParcelable("orderRaw");
+        raw = getIntent().getExtras().getParcelable("orderRaw");
         getWindow().getDecorView(). setSystemUiVisibility
                 (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR |
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -111,6 +112,20 @@ public class Details_OrderActivity extends AppCompatActivity {
         });
         dialog = new ProgressDialog(this);
         setOrderData(raw);
+        hideUpdateButton();
+    }
+
+    private void hideUpdateButton() {
+        if (
+                raw.getStatus().equals("readyForDelivery") ||
+                raw.getStatus().equals("acceptForDelivery") ||
+                raw.getStatus().equals("delivering") ||
+                raw.getStatus().equals("delivered") ||
+                raw.getStatus().equals("canceled") ||
+                raw.getStatus().equals("return") ){
+            ButtonUpDate.setVisibility(View.GONE);
+        }else
+            ButtonUpDate.setVisibility(View.VISIBLE);
     }
 
     private void setOrderData(OrderRaw raw) {

@@ -110,6 +110,7 @@ public class OrdersRepository {
                     Message.setText(R.string.Error_downloading_data);
                     dialog1.show();
                 }
+                Log.i("TTTTTTTTTTT",t.getMessage());
             }
         });
         return mutableLiveData;

@@ -11,13 +11,14 @@ public class Offer implements Parcelable {
 
     @SerializedName("total")
     @Expose
-    private Integer total;
+    private Double total;
+
 
     protected Offer(Parcel in) {
         if (in.readByte() == 0) {
             total = null;
         } else {
-            total = in.readInt();
+            total = in.readDouble();
         }
     }
 
@@ -27,7 +28,7 @@ public class Offer implements Parcelable {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(total);
+            dest.writeDouble(total);
         }
     }
 
@@ -48,12 +49,11 @@ public class Offer implements Parcelable {
         }
     };
 
-    public Integer getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
-
 }

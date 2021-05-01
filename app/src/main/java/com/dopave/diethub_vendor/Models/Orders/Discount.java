@@ -14,10 +14,10 @@ public class Discount implements Parcelable{
     private Offer offer;
     @SerializedName("total")
     @Expose
-    private Integer total;
+    private Double total;
     @SerializedName("coupon")
     @Expose
-    private Integer coupon;
+    private Double coupon;
 
 
     protected Discount(Parcel in) {
@@ -25,12 +25,12 @@ public class Discount implements Parcelable{
         if (in.readByte() == 0) {
             total = null;
         } else {
-            total = in.readInt();
+            total = in.readDouble();
         }
         if (in.readByte() == 0) {
             coupon = null;
         } else {
-            coupon = in.readInt();
+            coupon = in.readDouble();
         }
     }
 
@@ -41,13 +41,13 @@ public class Discount implements Parcelable{
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(total);
+            dest.writeDouble(total);
         }
         if (coupon == null) {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(coupon);
+            dest.writeDouble(coupon);
         }
     }
 
@@ -76,20 +76,19 @@ public class Discount implements Parcelable{
         this.offer = offer;
     }
 
-    public Integer getTotal() {
-        return total;
-    }
-
-    public void setTotal(Integer total) {
-        this.total = total;
-    }
-
-    public Integer getCoupon() {
+    public Double getCoupon() {
         return coupon;
     }
 
-    public void setCoupon(Integer coupon) {
+    public void setCoupon(Double coupon) {
         this.coupon = coupon;
     }
 
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 }
