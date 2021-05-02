@@ -119,7 +119,7 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         }
 
         try {
-            holder.createAt.setText(new SimpleDateFormat("dd/MM/yyyy").format(
+            holder.createAt.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm a").format(
                     new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                             .parse(orderRaw.getCreatedAt())));
         }
