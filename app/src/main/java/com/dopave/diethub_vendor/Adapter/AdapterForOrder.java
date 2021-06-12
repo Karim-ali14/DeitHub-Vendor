@@ -52,6 +52,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -119,7 +120,9 @@ public class AdapterForOrder extends RecyclerView.Adapter<AdapterForOrder.ViewHo
         }
 
         try {
-            holder.createAt.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm a").format(
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("AST"));
+            holder.createAt.setText(simpleDateFormat.format(
                     new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                             .parse(orderRaw.getCreatedAt())));
         }
